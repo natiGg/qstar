@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 
-class LoginButton extends StatelessWidget {
-  const LoginButton({
+class RegisterButton extends StatelessWidget {
+  const RegisterButton({
     Key ?key,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class LoginButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
           child: Text(
-            'Login',
+            'Register',
             style: TextStyle(
               color: Colors.white,
             ),

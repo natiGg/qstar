@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/login/widget/login_button.dart';
-import 'package:qstar/screen/login/widget/login_form.dart';
-import 'package:qstar/screen/login/widget/welcome_back.dart';
+import 'package:qstar/screen/register/widget/register_button.dart';
+import 'package:qstar/screen/register/widget/register_form.dart';
+
 
 class LoginScreen extends StatelessWidget {
     const LoginScreen({Key? key}) : super(key: key);
@@ -17,8 +17,7 @@ class LoginScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  <Widget>[
-          WelcomeBack(),
-          LoginForm(),
+          RegisterForm(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             alignment: Alignment.centerRight, 
@@ -30,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
             height: 60,
           ),
-          LoginButton(),
+          RegisterForm(),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 30,
@@ -39,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: RichText(
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: 'Don\'t have an account? '),
+                TextSpan(text: 'Already have an account?'),
                 TextSpan(
                   text: 'Register',
                   style: TextStyle(

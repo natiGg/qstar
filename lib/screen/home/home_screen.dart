@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
             height: 80,
           ),
           Image.asset('assets/images/q.png'),
-          SliderDot(),
+
           SizedBox(
             height: 20,
           ),
