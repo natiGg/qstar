@@ -20,19 +20,19 @@ class RegisterForm extends StatelessWidget {
             onChange: (value) {},
             
           ),
-          SizedBox(height: 16,),
+          const SizedBox(height: 16,),
                  InputTextField(
             label: 'email or phone',
             onChange: (value) {},
             
           ),
-          SizedBox(height: 16,),
+          const SizedBox(height: 16,),
           InputTextField(
             label: 'Password',
             password: true,
             onChange: (value) {},
           ),
-          SizedBox(height: 16,),
+          const SizedBox(height: 16,),
           InputTextField(
             label: 'confirm password',
             password: true,

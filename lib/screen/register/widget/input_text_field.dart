@@ -21,7 +21,7 @@ class InputTextField extends StatelessWidget {
       cursorColor: Colors.grey,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.grey),
+        labelStyle: const TextStyle(color: Colors.grey),
         border: UnderlineInputBorder(
             borderSide: BorderSide(
           color: mPrimaryColor,
