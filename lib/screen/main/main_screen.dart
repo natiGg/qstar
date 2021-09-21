@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/widget/custom_animated_bottom_bar.dart';
 import 'package:qstar/screen/profile/profile.dart';
 
@@ -81,10 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget getBody() {
     List<Widget> pages = [
-      Container(
-        alignment: Alignment.center,
-        child: Text("Home",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-      ),
+      UsersFeed(),
       ProfilePage(),
       Container(
         alignment: Alignment.center,

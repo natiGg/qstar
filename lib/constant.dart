@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Color mBackgroundColor = Color(0xFFFFFFFF);
 
-Color mPrimaryColor = Color(0xFF702963);
+Color mPrimaryColor = Color(0xFF58269f);
 
 Color mPrimaryTextColor = Color(0xFFae3d99);
 
