@@ -82,11 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getBody() {
     List<Widget> pages = [
       UsersFeed(),
-    //  ProfilePage(),
-      Container(
-        alignment: Alignment.center,
-        child: Text("Messages",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-      ),
+      //  ProfilePage(),
       Container(
         alignment: Alignment.center,
         child: Text(
@@ -98,10 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
       Container(
         alignment: Alignment.center,
         child: Text(
-          "Settings",
+          "Messages",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
       ),
+
       ProfileScreen(),
     ];
     return IndexedStack(
