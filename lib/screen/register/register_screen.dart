@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
             height: 60,
           ),
-          RegisterForm(),
+          const RegisterForm(),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 30,

@@ -9,6 +9,9 @@ class RegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const textStyle = const TextStyle(
+              color: Colors.white,
+            );
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: FlatButton(
@@ -32,9 +35,7 @@ class RegisterButton extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             'Register',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            style: textStyle,
           ),
         ),
       ),
