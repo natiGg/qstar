@@ -110,7 +110,6 @@ class WPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal:24,vertical: 6),
       child: Column(
         children: [
           Row(
@@ -127,7 +126,6 @@ class WPost extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage("assets/images/post${this.post.id}.jpg"),fit:BoxFit.cover ),
-              borderRadius: BorderRadius.circular(15)
             ),
             height: 300,
           ),

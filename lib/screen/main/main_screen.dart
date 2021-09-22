@@ -19,10 +19,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
               appBar:AppBar(
+                
+                
         backgroundColor: Colors.white,
+        centerTitle: true,
         leading:IconButton(icon: Icon(Icons.video_call),color: Colors.black,onPressed: (){}),
+        title: Row(
+           mainAxisSize: MainAxisSize.min,
+           children: <Widget>[
+                IconButton(
+                  
+                  icon: Icon(Icons.add),
+                  color: Colors.black,
+                  onPressed: null,
+                ),
+           ]
+        ),
+        
         actions: [
           IconButton(onPressed:(){}, icon: Icon(Icons.send_outlined),color: Colors.black)
+          
         ],
       ),
         body: getBody(),
@@ -84,10 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> pages = [
       UsersFeed(),
     //  ProfilePage(),
-      Container(
-        alignment: Alignment.center,
-        child: Text("Messages",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-      ),
+
       Container(
         alignment: Alignment.center,
         child: Text(
