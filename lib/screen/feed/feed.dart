@@ -167,7 +167,7 @@ class WPost extends StatelessWidget {
                   image: AssetImage("assets/images/post${this.post.id}.jpg"),
                   fit: BoxFit.cover),
             ),
-            height: 300,
+            height: 500,
           ),
           Row(
             children: [
