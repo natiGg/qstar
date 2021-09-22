@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/widget/custom_animated_bottom_bar.dart';
 import 'package:qstar/screen/profile/profile.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class MyHomePage extends StatefulWidget {
 
@@ -16,13 +18,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text("Custom Animated Bottom Navigation Bar"),
-          backgroundColor: Colors.white,
-          leading: Icon(    Icons.menu,  ),
-
-        ),
+              appBar:AppBar(
+        backgroundColor: Colors.white,
+        leading:IconButton(icon: Icon(Icons.video_call),color: Colors.black,onPressed: (){}),
+        actions: [
+          IconButton(onPressed:(){}, icon: Icon(Icons.send_outlined),color: Colors.black)
+        ],
+      ),
         body: getBody(),
         bottomNavigationBar: _buildBottomBar()
     );

@@ -18,10 +18,10 @@ List<User> _users = [
 ];
 
 List<Post> _posts = [
-  Post(userid: 5,id:1,title: 'mike check'),
-  Post(userid: 5,id:1,title: 'mike check'),
-  Post(userid: 5,id:1,title: 'mike check'),
-  Post(userid: 5,id:1,title: 'mike check'),
+  Post(userid: 1,id:1,title: 'mike check'),
+  Post(userid: 2,id:2,title: 'mike check'),
+  Post(userid: 3,id:3,title: 'mike check'),
+  Post(userid: 4,id:4,title: 'mike check'),
 
 ];
 
@@ -48,15 +48,8 @@ class Feed extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        backgroundColor: Color.fromRGBO(54, 65, 78, 1),
-        title: Text("Instagram", style: GoogleFonts.dancingScript(fontSize: 32,fontWeight: FontWeight.bold)),
-        leading:IconButton(icon: Icon(Icons.add_box_outlined),onPressed: (){}),
-        actions: [
-          IconButton(onPressed:(){}, icon: Icon(Icons.send_outlined),)
-        ],
-      ),
-      backgroundColor: Color.fromRGBO(56, 69, 81, 1),
+
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           SizedBox(height: 10,),
@@ -97,14 +90,14 @@ class UserAvatar extends StatelessWidget {
             backgroundColor: Colors.red.shade200,
             child: CircleAvatar(
               radius: 36,
-              backgroundColor:Color.fromRGBO(56, 69, 81, 1),
+              backgroundColor:Colors.white,
               child: CircleAvatar(
                 radius:32,
                 backgroundImage: AssetImage('assets/images/profile${this.user.id}.jpg')),
             ),
           ),
           SizedBox(height:3),
-          Text('${this.user.family}',style: TextStyle(color: Colors.white))
+          Text('${this.user.family}',style: TextStyle(color: Colors.black))
         ],
       ) ,
     );
@@ -123,11 +116,11 @@ class WPost extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: 24,),
-              CircleAvatar(backgroundImage: AssetImage('assets/images/${this.post.userid}.jpg')),
+              CircleAvatar(backgroundImage: AssetImage('assets/images/profile${this.post.userid}.jpg')),
               SizedBox(width: 5,),
-              Text('${_users.where((element)=> element.id==this.post.userid).first.family}',style: TextStyle(color: Colors.white)),
+              Text('${_users.where((element)=> element.id==this.post.userid).first.family}',style: TextStyle(color: Colors.black)),
               Spacer(),
-              IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz_rounded,color: Colors.white,))
+              IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz_rounded,color: Colors.black,))
             ],
           ),
           SizedBox(height: 5,),
@@ -141,8 +134,8 @@ class WPost extends StatelessWidget {
           Row(
             children: [
               IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.heart_fill,color: Colors.red,),padding: EdgeInsets.zero,),
-              IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.chat_bubble_text,color: Colors.white,)),
-              IconButton(onPressed: (){}, icon: Icon(Icons.send_outlined,color: Colors.white,)),
+              IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.chat_bubble_text,color: Colors.black,)),
+              IconButton(onPressed: (){}, icon: Icon(Icons.send_outlined,color: Colors.black,)),
               Spacer(),
               Container(
                   decoration: BoxDecoration(
@@ -155,7 +148,7 @@ class WPost extends StatelessWidget {
               CircleAvatar(radius: 3,backgroundColor: Colors.grey, ),
               CircleAvatar(radius: 3,backgroundColor: Colors.grey, ),
               Spacer(),
-              IconButton(onPressed: (){}, icon: Icon(Icons.bookmark_border,color: Colors.white,)),
+              IconButton(onPressed: (){}, icon: Icon(Icons.bookmark_border,color: Colors.black,)),
 
               SizedBox(width: 5,),
 

@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
  const myUser = User(
     imagePath:
-        'assets/images/profile.jpg',
+        'assets/images/profile1.jpg',
     name: 'Sarah Abs',
     email: 'sarah.abs@gmail.com',
     about:
