@@ -50,10 +50,18 @@ class Feed extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.video_call),
             color: Colors.black,
             onPressed: () {}),
+        title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            color: Colors.black,
+            onPressed: null,
+          ),
+        ]),
         actions: [
           IconButton(
               onPressed: () {},
@@ -156,10 +164,10 @@ class WPost extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/post${this.post.id}.jpg"),
-                    fit: BoxFit.cover),
-                borderRadius: BorderRadius.circular(15)),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/post${this.post.id}.jpg"),
+                  fit: BoxFit.cover),
+            ),
             height: 300,
           ),
           Row(
