@@ -52,19 +52,19 @@ class Feed extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          SizedBox(height: 10,),
-          Container(
-            height:110 ,
-            child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                SizedBox(height: 5),
-                Row(
-                  children:_users.map((e) => UserAvatar(e)).toList()
-                ) 
-              ],),
-          ),
-          SizedBox(height: 15,),
+          // SizedBox(height: 10,),
+          // Container(
+          //   height:110 ,
+          //   child: ListView(
+          //       scrollDirection: Axis.horizontal,
+          //       children: [
+          //       SizedBox(height: 5),
+          //       Row(
+          //         children:_users.map((e) => UserAvatar(e)).toList()
+          //       ) 
+          //     ],),
+          // ),
+          // SizedBox(height: 15,),
           Expanded(
             child: ListView(
               children:_posts.map((e) => WPost(post: e)).toList(),
