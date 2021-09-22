@@ -5,6 +5,7 @@ import 'package:qstar/screen/profile/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:qstar/screen/qvideo/qvideo.dart';
+import 'package:qstar/screen/search/search.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -17,16 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _inactiveColor = Colors.grey;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-              appBar:AppBar(
-        backgroundColor: Colors.white,
-        leading:IconButton(icon: Icon(Icons.video_call),color: Colors.black,onPressed: (){}),
-        actions: [
-          IconButton(onPressed:(){}, icon: Icon(Icons.send_outlined),color: Colors.black)
-        ],
-      ),
-        body: getBody(),
-        bottomNavigationBar: _buildBottomBar());
+    return Scaffold(body: getBody(), bottomNavigationBar: _buildBottomBar());
   }
 
   Widget _buildBottomBar() {
@@ -84,13 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> pages = [
       UsersFeed(),
       //  ProfilePage(),
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          "Messages",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-      ),
+      Search(),
       Qvideo(),
       Container(
         alignment: Alignment.center,

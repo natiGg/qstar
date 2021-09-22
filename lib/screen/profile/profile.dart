@@ -5,12 +5,8 @@ import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
 import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/widget/utils.dart';
 
-import 'package:flutter/material.dart';
-import 'package:qstar/widget/utils.dart';
-
-import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
 import 'package:qstar/screen/profile/widgets/insta_app_bar.dart';
-import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
+
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -27,6 +23,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var _primaryColor = Colors.transparent;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
     return Scaffold(
+      appBar: AppBar(
+        leadingWidth: 100,
+        backgroundColor: Colors.white,
+        leading: Container(
+          padding: EdgeInsets.only(left: 20, top: 15),
+          width: 100,
+          child: Text(
+            
+            "Username",
+            style: TextStyle(
+                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)
+                ,
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {}, icon: Icon(Icons.menu), color: Colors.black)
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

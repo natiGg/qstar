@@ -59,7 +59,9 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Stack(
+        
         children: <Widget>[
           homescreen(),
           Row(
@@ -77,6 +79,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                           ? const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
+                              
                               fontSize: 18)
                           : TextStyle(color: Colors.white, fontSize: 16))),
               const Text('|',
@@ -130,12 +133,13 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                       });
                     },
                     child: Container(
+                      margin: const EdgeInsets.only(top: 10.0),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: VideoPlayer(_controller),
                     )),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 70),
+                  padding: EdgeInsets.only(bottom: 0, top: 100),
                   child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
@@ -145,14 +149,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 10),
+                            padding: EdgeInsets.only(left: 10, bottom: 5),
                             child: Text(
                               '@spook_clothing',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
                           const Padding(
-                              padding: EdgeInsets.only(left: 10, bottom: 10),
+                              padding: EdgeInsets.only(left: 10, bottom: 5),
                               child: Text.rich(
                                 TextSpan(children: <TextSpan>[
                                   TextSpan(text: 'Eiffel Tower'),
