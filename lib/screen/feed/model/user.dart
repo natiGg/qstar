@@ -1,8 +1,11 @@
 class User {
   int id;
-  String family;
+  String userName;
+  String storyImage;
+  String userImage;
 
-  User({required this.id,required this.family});
+
+  User({required this.id,required this.userName,required this.storyImage,required this.userImage});
 }
 class Post
 {

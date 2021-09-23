@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   final _inactiveColor = Colors.grey;
   @override
@@ -46,12 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(Icons.video_collection),
-          title: Text('Video'),
+          icon:ImageIcon(
+            AssetImage("assets/images/q.png"),
+          ),
+          title: Text(''),
           activeColor: Colors.purpleAccent,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
+        
         BottomNavyBarItem(
           icon: Icon(Icons.notifications),
           title: Text(
