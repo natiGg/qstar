@@ -11,12 +11,11 @@ import 'package:qstar/screen/feed/widgets/info_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 List<User> _users = [
-  User(id: 1, userName: "natig",storyImage:"",userImage:""),
-  User(id: 2, userName: "gelila",storyImage:"",userImage:""),
+  User(id: 1, userName: "gelila",storyImage:"",userImage:""),
+  User(id: 2, userName: "natig",storyImage:"",userImage:""),
   User(id: 3, userName: "bini",storyImage:"",userImage:""),
   User(id: 4, userName: "yosi",storyImage:"",userImage:""),
   User(id: 5, userName: "abrsh",storyImage:"",userImage:""),
-
 
 ];
 
@@ -25,6 +24,8 @@ List<Post> _posts = [
   Post(userid: 2, id: 2, title: 'mike check'),
   Post(userid: 3, id: 3, title: 'mike check'),
   Post(userid: 4, id: 4, title: 'mike check'),
+  Post(userid: 5, id: 5, title: 'mike check'),
+
 ];
 
 void main() {
@@ -169,15 +170,18 @@ class WPost extends StatelessWidget {
       child: Column(
         children: [
           Row(
+
             children: [
               SizedBox(
                 width: 24,
               ),
+                 Spacer(),
               CircleAvatar(
                   backgroundImage: AssetImage(
                       'assets/images/profile${this.post.userid}.jpg')),
               SizedBox(
                 width: 5,
+                
               ),
               Text(
                   '${_users.where((element) => element.id == this.post.userid).first.userName}',
