@@ -59,9 +59,20 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        leadingWidth: 100,
+        backgroundColor: Colors.white,
+        leading: Container(
+          padding: EdgeInsets.only(left: 20, top: 15),
+          width: 100,
+          child: Text(
+            "Q video",
+            style: TextStyle(
+                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: Stack(
-        
         children: <Widget>[
           homescreen(),
           Row(
@@ -79,7 +90,6 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                           ? const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              
                               fontSize: 18)
                           : TextStyle(color: Colors.white, fontSize: 16))),
               const Text('|',
@@ -133,7 +143,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                       });
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(top: 10.0),
+                      margin: const EdgeInsets.only(top: 0.0),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: VideoPlayer(_controller),

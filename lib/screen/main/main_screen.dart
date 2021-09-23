@@ -3,97 +3,122 @@ import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/widget/custom_animated_bottom_bar.dart';
 import 'package:qstar/screen/profile/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:qstar/screen/main/widget/icons_app.dart';
+import 'package:tuple/tuple.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/search/search.dart';
+import 'package:qstar/screen/activity/activity_page.dart';
+import 'package:qstar/screen/main/widget/bottom_navigation_item.dart';
 
 class MyHomePage extends StatefulWidget {
+  static const ROUTE_NAME = 'BottomNavPage';
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BottomNavPageState createState() => _BottomNavPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 2;
+class _BottomNavPageState extends State<MyHomePage> {
+  static const TAG = 'BottomNavPage';
 
-  final _inactiveColor = Colors.grey;
+  int _currentTabIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
+
+  List<Tuple2<String, String>> tabsIcons = [
+    Tuple2(IconsApp.icHome, IconsApp.icHomeSelected),
+    Tuple2(IconsApp.icSearch, IconsApp.icSearchSelected),
+    Tuple2(IconsApp.icCreatePost, IconsApp.icCreatePost),
+    Tuple2(IconsApp.icFavorite, IconsApp.icFavoriteSelected),
+    Tuple2(IconsApp.icAccount, IconsApp.icAccountSelected),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: getBody(), bottomNavigationBar: _buildBottomBar());
-  }
-
-  Widget _buildBottomBar() {
-    return CustomAnimatedBottomBar(
-      containerHeight: 70,
-      backgroundColor: Colors.white,
-      selectedIndex: _currentIndex,
-      showElevation: true,
-      itemCornerRadius: 24,
-      curve: Curves.easeIn,
-      onItemSelected: (index) => setState(() => _currentIndex = index),
-      items: <BottomNavyBarItem>[
-        BottomNavyBarItem(
-          icon: Icon(Icons.home),
-          title: Text('Home'),
-          activeColor: Colors.purpleAccent,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon: Icon(Icons.search),
-          title: Text('Search'),
-          activeColor: Colors.purpleAccent,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon:ImageIcon(
-            AssetImage("assets/images/q.png"),
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          if (index <= 1) {
+            setState(() {
+              _currentTabIndex = index;
+            });
+          } else {
+            setState(() {
+              _currentTabIndex = index + 1;
+            });
+          }
+        },
+        children: <Widget>[
+          UsersFeed(),
+          Search(),
+          Qvideo(),
+          ActivityPage(),
+          ProfileScreen(),
+        ],
+      ),
+      bottomNavigationBar: Material(
+        elevation: 4,
+        color: Theme.of(context).bottomAppBarColor,
+        child: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border(top: Divider.createBorderSide(context))),
+            height: 56,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                    child: BottomNavigationItem(
+                        tabsIcons[0], 0 == _currentTabIndex, onPress: () {
+                  setState(() {
+                    _currentTabIndex = 0;
+                    _pageController.jumpToPage(0);
+                  });
+                })),
+                Expanded(
+                  child: BottomNavigationItem(
+                      tabsIcons[1], 1 == _currentTabIndex, onPress: () {
+                    setState(() {
+                      _currentTabIndex = 1;
+                      _pageController.jumpToPage(1);
+                    });
+                  }),
+                ),
+                Expanded(
+                  child: BottomNavigationItem(
+                      tabsIcons[2], 2 == _currentTabIndex, onPress: () {
+                    setState(() {
+                      _currentTabIndex = 2;
+                      _pageController.jumpToPage(2);
+                    });
+                  }),
+                ),
+                Expanded(
+                    child: BottomNavigationItem(
+                        tabsIcons[3], 3 == _currentTabIndex, onPress: () {
+                  setState(() {
+                    _currentTabIndex = 3;
+                    _pageController.jumpToPage(3);
+                  });
+                })),
+                Expanded(
+                    child: BottomNavigationItem(
+                        tabsIcons[4], 4 == _currentTabIndex, onPress: () {
+                  setState(() {
+                    _currentTabIndex = 4;
+                    _pageController.jumpToPage(4);
+                  });
+                })),
+              ],
+            ),
           ),
-          title: Text(''),
-          activeColor: Colors.purpleAccent,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        
-        BottomNavyBarItem(
-          icon: Icon(Icons.notifications),
-          title: Text(
-            'Activity ',
-          ),
-          activeColor: Colors.purpleAccent,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon: Icon(Icons.person),
-          title: Text('Profile'),
-          activeColor: Colors.purpleAccent,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  Widget getBody() {
-    List<Widget> pages = [
-      UsersFeed(),
-      //  ProfilePage(),
-      Search(),
-      Qvideo(),
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          "Messages",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          bottom: true,
         ),
       ),
-
-      ProfileScreen(),
-    ];
-    return IndexedStack(
-      index: _currentIndex,
-      children: pages,
     );
   }
 }

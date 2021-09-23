@@ -44,11 +44,12 @@ class Search extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  _tagItem("Style"),
-                  _tagItem("Science & Tech"),
-                  _tagItem("flutter"),
-                  _tagItem("youtube"),
-                  _tagItem("Sports"),
+                  _tagItem("filter All"),
+                  _tagItem("User"),
+                  _tagItem("Video"),
+                  _tagItem("Posts"),
+                  _tagItem("Page"),
+                  _tagItem("Hastag"),
                 ],
               ),
             ),
@@ -64,10 +65,10 @@ class Search extends StatelessWidget {
               },
             ),
             staggeredTiles: List.generate(
-              (8),
+              (10),
               (int index) {
-                int remain = index % 8;
-                if (remain == 1 || remain == 9) {
+                int remain = index % 10;
+                if (remain == 1 || remain == 11) {
                   return StaggeredTile.count(2, 2);
                 }
                 return StaggeredTile.count(1, 1);
