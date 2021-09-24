@@ -2,21 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/splash/splash_screen.dart';
-import 'package:flutter/material.dart';
+
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/splash/splash_screen.dart';
+
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:qstar/screen/videocall/videocall.dart';
 
 List<User> _users = [
-  User(id: 1, userName: "gelila",storyImage:"",userImage:""),
-  User(id: 2, userName: "natig",storyImage:"",userImage:""),
-  User(id: 3, userName: "bini",storyImage:"",userImage:""),
-  User(id: 4, userName: "yosi",storyImage:"",userImage:""),
-  User(id: 5, userName: "abrsh",storyImage:"",userImage:""),
-
+  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
+  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
+  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
+  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
 ];
 
 List<Post> _posts = [
@@ -25,7 +23,6 @@ List<Post> _posts = [
   Post(userid: 3, id: 3, title: 'mike check'),
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
-
 ];
 
 void main() {
@@ -58,12 +55,15 @@ class Feed extends StatelessWidget {
         leading: IconButton(
             icon: Icon(Icons.video_call),
             color: Colors.black,
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => GroupCallScreen()));
+            }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
             color: Colors.black,
-            onPressed: null,
+            onPressed: () {},
           ),
         ]),
         actions: [
@@ -76,25 +76,24 @@ class Feed extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-
           Padding(
             padding: EdgeInsets.all(20),
             child: Container(
-              height:110 ,
+              height: 110,
               child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
+                scrollDirection: Axis.horizontal,
+                children: [
                   SizedBox(height: 5),
-                  Row(
-                    children:_users.map((e) => UserStories(e)).toList()
-                  )
-                ],),
+                  Row(children: _users.map((e) => UserStories(e)).toList())
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           Expanded(
             child: ListView(
-              
               children: _posts.map((e) => WPost(post: e)).toList(),
             ),
           )
@@ -118,23 +117,17 @@ class UserStories extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image: AssetImage('assets/images/post${this.user.id}.jpg'),
-                 
-            fit: BoxFit.cover
-          ),
+              image: AssetImage('assets/images/post${this.user.id}.jpg'),
+              fit: BoxFit.cover),
         ),
         child: Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              colors: [
+              borderRadius: BorderRadius.circular(15),
+              gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
                 Colors.black.withOpacity(.9),
                 Colors.black.withOpacity(.1),
-              ]
-            )
-          ),
+              ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,15 +136,17 @@ class UserStories extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/profile${this.user.id}.jpg'),
-                    fit: BoxFit.cover
-                  )
-                ),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/profile${this.user.id}.jpg'),
+                        fit: BoxFit.cover)),
               ),
-              Text('${this.user.userName}', style: TextStyle(color: Colors.white),)
+              Text(
+                '${this.user.userName}',
+                style: TextStyle(color: Colors.white),
+              )
             ],
           ),
         ),
@@ -170,18 +165,16 @@ class WPost extends StatelessWidget {
       child: Column(
         children: [
           Row(
-
             children: [
               SizedBox(
                 width: 24,
               ),
-                 Spacer(),
+              Spacer(),
               CircleAvatar(
                   backgroundImage: AssetImage(
                       'assets/images/profile${this.post.userid}.jpg')),
               SizedBox(
                 width: 5,
-                
               ),
               Text(
                   '${_users.where((element) => element.id == this.post.userid).first.userName}',
