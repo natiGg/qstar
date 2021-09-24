@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
@@ -50,9 +51,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
-    _controller.pause();
+ 
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     _controller.dispose();
+    _controller.pause();
+       super.dispose();
     animationController.dispose();
   }
 
