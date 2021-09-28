@@ -7,8 +7,8 @@ import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
 
 
-class LoginScreen extends StatelessWidget {
-    const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+    const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

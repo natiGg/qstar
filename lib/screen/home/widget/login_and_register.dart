@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/login/login_screen.dart';
+import 'package:qstar/screen/register/register_screen.dart';
+
+
 
 class LoginAndRegister extends StatelessWidget {
   const LoginAndRegister({
@@ -19,7 +22,16 @@ class LoginAndRegister extends StatelessWidget {
                 borderRadius: BorderRadius.circular(36),
               ),
               color: mPrimaryColor,
-              onPressed: () {},
+                  onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return RegisterScreen();
+                    },
+                  ),
+                );
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
