@@ -15,7 +15,7 @@ class IconsApp {
   static const String icSearch = 'assets/icons/ic_search.svg';
   static const String icSearchSelected = 'assets/icons/ic_search_selected.svg';
 
-  static const String icCreatePost = 'assets/images/ic_create_post.svg';
+  static const String icCreatePost = 'assets/icons/ic_create_post.svg';
 
   static const String icFavorite = 'assets/icons/ic_favorite.svg';
   static const String icFavoriteSelected =
