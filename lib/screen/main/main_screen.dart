@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/main/widget/custom_animated_bottom_bar.dart';
+
 import 'package:qstar/screen/profile/profile.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:qstar/screen/main/widget/icons_app.dart';
 import 'package:tuple/tuple.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
@@ -12,24 +11,25 @@ import 'package:qstar/screen/activity/activity_page.dart';
 import 'package:qstar/screen/main/widget/bottom_navigation_item.dart';
 
 class MyHomePage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = 'BottomNavPage';
+
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _BottomNavPageState createState() => _BottomNavPageState();
 }
 
 class _BottomNavPageState extends State<MyHomePage> {
-  static const TAG = 'BottomNavPage';
-
   int _currentTabIndex = 0;
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
   List<Tuple2<String, String>> tabsIcons = [
-    Tuple2(IconsApp.icHome, IconsApp.icHomeSelected),
-    Tuple2(IconsApp.icSearch, IconsApp.icSearchSelected),
-    Tuple2(IconsApp.icCreatePost, IconsApp.icCreatePost),
-    Tuple2(IconsApp.icFavorite, IconsApp.icFavoriteSelected),
-    Tuple2(IconsApp.icAccount, IconsApp.icAccountSelected),
+    const Tuple2(IconsApp.icHome, IconsApp.icHomeSelected),
+    const Tuple2(IconsApp.icSearch, IconsApp.icSearchSelected),
+    const Tuple2(IconsApp.icq, IconsApp.icqslected),
+    const Tuple2(IconsApp.icFavorite, IconsApp.icFavoriteSelected),
+    const Tuple2(IconsApp.icAccount, IconsApp.icAccountSelected),
   ];
 
   @override
@@ -43,18 +43,18 @@ class _BottomNavPageState extends State<MyHomePage> {
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
-          if (index <= 1) {
+          if (index <= 0) {
             setState(() {
               _currentTabIndex = index;
             });
           } else {
             setState(() {
-              _currentTabIndex = index + 1;
+              _currentTabIndex = index + 0;
             });
           }
         },
         children: <Widget>[
-          UsersFeed(),
+          const UsersFeed(),
           Search(),
           Qvideo(),
           ActivityPage(),
@@ -89,14 +89,14 @@ class _BottomNavPageState extends State<MyHomePage> {
                   }),
                 ),
                 Expanded(
-                  child: BottomNavigationItem(
-                      tabsIcons[2], 2 == _currentTabIndex, onPress: () {
-                    setState(() {
-                      _currentTabIndex = 2;
-                      _pageController.jumpToPage(2);
-                    });
-                  }),
-                ),
+                    child: BottomNavigationItem(
+                        tabsIcons[2], 2 == _currentTabIndex, onPress: () {
+                           setState(() {
+                   _currentTabIndex = 2;
+                    _pageController.jumpToPage(2);
+                  });
+                 
+                })),
                 Expanded(
                     child: BottomNavigationItem(
                         tabsIcons[3], 3 == _currentTabIndex, onPress: () {

@@ -26,7 +26,7 @@ class _BottomNavigationItemState extends State<BottomNavigationItem> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         child: kIsWeb
-            ? Image.network(
+            ? Image.asset(
                 widget.isSelected ? widget.icon.item2 : widget.icon.item1,
                 color: Colors.black,
               )
