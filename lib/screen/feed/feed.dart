@@ -8,6 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
 import 'package:qstar/screen/videocall/videocall.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 List<User> _users = [
   User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
@@ -167,14 +168,25 @@ class WPost extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 24,
+                width: 25,
               ),
+                RatingBarIndicator(
+                    rating: 2.75,
+                    itemBuilder: (context, index) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                    ),
+                    itemCount: 5,
+                    itemSize: 20.0,
+                    direction: Axis.horizontal,
+                ),
+                
               Spacer(),
               CircleAvatar(
                   backgroundImage: AssetImage(
                       'assets/images/profile${this.post.userid}.jpg')),
               SizedBox(
-                width: 5,
+                width: 25,
               ),
               Text(
                   '${_users.where((element) => element.id == this.post.userid).first.userName}',
