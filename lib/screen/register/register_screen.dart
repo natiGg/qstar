@@ -18,18 +18,8 @@ class RegisterScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  <Widget>[
           RegisterForm(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            alignment: Alignment.centerRight, 
-            child: Text(
-              'Forgot password?',
-              style: TextStyle(color: mPrimaryColor),
-            ),
-          ),
-          SizedBox(
-            height: 60,
-          ),
-          const RegisterForm(),
+
+          RegisterButton(),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 30,
@@ -40,7 +30,7 @@ class RegisterScreen extends StatelessWidget {
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
                 TextSpan(text: 'Already have an account?'),
                 TextSpan(
-                  text: 'Register',
+                  text: 'Login',
                   style: TextStyle(
                     color: mPrimaryColor,
                   ),
