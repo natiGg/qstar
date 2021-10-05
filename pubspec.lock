@@ -64,6 +64,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  dependencies:
+    dependency: "direct main"
+    description:
+      name: dependencies
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
+  disposables:
+    dependency: transitive
+    description:
+      name: disposables
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   fake_async:
     dependency: transitive
     description:
@@ -163,6 +177,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -302,7 +323,14 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "2.1.5"
+  simple_gesture_detector:
+    dependency: transitive
+    description:
+      name: simple_gesture_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -336,6 +364,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  table_calendar:
+    dependency: "direct main"
+    description:
+      name: table_calendar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
   term_glyph:
     dependency: transitive
     description:
@@ -356,7 +391,7 @@ packages:
       name: tuple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "1.0.3"
   typed_data:
     dependency: transitive
     description:

@@ -40,8 +40,12 @@ dependencies:
   flutter_lints: ^1.0.0
   flutter_rating_bar: ^4.0.0
   video_player:
-  tuple: ^2.0.0
+  tuple:
   provider: ^5.0.0
+  table_calendar:
+  dependencies:
+
+
 
 dev_dependencies:
   flutter_test:

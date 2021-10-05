@@ -30,31 +30,7 @@ class RecommendUser extends StatelessWidget {
   Widget build(BuildContext context) {
             
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(Icons.video_call),
-            color: Colors.black,
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => GroupCallScreen()));
-            }),
-        title: Row(mainAxisSize: MainAxisSize.min, 
-        children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            color: Colors.black,
-            onPressed: () {},
-          ),
-        ]),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.send_outlined),
-              color: Colors.black)
-        ],
-      ),
+
       backgroundColor: Colors.white,
       body: Container(
         margin: EdgeInsets.only(

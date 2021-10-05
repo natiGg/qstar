@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/main/main_screen.dart';
+import 'package:qstar/screen/register/birthday.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({
@@ -24,7 +25,7 @@ class RegisterButton extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return MyHomePage();
+                return BirthDay();
               },
             ),
           );
@@ -34,7 +35,7 @@ class RegisterButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
           child: Text(
-            'Register',
+            'Next',
             style: textStyle,
           ),
         ),
