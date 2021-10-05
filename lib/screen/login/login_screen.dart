@@ -8,7 +8,7 @@ import 'package:qstar/screen/login/widget/login_form.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
 
 class LoginScreen extends StatelessWidget {
-    const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +16,12 @@ class LoginScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children:  <Widget>[
+        children: <Widget>[
           WelcomeBack(),
           LoginForm(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            alignment: Alignment.centerRight, 
+            alignment: Alignment.centerRight,
             child: Text(
               'Forgot password?',
               style: TextStyle(color: mPrimaryColor),
@@ -45,9 +45,10 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(
                     color: mPrimaryColor,
                   ),
-                  recognizer: TapGestureRecognizer()..onTap = () {
-                    Navigator.pop(context);
-                  },
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pop(context);
+                    },
                 ),
               ]),
             ),

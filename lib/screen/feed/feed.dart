@@ -49,7 +49,6 @@ class UsersFeed extends StatelessWidget {
 class Feed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-        
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -79,7 +78,6 @@ class Feed extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            
             Padding(
               padding: EdgeInsets.all(20),
               child: Container(
@@ -92,77 +90,78 @@ class Feed extends StatelessWidget {
                   ],
                 ),
               ),
-              
             ),
             Card(
-        margin: EdgeInsets.symmetric(horizontal: 0.0),
-        elevation: 0.0,
-        shape: null,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
-          color: Colors.white,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(backgroundImage: AssetImage(
-                        'assets/images/profile1.jpg')),
-                  const SizedBox(width: 8.0),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'What\'s on your mind?',
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const Divider(height: 10.0, thickness: 0.5),
-              Container(
-                height: 40.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              margin: EdgeInsets.symmetric(horizontal: 0.0),
+              elevation: 0.0,
+              shape: null,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
+                color: Colors.white,
+                child: Column(
                   children: [
-                    FlatButton.icon(
-                      onPressed: () => print('Live'),
-                      icon: const Icon(
-                        Icons.videocam,
-                        color: Colors.red,
-                      ),
-                      label: Text('Live'),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/profile1.jpg')),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'What\'s on your mind?',
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    const VerticalDivider(width: 8.0),
-                    FlatButton.icon(
-                      onPressed: () => print('Photo'),
-                      icon: const Icon(
-                        Icons.photo_library,
-                        color: Colors.green,
+                    const Divider(height: 10.0, thickness: 0.5),
+                    Container(
+                      height: 40.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FlatButton.icon(
+                            onPressed: () => print('Live'),
+                            icon: const Icon(
+                              Icons.videocam,
+                              color: Colors.red,
+                            ),
+                            label: Text('Live'),
+                          ),
+                          const VerticalDivider(width: 8.0),
+                          FlatButton.icon(
+                            onPressed: () => print('Photo'),
+                            icon: const Icon(
+                              Icons.photo_library,
+                              color: Colors.green,
+                            ),
+                            label: Text('Photo'),
+                          ),
+                          const VerticalDivider(width: 8.0),
+                          FlatButton.icon(
+                            onPressed: () => print('Room'),
+                            icon: const Icon(
+                              Icons.video_call,
+                              color: Colors.purpleAccent,
+                            ),
+                            label: Text('Room'),
+                          ),
+                        ],
                       ),
-                      label: Text('Photo'),
-                    ),
-                    const VerticalDivider(width: 8.0),
-                    FlatButton.icon(
-                      onPressed: () => print('Room'),
-                      icon: const Icon(
-                        Icons.video_call,
-                        color: Colors.purpleAccent,
-                      ),
-                      label: Text('Room'),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-          ),
+            ),
             SizedBox(
               height: 15,
             ),
             ..._posts.map((item) {
-              return WPost(post: item,);
+              return WPost(
+                post: item,
+              );
             }).toList(),
-                    
           ],
         ),
       ),
@@ -231,23 +230,21 @@ class WPost extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-
           Row(
             children: [
               SizedBox(
                 width: 25,
               ),
-                RatingBarIndicator(
-                    rating: 2.75,
-                    itemBuilder: (context, index) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                    ),
-                    itemCount: 5,
-                    itemSize: 20.0,
-                    direction: Axis.horizontal,
+              RatingBarIndicator(
+                rating: 2.75,
+                itemBuilder: (context, index) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
                 ),
-                
+                itemCount: 5,
+                itemSize: 20.0,
+                direction: Axis.horizontal,
+              ),
               Spacer(),
               CircleAvatar(
                   backgroundImage: AssetImage(
@@ -260,11 +257,39 @@ class WPost extends StatelessWidget {
                   style: TextStyle(color: Colors.black)),
               Spacer(),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_horiz_rounded,
-                    color: Colors.black,
-                  ))
+                onPressed: () {
+                  showDialog(
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: ListView(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shrinkWrap: true,
+                            children: [
+                              'Report...',
+                              'Turn on Post notification',
+                              'Copy Link',
+                              'Share to...',
+                              'Mute'
+                            ]
+                                .map((e) => InkWell(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 12, horizontal: 16),
+                                        child: Text(e),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ))
+                                .toList()),
+                      );
+                    },
+                  );
+                },
+                icon: Icon(Icons.more_vert),
+              )
             ],
           ),
           SizedBox(

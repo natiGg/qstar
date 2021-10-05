@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'auth_bloc.dart';
 
 import 'dart:developer' as developer;
-
+import 'package:flutter_svg/svg.dart';
 import 'comment_widget.dart';
 import 'package:qstar/screen/feed/feed.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CommentPage extends StatefulWidget {
   static const ROUTE_NAME = 'CommentPage';
@@ -21,26 +22,27 @@ class _CommentPageState extends State<CommentPage> {
   Widget build(BuildContext context) {
     // ignore: unnecessary_new
     return WillPopScope(
-      onWillPop: () => _moveToScreen2(
-        context,
-      ),
-      child: new Scaffold(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => UsersFeed()));
+        return true;
+      },
+      child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          title: Text("Comments"),
+          foregroundColor: Colors.black,
           leadingWidth: 100,
           backgroundColor: Colors.white,
-          leading: Container(
-            padding: const EdgeInsets.only(left: 20, top: 15),
-            width: 100,
-            // ignore: prefer_const_constructors
-            child: Text(
-              "Comments",
-              // ignore: prefer_const_constructors
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              "assets/icons/Icon Back.svg",
+              color: Colors.black,
             ),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const UsersFeed()));
+            },
           ),
         ),
         body: Column(
@@ -77,7 +79,7 @@ class _CommentPageState extends State<CommentPage> {
                       child: TextField(
                         // ignore: prefer_const_constructors
                         decoration: InputDecoration(
-                            hintText: 'Comment a', border: InputBorder.none),
+                            hintText: 'Comment here', border: InputBorder.none),
                       ),
                     ),
                   ),
@@ -104,8 +106,12 @@ class _CommentPageState extends State<CommentPage> {
     );
   }
 
-  _moveToScreen2(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UsersFeed()));
-  }
+  // Future<bool> _willPopCallback() async {
+
+  //   Navigator.of(context)
+  //       .push(MaterialPageRoute(builder: (context) => const UsersFeed()));
+  //   return true; //
+  // }
+  // _moveToScreen2(BuildContext context) =>
+  //     Navigator.pushReplacementNamed(context, "screen2");
 }
