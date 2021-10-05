@@ -43,6 +43,9 @@ dependencies:
   tuple:
   provider: ^5.0.0
   table_calendar:
+  intl_phone_number_input: ^0.7.0+2
+  pin_code_fields: ^7.3.0
+
   dependencies:
 
 

@@ -15,10 +15,31 @@ class Password extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      // Remove the debug banner
+      debugShowCheckedModeBanner: false,
+      title: 'qstar',
+      home: SetP(),
+    );
+ }
+
+}
+class SetP extends StatefulWidget {
+  const SetP({ Key? key }) : super(key: key);
+
+  @override
+  _SetPState createState() => _SetPState();
+}
+
+class _SetPState extends State<SetP> {
+    bool _isObscure = true;
+
+  @override
+  Widget build(BuildContext context) {
     const textStyle = const TextStyle(
               color: Colors.white,
             );
-    return Scaffold(
+        return Scaffold(
 
       body: Column(
 mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically,
@@ -44,7 +65,7 @@ mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically
                 shadowColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(25.0) ),
                             child: TextFormField(
-                  obscureText: true,
+                  obscureText: _isObscure,
                   autofocus: false,
                   decoration: InputDecoration(
                       hintText: 'Password',
@@ -52,7 +73,15 @@ mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically
                       filled: true,
                       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(borderRadius:BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white, width: 3.0))
+                      borderSide: BorderSide(color: Colors.white, width: 3.0)),
+                      suffixIcon: IconButton(
+                    icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    }) 
                   ),
                 ),
               ),
@@ -111,6 +140,6 @@ mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically
         ],
       ),
     );
+ 
   }
-
 }
