@@ -15,17 +15,49 @@ class LoginForm extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          InputTextField(
-            label: 'Email',
-            onChange: (value) {},
+          
+          Material(
+          
+              elevation: 20.0,
+              shadowColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(25.0) ),
+
+                          child: TextFormField(
             
-          ),
+                autofocus: false,
+                decoration: InputDecoration(
+                 
+                    hintText: 'Username',
+                    fillColor: Colors.white,
+                    filled: true,
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    enabledBorder: OutlineInputBorder(borderRadius:BorderRadius.circular(25.0),
+                    borderSide: BorderSide(color: Colors.white, width: 3.0))
+                ),
+              ),
+            ), 
           SizedBox(height: 16,),
-          InputTextField(
-            label: 'Password',
-            password: true,
-            onChange: (value) {},
-          ),
+                  Material(
+            
+                elevation: 20.0,
+                shadowColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(25.0) ),
+                            child: TextFormField(
+                  obscureText: true,
+                  autofocus: false,
+                  decoration: InputDecoration(
+                      hintText: 'Password',
+                      fillColor: Colors.white,
+                      filled: true,
+                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      enabledBorder: OutlineInputBorder(borderRadius:BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white, width: 3.0)),
+                     
+                    
+                  ),
+                ),
+              ),
+  
         ],
       ),
     );
