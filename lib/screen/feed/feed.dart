@@ -158,8 +158,11 @@ class Feed extends StatelessWidget {
               height: 15,
             ),
             ..._posts.map((item) {
-              return WPost(
-                post: item,
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: WPost(
+                  post: item,
+                ),
               );
             }).toList(),
           ],
@@ -228,12 +231,39 @@ class WPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25.0),
+            bottomRight: Radius.circular(25.0)),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0.0, 1.0), //(x,y)
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
       child: Column(
         children: [
           Row(
+            mainAxisAlignment:
+                MainAxisAlignment.center, //Center Column contents vertically,
+            crossAxisAlignment: CrossAxisAlignment
+                .center, //Center Column contents horizontally,
+
             children: [
               SizedBox(
-                width: 25,
+                width: 125,
+              ),
+              Text(
+                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
+                  style: TextStyle(color: Colors.black)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                    backgroundImage: AssetImage(
+                        'assets/images/profile${this.post.userid}.jpg')),
               ),
               RatingBarIndicator(
                 rating: 2.75,
@@ -245,16 +275,6 @@ class WPost extends StatelessWidget {
                 itemSize: 20.0,
                 direction: Axis.horizontal,
               ),
-              Spacer(),
-              CircleAvatar(
-                  backgroundImage: AssetImage(
-                      'assets/images/profile${this.post.userid}.jpg')),
-              SizedBox(
-                width: 25,
-              ),
-              Text(
-                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
-                  style: TextStyle(color: Colors.black)),
               Spacer(),
               IconButton(
                 onPressed: () {
@@ -292,6 +312,23 @@ class WPost extends StatelessWidget {
               )
             ],
           ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                    text:
+                        'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(fontWeight: FontWeight.w400),
+                  ),
+                ]),
+              ),
+            ),
+          ),
           SizedBox(
             height: 5,
           ),
@@ -303,60 +340,87 @@ class WPost extends StatelessWidget {
             ),
             height: 500,
           ),
-          Row(
+          Container(
+          padding: EdgeInsets.all(12.0),
+          child:Row(
+            
             children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  CupertinoIcons.heart_fill,
-                  color: Colors.red,
-                ),
-                padding: EdgeInsets.zero,
-              ),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    CupertinoIcons.chat_bubble_text,
-                    color: Colors.black,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.send_outlined,
-                    color: Colors.black,
-                  )),
-              Spacer(),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), color: Colors.red),
-                height: 7,
-                width: 10,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.thumb_up,
+                        color: mPrimaryColor,
+                        size: 25,
+                      ),
+                  
+                    ],
+                  ),
+                ),
               ),
-              CircleAvatar(
-                radius: 3,
-                backgroundColor: Colors.grey,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.chat, color: mPrimaryColor, size: 25),
+                    
+                    ],
+                  ),
+                ),
               ),
-              CircleAvatar(
-                radius: 3,
-                backgroundColor: Colors.grey,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.share, color: mPrimaryColor, size: 25),
+                    
+                    ],
+                  ),
+                ),
               ),
-              CircleAvatar(
-                radius: 3,
-                backgroundColor: Colors.grey,
-              ),
+              Spacer(),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(15), color: Colors.red),
+              //   height: 7,
+              //   width: 10,
+              // ),
+              // // CircleAvatar(
+              // //   radius: 3,
+              // //   backgroundColor: Colors.grey,
+              // // ),
+              // // CircleAvatar(
+              // //   radius: 3,
+              // //   backgroundColor: Colors.grey,
+              // // ),
+              // // CircleAvatar(
+              // //   radius: 3,
+              // //   backgroundColor: Colors.grey,
+              // // ),
               Spacer(),
               IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.bookmark_border,
-                    color: Colors.black,
+                    color: mPrimaryColor,
                   )),
               SizedBox(
                 width: 5,
               ),
             ],
           ),
-          InfoWidget()
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InfoWidget(),
+          )
         ],
       ),
     );
