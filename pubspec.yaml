@@ -47,6 +47,8 @@ dependencies:
   pin_code_fields: ^7.3.0
 
   dependencies:
+  fluttertoast: ^8.0.8
+  settings_ui: ^1.0.0
 
 
 

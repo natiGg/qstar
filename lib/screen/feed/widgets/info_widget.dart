@@ -50,8 +50,14 @@ class InfoWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 4),
             ),
             onTap: () {
-             
-               Navigator.push(context, MaterialPageRoute(builder: (context) => CommentPage()));
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      CommentPage(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             },
           )
         ],
