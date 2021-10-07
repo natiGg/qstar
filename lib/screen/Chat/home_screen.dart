@@ -3,6 +3,7 @@ import 'category_selector.dart';
 import 'favorite_contacts.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
+import 'package:qstar/constant.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,20 +14,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: mPrimaryColor,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.black,
+            color: mPrimaryColor,
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => UsersFeed()));
             }),
         title: Text(
-          'Chats',
+          "Chat",
           style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.bold,
+            color: mPrimaryColor,
+            fontSize: 27,
+            fontFamily: 'font1',
           ),
         ),
         elevation: 0.0,
@@ -34,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.search),
             iconSize: 30.0,
-            color: Colors.white,
+            color: mPrimaryColor,
             onPressed: () {},
           ),
         ],

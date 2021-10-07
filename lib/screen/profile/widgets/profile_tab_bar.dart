@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:qstar/constant.dart';
 
 class ProfileTabBar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   final ValueChanged<int> onTap;
 
   ProfileTabBar({
-  
     required this.height,
-    required this.onTap, Color? color,
-  }) ;
+    required this.onTap,
+    Color? color,
+  });
 
   @override
   _ProfileTabBarState createState() => _ProfileTabBarState();
@@ -31,12 +32,13 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
     double _screenWidth = MediaQuery.of(context).size.width;
     return Container(
       height: widget.height,
+      color: mPrimaryColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           GestureDetector(
               child: Container(
-                color: Theme.of(context).primaryColor,
+                color: mPrimaryColor,
                 width: _screenWidth / 3,
                 height: widget.height,
                 child: Stack(
@@ -52,7 +54,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                             alignment: Alignment.bottomCenter,
                             child: Container(
                               height: 2,
-                              color: Colors.white,
+                              color: mPrimaryColor,
                             ),
                           )
                         : SizedBox(),
@@ -69,7 +71,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
               }),
           GestureDetector(
             child: Container(
-              color: Theme.of(context).primaryColor,
+              color: mPrimaryColor,
               width: _screenWidth / 3,
               height: widget.height,
               child: Stack(
@@ -85,7 +87,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                           alignment: Alignment.bottomCenter,
                           child: Container(
                             height: 2,
-                            color: Colors.white,
+                            color: mPrimaryColor,
                           ),
                         )
                       : SizedBox(),
@@ -97,40 +99,6 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                 setState(() {
                   setFlags(tabName: 'tv');
                   widget.onTap(1);
-                });
-              }
-            },
-          ),
-          GestureDetector(
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              width: _screenWidth / 3,
-              height: widget.height,
-              child: Stack(
-                children: <Widget>[
-                  Align(
-                    child: Icon(
-                      Icons.assignment_ind,
-                      color: isTag ? _selectedColor : _unSelectedColor,
-                    ),
-                  ),
-                  isTag
-                      ? Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ),
-            onTap: () {
-              if (!isTag) {
-                setState(() {
-                  setFlags(tabName: 'tag');
-                  widget.onTap(2);
                 });
               }
             },

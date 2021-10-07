@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
-
+import 'package:qstar/constant.dart';
 import 'languages_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -16,7 +16,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Settings'),
+          title: Text(
+            "Setting",
+            style: TextStyle(
+              color: mPrimaryColor,
+              fontSize: 27,
+              fontFamily: 'font1',
+            ),
+          ),
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
         ),
@@ -32,27 +39,62 @@ class _SettingsScreenState extends State<SettingsScreen> {
         SettingsSection(
           tiles: [
             SettingsTile(
-                title: 'Personal Information', leading: Icon(Icons.person)),
-            SettingsTile(title: 'Saved', leading: Icon(Icons.save)),
+                title: 'Personal Information',
+                leading: Icon(
+                  Icons.person,
+                  color: mPrimaryColor,
+                )),
+            SettingsTile(
+              title: 'Saved',
+              leading: Icon(
+                Icons.save,
+                color: mPrimaryColor,
+              ),
+            ),
             SettingsTile(
                 title: 'Swicth to professional account',
-                leading: Icon(Icons.account_balance)),
-          ],
-        ),
-        SettingsSection(
-          tiles: [
-            SettingsTile(title: 'Password', leading: Icon(Icons.password)),
-            SettingsTile(title: 'Login Activity', leading: Icon(Icons.login)),
-            SettingsTile(title: 'Sign out', leading: Icon(Icons.exit_to_app)),
+                leading: Icon(
+                  Icons.account_balance,
+                  color: mPrimaryColor,
+                )),
           ],
         ),
         SettingsSection(
           tiles: [
             SettingsTile(
-                title: 'Terms of Service', leading: Icon(Icons.description)),
+                title: 'Password',
+                leading: Icon(
+                  Icons.password,
+                  color: mPrimaryColor,
+                )),
+            SettingsTile(
+                title: 'Login Activity',
+                leading: Icon(
+                  Icons.login,
+                  color: mPrimaryColor,
+                )),
+            SettingsTile(
+                title: 'Sign out',
+                leading: Icon(
+                  Icons.exit_to_app,
+                  color: mPrimaryColor,
+                )),
+          ],
+        ),
+        SettingsSection(
+          tiles: [
+            SettingsTile(
+                title: 'Terms of Service',
+                leading: Icon(
+                  Icons.description,
+                  color: mPrimaryColor,
+                )),
             SettingsTile(
                 title: 'Open source licenses',
-                leading: Icon(Icons.collections_bookmark)),
+                leading: Icon(
+                  Icons.collections_bookmark,
+                  color: mPrimaryColor,
+                )),
           ],
         ),
         // SettingsSection(
@@ -95,7 +137,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           tiles: [
             SettingsTile(
               title: 'Language',
-              leading: Icon(Icons.language),
+              leading: Icon(
+                Icons.language,
+                color: mPrimaryColor,
+              ),
               onPressed: (context) {
                 Navigator.pushReplacement(
                   context,
@@ -109,13 +154,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingsTile(
               title: 'Help',
-              leading: Icon(Icons.help),
+              leading: Icon(
+                Icons.help,
+                color: mPrimaryColor,
+              ),
               onPressed: (context) {},
             ),
             SettingsTile(
               title: 'about',
               leading: Icon(
                 Icons.info,
+                color: mPrimaryColor,
               ),
               onPressed: (context) {},
             ),
@@ -130,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   'assets/images/settings.png',
                   height: 50,
                   width: 50,
-                  color: Color(0xFF777777),
+                  color: mPrimaryColor,
                 ),
               ),
             ],

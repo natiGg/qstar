@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/constant.dart';
 import 'package:qstar/widget/utils.dart';
 
 Widget profileStats({required Size screen, required Color color}) {
@@ -102,7 +103,7 @@ Widget editProfile(
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: primaryColorDark,
+        color: mPrimaryColor,
       ),
       child: Center(
           child: Text(

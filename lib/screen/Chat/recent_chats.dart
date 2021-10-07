@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'message_model.dart';
 import 'chat_screen.dart';
+import 'package:qstar/constant.dart';
 
 class RecentChats extends StatelessWidget {
   @override
@@ -51,6 +52,7 @@ class RecentChats extends StatelessWidget {
                           CircleAvatar(
                             radius: 35.0,
                             backgroundImage: AssetImage(chat.sender.imageUrl),
+                            backgroundColor: mPrimaryColor,
                           ),
                           SizedBox(width: 10.0),
                           Column(
@@ -97,7 +99,7 @@ class RecentChats extends StatelessWidget {
                                   width: 40.0,
                                   height: 20.0,
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
+                                    color: mPrimaryColor,
                                     borderRadius: BorderRadius.circular(30.0),
                                   ),
                                   alignment: Alignment.center,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:qstar/constant.dart';
 import 'dart:developer' as developer;
 
 import 'activity_item_widget.dart';
@@ -24,7 +24,10 @@ class _ActivityPageState extends State<ActivityPage> {
           child: Text(
             "Activity",
             style: TextStyle(
-                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+              color: mPrimaryColor,
+              fontSize: 27,
+              fontFamily: 'font1',
+            ),
           ),
         ),
       ),

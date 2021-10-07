@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:developer' as developer;
+import 'package:qstar/constant.dart';
 
 import 'package:tuple/tuple.dart';
 
@@ -32,7 +33,7 @@ class _BottomNavigationItemState extends State<BottomNavigationItem> {
               )
             : SvgPicture.asset(
                 widget.isSelected ? widget.icon.item2 : widget.icon.item1,
-                color: Colors.black,
+                color: mPrimaryColor,
               ),
       ),
       onTap: widget.onPress,

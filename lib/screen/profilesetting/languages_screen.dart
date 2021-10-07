@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:qstar/constant.dart';
 
 class LanguagesScreen extends StatefulWidget {
   @override
@@ -12,11 +13,18 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Languages'),
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          "Language",
+          style: TextStyle(
+            color: mPrimaryColor,
+            fontSize: 27,
+            fontFamily: 'font1',
+          ),
         ),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+      ),
       body: SettingsList(
         sections: [
           SettingsSection(tiles: [
@@ -56,7 +64,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
 
   Widget trailingWidget(int index) {
     return (languageIndex == index)
-        ? Icon(Icons.check, color: Colors.blue)
+        ? Icon(Icons.check, color: mPrimaryColor)
         : Icon(null);
   }
 

@@ -56,7 +56,7 @@ class Feed extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.video_call),
-            color: Colors.black,
+            color: mPrimaryColor,
             onPressed: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => GroupCallScreen()));
@@ -64,7 +64,7 @@ class Feed extends StatelessWidget {
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            color: Colors.black,
+            color: mPrimaryColor,
             onPressed: () {},
           ),
         ]),
@@ -81,7 +81,7 @@ class Feed extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.send_outlined),
-              color: Colors.black),
+              color: mPrimaryColor),
         ],
       ),
       backgroundColor: Colors.white,
@@ -257,33 +257,14 @@ class WPost extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment:
-                MainAxisAlignment.center, //Center Column contents vertically,
-            crossAxisAlignment: CrossAxisAlignment
-                .center, //Center Column contents horizontally,
-
             children: [
               SizedBox(
-                width: 125,
+                width: 130,
               ),
-              Text(
-                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
-                  style: TextStyle(color: Colors.black)),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Expanded(
                 child: CircleAvatar(
                     backgroundImage: AssetImage(
                         'assets/images/profile${this.post.userid}.jpg')),
-              ),
-              RatingBarIndicator(
-                rating: 2.75,
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                itemCount: 5,
-                itemSize: 20.0,
-                direction: Axis.horizontal,
               ),
               Spacer(),
               IconButton(
@@ -322,6 +303,19 @@ class WPost extends StatelessWidget {
               )
             ],
           ),
+          Text(
+              '${_users.where((element) => element.id == this.post.userid).first.userName}',
+              style: TextStyle(color: Colors.black)),
+          RatingBarIndicator(
+            rating: 2.75,
+            itemBuilder: (context, index) => Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            itemCount: 5,
+            itemSize: 20.0,
+            direction: Axis.horizontal,
+          ),
           Container(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -351,81 +345,77 @@ class WPost extends StatelessWidget {
             height: 500,
           ),
           Container(
-          padding: EdgeInsets.all(12.0),
-          child:Row(
-            
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.thumb_up,
-                        color: mPrimaryColor,
-                        size: 25,
-                      ),
-                  
-                    ],
+            padding: EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.thumb_up,
+                          color: mPrimaryColor,
+                          size: 25,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.chat, color: mPrimaryColor, size: 25),
-                    
-                    ],
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.chat, color: mPrimaryColor, size: 25),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.share, color: mPrimaryColor, size: 25),
-                    
-                    ],
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.share, color: mPrimaryColor, size: 25),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Spacer(),
-              // Container(
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(15), color: Colors.red),
-              //   height: 7,
-              //   width: 10,
-              // ),
-              // // CircleAvatar(
-              // //   radius: 3,
-              // //   backgroundColor: Colors.grey,
-              // // ),
-              // // CircleAvatar(
-              // //   radius: 3,
-              // //   backgroundColor: Colors.grey,
-              // // ),
-              // // CircleAvatar(
-              // //   radius: 3,
-              // //   backgroundColor: Colors.grey,
-              // // ),
-              Spacer(),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.bookmark_border,
-                    color: mPrimaryColor,
-                  )),
-              SizedBox(
-                width: 5,
-              ),
-            ],
-          ),
+                Spacer(),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(15), color: Colors.red),
+                //   height: 7,
+                //   width: 10,
+                // ),
+                // // CircleAvatar(
+                // //   radius: 3,
+                // //   backgroundColor: Colors.grey,
+                // // ),
+                // // CircleAvatar(
+                // //   radius: 3,
+                // //   backgroundColor: Colors.grey,
+                // // ),
+                // // CircleAvatar(
+                // //   radius: 3,
+                // //   backgroundColor: Colors.grey,
+                // // ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.bookmark_border,
+                      color: mPrimaryColor,
+                    )),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

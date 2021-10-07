@@ -43,7 +43,6 @@ class BottomSheetScrollable extends StatelessWidget {
                 children: actions
                     .map((action) => BottomSheetActionWidget(action))
                     .toList(),
-                    
               )),
             ),
           ))

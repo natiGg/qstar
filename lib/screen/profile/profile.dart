@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
-
+import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
 import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
@@ -55,9 +55,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.only(left: 20, top: 15),
           width: 100,
           child: Text(
-            "Username",
+            "User Name",
             style: TextStyle(
-                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+              color: mPrimaryColor,
+              fontSize: 23,
+              fontFamily: 'font1',
+            ),
           ),
         ),
         actions: [
@@ -66,19 +69,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _onShowMenu();
               },
               icon: Icon(Icons.menu),
-              color: Colors.black)
+              color: mPrimaryColor)
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            profileStats(screen: _screen, color: _primaryColor),
+            profileStats(screen: _screen, color: mPrimaryColor),
             bio(primaryColor: _primaryColor),
             editProfile(
               primaryColorDark: _primaryColorDark,
-              primaryColor: _primaryColor,
+              primaryColor: mPrimaryColor,
             ),
-            storyHighlight(primaryColor: _primaryColor),
+            storyHighlight(primaryColor: mPrimaryColor),
             Divider(
               height: 2,
               color: Colors.grey[500],
