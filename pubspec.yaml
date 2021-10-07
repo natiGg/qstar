@@ -50,8 +50,6 @@ dependencies:
   fluttertoast: ^8.0.8
   settings_ui: ^1.0.0
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
