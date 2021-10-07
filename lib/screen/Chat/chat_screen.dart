@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/Chat/home_screen.dart';
 import 'message_model.dart';
 import 'user_model.dart';
 import 'package:qstar/constant.dart';
@@ -54,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Text(
             message.text,
             style: TextStyle(
-              color: Colors.blueGrey,
+              color: Colors.black,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
             ),
@@ -116,21 +117,32 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mPrimaryColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: mPrimaryColor,
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+            }),
         title: Text(
           widget.user.name,
           style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'font1',
+              color: mPrimaryColor),
         ),
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.more_horiz),
             iconSize: 30.0,
-            color: Colors.white,
+            color: mPrimaryColor,
             onPressed: () {},
           ),
         ],
