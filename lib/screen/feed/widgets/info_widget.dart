@@ -24,7 +24,7 @@ class InfoWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: EdgeInsets.only(
-              top: 8,
+              top: 8,bottom: 8
             ),
             child: RichText(
               text: TextSpan(children: [
@@ -33,7 +33,7 @@ class InfoWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText2),
                 TextSpan(
                     text:
-                        '  how to rear mount pec dec instal slideshow. Note: the hite-rite v1 dropper post makes for a great linkage point for extra strap when overloading 🚚 :: fabs chest pre order june 1st :::..',
+                        'how to rear mount pec dec instal slideshow. Note: the hite-rite v1 dropper post makes for a great linkage point for extra strap when overloading 🚚 :: fabs chest pre order june 1st :::..',
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1
@@ -47,7 +47,7 @@ class InfoWidget extends StatelessWidget {
                 'View all 4 comment',
                 style: Theme.of(context).textTheme.caption,
               ),
-              padding: EdgeInsets.symmetric(vertical: 4),
+              padding: EdgeInsets.symmetric(vertical: 10),
             ),
             onTap: () {
               Navigator.pushReplacement(

@@ -11,7 +11,7 @@ class WelcomeBack extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
       child: Text(
-        'Welcome back!',
+        'Qstar',
         style: TextStyle(
           color: mPrimaryTextColor,
           fontSize: 32,

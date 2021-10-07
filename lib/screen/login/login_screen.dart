@@ -13,10 +13,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context),
+
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:  <Widget>[
           WelcomeBack(),
           LoginForm(),
           Container(
@@ -58,26 +58,26 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: mBackgroundColor,
-      elevation: 0,
-      centerTitle: true,
-      title: Text(
-        'Login',
-        style: TextStyle(
-          color: mPrimaryTextColor,
-        ),
-      ),
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios,
-          color: mPrimaryTextColor,
-        ),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-    );
-  }
+  // AppBar buildAppBar(BuildContext context) {
+  //   return AppBar(
+  //     backgroundColor: mBackgroundColor,
+  //     elevation: 0,
+  //     centerTitle: true,
+  //     title: Text(
+  //       'Login',
+  //       style: TextStyle(
+  //         color: mPrimaryTextColor,
+  //       ),
+  //     ),
+  //     leading: IconButton(
+  //       icon: Icon(
+  //         Icons.arrow_back_ios,
+  //         color: mPrimaryTextColor,
+  //       ),
+  //       onPressed: () {
+  //         Navigator.pop(context);
+  //       },
+  //     ),
+  //   );
+  // }
 }
