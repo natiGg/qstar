@@ -12,7 +12,11 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Languages')),
+        appBar: AppBar(
+          title: Text('Languages'),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+        ),
       body: SettingsList(
         sections: [
           SettingsSection(tiles: [

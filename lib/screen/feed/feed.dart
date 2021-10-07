@@ -8,6 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
 import 'package:qstar/screen/videocall/videocall.dart';
+import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 List<User> _users = [
@@ -69,9 +70,18 @@ class Feed extends StatelessWidget {
         ]),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
               icon: Icon(Icons.send_outlined),
-              color: Colors.black)
+              color: Colors.black),
         ],
       ),
       backgroundColor: Colors.white,
