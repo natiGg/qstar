@@ -259,12 +259,14 @@ class WPost extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 130,
+                width: 150,
               ),
               Expanded(
-                child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                        'assets/images/profile${this.post.userid}.jpg')),
+                child: Center(
+                  child: CircleAvatar(
+                      backgroundImage: AssetImage(
+                          'assets/images/profile${this.post.userid}.jpg')),
+                ),
               ),
               Spacer(),
               IconButton(
@@ -303,10 +305,11 @@ class WPost extends StatelessWidget {
               )
             ],
           ),
-          Text(
+          Column(children: [
+            Text(
               '${_users.where((element) => element.id == this.post.userid).first.userName}',
               style: TextStyle(color: Colors.black)),
-          RatingBarIndicator(
+               RatingBarIndicator(
             rating: 2.75,
             itemBuilder: (context, index) => Icon(
               Icons.star,
@@ -316,6 +319,8 @@ class WPost extends StatelessWidget {
             itemSize: 20.0,
             direction: Axis.horizontal,
           ),
+          ],),
+         
           Container(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
