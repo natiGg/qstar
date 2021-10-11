@@ -7,7 +7,7 @@ class InfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,23 +23,7 @@ class InfoWidget extends StatelessWidget {
               )),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(
-              top: 8,bottom: 8
-            ),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'dangngocduc',
-                    style: Theme.of(context).textTheme.bodyText2),
-                TextSpan(
-                    text:
-                        'how to rear mount pec dec instal slideshow. Note: the hite-rite v1 dropper post makes for a great linkage point for extra strap when overloading 🚚 :: fabs chest pre order june 1st :::..',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontWeight: FontWeight.w400)),
-              ]),
-            ),
+            padding: EdgeInsets.only(top: 4, bottom: 4),
           ),
           InkWell(
             child: Container(

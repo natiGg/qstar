@@ -21,8 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => UsersFeed()));
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => UsersFeed(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }),
         title: Text(
           "Chat",

@@ -8,6 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
 import 'package:qstar/screen/videocall/videocall.dart';
+import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -58,14 +59,28 @@ class Feed extends StatelessWidget {
             icon: Icon(Icons.video_call),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => GroupCallScreen()));
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      GroupCallScreen(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
             color: mPrimaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => MyApp(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            },
           ),
         ]),
         actions: [
@@ -241,19 +256,6 @@ class WPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25.0),
-            bottomRight: Radius.circular(25.0)),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 1.0), //(x,y)
-            blurRadius: 6.0,
-          ),
-        ],
-      ),
       child: Column(
         children: [
           Row(

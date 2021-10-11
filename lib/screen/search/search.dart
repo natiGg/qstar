@@ -7,7 +7,7 @@ class Search extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 8,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -25,7 +25,7 @@ class Search extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 hintText: "Search",
-                prefix: Icon(
+                prefixIcon: Icon(
                   Icons.search,
                   color: Colors.black,
                 ),
@@ -40,7 +40,7 @@ class Search extends StatelessWidget {
           SliverToBoxAdapter(
             child: Container(
               height: 30,
-              margin: EdgeInsets.only(top: 5, bottom: 5),
+              margin: EdgeInsets.only(top: 13, bottom: 5),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -99,7 +99,7 @@ class Search extends StatelessWidget {
   Widget _gridItem(int i) {
     return Image.asset(
       "assets/images/$i.jpg",
-      fit: BoxFit.fill,
+      fit: BoxFit.cover,
     );
   }
 }
