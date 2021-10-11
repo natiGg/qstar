@@ -305,7 +305,10 @@ class WPost extends StatelessWidget {
               )
             ],
           ),
-          Column(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+
+            children: [
             Text(
               '${_users.where((element) => element.id == this.post.userid).first.userName}',
               style: TextStyle(color: Colors.black)),
