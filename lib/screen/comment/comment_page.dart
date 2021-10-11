@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'auth_bloc.dart';
 
@@ -30,20 +30,29 @@ class _CommentPageState extends State<CommentPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text("Comments"),
-          foregroundColor: Colors.black,
-          leadingWidth: 100,
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: SvgPicture.asset(
-              "assets/icons/Icon Back.svg",
-              color: Colors.black,
+              icon: Icon(Icons.arrow_back),
+              color: mPrimaryColor,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        UsersFeed(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              }),
+          title: Text(
+            "Comments",
+            style: TextStyle(
+              color: mPrimaryColor,
+              fontSize: 27,
+              fontFamily: 'font1',
             ),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const UsersFeed()));
-            },
           ),
+          elevation: 0.0,
         ),
         body: Column(
           children: <Widget>[

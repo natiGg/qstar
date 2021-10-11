@@ -309,23 +309,22 @@ class WPost extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-
             children: [
-            Text(
-              '${_users.where((element) => element.id == this.post.userid).first.userName}',
-              style: TextStyle(color: Colors.black)),
-               RatingBarIndicator(
-            rating: 2.75,
-            itemBuilder: (context, index) => Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            itemCount: 5,
-            itemSize: 20.0,
-            direction: Axis.horizontal,
+              Text(
+                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
+                  style: TextStyle(color: Colors.black)),
+              RatingBarIndicator(
+                rating: 2.75,
+                itemBuilder: (context, index) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                itemCount: 5,
+                itemSize: 20.0,
+                direction: Axis.horizontal,
+              ),
+            ],
           ),
-          ],),
-         
           Container(
             child: Padding(
               padding: const EdgeInsets.all(12.0),

@@ -65,6 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final decoration = BoxDecoration(
+      shape: BoxShape.circle,
+      color: Colors.black54,
+    );
     if (files == null) {
       return Scaffold();
     } else {
@@ -143,13 +147,54 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: MediaQuery.of(context).size.height * 0.25,
                           width: MediaQuery.of(context).size.width)
                       : Container()),
+              Positioned(
+                child: Container(
+                  padding: EdgeInsets.all(6),
+                  child: Row(
+                    children: [
+                      Container(
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.zoom_out_map,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {}),
+                          decoration: decoration),
+                      Expanded(child: Container()),
+                      Container(
+                          child: IconButton(
+                              icon: Icon(Icons.camera,
+                                  size: 16, color: Colors.white),
+                              onPressed: () {}),
+                          decoration: decoration),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        child: IconButton(
+                          icon: Icon(Icons.content_copy,
+                              size: 16, color: Colors.white),
+                          onPressed: () {},
+                          tooltip: "Select multiple",
+                        ),
+                        decoration: decoration,
+                      )
+                    ],
+                  ),
+                ),
+                bottom: 0,
+                left: 0,
+                right: 0,
+              ),
+
               const Divider(),
               // ignore: unnecessary_null_comparison, prefer_is_empty
               if (selectedModel == null && selectedModel.files.length < 1)
                 Container()
               else
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.38,
+                  height: MediaQuery.of(context).size.height * 0.30,
                   child: GridView.builder(
                       gridDelegate:
                           // ignore: prefer_const_constructors
