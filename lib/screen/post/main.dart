@@ -7,10 +7,12 @@ import 'dart:io';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'file.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import "package:storage_path/storage_path.dart" show StoragePath;
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
+import 'package:qstar/screen/post/camera_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
@@ -166,7 +168,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: IconButton(
                               icon: Icon(Icons.camera,
                                   size: 16, color: Colors.white),
-                              onPressed: () {}),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            CameraScreen(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              }),
                           decoration: decoration),
                       SizedBox(
                         width: 16,
