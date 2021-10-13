@@ -249,10 +249,17 @@ class UserStories extends StatelessWidget {
   }
 }
 
-class WPost extends StatelessWidget {
+class WPost extends StatefulWidget {
   final Post post;
 
   WPost({required this.post});
+
+  @override
+  State<WPost> createState() => _WPostState();
+}
+
+class _WPostState extends State<WPost> {
+  bool isActive=false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -267,7 +274,7 @@ class WPost extends StatelessWidget {
                 child: Center(
                   child: CircleAvatar(
                       backgroundImage: AssetImage(
-                          'assets/images/profile${this.post.userid}.jpg')),
+                          'assets/images/profile${this.widget.post.userid}.jpg')),
                 ),
               ),
               Spacer(),
@@ -311,7 +318,7 @@ class WPost extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
+                  '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
                   style: TextStyle(color: Colors.black)),
               RatingBarIndicator(
                 rating: 2.75,
@@ -348,7 +355,7 @@ class WPost extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/post${this.post.id}.jpg"),
+                  image: AssetImage("assets/images/post${this.widget.post.id}.jpg"),
                   fit: BoxFit.cover),
             ),
             height: 500,
@@ -363,11 +370,11 @@ class WPost extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(
-                          Icons.thumb_up,
-                          color: mPrimaryColor,
-                          size: 25,
-                        ),
+                          GestureDetector(onTap:(){
+                            setState(() {
+                              isActive=!isActive;
+                            });
+                          },child: activeLikeButton(isActive)),
                       ],
                     ),
                   ),
@@ -434,4 +441,23 @@ class WPost extends StatelessWidget {
       ),
     );
   }
+  Widget activeLikeButton(isActive){
+ 
+           return Icon(Icons.thumb_up, color: isActive ? mPrimaryColor : Colors.grey, size: 25,);
+      }
+    Widget inactiveLike()
+    {
+        return Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white)
+          ),
+          child: Center(
+            child: Icon(Icons.thumb_up, size: 12, color: Colors.white),
+          ),
+        );
+    }
 }
