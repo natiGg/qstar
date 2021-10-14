@@ -12,6 +12,7 @@ import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+
 List<User> _users = [
   User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
   User(id: 2, userName: "natig", storyImage: "", userImage: ""),
@@ -260,204 +261,196 @@ class WPost extends StatefulWidget {
 
 class _WPostState extends State<WPost> {
   bool isActive=false;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 150,
-              ),
-              Expanded(
-                child: Center(
-                  child: CircleAvatar(
-                      backgroundImage: AssetImage(
-                          'assets/images/profile${this.widget.post.userid}.jpg')),
-                ),
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                    useRootNavigator: false,
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: ListView(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            shrinkWrap: true,
-                            children: [
-                              'Report...',
-                              'Turn on Post notification',
-                              'Copy Link',
-                              'Share to...',
-                              'Mute'
-                            ]
-                                .map((e) => InkWell(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 16),
-                                        child: Text(e),
-                                      ),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ))
-                                .toList()),
-                      );
-                    },
-                  );
-                },
-                icon: Icon(Icons.more_vert),
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                  '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
-                  style: TextStyle(color: Colors.black)),
-              RatingBarIndicator(
-                rating: 2.75,
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                itemCount: 5,
-                itemSize: 20.0,
-                direction: Axis.horizontal,
-              ),
-            ],
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text:
-                        'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
-                ]),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/post${this.widget.post.id}.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            height: 500,
-          ),
-          Container(
-            padding: EdgeInsets.all(12.0),
-            child: Row(
+    return GestureDetector(
+      onDoubleTap: (){ setState(() {
+        isActive=!isActive;
+      });
+
+      },
+      child: Container(
+        child: Column(
+          children: [
+            Row(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                
+                SizedBox(
+                  width: 150,
+                ),
+                Expanded(
                   child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                          GestureDetector(onTap:(){
-                            setState(() {
-                              isActive=!isActive;
-                            });
-                          },child: activeLikeButton(isActive)),
-                      ],
-                    ),
+                    child: CircleAvatar(
+                        backgroundImage: AssetImage(
+                            'assets/images/profile${this.widget.post.userid}.jpg')),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.chat, color: mPrimaryColor, size: 25),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.share, color: mPrimaryColor, size: 25),
-                      ],
-                    ),
-                  ),
-                ),
-                Spacer(),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(15), color: Colors.red),
-                //   height: 7,
-                //   width: 10,
-                // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
+                 
+                
+               
                 Spacer(),
                 IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.bookmark_border,
-                      color: mPrimaryColor,
-                    )),
-                SizedBox(
-                  width: 5,
+                  onPressed: () {
+                    showDialog(
+                      useRootNavigator: false,
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          child: ListView(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              shrinkWrap: true,
+                              children: [
+                                'Report...',
+                                'Turn on Post notification',
+                                'Copy Link',
+                                'Share to...',
+                                'Mute'
+                              ]
+                                  .map((e) => InkWell(
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12, horizontal: 16),
+                                          child: Text(e),
+                                        ),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ))
+                                  .toList()),
+                        );
+                      },
+                    );
+                  },
+                  icon: Icon(Icons.more_vert),
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                    '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
+                    style: TextStyle(color: Colors.black)),
+                RatingBarIndicator(
+                  rating: 2.75,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+                  direction: Axis.horizontal,
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InfoWidget(),
-          )
-        ],
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text:
+                          'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/post${this.widget.post.id}.jpg"),
+                    fit: BoxFit.cover),
+              ),
+              height: 500,
+            ),
+             
+            Container(
+              padding: EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  GestureDetector(onTap:(){
+                    setState(() {
+                      isActive=!isActive;
+                    });
+                  },
+               
+                 child: activeLikeButton(isActive)),
+                 Comment(),
+                 Share(),
+    
+                  
+                  Spacer(),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.bookmark_border,
+                        color: mPrimaryColor,
+                      )),
+                  SizedBox(
+                    width: 5,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InfoWidget(),
+            )
+          ],
+        ),
       ),
     );
   }
   Widget activeLikeButton(isActive){
  
-           return Icon(Icons.thumb_up, color: isActive ? mPrimaryColor : Colors.grey, size: 25,);
+           return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.thumb_up, color: isActive ? mPrimaryColor : Colors.grey, size: 25,)
+                        ],
+                    ),
+                  ),
+                );
       }
-    Widget inactiveLike()
+    Widget Comment()
     {
-        return Container(
-          width: 25,
-          height: 25,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white)
-          ),
-          child: Center(
-            child: Icon(Icons.thumb_up, size: 12, color: Colors.white),
-          ),
-        );
+        return  Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.chat, color:  Colors.grey, size: 25),
+                      ],
+                    ),
+                  ),
+                );
+    }
+    Widget Share()
+    {
+     return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.share, color: Colors.grey, size: 25),
+                      ],
+                    ),
+                  ),
+                );
     }
 }

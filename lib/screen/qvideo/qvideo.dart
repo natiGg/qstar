@@ -30,6 +30,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   bool abo = false;
   bool foryou = true;
   bool play = true;
+  
   late VideoPlayerController _controller;
   late AnimationController animationController;
   PageController pageController =
@@ -65,12 +66,13 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+         
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
         backgroundColor: Colors.white,
         leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
+          padding: EdgeInsets.only(left: 20, top: 10),
           width: 100,
           child: Text(
             "video",
@@ -137,12 +139,12 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                     alignment: Alignment.bottomLeft,
                     child: Container(
                       width: MediaQuery.of(context).size.width - 100,
-                      height: 80,
+                      height: 90,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const Padding(
-                              padding: EdgeInsets.only(left: 10, top: 0),
+                              padding: EdgeInsets.only(left: 10),
                               child: Text.rich(
                                 TextSpan(children: <TextSpan>[
                                   TextSpan(text: 'football love'),
@@ -168,21 +170,42 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text('username',
-                                    style: TextStyle(color: Colors.white)),
+                                Column(
+                                  children: [
+                                    Text('username',
+                                        style: TextStyle(color: Colors.white)),
+                                         Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          width: 100,
+                          height: 20,
+                          child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36),
+              ),
+              color: mPrimaryColor,
+              onPressed: () {
+                
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 1),
+                alignment: Alignment.center,
+                child: Text(
+                  'Follow',
+                  style: TextStyle(color: Colors.white)
+                ),
+              ),
+            ),
+                        ),
+                      ),
+  
+                                  ],
+                                ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                TextButton.icon(
-                                  icon: Icon(
-                                    Icons.add,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Follow',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10)),
-                                  onPressed: () {},
-                                )
+                        
                               ],
                             ),
                           ),
