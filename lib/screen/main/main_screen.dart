@@ -56,7 +56,7 @@ class _BottomNavPageState extends State<MyHomePage> {
           }
         },
         children: <Widget>[
-           UsersFeed(),
+          UsersFeed(),
           Search(),
           CategoryVid(),
           ActivityPage(),
@@ -93,11 +93,10 @@ class _BottomNavPageState extends State<MyHomePage> {
                 Expanded(
                     child: BottomNavigationItem(
                         tabsIcons[2], 2 == _currentTabIndex, onPress: () {
-                           setState(() {
-                   _currentTabIndex = 2;
+                  setState(() {
+                    _currentTabIndex = 2;
                     _pageController.jumpToPage(2);
                   });
-                 
                 })),
                 Expanded(
                     child: BottomNavigationItem(
