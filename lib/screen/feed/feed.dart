@@ -11,6 +11,9 @@ import 'package:qstar/screen/videocall/videocall.dart';
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
+// import 'package:rive/rive.dart';
 
 
 List<User> _users = [
@@ -33,8 +36,14 @@ void main() {
   runApp(const UsersFeed());
 }
 
-class UsersFeed extends StatelessWidget {
+class UsersFeed extends StatefulWidget {
   const UsersFeed({Key? key}) : super(key: key);
+
+  @override
+  State<UsersFeed> createState() => _UsersFeedState();
+}
+
+class _UsersFeedState extends State<UsersFeed> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +58,12 @@ class UsersFeed extends StatelessWidget {
   }
 }
 
-class Feed extends StatelessWidget {
+class Feed extends StatefulWidget {
+  @override
+  State<Feed> createState() => _FeedState();
+}
+
+class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,11 +212,16 @@ class Feed extends StatelessWidget {
   }
 }
 
-class UserStories extends StatelessWidget {
+class UserStories extends StatefulWidget {
   final User user;
 
   UserStories(this.user);
 
+  @override
+  State<UserStories> createState() => _UserStoriesState();
+}
+
+class _UserStoriesState extends State<UserStories> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -212,17 +231,17 @@ class UserStories extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage('assets/images/post${this.user.id}.jpg'),
+              image: AssetImage('assets/images/post${this.widget.user.id}.jpg'),
               fit: BoxFit.cover),
         ),
         child: Container(
           padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                Colors.black.withOpacity(.9),
-                Colors.black.withOpacity(.1),
-              ])),
+          // decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(15),
+          //     gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+          //       Colors.black.withOpacity(.9),
+          //       Colors.black.withOpacity(.1),
+          //     ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,11 +254,11 @@ class UserStories extends StatelessWidget {
                     border: Border.all(color: Colors.white, width: 2),
                     image: DecorationImage(
                         image: AssetImage(
-                            'assets/images/profile${this.user.id}.jpg'),
+                            'assets/images/profile${this.widget.user.id}.jpg'),
                         fit: BoxFit.cover)),
               ),
               Text(
-                '${this.user.userName}',
+                '${this.widget.user.userName}',
                 style: TextStyle(color: Colors.white),
               )
             ],
@@ -261,13 +280,19 @@ class WPost extends StatefulWidget {
 
 class _WPostState extends State<WPost> {
   bool isActive=false;
+    final FlareControls flareControls = FlareControls();
+
+  /// Is the animation currently playing?
+    bool _isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: (){ setState(() {
         isActive=!isActive;
+        // _isPlaying ? null : _controller.isActive = true;
       });
+            flareControls.play("like");
 
       },
       child: Container(
@@ -344,24 +369,26 @@ class _WPostState extends State<WPost> {
                 ),
               ],
             ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text:
-                          'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          ?.copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ]),
+            Stack(
+                          children: <Widget>[
+                            Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text:
+                            'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(fontWeight: FontWeight.w400),
+                      ),
+                    ]),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
+              SizedBox(
               height: 5,
             ),
             Container(
@@ -372,6 +399,27 @@ class _WPostState extends State<WPost> {
               ),
               height: 500,
             ),
+            Container(
+                height: 500,
+                child: Center(
+                  child: SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: FlareActor(
+                      'assets/images/instagram_like.flr',
+                      controller: flareControls,
+                      animation: 'idle',
+                    ),
+                  ),
+                ),
+              ),
+
+                          ]
+            
+            ),
+            
+            
+            
              
             Container(
               padding: EdgeInsets.all(12.0),
