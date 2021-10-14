@@ -432,20 +432,40 @@ class _WPostState extends State<WPost> {
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                          if(!isdisActive)
+                          if(isdisActive && !isActive)
                           {
                           isActive = !isActive;
-                          }              
+                          isdisActive=!isdisActive;
+                          }
+                          else if(!isdisActive && isActive)
+                          {
+                          isActive = !isActive;
+                          
+                          } 
+                          else if(!isdisActive && !isActive){
+                            isActive =!isActive;
+                          }
+           
                       });
                     },
                     child: activeLikeButton(isActive)),
                     GestureDetector(
                     onTap: () {
                       setState(() {
-                        if(!isActive)
+                          if(isActive && !isdisActive)
+                        {
+                          isActive=!isActive;
+                        isdisActive = !isdisActive;
+
+                        }
+                        else if(isdisActive  && !isActive)
                         {
                         isdisActive = !isdisActive;
 
+                        }
+                        else if(!isdisActive && !isActive)
+                        {
+                          isdisActive=!isdisActive;
                         }
 
                       });
