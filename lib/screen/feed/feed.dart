@@ -13,8 +13,8 @@ import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
+import 'package:qstar/screen/comment/comment_page.dart';
 // import 'package:rive/rive.dart';
-
 
 List<User> _users = [
   User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
@@ -118,19 +118,19 @@ class _FeedState extends State<Feed> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Container(
-                height: 110,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    SizedBox(height: 5),
-                    Row(children: _users.map((e) => UserStories(e)).toList())
-                  ],
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.all(20),
+            //   child: Container(
+            //     height: 110,
+            //     child: ListView(
+            //       scrollDirection: Axis.horizontal,
+            //       children: [
+            //         SizedBox(height: 5),
+            //         Row(children: _users.map((e) => UserStories(e)).toList())
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Card(
               margin: EdgeInsets.symmetric(horizontal: 0.0),
               elevation: 0.0,
@@ -279,41 +279,47 @@ class WPost extends StatefulWidget {
 }
 
 class _WPostState extends State<WPost> {
-  bool isActive=false;
-    final FlareControls flareControls = FlareControls();
+  bool isActive = false;
+  final FlareControls flareControls = FlareControls();
 
   /// Is the animation currently playing?
-    bool _isPlaying = false;
+  bool _isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: (){ setState(() {
-        isActive=!isActive;
-        // _isPlaying ? null : _controller.isActive = true;
-      });
-            flareControls.play("like");
-
+      onDoubleTap: () {
+        setState(() {
+          isActive = !isActive;
+          // _isPlaying ? null : _controller.isActive = true;
+        });
+        flareControls.play("like");
       },
       child: Container(
         child: Column(
           children: [
             Row(
               children: [
-                
                 SizedBox(
                   width: 150,
                 ),
                 Expanded(
                   child: Center(
-                    child: CircleAvatar(
-                        backgroundImage: AssetImage(
-                            'assets/images/profile${this.widget.post.userid}.jpg')),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: mPrimaryColor, width: 2),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: CircleAvatar(
+                            radius: 22,
+                            backgroundImage: AssetImage(
+                                'assets/images/profile${this.widget.post.userid}.jpg')),
+                      ),
+                    ),
                   ),
                 ),
-                 
-                
-               
                 Spacer(),
                 IconButton(
                   onPressed: () {
@@ -367,39 +373,40 @@ class _WPostState extends State<WPost> {
                   itemSize: 20.0,
                   direction: Axis.horizontal,
                 ),
-              ],
-            ),
-            Stack(
-                          children: <Widget>[
-                            Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text:
-                            'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            ?.copyWith(fontWeight: FontWeight.w400),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  child: Center(
+                    child: Text(
+                      "To create bordered text, a Paint with Paint.style set to PaintingStyle.",
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.6),
+                        decorationStyle: TextDecorationStyle.wavy,
                       ),
-                    ]),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+            Stack(children: <Widget>[
               SizedBox(
-              height: 5,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/post${this.widget.post.id}.jpg"),
-                    fit: BoxFit.cover),
+                height: 5,
               ),
-              height: 500,
-            ),
-            Container(
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/post${this.widget.post.id}.jpg"),
+                      fit: BoxFit.cover),
+                ),
+                height: 500,
+              ),
+              Container(
                 height: 500,
                 child: Center(
                   child: SizedBox(
@@ -413,29 +420,31 @@ class _WPostState extends State<WPost> {
                   ),
                 ),
               ),
-
-                          ]
-            
-            ),
-            
-            
-            
-             
+            ]),
             Container(
               padding: EdgeInsets.all(12.0),
               child: Row(
                 children: [
-                  GestureDetector(onTap:(){
-                    setState(() {
-                      isActive=!isActive;
-                    });
-                  },
-               
-                 child: activeLikeButton(isActive)),
-                 Comment(),
-                 Share(),
-    
-                  
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isActive = !isActive;
+                        });
+                      },
+                      child: activeLikeButton(isActive)),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                CommentPage(),
+                            transitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                      child: Comment()),
+                  Share(),
                   Spacer(),
                   Spacer(),
                   IconButton(
@@ -459,46 +468,50 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
-  Widget activeLikeButton(isActive){
- 
-           return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(isActive?Icons.thumb_up:Icons.thumb_up_alt_outlined, color: isActive ? mPrimaryColor : Colors.grey, size: 25,)
-                        ],
-                    ),
-                  ),
-                );
-      }
-    Widget Comment()
-    {
-        return  Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.chat, color:  Colors.grey, size: 25),
-                      ],
-                    ),
-                  ),
-                );
-    }
-    Widget Share()
-    {
-     return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.share, color: Colors.grey, size: 25),
-                      ],
-                    ),
-                  ),
-                );
-    }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+
+  Widget activeLikeButton(isActive) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              isActive ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+              color: isActive ? mPrimaryColor : Colors.grey,
+              size: 25,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Comment() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.chat, color: Colors.grey, size: 25),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Share() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.share, color: Colors.grey, size: 25),
+          ],
+        ),
+      ),
+    );
+  }
+}

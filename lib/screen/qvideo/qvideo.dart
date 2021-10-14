@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:qstar/constant.dart';
-
+import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
@@ -35,7 +35,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   bool abo = false;
   bool foryou = true;
   bool play = true;
-  
+
   late VideoPlayerController _controller;
   late AnimationController animationController;
   PageController pageController =
@@ -79,7 +79,6 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-         
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
@@ -195,38 +194,35 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                   children: [
                                     Text('username',
                                         style: TextStyle(color: Colors.white)),
-                                         Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Container(
-                          width: 100,
-                          height: 20,
-                          child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(36),
-              ),
-              color: mPrimaryColor,
-              onPressed: () {
-                
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 1),
-                alignment: Alignment.center,
-                child: Text(
-                  'Follow',
-                  style: TextStyle(color: Colors.white)
-                ),
-              ),
-            ),
-                        ),
-                      ),
-  
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Container(
+                                        width: 100,
+                                        height: 20,
+                                        child: FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(36),
+                                          ),
+                                          color: mPrimaryColor,
+                                          onPressed: () {},
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 1),
+                                            alignment: Alignment.center,
+                                            child: Text('Follow',
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                        
                               ],
                             ),
                           ),
