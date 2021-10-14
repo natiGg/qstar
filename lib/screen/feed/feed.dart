@@ -280,6 +280,8 @@ class WPost extends StatefulWidget {
 
 class _WPostState extends State<WPost> {
   bool isActive = false;
+    bool isdisActive = false;
+
   final FlareControls flareControls = FlareControls();
 
   /// Is the animation currently playing?
@@ -287,117 +289,118 @@ class _WPostState extends State<WPost> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: () {
-        setState(() {
-          isActive = !isActive;
-          // _isPlaying ? null : _controller.isActive = true;
-        });
-        flareControls.play("like");
-      },
-      child: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 150,
-                ),
-                Expanded(
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: mPrimaryColor, width: 2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: CircleAvatar(
-                            radius: 22,
-                            backgroundImage: AssetImage(
-                                'assets/images/profile${this.widget.post.userid}.jpg')),
-                      ),
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 150,
+              ),
+              Expanded(
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: mPrimaryColor, width: 2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: CircleAvatar(
+                          radius: 22,
+                          backgroundImage: AssetImage(
+                              'assets/images/profile${this.widget.post.userid}.jpg')),
                     ),
                   ),
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                      useRootNavigator: false,
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: ListView(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              shrinkWrap: true,
-                              children: [
-                                'Report...',
-                                'Turn on Post notification',
-                                'Copy Link',
-                                'Share to...',
-                                'Mute'
-                              ]
-                                  .map((e) => InkWell(
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 12, horizontal: 16),
-                                          child: Text(e),
-                                        ),
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ))
-                                  .toList()),
-                        );
-                      },
-                    );
-                  },
-                  icon: Icon(Icons.more_vert),
-                )
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                    '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
-                    style: TextStyle(color: Colors.black)),
-                RatingBarIndicator(
-                  rating: 2.75,
-                  itemBuilder: (context, index) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  itemCount: 5,
-                  itemSize: 20.0,
-                  direction: Axis.horizontal,
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: ListView(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shrinkWrap: true,
+                            children: [
+                              'Report...',
+                              'Turn on Post notification',
+                              'Copy Link',
+                              'Share to...',
+                              'Mute'
+                            ]
+                                .map((e) => InkWell(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 12, horizontal: 16),
+                                        child: Text(e),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ))
+                                .toList()),
+                      );
+                    },
+                  );
+                },
+                icon: Icon(Icons.more_vert),
+              )
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                  '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
+                  style: TextStyle(color: Colors.black)),
+              RatingBarIndicator(
+                rating: 2.75,
+                itemBuilder: (context, index) => Icon(
+                  Icons.star,
+                  color: Colors.amber,
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  child: Center(
-                    child: Text(
-                      "To create bordered text, a Paint with Paint.style set to PaintingStyle.",
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.6),
-                        decorationStyle: TextDecorationStyle.wavy,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-            Stack(children: <Widget>[
+                itemCount: 5,
+                itemSize: 20.0,
+                direction: Axis.horizontal,
+              ),
               SizedBox(
                 height: 5,
               ),
               Container(
+                child: Center(
+                  child: Text(
+                    "To create bordered text, a Paint with Paint.style set to PaintingStyle.",
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.6),
+                      decorationStyle: TextDecorationStyle.wavy,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+          Stack(children: <Widget>[
+            SizedBox(
+              height: 5,
+            ),
+            GestureDetector(
+              onDoubleTap: (){
+                    
+                setState(() {
+                  isActive = !isActive;
+                  // _isPlaying ? null : _controller.isActive = true;
+                });
+                flareControls.play("like");
+              },
+              child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
@@ -406,65 +409,81 @@ class _WPostState extends State<WPost> {
                 ),
                 height: 500,
               ),
-              Container(
-                height: 500,
-                child: Center(
-                  child: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: FlareActor(
-                      'assets/images/instagram_like.flr',
-                      controller: flareControls,
-                      animation: 'idle',
-                    ),
+            ),
+            Container(
+              height: 500,
+              child: Center(
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: FlareActor(
+                    'assets/images/instagram_like.flr',
+                    controller: flareControls,
+                    animation: 'idle',
                   ),
                 ),
               ),
-            ]),
-            Container(
-              padding: EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isActive = !isActive;
-                        });
-                      },
-                      child: activeLikeButton(isActive)),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                CommentPage(),
-                            transitionDuration: Duration.zero,
-                          ),
-                        );
-                      },
-                      child: Comment()),
-                  Share(),
-                  Spacer(),
-                  Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.bookmark_border,
-                        color: mPrimaryColor,
-                      )),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ],
-              ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InfoWidget(),
-            )
-          ],
-        ),
+          ]),
+          Container(
+            padding: EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      setState(() {
+                          if(!isdisActive)
+                          {
+                          isActive = !isActive;
+                          }              
+                      });
+                    },
+                    child: activeLikeButton(isActive)),
+                    GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if(!isActive)
+                        {
+                        isdisActive = !isdisActive;
+
+                        }
+
+                      });
+                    },
+                    child: activedisLikeButton(isdisActive)),
+                    
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              CommentPage(),
+                          transitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                    child: Comment()),
+                Share(),
+                Spacer(),
+                Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.bookmark_border,
+                      color: mPrimaryColor,
+                    )),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InfoWidget(),
+          )
+        ],
       ),
     );
   }
@@ -478,6 +497,23 @@ class _WPostState extends State<WPost> {
           children: <Widget>[
             Icon(
               isActive ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+              color: isActive ? mPrimaryColor : Colors.grey,
+              size: 25,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  Widget activedisLikeButton(isActive) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              isActive ? Icons.thumb_down : Icons.thumb_down_outlined,
               color: isActive ? mPrimaryColor : Colors.grey,
               size: 25,
             )
