@@ -467,7 +467,7 @@ class _WPostState extends State<WPost> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(Icons.thumb_up, color: isActive ? mPrimaryColor : Colors.grey, size: 25,)
+                        Icon(isActive?Icons.thumb_up:Icons.thumb_up_alt_outlined, color: isActive ? mPrimaryColor : Colors.grey, size: 25,)
                         ],
                     ),
                   ),
