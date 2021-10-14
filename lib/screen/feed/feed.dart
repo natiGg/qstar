@@ -236,12 +236,12 @@ class _UserStoriesState extends State<UserStories> {
         ),
         child: Container(
           padding: EdgeInsets.all(10),
-          // decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(15),
-          //     gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-          //       Colors.black.withOpacity(.9),
-          //       Colors.black.withOpacity(.1),
-          //     ])),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+                Colors.black.withOpacity(.9),
+                Colors.black.withOpacity(.1),
+              ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

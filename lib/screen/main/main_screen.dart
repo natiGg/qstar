@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:qstar/screen/profile/profile.dart';
 
 import 'package:qstar/screen/main/widget/icons_app.dart';
+import 'package:qstar/screen/qvideo/category.dart';
 import 'package:tuple/tuple.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/search/search.dart';
@@ -56,7 +58,7 @@ class _BottomNavPageState extends State<MyHomePage> {
         children: <Widget>[
            UsersFeed(),
           Search(),
-          Qvideo(),
+          CategoryVid(),
           ActivityPage(),
           ProfileScreen(),
         ],
