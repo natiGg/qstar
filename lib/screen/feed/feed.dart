@@ -11,6 +11,10 @@ import 'package:qstar/screen/videocall/videocall.dart';
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
+// import 'package:rive/rive.dart';
+
 
 List<User> _users = [
   User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
@@ -32,8 +36,14 @@ void main() {
   runApp(const UsersFeed());
 }
 
-class UsersFeed extends StatelessWidget {
+class UsersFeed extends StatefulWidget {
   const UsersFeed({Key? key}) : super(key: key);
+
+  @override
+  State<UsersFeed> createState() => _UsersFeedState();
+}
+
+class _UsersFeedState extends State<UsersFeed> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,7 +58,12 @@ class UsersFeed extends StatelessWidget {
   }
 }
 
-class Feed extends StatelessWidget {
+class Feed extends StatefulWidget {
+  @override
+  State<Feed> createState() => _FeedState();
+}
+
+class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,11 +212,16 @@ class Feed extends StatelessWidget {
   }
 }
 
-class UserStories extends StatelessWidget {
+class UserStories extends StatefulWidget {
   final User user;
 
   UserStories(this.user);
 
+  @override
+  State<UserStories> createState() => _UserStoriesState();
+}
+
+class _UserStoriesState extends State<UserStories> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -211,7 +231,7 @@ class UserStories extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: AssetImage('assets/images/post${this.user.id}.jpg'),
+              image: AssetImage('assets/images/post${this.widget.user.id}.jpg'),
               fit: BoxFit.cover),
         ),
         child: Container(
@@ -234,11 +254,11 @@ class UserStories extends StatelessWidget {
                     border: Border.all(color: Colors.white, width: 2),
                     image: DecorationImage(
                         image: AssetImage(
-                            'assets/images/profile${this.user.id}.jpg'),
+                            'assets/images/profile${this.widget.user.id}.jpg'),
                         fit: BoxFit.cover)),
               ),
               Text(
-                '${this.user.userName}',
+                '${this.widget.user.userName}',
                 style: TextStyle(color: Colors.white),
               )
             ],
@@ -249,80 +269,93 @@ class UserStories extends StatelessWidget {
   }
 }
 
-class WPost extends StatelessWidget {
+class WPost extends StatefulWidget {
   final Post post;
 
   WPost({required this.post});
+
+  @override
+  State<WPost> createState() => _WPostState();
+}
+
+class _WPostState extends State<WPost> {
+  bool isActive=false;
+    final FlareControls flareControls = FlareControls();
+
+  /// Is the animation currently playing?
+    bool _isPlaying = false;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 150,
-              ),
-              Expanded(
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: mPrimaryColor, width: 2),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: CircleAvatar(
-                          radius: 22,
-                          backgroundImage: AssetImage(
-                              'assets/images/profile${this.post.userid}.jpg')),
-                    ),
+    return GestureDetector(
+      onDoubleTap: (){ setState(() {
+        isActive=!isActive;
+        // _isPlaying ? null : _controller.isActive = true;
+      });
+            flareControls.play("like");
+
+      },
+      child: Container(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                
+                SizedBox(
+                  width: 150,
+                ),
+                Expanded(
+                  child: Center(
+                    child: CircleAvatar(
+                        backgroundImage: AssetImage(
+                            'assets/images/profile${this.widget.post.userid}.jpg')),
                   ),
                 ),
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                    useRootNavigator: false,
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: ListView(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            shrinkWrap: true,
-                            children: [
-                              'Report...',
-                              'Turn on Post notification',
-                              'Copy Link',
-                              'Share to...',
-                              'Mute'
-                            ]
-                                .map((e) => InkWell(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 16),
-                                        child: Text(e),
-                                      ),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ))
-                                .toList()),
-                      );
-                    },
-                  );
-                },
-                icon: Icon(Icons.more_vert),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, top: 3),
-            child: Column(
+                 
+                
+               
+                Spacer(),
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      useRootNavigator: false,
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          child: ListView(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              shrinkWrap: true,
+                              children: [
+                                'Report...',
+                                'Turn on Post notification',
+                                'Copy Link',
+                                'Share to...',
+                                'Mute'
+                              ]
+                                  .map((e) => InkWell(
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12, horizontal: 16),
+                                          child: Text(e),
+                                        ),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ))
+                                  .toList()),
+                        );
+                      },
+                    );
+                  },
+                  icon: Icon(Icons.more_vert),
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                    '${_users.where((element) => element.id == this.post.userid).first.userName}',
+                    '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
                     style: TextStyle(color: Colors.black)),
                 RatingBarIndicator(
                   rating: 2.75,
@@ -336,105 +369,136 @@ class WPost extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Container(
-            child: Center(
-              child: Text(
-                "Hello World World World World World World World WorldWorld WorldWorldWorld World WorldWorldWorldWorld WorldWorld",
-                textAlign: TextAlign.center,
+            Stack(
+                          children: <Widget>[
+                            Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text:
+                            'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            ?.copyWith(fontWeight: FontWeight.w400),
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+              SizedBox(
+              height: 5,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/post${this.widget.post.id}.jpg"),
+                    fit: BoxFit.cover),
+              ),
+              height: 500,
+            ),
+            Container(
+                height: 500,
+                child: Center(
+                  child: SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: FlareActor(
+                      'assets/images/instagram_like.flr',
+                      controller: flareControls,
+                      animation: 'idle',
+                    ),
+                  ),
+                ),
+              ),
+
+                          ]
+            
+            ),
+            
+            
+            
+             
+            Container(
+              padding: EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  GestureDetector(onTap:(){
+                    setState(() {
+                      isActive=!isActive;
+                    });
+                  },
+               
+                 child: activeLikeButton(isActive)),
+                 Comment(),
+                 Share(),
+    
+                  
+                  Spacer(),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.bookmark_border,
+                        color: mPrimaryColor,
+                      )),
+                  SizedBox(
+                    width: 5,
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/post${this.post.id}.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            height: 500,
-          ),
-          Container(
-            padding: EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.thumb_up,
-                          color: mPrimaryColor,
-                          size: 25,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.chat, color: mPrimaryColor, size: 25),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.share, color: mPrimaryColor, size: 25),
-                      ],
-                    ),
-                  ),
-                ),
-                Spacer(),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(15), color: Colors.red),
-                //   height: 7,
-                //   width: 10,
-                // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
-                // // CircleAvatar(
-                // //   radius: 3,
-                // //   backgroundColor: Colors.grey,
-                // // ),
-                Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.bookmark_border,
-                      color: mPrimaryColor,
-                    )),
-                SizedBox(
-                  width: 5,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InfoWidget(),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InfoWidget(),
+            )
+          ],
+        ),
       ),
     );
   }
-}
+  Widget activeLikeButton(isActive){
+ 
+           return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(isActive?Icons.thumb_up:Icons.thumb_up_alt_outlined, color: isActive ? mPrimaryColor : Colors.grey, size: 25,)
+                        ],
+                    ),
+                  ),
+                );
+      }
+    Widget Comment()
+    {
+        return  Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.chat, color:  Colors.grey, size: 25),
+                      ],
+                    ),
+                  ),
+                );
+    }
+    Widget Share()
+    {
+     return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.share, color: Colors.grey, size: 25),
+                      ],
+                    ),
+                  ),
+                );
+    }
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
