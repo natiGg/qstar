@@ -4,8 +4,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:qstar/constant.dart';
+
+import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
+
+import 'package:qstar/screen/qvideo/bottomsheet/bottom_sheet_action.dart';
+import 'package:qstar/screen/qvideo/Video_Picker.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +41,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
       PageController(initialPage: 0, viewportFraction: 0.8);
   ScrollController _scrollController = ScrollController(initialScrollOffset: 0);
   PageController foryouController = new PageController();
-
+  late VoidCallback _onShowMenu;
   @override
   void initState() {
     super.initState();
@@ -49,6 +54,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         _controller.setLooping(true);
         setState(() {});
       });
+
+    _onShowMenu = () {
+      context.showBottomSheet([
+        BottomSheetAction(
+            iconData: Icons.description, title: 'Description', id: 0),
+        BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
+      ]);
+    };
   }
 
   @override
@@ -87,7 +100,15 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
             icon: Icon(Icons.camera_alt),
             iconSize: 30.0,
             color: mPrimaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) => MyApp(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -209,20 +230,32 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 children: <Widget>[],
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Transform(
+                            // ignore: unnecessary_new
+                            new GestureDetector(
+                              onTap: () {
+                                _onShowMenu();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Transform(
                                       alignment: Alignment.center,
                                       transform: Matrix4.rotationY(math.pi),
-                                      child: Icon(Icons.more_horiz,
-                                          size: 20, color: Colors.white)),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
+                                      // ignore: prefer_const_constructors
+                                      child: Icon(
+                                        Icons.more_horiz,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    // ignore: prefer_const_constructors
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Container(

@@ -265,9 +265,19 @@ class WPost extends StatelessWidget {
               ),
               Expanded(
                 child: Center(
-                  child: CircleAvatar(
-                      backgroundImage: AssetImage(
-                          'assets/images/profile${this.post.userid}.jpg')),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: mPrimaryColor, width: 2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: CircleAvatar(
+                          radius: 22,
+                          backgroundImage: AssetImage(
+                              'assets/images/profile${this.post.userid}.jpg')),
+                    ),
+                  ),
                 ),
               ),
               Spacer(),
@@ -307,38 +317,31 @@ class WPost extends StatelessWidget {
               )
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                  '${_users.where((element) => element.id == this.post.userid).first.userName}',
-                  style: TextStyle(color: Colors.black)),
-              RatingBarIndicator(
-                rating: 2.75,
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 3),
+            child: Column(
+              children: [
+                Text(
+                    '${_users.where((element) => element.id == this.post.userid).first.userName}',
+                    style: TextStyle(color: Colors.black)),
+                RatingBarIndicator(
+                  rating: 2.75,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+                  direction: Axis.horizontal,
                 ),
-                itemCount: 5,
-                itemSize: 20.0,
-                direction: Axis.horizontal,
-              ),
-            ],
+              ],
+            ),
           ),
           Container(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                    text:
-                        'This is gonna be the best day of my life....my la lalala lalllaaaaalaaa aaaa',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
-                ]),
+            child: Center(
+              child: Text(
+                "Hello World World World World World World World WorldWorld WorldWorldWorld World WorldWorldWorldWorld WorldWorld",
+                textAlign: TextAlign.center,
               ),
             ),
           ),

@@ -10,6 +10,11 @@ import 'package:qstar/screen/post/location.dart';
 import 'package:qstar/screen/post/setting.dart';
 
 class SettingPostPage extends StatefulWidget {
+
+
+
+
+
   static const ROUTE_NAME = 'SettingPostPage';
   @override
   _SettingPostPageState createState() => _SettingPostPageState();
@@ -153,4 +158,6 @@ class _SettingPostPageState extends State<SettingPostPage> {
       ),
     );
   }
+
+  
 }

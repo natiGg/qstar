@@ -8,10 +8,16 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'file.dart';
 
+import 'package:camera/camera.dart';
+
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import "package:storage_path/storage_path.dart" show StoragePath;
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
+import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -41,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String image;
   List<FileModel>? files;
 
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _getImagesPath() async {
-    var imagePath = await StoragePath.imagesPath;
+   var imagePath = await StoragePath.imagesPath;
+   
     var images = jsonDecode(imagePath) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
     print(files.toString());
@@ -61,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         selectedModel = files![0];
         image = files![0].files[0];
+       
       });
     }
   }
@@ -126,12 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   // ignore: prefer_const_constructors
                   Padding(
                     padding: const EdgeInsets.all(12.0),
+                    // ignore: unnecessary_new
                     child: new GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SettingPostPage()));
+                                builder: (context) => PreviewImageScreengallery(
+                                    imagePath: image)));
                       },
                       child: new Text(
                         'Next',

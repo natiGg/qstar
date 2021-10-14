@@ -8,6 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
+import 'package:qstar/screen/post/setting_post_page.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as imageLib;
 
@@ -54,10 +55,19 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.check),
+            icon: Icon(Icons.arrow_forward),
             iconSize: 30.0,
             color: mPrimaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      SettingPostPage(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            },
           ),
         ],
       ),

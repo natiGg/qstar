@@ -9,14 +9,11 @@ class WelcomeBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 20),
-      child: Text(
-        'Qstar',
-        style: TextStyle(
-          color: mPrimaryTextColor,
-          fontSize: 32,
-          fontWeight: FontWeight.w500,
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: Image.asset(
+        'assets/images/q.png',
+        height: 200,
+        width: 200,
       ),
     );
   }

@@ -8,21 +8,22 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
+import 'package:qstar/screen/post/setting_post_page.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as imageLib;
 
-class PreviewImageScreen extends StatefulWidget {
+class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
 
-  const PreviewImageScreen({required this.imagePath});
+  const PreviewImageScreengallery({required this.imagePath});
 
   @override
   _PreviewImageScreenState createState() => _PreviewImageScreenState();
 }
 
-class _PreviewImageScreenState extends State<PreviewImageScreen> {
+class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
   List<Filter> filters = presetFiltersList;
-  imageLib.Image? _image;
+   imageLib.Image? _image;
   late String fileName;
   late Filter _filter;
 
@@ -30,6 +31,15 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
   void initState() {
     super.initState();
     getImage();
+  }
+
+  Future getImage() async {
+    fileName = basename(widget.imagePath);
+    var image = Image.file(File(widget.imagePath));
+   
+    setState(() {
+      _image = image as imageLib.Image;
+    });
   }
 
   @override
@@ -54,10 +64,13 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.check),
+            icon: Icon(Icons.arrow_forward),
             iconSize: 30.0,
             color: mPrimaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingPostPage()));
+            },
           ),
         ],
       ),
@@ -73,12 +86,12 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
               flex: 1,
               child: Container(
                 alignment: Alignment(0.0, 0.0),
-                child: _image == null
+                child: _image  == null
                     ? new Text('filter unavalable.')
                     // ignore: unnecessary_new
                     : new PhotoFilterSelector(
                         title: Text("f"),
-                        image: _image!,
+                        image: _image! ,
                         filters: presetFiltersList,
                         filename: fileName,
                         loader: Center(child: CircularProgressIndicator()),
@@ -89,17 +102,5 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
         ),
       ),
     );
-  }
-
-  Future<ByteData> getBytesFromFile() async {
-    Uint8List bytes = File(widget.imagePath).readAsBytesSync() as Uint8List;
-    return ByteData.view(bytes.buffer);
-  }
-
-  void getImage() async {
-    setState(() {
-      //var image = imageLib.decodeImage(Image.file(File(widget.imagePath).readAsBytesSync());
-      _image = widget.imagePath as imageLib.Image?;
-    });
   }
 }
