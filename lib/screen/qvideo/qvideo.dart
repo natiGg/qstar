@@ -6,17 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
+import 'package:qstar/screen/qvideo/category.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
 import 'package:qstar/screen/qvideo/bottomsheet/bottom_sheet_action.dart';
 import 'package:qstar/screen/qvideo/Video_Picker.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class Qvideoscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -81,12 +78,22 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 100,
         backgroundColor: Colors.white,
-        leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 10),
-          width: 100,
-          child: Text(
+        centerTitle: true,
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: mPrimaryColor),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      CategoryVid(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            }),
+        title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          Text(
             "video",
             style: TextStyle(
               color: mPrimaryColor,
@@ -94,8 +101,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
               fontFamily: 'font1',
             ),
           ),
-        ),
-        elevation: 0.0,
+        ]),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.camera_alt),
@@ -105,7 +111,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => MyApp(),
+                  pageBuilder: (context, animation1, animation2) =>
+                      VideoPicker(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -205,7 +212,19 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                                 BorderRadius.circular(36),
                                           ),
                                           color: mPrimaryColor,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                        animation1,
+                                                        animation2) =>
+                                                    CategoryVid(),
+                                                transitionDuration:
+                                                    Duration.zero,
+                                              ),
+                                            );
+                                          },
                                           child: Container(
                                             width: double.infinity,
                                             padding: const EdgeInsets.symmetric(
