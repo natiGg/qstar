@@ -14,6 +14,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
+
+import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
+
+import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -43,7 +47,26 @@ class UsersFeed extends StatefulWidget {
   State<UsersFeed> createState() => _UsersFeedState();
 }
 
+late VoidCallback _onShowMenu;
+
 class _UsersFeedState extends State<UsersFeed> {
+  @override
+  void initState() {
+    super.initState();
+
+    _onShowMenu = () {
+      context.showBottomSheet([
+        BottomSheetAction(iconData: Icons.share, title: 'Share TO', id: 0),
+        BottomSheetAction(
+            iconData: Icons.account_circle_outlined, title: 'User 1', id: 1),
+        BottomSheetAction(
+            iconData: Icons.account_circle_outlined, title: 'User 2', id: 2),
+        BottomSheetAction(
+            iconData: Icons.account_circle_outlined, title: 'User 3', id: 3),
+      ]);
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -561,7 +584,12 @@ class _WPostState extends State<WPost> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(Icons.share, color: Colors.grey, size: 25),
+            IconButton(
+              icon: const Icon(Icons.share, color: Colors.grey, size: 25),
+              onPressed: () {
+                _onShowMenu();
+              },
+            ),
           ],
         ),
       ),

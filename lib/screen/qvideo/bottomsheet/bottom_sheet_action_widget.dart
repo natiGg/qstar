@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/constant.dart';
 import 'app_context.dart';
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +19,10 @@ class BottomSheetActionWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [
-            Icon(action.iconData),
+            Icon(
+              action.iconData,
+              color: mPrimaryColor,
+            ),
             SizedBox(
               width: 10,
             ),
