@@ -58,6 +58,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         BottomSheetAction(
             iconData: Icons.description, title: 'Description', id: 0),
         BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
+        BottomSheetAction(iconData: Icons.forward, title: 'Go to post', id: 2),
       ]);
     };
   }
