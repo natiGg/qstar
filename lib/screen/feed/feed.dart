@@ -428,8 +428,14 @@ class _WPostState extends State<WPost> {
                 setState(() {
                   if (isdisActive && !isActive) {
                     isdisActive = !isdisActive;
+                  } 
+                  else if(!isActive){
+                    isActive=!isActive;
                   }
-                  isActive = !isActive;
+                  
+                  
+
+                  
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
@@ -579,7 +585,7 @@ class _WPostState extends State<WPost> {
 
   Widget Share() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: EdgeInsets.symmetric( vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
