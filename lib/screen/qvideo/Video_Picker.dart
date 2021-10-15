@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:async';
 import 'dart:io';
 
@@ -8,6 +9,9 @@ import 'package:video_player/video_player.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
+import 'package:qstar/screen/qvideo/videoPreview.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoRecorderExample extends StatefulWidget {
   @override
@@ -19,10 +23,16 @@ class VideoRecorderExample extends StatefulWidget {
 class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   CameraController? controller;
   late String videoPath;
+  late String imagePath;
 
+  late File _video;
+  late File _cameraVideo;
   late List<CameraDescription> cameras;
   late int selectedCameraIdx;
+  VideoPlayerController? _videoPlayerController;
+  VideoPlayerController? _cameraVideoPlayerController;
 
+  final ImagePicker _picker = ImagePicker();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -46,10 +56,48 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     });
   }
 
+  _pickVideo() async {
+    final XFile? file = await _picker.pickVideo(
+        source: ImageSource.gallery, maxDuration: const Duration(seconds: 10));
+
+    //_video = File(file.path);
+      await _playVideo(file);
+    // _videoPlayerController = VideoPlayerController.file(_video)
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //     _videoPlayerController!.play();
+    //   });
+  }
+
+  // This funcion will helps you to pick a Video File from Camera
+Future<void> _playVideo(XFile? file) async {
+   
+            Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PreviewImageScreengallery(imagePath: file!.path),
+        ),
+      );
+    
+  }
+   VideoPlayerController? _controller;
+  VideoPlayerController? _toBeDisposed;
+    void dispose() {
+    _disposeVideoController();
+  
+    super.dispose();
+  }
+    Future<void> _disposeVideoController() async {
+    if (_toBeDisposed != null) {
+      await _toBeDisposed!.dispose();
+    }
+    _toBeDisposed = _controller;
+    _controller = null;
+  }
   @override
   Widget build(BuildContext context) {
     if (controller == null) {
-      return Scaffold();
+      return const Scaffold();
     } else {
       return Scaffold(
         key: _scaffoldKey,
@@ -100,19 +148,13 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  _cameraTogglesRowWidget(),
-                  _captureControlRowWidget(),
-                 // _galleryWidget(),
-                  Expanded(
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _cameraTogglesRowWidget(),
+                _captureControlRowWidget(),
+                _galleryWidget(),
+              ],
             ),
           ],
         ),
@@ -182,9 +224,9 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   Widget _captureControlRowWidget() {
     return Expanded(
       child: Align(
-        alignment: Alignment.center,
+        alignment: Alignment.centerLeft,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             IconButton(
@@ -284,6 +326,13 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.grey,
           textColor: Colors.white);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PreviewImageScreengallery(imagePath: videoPath),
+        ),
+      );
     });
   }
 
@@ -351,14 +400,14 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   }
 
   _galleryWidget() {
-    return Container(
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: IconButton(
-            icon: const Icon(Icons.mms_outlined),
-            color: mPrimaryColor,
-            onPressed: () {}),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 100.0),
+      child: IconButton(
+          icon: const Icon(Icons.monochrome_photos),
+          color: mPrimaryColor,
+          onPressed: () {
+            _pickVideo();
+          }),
     );
   }
 }
