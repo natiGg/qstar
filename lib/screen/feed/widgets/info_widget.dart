@@ -31,7 +31,7 @@ class InfoWidget extends StatelessWidget {
                 'View all 4 comment',
                 style: Theme.of(context).textTheme.caption,
               ),
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(vertical: 5),
             ),
             onTap: () {
               Navigator.pushReplacement(
