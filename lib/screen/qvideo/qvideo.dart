@@ -113,7 +113,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      VideoPicker(),
+                      VideoRecorderExample(),
                   transitionDuration: Duration.zero,
                 ),
               );
