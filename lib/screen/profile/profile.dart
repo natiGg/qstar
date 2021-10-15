@@ -8,9 +8,11 @@ import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dar
 import 'package:qstar/widget/utils.dart';
 
 import 'package:qstar/screen/profile/widgets/insta_app_bar.dart';
+import 'package:qstar/screen/profile/editprofile.dart';
 
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -77,9 +79,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: <Widget>[
             profileStats(screen: _screen, color: mPrimaryColor),
             bio(primaryColor: _primaryColor),
-            editProfile(
-              primaryColorDark: _primaryColorDark,
-              primaryColor: mPrimaryColor,
+            GestureDetector(
+              onTap: (){
+                    Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation1, animation2) =>
+                                        EditProfilePage(),
+                                transitionDuration: Duration.zero,
+                              ),
+                            );
+              },
+              child: editProfile(
+                primaryColorDark: _primaryColorDark,
+                primaryColor: mPrimaryColor,
+              ),
             ),
             storyHighlight(primaryColor: mPrimaryColor),
             Divider(
