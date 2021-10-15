@@ -428,10 +428,14 @@ class _WPostState extends State<WPost> {
                 setState(() {
                   if (isdisActive && !isActive) {
                     isdisActive = !isdisActive;
+                     isActive=!isActive;
+
                   } 
+
                   else if(!isActive){
                     isActive=!isActive;
                   }
+         
                   
                   
 

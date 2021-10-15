@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 import 'package:qstar/widget/utils.dart';
 
 Widget profileStats({required Size screen, required Color color}) {
   return Container(
-    padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+    padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
     color: Colors.white,
-    height: 100,
-    child: Row(
+    child: Column(
       children: <Widget>[
         Container(
           width: 100,
@@ -19,6 +20,27 @@ Widget profileStats({required Size screen, required Color color}) {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top:5.0),
+          child: RatingBarIndicator(
+                          rating: 2.75,
+                          itemBuilder: (context, index) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemCount: 5,
+                          itemSize: 20.0,
+                          direction: Axis.horizontal,
+                        ),
+        ),
+         Center(child:Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Text(
+                "Betty G zonozonka",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              ),
+                  ) ,),
+        
         Container(
           width: screen.width - 100 - 20,
           child: Row(
@@ -146,7 +168,7 @@ Widget statsBox({
 }) {
   return Container(
     color: Colors.white,
-    height: 98,
+    height: 60,
     width: 80,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
