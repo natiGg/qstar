@@ -293,27 +293,29 @@ class _WPostState extends State<WPost> {
       child: Column(
         children: [
           Row(
+       mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 150,
-              ),
-              Expanded(
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: mPrimaryColor, width: 2),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: CircleAvatar(
-                          radius: 22,
-                          backgroundImage: AssetImage(
-                              'assets/images/profile${this.widget.post.userid}.jpg')),
-                    ),
-                  ),
-                ),
-              ),
+              Spacer(),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 45),
+                                  child: Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: mPrimaryColor, width: 2),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(1.0),
+                                        child: CircleAvatar(
+                                            radius: 22,
+                                            backgroundImage: AssetImage(
+                                                'assets/images/profile${this.widget.post.userid}.jpg')),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+ 
+             
               Spacer(),
               IconButton(
                 onPressed: () {
@@ -353,11 +355,18 @@ class _WPostState extends State<WPost> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            
             children: [
-              Text(
-                  '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
-                  style: TextStyle(color: Colors.black)),
-              RatingBarIndicator(
+
+             Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Column(
+                   children: [
+                     Text(
+                          '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
+                          style: TextStyle(color: Colors.black)),
+RatingBarIndicator(
                 rating: 2.75,
                 itemBuilder: (context, index) => Icon(
                   Icons.star,
@@ -367,6 +376,11 @@ class _WPostState extends State<WPost> {
                 itemSize: 20.0,
                 direction: Axis.horizontal,
               ),
+                   ],
+                 ),
+               ],
+             ),
+              
               SizedBox(
                 height: 5,
               ),
@@ -430,7 +444,7 @@ class _WPostState extends State<WPost> {
             ),
           ]),
           Container(
-            padding: EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(5.0),
             child: Row(
               children: [
                 GestureDetector(
@@ -504,7 +518,7 @@ class _WPostState extends State<WPost> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: InfoWidget(),
           )
         ],
@@ -514,7 +528,7 @@ class _WPostState extends State<WPost> {
 
   Widget activeLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -531,7 +545,7 @@ class _WPostState extends State<WPost> {
   }
   Widget activedisLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -549,7 +563,7 @@ class _WPostState extends State<WPost> {
 
   Widget Comment() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -563,7 +577,7 @@ class _WPostState extends State<WPost> {
 
   Widget Share() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
