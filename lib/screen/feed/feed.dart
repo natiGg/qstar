@@ -280,7 +280,7 @@ class WPost extends StatefulWidget {
 
 class _WPostState extends State<WPost> {
   bool isActive = false;
-    bool isdisActive = false;
+  bool isdisActive = false;
 
   final FlareControls flareControls = FlareControls();
 
@@ -293,29 +293,27 @@ class _WPostState extends State<WPost> {
       child: Column(
         children: [
           Row(
-       mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 45),
-                                  child: Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(color: mPrimaryColor, width: 2),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: CircleAvatar(
-                                            radius: 22,
-                                            backgroundImage: AssetImage(
-                                                'assets/images/profile${this.widget.post.userid}.jpg')),
-                                      ),
-                                    ),
-                                  ),
-                                ),
- 
-             
+              Padding(
+                padding: EdgeInsets.only(left: 45),
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: mPrimaryColor, width: 2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: CircleAvatar(
+                          radius: 22,
+                          backgroundImage: AssetImage(
+                              'assets/images/profile${this.widget.post.userid}.jpg')),
+                    ),
+                  ),
+                ),
+              ),
               Spacer(),
               IconButton(
                 onPressed: () {
@@ -355,34 +353,31 @@ class _WPostState extends State<WPost> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            
             children: [
-
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Column(
-                   children: [
-                     Text(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
                           '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
                           style: TextStyle(color: Colors.black)),
-RatingBarIndicator(
-                rating: 2.75,
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                itemCount: 5,
-                itemSize: 20.0,
-                direction: Axis.horizontal,
+                      RatingBarIndicator(
+                        rating: 2.75,
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        itemCount: 5,
+                        itemSize: 20.0,
+                        direction: Axis.horizontal,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-                   ],
-                 ),
-               ],
-             ),
-              
               SizedBox(
-                height: 5,
+                height: 15,
               ),
               Container(
                 child: Center(
@@ -406,12 +401,10 @@ RatingBarIndicator(
               height: 5,
             ),
             GestureDetector(
-              onDoubleTap: (){
-                    
+              onDoubleTap: () {
                 setState(() {
-                  if(isdisActive && !isActive)
-                  {
-                    isdisActive=!isdisActive;
+                  if (isdisActive && !isActive) {
+                    isdisActive = !isdisActive;
                   }
                   isActive = !isActive;
                   // _isPlaying ? null : _controller.isActive = true;
@@ -450,46 +443,31 @@ RatingBarIndicator(
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                          if(isdisActive && !isActive)
-                          {
+                        if (isdisActive && !isActive) {
                           isActive = !isActive;
-                          isdisActive=!isdisActive;
-                          }
-                          else if(!isdisActive && isActive)
-                          {
+                          isdisActive = !isdisActive;
+                        } else if (!isdisActive && isActive) {
                           isActive = !isActive;
-                          
-                          } 
-                          else if(!isdisActive && !isActive){
-                            isActive =!isActive;
-                          }
-           
+                        } else if (!isdisActive && !isActive) {
+                          isActive = !isActive;
+                        }
                       });
                     },
                     child: activeLikeButton(isActive)),
-                    GestureDetector(
+                GestureDetector(
                     onTap: () {
                       setState(() {
-                          if(isActive && !isdisActive)
-                        {
-                          isActive=!isActive;
-                        isdisActive = !isdisActive;
-
+                        if (isActive && !isdisActive) {
+                          isActive = !isActive;
+                          isdisActive = !isdisActive;
+                        } else if (isdisActive && !isActive) {
+                          isdisActive = !isdisActive;
+                        } else if (!isdisActive && !isActive) {
+                          isdisActive = !isdisActive;
                         }
-                        else if(isdisActive  && !isActive)
-                        {
-                        isdisActive = !isdisActive;
-
-                        }
-                        else if(!isdisActive && !isActive)
-                        {
-                          isdisActive=!isdisActive;
-                        }
-
                       });
                     },
                     child: activedisLikeButton(isdisActive)),
-                    
                 GestureDetector(
                     onTap: () {
                       Navigator.pushReplacement(
@@ -543,6 +521,7 @@ RatingBarIndicator(
       ),
     );
   }
+
   Widget activedisLikeButton(isActive) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
