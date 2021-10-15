@@ -395,6 +395,10 @@ class _WPostState extends State<WPost> {
               onDoubleTap: (){
                     
                 setState(() {
+                  if(isdisActive && !isActive)
+                  {
+                    isdisActive=!isdisActive;
+                  }
                   isActive = !isActive;
                   // _isPlaying ? null : _controller.isActive = true;
                 });
