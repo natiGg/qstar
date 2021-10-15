@@ -330,7 +330,7 @@ class _WPostState extends State<WPost> {
                     child: Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: CircleAvatar(
-                          radius: 22,
+                          radius: 30,
                           backgroundImage: AssetImage(
                               'assets/images/profile${this.widget.post.userid}.jpg')),
                     ),

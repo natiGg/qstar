@@ -105,7 +105,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         ]),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.camera_alt),
+            icon: Icon(Icons.switch_video_outlined),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
@@ -184,67 +184,54 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
                               )),
-                          Container(
-                            padding: EdgeInsets.only(
-                              left: 10,
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 12,
-                                  backgroundImage:
-                                      AssetImage('assets/images/profile2.jpg'),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  children: [
-                                    Text('username',
-                                        style: TextStyle(color: Colors.white)),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 13),
+                                width: 62,
+                                height: 42,
+                                child: Stack(
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.white,
+                                      child: CircleAvatar(
+                                        radius: 19,
+                                        backgroundColor: Colors.black,
+                                        backgroundImage:
+                                            AssetImage('assets/spook.png'),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
                                       child: Container(
-                                        width: 100,
-                                        height: 20,
-                                        child: FlatButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(36),
-                                          ),
-                                          color: mPrimaryColor,
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                              context,
-                                              PageRouteBuilder(
-                                                pageBuilder: (context,
-                                                        animation1,
-                                                        animation2) =>
-                                                    CategoryVid(),
-                                                transitionDuration:
-                                                    Duration.zero,
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 1),
-                                            alignment: Alignment.center,
-                                            child: Text('Follow',
-                                                style: TextStyle(
-                                                    color: Colors.white)),
-                                          ),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color: Colors.white, width: 1),
+                                        ),
+                                        child: CircleAvatar(
+                                          radius: 7,
+                                          backgroundColor:
+                                              mPrimaryColor.withOpacity(1),
+                                          child: Center(
+                                              child: Icon(Icons.add,
+                                                  size: 11,
+                                                  color: Colors.white)),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text.rich(
+                                TextSpan(children: <TextSpan>[
+                                  TextSpan(text: 'UserName'),
+                                ]),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              )
+                            ],
                           ),
                         ],
                       ),
