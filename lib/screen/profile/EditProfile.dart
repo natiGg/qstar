@@ -15,10 +15,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/gestures.dart';
 
-
-
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({ Key? key }) : super(key: key);
+  const EditProfilePage({Key? key}) : super(key: key);
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -45,10 +43,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-              },
-              icon: Icon(Icons.menu),
-              color: mPrimaryColor)
+              onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
         ],
       ),
       body: Container(
@@ -59,7 +54,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
           child: ListView(
             children: [
-              
               SizedBox(
                 height: 15,
               ),
@@ -106,98 +100,104 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             color: Colors.white,
                           ),
                         )),
-                    
                   ],
                 ),
               ),
-                  Center(child:Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                "Betty G zonozonka",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    "Betty G zonozonka",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                  ),
+                ),
               ),
-                  ) ,)
-                  ,
               SizedBox(
                 height: 35,
               ),
-                              const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Full Name',
-                  text: "nati",
-                  onChanged: (name) {},
+              const SizedBox(height: 24),
+              TextFieldWidget(
+                label: 'Full Name',
+                text: "nati",
+                onChanged: (name) {},
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: RichText(
+                  text:
+                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                    TextSpan(
+                        text:
+                            "Help people disocver your account by using the name you're known by: either your full name,nickname or business name"),
+                  ]),
                 ),
-                Container(
-            padding: const EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: "Help people disocver your account by using the name you're known by: either your full name,nickname or business name"),
-              
-              ]),
-            ),
-          ),
-          const SizedBox(height:2),
-           Container(
-            padding: EdgeInsets.all(8),
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: "you can only change your name twice within 14 days"),
-              
-              ]),
-            ),
-          ),
-
-
-                  const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Username',
-                  text: "natiG",
-                  onChanged: (email) {},
+              ),
+              const SizedBox(height: 2),
+              Container(
+                padding: EdgeInsets.all(8),
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text:
+                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                    TextSpan(
+                        text:
+                            "you can only change your name twice within 14 days"),
+                  ]),
                 ),
-                Container(
-            padding: const EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: "In most cases,you'll be able to change your username back to natig for another 14 days."),
-                TextSpan(
-                  text: 'Findout more',
-                  style: TextStyle(
-                    color: mPrimaryColor,
-                  ),
-                
-                  recognizer: TapGestureRecognizer()..onTap = () {
-                    Navigator.pop(context);
-                  },
+              ),
+              const SizedBox(height: 24),
+              TextFieldWidget(
+                label: 'Username',
+                text: "natiG",
+                onChanged: (email) {},
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: RichText(
+                  text:
+                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                    TextSpan(
+                        text:
+                            "In most cases,you'll be able to change your username back to natig for another 14 days."),
+                    TextSpan(
+                      text: 'Findout more',
+                      style: TextStyle(
+                        color: mPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.pop(context);
+                        },
+                    ),
+                  ]),
                 ),
-              
-              ]),
-            ),
-          ),
-                  const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'About',
-                  text: "mnshe nw",
-                  onChanged: (email) {},
+              ),
+              const SizedBox(height: 24),
+              TextFieldWidget(
+                label: 'About',
+                text: "mnshe nw",
+                onChanged: (email) {},
+              ),
+              const SizedBox(height: 24),
+              TextFieldWidget(
+                label: 'Website',
+                text: "mnshe nw",
+                onChanged: (email) {},
+              ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                child: RichText(
+                  text:
+                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                    TextSpan(
+                        text:
+                            "In most cases,you'll be able to change your username back to natig for another 14 days."),
+                  ]),
                 ),
-             const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Website',
-                  text: "mnshe nw",
-                  onChanged: (email) {},
-                ),
-                  Container(
-            padding: const EdgeInsets.all(8),
-            alignment: Alignment.center,
-            child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: "In most cases,you'll be able to change your username back to natig for another 14 days."),
-
-              ]),
-            ),
-          ),
+              ),
               SizedBox(
                 height: 35,
               ),
@@ -208,9 +208,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 35,
                   ),
                   RaisedButton.icon(
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     label: Text(
@@ -240,17 +238,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     textColor: mPrimaryColor,
                     splashColor: mPrimaryColor,
                     color: Colors.white,
-                  ), 
+                  ),
                   SizedBox(
                     height: 35,
                   ),
                 ],
-              ) ],
+              )
+            ],
           ),
         ),
       ),
     );
   }
-
- 
 }

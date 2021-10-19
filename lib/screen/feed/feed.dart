@@ -154,6 +154,7 @@ class _FeedState extends State<Feed> {
             //     ),
             //   ),
             // ),
+         
             Card(
               margin: EdgeInsets.symmetric(horizontal: 0.0),
               elevation: 0.0,
@@ -228,6 +229,51 @@ class _FeedState extends State<Feed> {
                 ),
               );
             }).toList(),
+               Container(
+                 child: Padding(
+                   padding: const EdgeInsets.all(10.0),
+                   child: Align(
+                     alignment: Alignment.topLeft,
+                     child: Text(
+                                    "Suggested Friends",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: mPrimaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                   ),
+                 ),
+               ),  
+            Container(
+              height: 250,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                    Column(
+                      children: [
+                     
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(height: 5),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(children: _users.map((e) => UserAvatar(e)).toList()),
+                          )
+                      ],
+                    ),
+                
+                ],
+              ),
+            ),
+              ..._posts.map((item) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: WPost(
+                  post: item,
+                ),
+              );
+            }).toList(),
           ],
         ),
       ),
@@ -289,6 +335,140 @@ class _UserStoriesState extends State<UserStories> {
         ),
       ),
     );
+  }
+}
+
+class UserAvatar extends StatelessWidget {
+  final User user;
+  UserAvatar(this.user);
+
+  @override
+  Widget build(BuildContext context) {
+    // return Container(
+    //   margin: EdgeInsets.all(6),
+    //   child:Column(
+    //     children: [
+    //       CircleAvatar(
+    //         radius: 37,
+    //         backgroundColor: Colors.red.shade200,
+    //         child: CircleAvatar(
+    //           radius: 36,
+    //           backgroundColor:Colors.white,
+    //           child: CircleAvatar(
+    //             radius:32,
+    //             backgroundImage: AssetImage('assets/images/profile${this.user.id}.jpg')),
+    //         ),
+    //       ),
+    //       SizedBox(height:3),
+    //       Text('${this.user.userName}',style: TextStyle(color: Colors.white))
+    //     ],
+    //   ) ,
+    // );
+    return Column(children: [
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Card(
+          elevation: 2,
+          child: Row(
+              children: List.generate(1, (index) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Stack(
+                    children:[ Container(
+                      width: 68,
+                      height: 68,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                              colors: [Color(0xFF9B2282), Color(0xFFEEA863)],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 2),
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/profile${this.user.id}.jpg'),
+                                  fit: BoxFit.cover),
+                            )),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 50),
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          border: Border.all(
+                                                              color: mPrimaryColor, width: 1),
+                                                        ),
+                                                        child: CircleAvatar(
+                                                          radius: 9,
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          child: Center(
+                                                              child: Icon(Icons.add,
+                                                                  size: 16,
+                                                                  color: mPrimaryColor)),
+                                                        ),
+                                                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Center(
+                      child: Text(
+                    '${this.user.userName}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: mPrimaryColor),
+                  )),
+                  RatingBarIndicator(
+                    rating: 2.75,
+                    itemBuilder: (context, index) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    itemCount: 5,
+                    itemSize: 20.0,
+                    direction: Axis.horizontal,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    height: 60,
+                    width: 80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "12k",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: mPrimaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "followers",
+                          style: const TextStyle(
+                              fontSize: 14, color: mPrimaryColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                ],
+              ),
+            );
+          })),
+        ),
+      )
+    ]);
   }
 }
 
@@ -428,18 +608,11 @@ class _WPostState extends State<WPost> {
                 setState(() {
                   if (isdisActive && !isActive) {
                     isdisActive = !isdisActive;
-                     isActive=!isActive;
-
-                  } 
-
-                  else if(!isActive){
-                    isActive=!isActive;
+                    isActive = !isActive;
+                  } else if (!isActive) {
+                    isActive = !isActive;
                   }
-         
-                  
-                  
 
-                  
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
@@ -589,7 +762,7 @@ class _WPostState extends State<WPost> {
 
   Widget Share() {
     return Container(
-      padding: EdgeInsets.symmetric( vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

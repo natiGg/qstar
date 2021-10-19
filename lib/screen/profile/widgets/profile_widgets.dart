@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -7,7 +8,7 @@ import 'package:qstar/widget/utils.dart';
 Widget profileStats({required Size screen, required Color color}) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
-    color: Colors.white,
+   
     child: Column(
       children: <Widget>[
         Container(
@@ -20,27 +21,36 @@ Widget profileStats({required Size screen, required Color color}) {
             ),
           ),
         ),
+                    SizedBox(height: 15,),
+
         Padding(
-          padding: const EdgeInsets.only(top:5.0),
+          padding: const EdgeInsets.only(top: 5.0),
           child: RatingBarIndicator(
-                          rating: 2.75,
-                          itemBuilder: (context, index) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          itemCount: 5,
-                          itemSize: 20.0,
-                          direction: Axis.horizontal,
-                        ),
+            rating: 2.75,
+            itemBuilder: (context, index) => Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            itemCount: 5,
+            itemSize: 20.0,
+            direction: Axis.horizontal,
+          ),
         ),
-         Center(child:Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                "Betty G zonozonka",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-                  ) ,),
-        
+                    SizedBox(height: 10,),
+
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text(
+              "@Betty G zonozonka",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ),
+        bio(primaryColor: mPrimaryColor),
+
+                    SizedBox(height: 15,),
+
         Container(
           width: screen.width - 100 - 20,
           child: Row(
@@ -61,60 +71,64 @@ Widget profileStats({required Size screen, required Color color}) {
 Widget bio({required Color primaryColor}) {
   return Container(
     color: Colors.white,
-    height: 100,
-    padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'abebe dechato',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'All photos are ',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              TextSpan(
-                text: '#shotoniphone ',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              TextSpan(
-                text:
-                    'unless stated otherwise. NTS-\"Have teh courage to follow your heart and intuation.\" ',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-              TextSpan(
-                  text: '#100daysofcode #flutterdeveloper',
+    height: 40,
+    width: 200,
+    padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+    child: Card(
+      elevation: 2,
+    
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+        
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'It is what it is...',
                   style: TextStyle(
                     color: Colors.black,
-                  ))
-            ],
+                  ),
+                ),
+                
+              ],
+            ),
           ),
-        ),
-        Text(
-          'gyakhoe.com',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-      ],
+        
+        ],
+      ),
     ),
   );
 }
-
+Widget Preferences({required Color primaryColor}) {
+  return Container(
+    color: Colors.white,
+    padding: const EdgeInsets.only(left: 10, right: 10),
+    child: Container(
+      height: 30,
+      width: 300,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: mPrimaryColor)
+        
+      ),
+      child: FlatButton(
+        onPressed: (){},
+        child: Center(
+            child: Text(
+          'Perfect match preferences',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: mPrimaryColor
+            ,
+          ),
+        )),
+      ),
+    ),
+  );
+}
 Widget editProfile(
     {@required Color? primaryColor, required Color primaryColorDark}) {
   return Container(
@@ -122,6 +136,7 @@ Widget editProfile(
     padding: const EdgeInsets.only(left: 10, right: 10),
     child: Container(
       height: 30,
+      width: 100,
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -159,6 +174,86 @@ Widget storyHighlight({@required primaryColor}) {
         ),
       ],
     ),
+  );
+}
+
+Widget SocialMedia() {
+  return Row(
+    children: [
+      Container(
+        width: 40,
+        height: 30,
+
+        child: RawMaterialButton(
+          onPressed: () {},
+          elevation: 2.0,
+          fillColor: Colors.white,
+          child: Icon(
+            FontAwesome.bookmark_o,
+            size: 20,
+            color: mPrimaryColor,
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+      ),
+      SizedBox(width: 10,),
+      Container(
+        width: 40,
+        height: 30,
+
+        child: RawMaterialButton(
+          onPressed: () {},
+          elevation: 2.0,
+          fillColor: Colors.white,
+          child: Image(
+            image: new AssetImage("assets/images/fb.png"),
+            width: 20,
+            height: 20,
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+      ),
+      SizedBox(width: 10,),
+      
+      Container(
+        width: 40,
+        height: 30,
+
+        child: RawMaterialButton(
+          onPressed: () {},
+          elevation: 2.0,
+          fillColor: Colors.white,
+          child: Image(
+            image: new AssetImage("assets/images/tiktok.png"),
+            width: 20,
+            height: 20,
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+      ),
+            SizedBox(width: 10,),
+
+      Container(
+        width: 40,
+        height: 30,
+
+        child: RawMaterialButton(
+          onPressed: () {},
+          elevation: 2.0,
+          fillColor: Colors.white,
+          child: Image(
+            image: new AssetImage("assets/images/inst.png"),
+            width: 20,
+            height: 20,
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+      ),
+    ],
   );
 }
 
@@ -205,10 +300,12 @@ Widget profileAvatar({
             child: Container(
               height: height, // 150,
               width: width, //150,
+          
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: 3,
+                    color: mPrimaryColor
                   )),
             ),
           ),
