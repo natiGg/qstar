@@ -302,6 +302,7 @@ class _FeedState extends State<Feed> {
                                 width: 120,
                                 height: 30,
                                 decoration: BoxDecoration(
+                                  
                                     borderRadius: BorderRadius.circular(5),
                                     border: Border.all(color: mPrimaryColor)),
                                 child: FlatButton.icon(
@@ -692,7 +693,7 @@ class _WPostState extends State<WPost> {
                       ),
                     ),
                       _isFF[(this.widget.post.userid)-1]? Container(
-                        margin: EdgeInsets.only(left:40),
+                        margin: EdgeInsets.only(left:20,top: 55,right: 20),
                         child: GestureDetector(
                           onTap:(){
                           setState(() {
@@ -701,7 +702,8 @@ class _WPostState extends State<WPost> {
                         },
                         
                         child:followButton(isFollowed),),
-                      ):SizedBox(width: 0,)
+                      ):SizedBox(width: 0,),
+
                     ]
                   ),
                 ],
@@ -743,6 +745,7 @@ class _WPostState extends State<WPost> {
               )
             ],
           ),
+          
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -751,6 +754,7 @@ class _WPostState extends State<WPost> {
                 children: [
                   Column(
                     children: [
+                      SizedBox(height: 10),
                       Text(
                           '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
                           style: TextStyle(color: Colors.black)),
