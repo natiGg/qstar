@@ -249,6 +249,32 @@ class _FeedState extends State<Feed> {
                           //   ],
                           // ),
                         ),
+                                  Container(
+                                                      height: 120.0,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        children: [
+                                                          FlatButton.icon(
+                            onPressed: () => print('Live'),
+                            icon: const Icon(
+                              Icons.videocam,
+                              color: Colors.red,
+                            ),
+                            label: Text('Live'),
+                                                          ),
+                                                          const VerticalDivider(width: 8.0),
+                                                          FlatButton.icon(
+                            onPressed: () => print('Photo'),
+                            icon: const Icon(
+                              Icons.photo_library,
+                              color: Colors.green,
+                            ),
+                            label: Text('Photo'),
+                                                          ),
+                                                       
+                                                        ],
+                                                      ),
+                                                    ),
                       ],
                     ),
                                         const Divider(height: 10.0, thickness: 0.5),
@@ -305,6 +331,7 @@ class _FeedState extends State<Feed> {
                               ),
                             ],
                           ),
+                       SizedBox(height: 20,),
                     Container(
                       height: 40.0,
                       child: Row(
