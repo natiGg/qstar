@@ -180,7 +180,7 @@ class _FeedState extends State<Feed> {
                           ),
                         ),
                         Container(
-                          height: 150.0,
+                          height: 120.0,
                           padding: EdgeInsets.all(10),
                           // decoration: BoxDecoration(
                           //     color: Colors.white,
@@ -250,18 +250,11 @@ class _FeedState extends State<Feed> {
                           // ),
                         ),
                                   Container(
-                                                      height: 120.0,
+                                                      height: 100.0,
                                                       child: Column(
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
-                                                          FlatButton.icon(
-                            onPressed: () => print('Live'),
-                            icon: const Icon(
-                              Icons.videocam,
-                              color: Colors.red,
-                            ),
-                            label: Text('Live'),
-                                                          ),
+                                                       
                                                           const VerticalDivider(width: 8.0),
                                                           FlatButton.icon(
                             onPressed: () => print('Photo'),
@@ -271,7 +264,14 @@ class _FeedState extends State<Feed> {
                             ),
                             label: Text('Photo'),
                                                           ),
-                                                       
+                                                          FlatButton.icon(
+                            onPressed: () => print('Live'),
+                            icon: const Icon(
+                              Icons.videocam,
+                              color: Colors.red,
+                            ),
+                            label: Text('Live'),
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
