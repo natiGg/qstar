@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
 
@@ -25,7 +26,7 @@ List<User> _users = [
   User(id: 2, userName: "natig", storyImage: "", userImage: ""),
   User(id: 3, userName: "bini", storyImage: "", userImage: ""),
   User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: "")
 ];
 
 List<Post> _posts = [
@@ -35,6 +36,7 @@ List<Post> _posts = [
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
+List<bool> _isFF=[true,false,false,true,false];
 
 void main() {
   runApp(const UsersFeed());
@@ -154,10 +156,10 @@ class _FeedState extends State<Feed> {
             //     ),
             //   ),
             // ),
-         
+
             Card(
               margin: EdgeInsets.symmetric(horizontal: 0.0),
-              elevation: 0.0,
+              elevation: 2,
               shape: null,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
@@ -176,10 +178,133 @@ class _FeedState extends State<Feed> {
                               hintText: 'What\'s on your mind?',
                             ),
                           ),
-                        )
+                        ),
+                        Container(
+                          height: 150.0,
+                          padding: EdgeInsets.all(10),
+                          // decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.only(
+                          //         topLeft: Radius.circular(5),
+                          //         bottomLeft: Radius.circular(5),
+                          //         bottomRight: Radius.circular(5),
+                          //         topRight: Radius.circular(5)),
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //           color: Colors.grey.withOpacity(0.5),
+                          //           spreadRadius: 5,
+                          //           blurRadius: 7,
+                          //           offset: Offset(0, 3))
+                          //     ]),
+                          // child: Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Container(
+                          //       width: 120,
+                          //       height: 30,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(5),
+                          //           border: Border.all(color: mPrimaryColor)),
+                          //       child: FlatButton.icon(
+                          //         onPressed: () => print('Live'),
+                          //         icon: const Icon(
+                          //           Icons.public,
+                          //           color: mPrimaryColor,
+                          //         ),
+                          //         label: Text('Public'),
+                          //       ),
+                          //     ),
+                          //     const SizedBox(height: 8.0),
+                          //     Container(
+                          //       width: 120,
+                          //       height: 30,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(5),
+                          //           border: Border.all(color: mPrimaryColor)),
+                          //       child: FlatButton.icon(
+                          //         onPressed: () => print('Photo'),
+                          //         icon: const Icon(
+                          //           Icons.account_circle,
+                          //           color: mPrimaryColor,
+                          //         ),
+                          //         label: Text('Friends'),
+                          //       ),
+                          //     ),
+                          //     const SizedBox(height: 8.0),
+                          //     Container(
+                          //       width: 120,
+                          //       height: 30,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(5),
+                          //           border: Border.all(color: mPrimaryColor)),
+                          //       child: FlatButton.icon(
+                          //         onPressed: () => print('Room'),
+                          //         icon: const Icon(
+                          //           Icons.star,
+                          //           color: mPrimaryColor,
+                          //         ),
+                          //         label: Text('Star'),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                        ),
                       ],
                     ),
-                    const Divider(height: 10.0, thickness: 0.5),
+                                        const Divider(height: 10.0, thickness: 0.5),
+
+                    Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 120,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: mPrimaryColor)),
+                                child: FlatButton.icon(
+                                  onPressed: () => print('Live'),
+                                  icon: const Icon(
+                                    Icons.public,
+                                    color: mPrimaryColor,
+                                  ),
+                                  label: Text('Public'),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Container(
+                                width: 120,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: mPrimaryColor)),
+                                child: FlatButton.icon(
+                                  onPressed: () => print('Photo'),
+                                  icon: const Icon(
+                                    Icons.account_circle,
+                                    color: mPrimaryColor,
+                                  ),
+                                  label: Text('Friends'),
+                                ),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Container(
+                                width: 120,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: mPrimaryColor)),
+                                child: FlatButton.icon(
+                                  onPressed: () => print('Room'),
+                                  icon: const Icon(
+                                    Icons.star,
+                                    color: mPrimaryColor,
+                                  ),
+                                  label: Text('Star'),
+                                ),
+                              ),
+                            ],
+                          ),
                     Container(
                       height: 40.0,
                       child: Row(
@@ -229,44 +354,44 @@ class _FeedState extends State<Feed> {
                 ),
               );
             }).toList(),
-               Container(
-                 child: Padding(
-                   padding: const EdgeInsets.all(10.0),
-                   child: Align(
-                     alignment: Alignment.topLeft,
-                     child: Text(
-                                    "Suggested Friends",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: mPrimaryColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                   ),
-                 ),
-               ),  
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Suggested Friends",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: mPrimaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
             Container(
               height: 250,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                    Column(
-                      children: [
-                     
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(height: 5),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(children: _users.map((e) => UserAvatar(e)).toList()),
-                          )
-                      ],
-                    ),
-                
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(height: 5),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                            children:
+                                _users.map((e) => UserAvatar(e)).toList()),
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
-              ..._posts.map((item) {
+            ..._posts.map((item) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: WPost(
@@ -338,9 +463,16 @@ class _UserStoriesState extends State<UserStories> {
   }
 }
 
-class UserAvatar extends StatelessWidget {
+class UserAvatar extends StatefulWidget {
   final User user;
   UserAvatar(this.user);
+
+  @override
+  State<UserAvatar> createState() => _UserAvatarState();
+}
+
+class _UserAvatarState extends State<UserAvatar> {
+      bool isFollowed=false;
 
   @override
   Widget build(BuildContext context) {
@@ -376,47 +508,41 @@ class UserAvatar extends StatelessWidget {
               child: Column(
                 children: [
                   Stack(
-                    children:[ Container(
-                      width: 68,
-                      height: 68,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                              colors: [Color(0xFF9B2282), Color(0xFFEEA863)],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/profile${this.user.id}.jpg'),
-                                  fit: BoxFit.cover),
-                            )),
+                    children: [
+                      Container(
+                        width: 68,
+                        height: 68,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                colors: [Color(0xFF9B2282), Color(0xFFEEA863)],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.white, width: 2),
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/profile${this.widget.user.id}.jpg'),
+                                    fit: BoxFit.cover),
+                              )),
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 50),
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          border: Border.all(
-                                                              color: mPrimaryColor, width: 1),
-                                                        ),
-                                                        child: CircleAvatar(
-                                                          radius: 9,
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          child: Center(
-                                                              child: Icon(Icons.add,
-                                                                  size: 16,
-                                                                  color: mPrimaryColor)),
-                                                        ),
-                                                      ),
+                      GestureDetector(onTap: (){
+                        setState(() {
+                                isFollowed=!isFollowed;
+                        });
+                  
+                      },
+                      child: followButton(isFollowed),
+                      
+                      )
                     ],
                   ),
                   SizedBox(
@@ -424,7 +550,7 @@ class UserAvatar extends StatelessWidget {
                   ),
                   Center(
                       child: Text(
-                    '${this.user.userName}',
+                    '${this.widget.user.userName}',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: mPrimaryColor),
                   )),
@@ -461,7 +587,6 @@ class UserAvatar extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
                 ],
               ),
             );
@@ -469,6 +594,23 @@ class UserAvatar extends StatelessWidget {
         ),
       )
     ]);
+  }
+
+    Widget followButton(isFollowed){
+    return   Container(
+                        margin: EdgeInsets.only(left: 50),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: mPrimaryColor, width: 1),
+                        ),
+                        child: CircleAvatar(
+                          radius: 9,
+                          backgroundColor: isFollowed? mPrimaryColor:Colors.white,
+                          child: Center(
+                              child: Icon(  isFollowed? Icons.check :Icons.add,
+                                  size: 16, color: isFollowed? Colors.white: mPrimaryColor)),
+                        )
+                      );
   }
 }
 
@@ -484,7 +626,7 @@ class WPost extends StatefulWidget {
 class _WPostState extends State<WPost> {
   bool isActive = false;
   bool isdisActive = false;
-
+  bool isFollowed=false;
   final FlareControls flareControls = FlareControls();
 
   /// Is the animation currently playing?
@@ -492,6 +634,7 @@ class _WPostState extends State<WPost> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Column(
         children: [
@@ -499,23 +642,42 @@ class _WPostState extends State<WPost> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              Padding(
-                padding: EdgeInsets.only(left: 45),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: mPrimaryColor, width: 2),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children:[ Padding(
+                      padding: EdgeInsets.only(left: 45),
+                      child: Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: mPrimaryColor, width: 2),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(1.0),
+                            child: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AssetImage(
+                                    'assets/images/profile${this.widget.post.userid}.jpg')),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage(
-                              'assets/images/profile${this.widget.post.userid}.jpg')),
-                    ),
+                      _isFF[(this.widget.post.userid)-1]? Container(
+                        margin: EdgeInsets.only(left:40),
+                        child: GestureDetector(
+                          onTap:(){
+                          setState(() {
+                            isFollowed=!isFollowed;
+                          });
+                        },
+                        
+                        child:followButton(isFollowed),),
+                      ):SizedBox(width: 0,)
+                    ]
                   ),
-                ),
+                ],
               ),
               Spacer(),
               IconButton(
@@ -584,16 +746,24 @@ class _WPostState extends State<WPost> {
               ),
               Container(
                 child: Center(
-                  child: Text(
-                    "To create bordered text, a Paint with Paint.style set to PaintingStyle.",
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.6),
-                      decorationStyle: TextDecorationStyle.wavy,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment:Alignment.centerLeft ,
+                      child: Text(
+                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.6),
+                          decorationStyle: TextDecorationStyle.wavy,
+                          
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
+
               SizedBox(
                 height: 10,
               ),
@@ -727,7 +897,23 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
-
+  
+    Widget followButton(isFollowed){
+    return   Container(
+                        margin: EdgeInsets.only(left: 50),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: mPrimaryColor, width: 1),
+                        ),
+                        child: CircleAvatar(
+                          radius: 9,
+                          backgroundColor: isFollowed? mPrimaryColor:Colors.white,
+                          child: Center(
+                              child: Icon(  isFollowed? Icons.check :Icons.add,
+                                  size: 16, color: isFollowed? Colors.white: mPrimaryColor)),
+                        )
+                      );
+  }
   Widget activedisLikeButton(isActive) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
