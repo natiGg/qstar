@@ -36,7 +36,7 @@ List<Post> _posts = [
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
-List<bool> _isFF=[true,false,false,true,false];
+List<bool> _isFF = [true, false, false, true, false];
 
 void main() {
   runApp(const UsersFeed());
@@ -158,7 +158,7 @@ class _FeedState extends State<Feed> {
             // ),
 
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 0.0),
+              margin: EdgeInsets.symmetric(horizontal: 0.0,vertical: 10),
               elevation: 2,
               shape: null,
               child: Container(
@@ -179,194 +179,194 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 120.0,
-                          padding: EdgeInsets.all(10),
-                          // decoration: BoxDecoration(
-                          //     color: Colors.white,
-                          //     borderRadius: BorderRadius.only(
-                          //         topLeft: Radius.circular(5),
-                          //         bottomLeft: Radius.circular(5),
-                          //         bottomRight: Radius.circular(5),
-                          //         topRight: Radius.circular(5)),
-                          //     boxShadow: [
-                          //       BoxShadow(
-                          //           color: Colors.grey.withOpacity(0.5),
-                          //           spreadRadius: 5,
-                          //           blurRadius: 7,
-                          //           offset: Offset(0, 3))
-                          //     ]),
-                          // child: Column(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Container(
-                          //       width: 120,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(5),
-                          //           border: Border.all(color: mPrimaryColor)),
-                          //       child: FlatButton.icon(
-                          //         onPressed: () => print('Live'),
-                          //         icon: const Icon(
-                          //           Icons.public,
-                          //           color: mPrimaryColor,
-                          //         ),
-                          //         label: Text('Public'),
-                          //       ),
-                          //     ),
-                          //     const SizedBox(height: 8.0),
-                          //     Container(
-                          //       width: 120,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(5),
-                          //           border: Border.all(color: mPrimaryColor)),
-                          //       child: FlatButton.icon(
-                          //         onPressed: () => print('Photo'),
-                          //         icon: const Icon(
-                          //           Icons.account_circle,
-                          //           color: mPrimaryColor,
-                          //         ),
-                          //         label: Text('Friends'),
-                          //       ),
-                          //     ),
-                          //     const SizedBox(height: 8.0),
-                          //     Container(
-                          //       width: 120,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //           borderRadius: BorderRadius.circular(5),
-                          //           border: Border.all(color: mPrimaryColor)),
-                          //       child: FlatButton.icon(
-                          //         onPressed: () => print('Room'),
-                          //         icon: const Icon(
-                          //           Icons.star,
-                          //           color: mPrimaryColor,
-                          //         ),
-                          //         label: Text('Star'),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                        ),
-                                  Container(
-                                                      height: 100.0,
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        children: [
-                                                       
-                                                          const VerticalDivider(width: 8.0),
-                                                          FlatButton.icon(
-                            onPressed: () => print('Photo'),
-                            icon: const Icon(
-                              Icons.photo_library,
-                              color: Colors.green,
-                            ),
-                            label: Text('Photo'),
-                                                          ),
-                                                          FlatButton.icon(
+                        // Container(
+                        //   height: 120.0,
+                        //   padding: EdgeInsets.all(10),
+                        //   // decoration: BoxDecoration(
+                        //   //     color: Colors.white,
+                        //   //     borderRadius: BorderRadius.only(
+                        //   //         topLeft: Radius.circular(5),
+                        //   //         bottomLeft: Radius.circular(5),
+                        //   //         bottomRight: Radius.circular(5),
+                        //   //         topRight: Radius.circular(5)),
+                        //   //     boxShadow: [
+                        //   //       BoxShadow(
+                        //   //           color: Colors.grey.withOpacity(0.5),
+                        //   //           spreadRadius: 5,
+                        //   //           blurRadius: 7,
+                        //   //           offset: Offset(0, 3))
+                        //   //     ]),
+                        //   // child: Column(
+                        //   //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   //   children: [
+                        //   //     Container(
+                        //   //       width: 120,
+                        //   //       height: 30,
+                        //   //       decoration: BoxDecoration(
+                        //   //           borderRadius: BorderRadius.circular(5),
+                        //   //           border: Border.all(color: mPrimaryColor)),
+                        //   //       child: FlatButton.icon(
+                        //   //         onPressed: () => print('Live'),
+                        //   //         icon: const Icon(
+                        //   //           Icons.public,
+                        //   //           color: mPrimaryColor,
+                        //   //         ),
+                        //   //         label: Text('Public'),
+                        //   //       ),
+                        //   //     ),
+                        //   //     const SizedBox(height: 8.0),
+                        //   //     Container(
+                        //   //       width: 120,
+                        //   //       height: 30,
+                        //   //       decoration: BoxDecoration(
+                        //   //           borderRadius: BorderRadius.circular(5),
+                        //   //           border: Border.all(color: mPrimaryColor)),
+                        //   //       child: FlatButton.icon(
+                        //   //         onPressed: () => print('Photo'),
+                        //   //         icon: const Icon(
+                        //   //           Icons.account_circle,
+                        //   //           color: mPrimaryColor,
+                        //   //         ),
+                        //   //         label: Text('Friends'),
+                        //   //       ),
+                        //   //     ),
+                        //   //     const SizedBox(height: 8.0),
+                        //   //     Container(
+                        //   //       width: 120,
+                        //   //       height: 30,
+                        //   //       decoration: BoxDecoration(
+                        //   //           borderRadius: BorderRadius.circular(5),
+                        //   //           border: Border.all(color: mPrimaryColor)),
+                        //   //       child: FlatButton.icon(
+                        //   //         onPressed: () => print('Room'),
+                        //   //         icon: const Icon(
+                        //   //           Icons.star,
+                        //   //           color: mPrimaryColor,
+                        //   //         ),
+                        //   //         label: Text('Star'),
+                        //   //       ),
+                        //   //     ),
+                        //   //   ],
+                        //   // ),
+                        // ),
+                        // Container(
+                        //   height: 100.0,
+                        //   child: Column(
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     children: [
+                        //       const VerticalDivider(width: 8.0),
+                        //       FlatButton.icon(
+                        //         onPressed: () => print('Photo'),
+                        //         icon: const Icon(
+                        //           Icons.photo_library,
+                        //           color: Colors.green,
+                        //         ),
+                        //         label: Text('Photo'),
+                        //       ),
+                        //       FlatButton.icon(
+                        //         onPressed: () => print('Live'),
+                        //         icon: const Icon(
+                        //           Icons.videocam,
+                        //           color: Colors.red,
+                        //         ),
+                        //         label: Text('Live'),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                    const Divider(height: 5.0, thickness: 0.5),
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     Container(
+                    //       width: 120,
+                    //       height: 30,
+                    //       decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(5),
+                    //           border: Border.all(color: mPrimaryColor)),
+                    //       child: FlatButton.icon(
+                    //         onPressed: () => print('Live'),
+                    //         icon: const Icon(
+                    //           Icons.public,
+                    //           color: mPrimaryColor,
+                    //         ),
+                    //         label: Text('Public'),
+                    //       ),
+                    //     ),
+                    //     const SizedBox(height: 8.0),
+                    //     Container(
+                    //       width: 120,
+                    //       height: 30,
+                    //       decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(5),
+                    //           border: Border.all(color: mPrimaryColor)),
+                    //       child: FlatButton.icon(
+                    //         onPressed: () => print('Photo'),
+                    //         icon: const Icon(
+                    //           Icons.account_circle,
+                    //           color: mPrimaryColor,
+                    //         ),
+                    //         label: Text('Friends'),
+                    //       ),
+                    //     ),
+                    //     const SizedBox(height: 8.0),
+                    //     Container(
+                    //       width: 120,
+                    //       height: 30,
+                    //       decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(5),
+                    //           border: Border.all(color: mPrimaryColor)),
+                    //       child: FlatButton.icon(
+                    //         onPressed: () => print('Room'),
+                    //         icon: const Icon(
+                    //           Icons.star,
+                    //           color: mPrimaryColor,
+                    //         ),
+                    //         label: Text('Star'),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      height: 40.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FlatButton.icon(
                             onPressed: () => print('Live'),
                             icon: const Icon(
                               Icons.videocam,
                               color: Colors.red,
                             ),
                             label: Text('Live'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                      ],
-                    ),
-                                        const Divider(height: 10.0, thickness: 0.5),
-
-                    Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 120,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: mPrimaryColor)),
-                                child: FlatButton.icon(
-                                  onPressed: () => print('Live'),
-                                  icon: const Icon(
-                                    Icons.public,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Public'),
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Container(
-                                width: 120,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: mPrimaryColor)),
-                                child: FlatButton.icon(
-                                  onPressed: () => print('Photo'),
-                                  icon: const Icon(
-                                    Icons.account_circle,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Friends'),
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Container(
-                                width: 120,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: mPrimaryColor)),
-                                child: FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    Icons.star,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Star'),
-                                ),
-                              ),
-                            ],
                           ),
-                       SizedBox(height: 20,),
-                    // Container(
-                    //   height: 40.0,
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //     children: [
-                    //       FlatButton.icon(
-                    //         onPressed: () => print('Live'),
-                    //         icon: const Icon(
-                    //           Icons.videocam,
-                    //           color: Colors.red,
-                    //         ),
-                    //         label: Text('Live'),
-                    //       ),
-                    //       const VerticalDivider(width: 8.0),
-                    //       FlatButton.icon(
-                    //         onPressed: () => print('Photo'),
-                    //         icon: const Icon(
-                    //           Icons.photo_library,
-                    //           color: Colors.green,
-                    //         ),
-                    //         label: Text('Photo'),
-                    //       ),
-                    //       const VerticalDivider(width: 8.0),
-                    //       FlatButton.icon(
-                    //         onPressed: () => print('Room'),
-                    //         icon: const Icon(
-                    //           Icons.video_call,
-                    //           color: Colors.purpleAccent,
-                    //         ),
-                    //         label: Text('Room'),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+                          const VerticalDivider(width: 8.0),
+                          FlatButton.icon(
+                            onPressed: () => print('Photo'),
+                            icon: const Icon(
+                              Icons.photo_library,
+                              color: Colors.green,
+                            ),
+                            label: Text('Photo'),
+                          ),
+                          const VerticalDivider(width: 8.0),
+                          FlatButton.icon(
+                            onPressed: () => print('Room'),
+                            icon: const Icon(
+                              Icons.video_call,
+                              color: Colors.purpleAccent,
+                            ),
+                            label: Text('Room'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -500,7 +500,7 @@ class UserAvatar extends StatefulWidget {
 }
 
 class _UserAvatarState extends State<UserAvatar> {
-      bool isFollowed=false;
+  bool isFollowed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -562,14 +562,13 @@ class _UserAvatarState extends State<UserAvatar> {
                               )),
                         ),
                       ),
-                      GestureDetector(onTap: (){
-                        setState(() {
-                                isFollowed=!isFollowed;
-                        });
-                  
-                      },
-                      child: followButton(isFollowed),
-                      
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isFollowed = !isFollowed;
+                          });
+                        },
+                        child: followButton(isFollowed),
                       )
                     ],
                   ),
@@ -624,21 +623,20 @@ class _UserAvatarState extends State<UserAvatar> {
     ]);
   }
 
-    Widget followButton(isFollowed){
-    return   Container(
-                        margin: EdgeInsets.only(left: 50),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: mPrimaryColor, width: 1),
-                        ),
-                        child: CircleAvatar(
-                          radius: 9,
-                          backgroundColor: isFollowed? mPrimaryColor:Colors.white,
-                          child: Center(
-                              child: Icon(  isFollowed? Icons.check :Icons.add,
-                                  size: 16, color: isFollowed? Colors.white: mPrimaryColor)),
-                        )
-                      );
+  Widget followButton(isFollowed) {
+    return Container(
+        margin: EdgeInsets.only(left: 50),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: mPrimaryColor, width: 1),
+        ),
+        child: CircleAvatar(
+          radius: 9,
+          backgroundColor: isFollowed ? mPrimaryColor : Colors.white,
+          child: Center(
+              child: Icon(isFollowed ? Icons.check : Icons.add,
+                  size: 16, color: isFollowed ? Colors.white : mPrimaryColor)),
+        ));
   }
 }
 
@@ -654,7 +652,7 @@ class WPost extends StatefulWidget {
 class _WPostState extends State<WPost> {
   bool isActive = false;
   bool isdisActive = false;
-  bool isFollowed=false;
+  bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
 
   /// Is the animation currently playing?
@@ -662,7 +660,6 @@ class _WPostState extends State<WPost> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         children: [
@@ -673,8 +670,8 @@ class _WPostState extends State<WPost> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    children:[ Padding(
+                  Stack(children: [
+                    Padding(
                       padding: EdgeInsets.only(left: 45),
                       child: Center(
                         child: Container(
@@ -692,20 +689,23 @@ class _WPostState extends State<WPost> {
                         ),
                       ),
                     ),
-                      _isFF[(this.widget.post.userid)-1]? Container(
-                        margin: EdgeInsets.only(left:20,top: 55,right: 20),
-                        child: GestureDetector(
-                          onTap:(){
-                          setState(() {
-                            isFollowed=!isFollowed;
-                          });
-                        },
-                        
-                        child:followButton(isFollowed),),
-                      ):SizedBox(width: 0,),
-
-                    ]
-                  ),
+                    _isFF[(this.widget.post.userid) - 1]
+                        ? Container(
+                            margin:
+                                EdgeInsets.only(left: 20, top: 55, right: 20),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isFollowed = !isFollowed;
+                                });
+                              },
+                              child: followButton(isFollowed),
+                            ),
+                          )
+                        : SizedBox(
+                            width: 0,
+                          ),
+                  ]),
                 ],
               ),
               Spacer(),
@@ -745,7 +745,6 @@ class _WPostState extends State<WPost> {
               )
             ],
           ),
-          
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -780,13 +779,12 @@ class _WPostState extends State<WPost> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Align(
-                      alignment:Alignment.centerLeft ,
+                      alignment: Alignment.centerLeft,
                       child: Text(
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.6),
                           decorationStyle: TextDecorationStyle.wavy,
-                          
                         ),
                         textAlign: TextAlign.start,
                       ),
@@ -794,7 +792,6 @@ class _WPostState extends State<WPost> {
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 10,
               ),
@@ -928,23 +925,23 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
-  
-    Widget followButton(isFollowed){
-    return   Container(
-                        margin: EdgeInsets.only(left: 50),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: mPrimaryColor, width: 1),
-                        ),
-                        child: CircleAvatar(
-                          radius: 9,
-                          backgroundColor: isFollowed? mPrimaryColor:Colors.white,
-                          child: Center(
-                              child: Icon(  isFollowed? Icons.check :Icons.add,
-                                  size: 16, color: isFollowed? Colors.white: mPrimaryColor)),
-                        )
-                      );
+
+  Widget followButton(isFollowed) {
+    return Container(
+        margin: EdgeInsets.only(left: 50),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: mPrimaryColor, width: 1),
+        ),
+        child: CircleAvatar(
+          radius: 9,
+          backgroundColor: isFollowed ? mPrimaryColor : Colors.white,
+          child: Center(
+              child: Icon(isFollowed ? Icons.check : Icons.add,
+                  size: 16, color: isFollowed ? Colors.white : mPrimaryColor)),
+        ));
   }
+
   Widget activedisLikeButton(isActive) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
