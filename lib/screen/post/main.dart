@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   runApp(const MyApp());

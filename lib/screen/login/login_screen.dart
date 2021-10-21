@@ -6,6 +6,9 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/login/widget/login_button.dart';
 import 'package:qstar/screen/login/widget/login_form.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
+import 'package:qstar/screen/register/register_screen.dart';
+
+import 'forgotpassword.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,18 +16,29 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children:  <Widget>[
+        children: <Widget>[
           WelcomeBack(),
           LoginForm(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             alignment: Alignment.centerRight,
-            child: Text(
-              'Forgot password?',
-              style: TextStyle(color: mPrimaryColor),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) {
+                      return Forgotpassword();
+                    },
+                  ),
+                );
+              },
+              child: Text(
+                'Forgot password?',
+                style: TextStyle(color: mPrimaryColor),
+              ),
             ),
           ),
           SizedBox(
@@ -39,15 +53,22 @@ class LoginScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: RichText(
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: 'Don\'t have an account? '),
+                TextSpan(text: 'Don\'t you have an account? '),
                 TextSpan(
-                  text: 'Register',
+                  text: 'Signup',
                   style: TextStyle(
                     color: mPrimaryColor,
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            return RegisterScreen();
+                          },
+                        ),
+                      );
                     },
                 ),
               ]),

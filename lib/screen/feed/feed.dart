@@ -8,7 +8,8 @@ import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
-import 'package:qstar/screen/videocall/videocall.dart';
+import 'package:qstar/screen/videocall/home_page.dart';
+
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -26,6 +27,12 @@ List<User> _users = [
   User(id: 2, userName: "natig", storyImage: "", userImage: ""),
   User(id: 3, userName: "bini", storyImage: "", userImage: ""),
   User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
+  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
+  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
+  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
+  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
   User(id: 5, userName: "abrsh", storyImage: "", userImage: "")
 ];
 
@@ -143,6 +150,9 @@ class _FeedState extends State<Feed> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 15,
+            ),
             // Padding(
             //   padding: EdgeInsets.all(20),
             //   child: Container(
@@ -374,6 +384,30 @@ class _FeedState extends State<Feed> {
             SizedBox(
               height: 15,
             ),
+            Divider(),
+            Text(
+              'Top 10 Perfect Match for you',
+              style: TextStyle(
+                color: mPrimaryColor,
+                fontSize: 15,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Container(
+                height: 168,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    SizedBox(height: 5),
+                    Row(children: _users.map((e) => UserStories(e)).toList()),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              thickness: 1.0,
+            ),
             ..._posts.map((item) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -446,47 +480,103 @@ class UserStories extends StatefulWidget {
 class _UserStoriesState extends State<UserStories> {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.6 / 2,
-      child: Container(
-        margin: EdgeInsets.only(right: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-              image: AssetImage('assets/images/post${this.widget.user.id}.jpg'),
-              fit: BoxFit.cover),
-        ),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: Container(
+            margin: EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-                Colors.black.withOpacity(.9),
-                Colors.black.withOpacity(.1),
-              ])),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
-                    image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/profile${this.widget.user.id}.jpg'),
-                        fit: BoxFit.cover)),
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/post${this.widget.user.id}.jpg'),
+                  fit: BoxFit.cover),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient:
+                      LinearGradient(begin: Alignment.bottomRight, colors: [
+                    Colors.black.withOpacity(.9),
+                    Colors.black.withOpacity(.1),
+                  ])),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 38.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 60,
+                      height: 65,
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                '${this.widget.user.userName}',
-                style: TextStyle(color: Colors.white),
-              )
-            ],
+            ),
           ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0, left: 9),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(
+                  Icons.manage_accounts_sharp,
+                  size: 9,
+                  color: mPrimaryColor,
+                ),
+                SizedBox(
+                  width: 1,
+                ),
+                Text(
+                  '@betty',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 11,
+                  ),
+                ),
+              ]),
+              Row(children: <Widget>[
+                Icon(
+                  Icons.calendar_today,
+                  size: 9,
+                  color: mPrimaryColor,
+                ),
+                SizedBox(
+                  width: 1,
+                ),
+                Text(
+                  '20',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 11,
+                  ),
+                ),
+              ]),
+              Row(children: <Widget>[
+                Icon(
+                  Icons.location_on,
+                  size: 10,
+                  color: mPrimaryColor,
+                ),
+                SizedBox(
+                  width: 1,
+                ),
+                Text(
+                  'Addis Ababa',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 11,
+                  ),
+                ),
+              ])
+            ],
+          ),
+        )
+      ],
     );
   }
 }
@@ -543,7 +633,7 @@ class _UserAvatarState extends State<UserAvatar> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
-                                colors: [Color(0xFF9B2282), Color(0xFFEEA863)],
+                                colors: [mPrimaryColor, mPrimaryColor],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter)),
                         child: Padding(
@@ -602,14 +692,14 @@ class _UserAvatarState extends State<UserAvatar> {
                         Text(
                           "12k",
                           style: TextStyle(
-                              fontSize: 18,
-                              color: mPrimaryColor,
+                              fontSize: 15,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "followers",
                           style: const TextStyle(
-                              fontSize: 14, color: mPrimaryColor),
+                              fontSize: 12, color: Colors.black),
                         ),
                       ],
                     ),
@@ -755,8 +845,11 @@ class _WPostState extends State<WPost> {
                     children: [
                       SizedBox(height: 10),
                       Text(
-                          '${_users.where((element) => element.id == this.widget.post.userid).first.userName}',
+                          '@${_users.where((element) => element.id == this.widget.post.userid).first.userName}     129K',
                           style: TextStyle(color: Colors.black)),
+                      SizedBox(
+                        height: 5,
+                      ),
                       RatingBarIndicator(
                         rating: 2.75,
                         itemBuilder: (context, index) => Icon(
@@ -777,17 +870,14 @@ class _WPostState extends State<WPost> {
               Container(
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.6),
-                          decorationStyle: TextDecorationStyle.wavy,
-                        ),
-                        textAlign: TextAlign.start,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.6),
+                        decorationStyle: TextDecorationStyle.wavy,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

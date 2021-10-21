@@ -12,7 +12,7 @@ class WelcomeBack extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Image.asset(
         'assets/images/q.png',
-        height: 200,
+        height: 140,
         width: 200,
       ),
     );

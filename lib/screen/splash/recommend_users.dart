@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/main/main_screen.dart';
-import 'package:qstar/screen/videocall/videocall.dart';
 
 void main() {
   runApp(const Recommend());

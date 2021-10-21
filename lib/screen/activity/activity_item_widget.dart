@@ -24,7 +24,9 @@ class ActivityItemWidget extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14)),
                           TextSpan(
                               text: ' liked your photo.',
                               style: Theme.of(context).textTheme.subtitle1),
@@ -37,11 +39,12 @@ class ActivityItemWidget extends StatelessWidget {
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onBackground
-                                          .withOpacity(0.56)))
+                                          .withOpacity(0.56),
+                                      fontSize: 14))
                         ])))),
                 Container(
-                  width: 56,
-                  height: 56,
+                  width: 40,
+                  height: 40,
                   decoration: ShapeDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/images/2.jpg'),

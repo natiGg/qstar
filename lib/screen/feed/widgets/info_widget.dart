@@ -23,13 +23,15 @@ class InfoWidget extends StatelessWidget {
               )),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(top: 4, bottom: 4),
+            padding: EdgeInsets.only(
+              top: 0,
+            ),
           ),
           InkWell(
             child: Container(
               child: Text(
                 'View all 4 comment',
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               padding: EdgeInsets.symmetric(vertical: 5),
             ),

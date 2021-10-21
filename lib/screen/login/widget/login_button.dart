@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/splash/recommend_users.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
-    Key ?key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -21,9 +22,7 @@ class LoginButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) {
-                return Recommend();
-              },
+              builder: (context) => MyHomePage(),
             ),
           );
         },

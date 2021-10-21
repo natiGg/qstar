@@ -107,7 +107,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
-                    "Betty G zonozonka",
+                    "Betty",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                   ),
                 ),

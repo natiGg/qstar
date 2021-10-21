@@ -6,25 +6,27 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
 
-
 class RegisterScreen extends StatelessWidget {
-    const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Column(
-mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically,
-        children:  <Widget>[
-          Text("Sign Up",style: TextStyle( // we use the [TextStyle] widget to customize text
-            color: mPrimaryColor, // set the color
-            fontSize: 32.0, // and the font size
-          ),),
+        mainAxisAlignment:
+            MainAxisAlignment.center, //Center Column contents vertically,
+        children: <Widget>[
+          Text(
+            "Sign Up",
+            style: TextStyle(
+              // we use the [TextStyle] widget to customize text
+              color: mPrimaryColor, // set the color
+              fontSize: 32.0,
+              fontFamily: 'font1', // and the font size
+            ),
+          ),
           SizedBox(height: 20),
           RegisterForm(),
-
-      
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 45,
@@ -33,16 +35,18 @@ mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically
             alignment: Alignment.center,
             child: RichText(
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(text: 'By tapping sign up & accept you acknowledge that you have read the privacy policy and agree to the Term of Service.'),
                 TextSpan(
-                  text: 'Next',
+                    text:
+                        'By tapping Next  & accept you acknowledge that you have read the privacy policy and agree to the Term of Service.'),
+                TextSpan(
+                  text: 'See More',
                   style: TextStyle(
                     color: mPrimaryColor,
                   ),
-                
-                  recognizer: TapGestureRecognizer()..onTap = () {
-                    Navigator.pop(context);
-                  },
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pop(context);
+                    },
                 ),
               ]),
             ),
@@ -52,5 +56,4 @@ mainAxisAlignment: MainAxisAlignment.center, //Center Column contents vertically
       ),
     );
   }
-
 }

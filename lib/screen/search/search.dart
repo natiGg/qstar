@@ -44,7 +44,6 @@ class Search extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  _tagItem("filter All"),
                   _tagItem("User"),
                   _tagItem("Video"),
                   _tagItem("Posts"),
@@ -54,27 +53,6 @@ class Search extends StatelessWidget {
               ),
             ),
           ),
-          SliverStaggeredGrid.count(
-            crossAxisCount: 3,
-            mainAxisSpacing: 1,
-            crossAxisSpacing: 1,
-            children: List.generate(
-              8,
-              (int i) {
-                return _gridItem(i);
-              },
-            ),
-            staggeredTiles: List.generate(
-              (10),
-              (int index) {
-                int remain = index % 10;
-                if (remain == 1 || remain == 11) {
-                  return StaggeredTile.count(2, 2);
-                }
-                return StaggeredTile.count(1, 1);
-              },
-            ),
-          )
         ],
       ),
     );

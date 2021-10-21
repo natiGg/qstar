@@ -18,12 +18,12 @@ class IconsApp {
   static const String icq = 'assets/icons/q.svg';
   static const String icqslected = 'assets/icons/q.svg';
 
-  static const String icFavorite = 'assets/icons/ic_favorite.svg';
-  static const String icFavoriteSelected =
-      'assets/icons/ic_favorite_selected.svg';
+  static const String icFavorite = 'assets/icons/noti.svg';
+  static const String icFavoriteSelected = 'assets/icons/notis.svg';
 
   static const String icAccount = 'assets/icons/ic_account.svg';
-  static const String icAccountSelected ='assets/icons/ic_account_selected.svg';
+  static const String icAccountSelected =
+      'assets/icons/ic_account_selected.svg';
   static const String icShop = 'assets/icons/ic_shop.svg';
   static const String icFood = 'assets/icons/ic_food.svg';
   static const String icStyle = 'assets/icons/ic_style.svg';

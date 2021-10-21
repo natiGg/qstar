@@ -5,14 +5,14 @@ import 'package:qstar/screen/register/birthday.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({
-    Key ?key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const textStyle = const TextStyle(
-              color: Colors.white,
-            );
+      color: Colors.white,
+    );
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: FlatButton(
@@ -23,8 +23,8 @@ class RegisterButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) {
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) {
                 return BirthDay();
               },
             ),

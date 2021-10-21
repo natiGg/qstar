@@ -8,7 +8,6 @@ import 'package:qstar/widget/utils.dart';
 Widget profileStats({required Size screen, required Color color}) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
-   
     child: Column(
       children: <Widget>[
         Container(
@@ -21,8 +20,9 @@ Widget profileStats({required Size screen, required Color color}) {
             ),
           ),
         ),
-                    SizedBox(height: 15,),
-
+        SizedBox(
+          height: 10,
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 5.0),
           child: RatingBarIndicator(
@@ -36,21 +36,22 @@ Widget profileStats({required Size screen, required Color color}) {
             direction: Axis.horizontal,
           ),
         ),
-                    SizedBox(height: 10,),
-
+        SizedBox(
+          height: 10,
+        ),
         Center(
           child: Padding(
             padding: const EdgeInsets.all(2.0),
             child: Text(
-              "@Betty G zonozonka",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+              "@Betty",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
         ),
         bio(primaryColor: mPrimaryColor),
-
-                    SizedBox(height: 15,),
-
+        SizedBox(
+          height: 15,
+        ),
         Container(
           width: screen.width - 100 - 20,
           child: Row(
@@ -76,12 +77,10 @@ Widget bio({required Color primaryColor}) {
     padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
     child: Card(
       elevation: 2,
-    
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-        
           RichText(
             text: TextSpan(
               children: [
@@ -91,11 +90,9 @@ Widget bio({required Color primaryColor}) {
                     color: Colors.black,
                   ),
                 ),
-                
               ],
             ),
           ),
-        
         ],
       ),
     ),
@@ -110,19 +107,16 @@ Widget Preferences({required Color primaryColor}) {
       width: 300,
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: mPrimaryColor)
-        
-      ),
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: mPrimaryColor)),
       child: FlatButton(
-        onPressed: (){},
+        onPressed: () {},
         child: Center(
             child: Text(
           'Perfect match preferences',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: mPrimaryColor
-            ,
+            color: mPrimaryColor,
           ),
         )),
       ),
@@ -183,25 +177,25 @@ Widget SocialMedia() {
       Container(
         width: 40,
         height: 30,
-
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Icon(
-            FontAwesome.bookmark_o,
-            size: 20,
-            color: mPrimaryColor,
+          child: Image(
+            image: new AssetImage("assets/images/yt.png"),
+            width: 20,
+            height: 20,
           ),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(width: 10,),
+      SizedBox(
+        width: 10,
+      ),
       Container(
         width: 40,
         height: 30,
-
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
@@ -215,12 +209,12 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(width: 10,),
-      
+      SizedBox(
+        width: 10,
+      ),
       Container(
         width: 40,
         height: 30,
-
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
@@ -234,12 +228,12 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-            SizedBox(width: 10,),
-
+      SizedBox(
+        width: 10,
+      ),
       Container(
         width: 40,
         height: 30,
-
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
@@ -300,13 +294,10 @@ Widget profileAvatar({
             child: Container(
               height: height, // 150,
               width: width, //150,
-          
+
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 3,
-                    color: mPrimaryColor
-                  )),
+                  border: Border.all(width: 3, color: mPrimaryColor)),
             ),
           ),
           Align(

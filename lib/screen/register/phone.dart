@@ -53,18 +53,11 @@ class _SetPhoneState extends State<SetPhone> {
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
                 color: mPrimaryColor, // set the color
-                fontSize: 25.0, // and the font size
+                fontSize: 25.0,
+                fontFamily: 'font1', // and the font size
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              "Sign up with phone instead",
-              style: TextStyle(
-                // we use the [TextStyle] widget to customize text
-                color: mPrimaryColor, // set the color
-                fontSize: 10.0, // and the font size
-              ),
-            ),
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
@@ -115,20 +108,7 @@ class _SetPhoneState extends State<SetPhone> {
               alignment: Alignment.center,
               child: RichText(
                 text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                  TextSpan(text: "We'll send you an SMS & verification code"),
-                  TextSpan(
-                      text:
-                          'By tapping sign up & accept you acknowledge that you have read the privacy policy and agree to the Term of Service.'),
-                  TextSpan(
-                    text: 'Next',
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.pop(context);
-                      },
-                  ),
+                  TextSpan(text: "We'll send you an SMS  verification code"),
                 ]),
               ),
             ),
@@ -142,8 +122,8 @@ class _SetPhoneState extends State<SetPhone> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) {
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) {
                         return Verification();
                       },
                     ),
