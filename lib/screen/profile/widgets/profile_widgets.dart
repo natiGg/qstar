@@ -98,7 +98,6 @@ Widget bio({required Color primaryColor}) {
     ),
   );
 }
-
 Widget Preferences({required Color primaryColor}) {
   return Container(
     color: Colors.white,
@@ -124,7 +123,6 @@ Widget Preferences({required Color primaryColor}) {
     ),
   );
 }
-
 Widget editProfile(
     {@required Color? primaryColor, required Color primaryColorDark}) {
   return Container(

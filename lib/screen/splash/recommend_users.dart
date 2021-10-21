@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 
-
 void main() {
   runApp(const Recommend());
 }

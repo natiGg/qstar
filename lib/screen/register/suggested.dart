@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
@@ -120,7 +122,6 @@ class Suggested extends StatelessWidget {
     );
   }
 }
-
 class SuggestedUsers extends StatelessWidget {
   final User user;
 
