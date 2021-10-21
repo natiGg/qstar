@@ -106,14 +106,14 @@ class _FeedState extends State<Feed> {
             icon: Icon(Icons.video_call),
             color: mPrimaryColor,
             onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   PageRouteBuilder(
-              //     pageBuilder: (context, animation1, animation2) =>
-              //         GroupCallScreen(),
-              //     transitionDuration: Duration.zero,
-              //   ),
-              // );
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      GroupCallScreen(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
@@ -870,17 +870,14 @@ class _WPostState extends State<WPost> {
               Container(
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.6),
-                          decorationStyle: TextDecorationStyle.wavy,
-                        ),
-                        textAlign: TextAlign.start,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ",
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.6),
+                        decorationStyle: TextDecorationStyle.wavy,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

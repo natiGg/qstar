@@ -2,14 +2,6 @@
 
     package="com.example.qstar">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-=======
->>>>>>> 03c870b8b8735408616d6d100e7d6cb799a40ecf
    <application
         android:requestLegacyExternalStorage="true"
         android:label="qstar"
