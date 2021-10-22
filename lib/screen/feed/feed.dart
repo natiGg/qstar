@@ -667,7 +667,6 @@ class _FeedState extends State<Feed> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
-                                 
             
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
