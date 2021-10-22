@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'category_selector.dart';
 import 'favorite_contacts.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
+class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -37,19 +33,46 @@ class _HomeScreenState extends State<HomeScreen> {
             fontFamily: 'font1',
           ),
         ),
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            iconSize: 30.0,
-            color: mPrimaryColor,
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Column(
         children: <Widget>[
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 1),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.black38.withAlpha(10),
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search ",
+                      hintStyle: TextStyle(
+                        color: Colors.black.withAlpha(120),
+                      ),
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (String keyword) {},
+                  ),
+                ),
+                Icon(
+                  Icons.search,
+                  color: Colors.black.withAlpha(120),
+                )
+              ],
+            ),
+          ),
           CategorySelector(),
+          SizedBox(
+            height: 5,
+          ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -67,6 +90,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Navigator.pushReplacement(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation1, animation2) => Qvideoscreen(),
+          //     transitionDuration: Duration.zero,
+          //   ),
+          // );
+        },
+        label: const Text('Friends'),
+        icon: const Icon(FontAwesome.user),
+        backgroundColor: mPrimaryColor,
       ),
     );
   }

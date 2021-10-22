@@ -8,12 +8,12 @@ class CategorySelector extends StatefulWidget {
 
 class _CategorySelectorState extends State<CategorySelector> {
   int selectedIndex = 0;
-  final List<String> categories = ['Messages', 'Online', 'NearBy'];
+  final List<String> categories = ['Friends', 'Contact', 'NearBy', "Match"];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90.0,
+      height: 90,
       color: Colors.white,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -27,14 +27,14 @@ class _CategorySelectorState extends State<CategorySelector> {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 30.0,
+                horizontal: 18.0,
+                vertical: 20.0,
               ),
               child: Text(
                 categories[index],
                 style: TextStyle(
                   color: index == selectedIndex ? mPrimaryColor : Colors.grey,
-                  fontSize: 24.0,
+                  fontSize: 17.0,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                 ),

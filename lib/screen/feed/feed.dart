@@ -8,7 +8,7 @@ import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
-import 'package:qstar/screen/videocall/home_page.dart';
+import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
@@ -113,7 +113,7 @@ class _FeedState extends State<Feed> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      GroupCallScreen(),
+                      PersonalInfo(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -136,14 +136,17 @@ class _FeedState extends State<Feed> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        HomeScreen(),
-                    transitionDuration: Duration.zero,
-                  ),
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
                 );
+                // Navigator.pushReplacement(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) =>
+                //         HomeScreen(),
+                //     transitionDuration: Duration.zero,
+                //   ),
+                // );
               },
               icon: Icon(Icons.send_outlined),
               color: mPrimaryColor),
@@ -397,14 +400,6 @@ class _FeedState extends State<Feed> {
                             label: Text('Photo'),
                           ),
                           const VerticalDivider(width: 8.0),
-                          FlatButton.icon(
-                            onPressed: () => print('Room'),
-                            icon: const Icon(
-                              Icons.video_call,
-                              color: Colors.purpleAccent,
-                            ),
-                            label: Text('Room'),
-                          ),
                         ],
                       ),
                     ),

@@ -47,8 +47,8 @@ class _ChatScreenState extends State<ChatScreen> {
             message.time,
             style: TextStyle(
               color: Colors.blueGrey,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w100,
             ),
           ),
           SizedBox(height: 8.0),
@@ -56,8 +56,8 @@ class _ChatScreenState extends State<ChatScreen> {
             message.text,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
+              fontSize: 14.0,
+              fontWeight: FontWeight.w200,
             ),
           ),
         ],
@@ -126,8 +126,14 @@ class _ChatScreenState extends State<ChatScreen> {
               color: mPrimaryColor,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      HomeScreen(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }),
         title: Text(
           widget.user.name,

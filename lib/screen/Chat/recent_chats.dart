@@ -25,12 +25,14 @@ class RecentChats extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final Message chat = chats[index];
               return GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => ChatScreen(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        ChatScreen(
                       user: chat.sender,
                     ),
+                    transitionDuration: Duration.zero,
                   ),
                 ),
                 child: Container(
@@ -62,8 +64,8 @@ class RecentChats extends StatelessWidget {
                                 chat.sender.name,
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w200,
                                 ),
                               ),
                               SizedBox(height: 5.0),
@@ -73,8 +75,8 @@ class RecentChats extends StatelessWidget {
                                   chat.text,
                                   style: TextStyle(
                                     color: Colors.blueGrey,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -104,7 +106,7 @@ class RecentChats extends StatelessWidget {
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'NEW',
+                                    '3',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12.0,

@@ -99,40 +99,7 @@ Widget bio({required Color primaryColor}) {
     ),
   );
 }
-Widget Preferences({required Color primaryColor,required BuildContext context}) {
-  return Container(
-    color: Colors.white,
-    padding: const EdgeInsets.only(left: 10, right: 10),
-    child: Container(
-      height: 30,
-      width: 300,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: mPrimaryColor)),
-      child: FlatButton(
-        onPressed: () {
-           Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return PersonalInfo();
-                    },
-                  ),
-                );
-        },
-        child: Center(
-            child: Text(
-          'Perfect match preferences',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: mPrimaryColor,
-          ),
-        )),
-      ),
-    ),
-  );
-}
+
 Widget editProfile(
     {@required Color? primaryColor, required Color primaryColorDark}) {
   return Container(

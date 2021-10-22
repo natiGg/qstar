@@ -131,10 +131,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 15,
             ),
-            Preferences(primaryColor: _primaryColor,context:context),
-            SizedBox(
-              height: 15,
-            ),
             Divider(
               height: 2,
               color: Colors.grey[500],
