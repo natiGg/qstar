@@ -18,12 +18,21 @@ class Forgotpassword extends StatelessWidget {
         children: <Widget>[
           WelcomeBack(),
           Text(
-            "What's your email address",
+            "Please Enter  email address",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
               color: mPrimaryColor, // set the color
               fontSize: 25.0,
               fontFamily: 'font1', // and the font size
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            "Confirmation  will be sent to your email",
+            style: TextStyle(
+              // we use the [TextStyle] widget to customize text
+              color: mPrimaryColor, // set the color
+              fontSize: 10.0, // and the font size
             ),
           ),
           SizedBox(height: 20),

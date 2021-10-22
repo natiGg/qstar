@@ -13,7 +13,6 @@ import 'package:qstar/screen/profile/editprofile.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -78,60 +77,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: <Widget>[
             Container(
-               decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.only(
-     
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(10)
-    ),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.5),
-        spreadRadius: 5,
-        blurRadius: 7,
-        offset: Offset(0, 3), // changes position of shadow
-      ),
-    ],
-  ),
-              child: Column(
-              children: [
-                profileStats(screen: _screen, color: mPrimaryColor), SizedBox(height: 15,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: (){
-                            Navigator.pushReplacement(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder:
-                                            (context, animation1, animation2) =>
-                                                EditProfilePage(),
-                                        transitionDuration: Duration.zero,
-                                      ),
-                                    );
-                      },
-                      child: editProfile(
-                        primaryColorDark: _primaryColorDark,
-                        primaryColor: mPrimaryColor,
-                      ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
                     ),
-                  ),
+                  ],
                 ),
-                SocialMedia()
-              ],
+                child: Column(
+                  children: [
+                    profileStats(screen: _screen, color: mPrimaryColor),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            EditProfilePage(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                              child: editProfile(
+                                primaryColorDark: _primaryColorDark,
+                                primaryColor: mPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SocialMedia()
+                      ],
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 15,
             ),
-              ],
-            )),
-           SizedBox(height: 15,),
-            Preferences(primaryColor: _primaryColor),
-            
-            storyHighlight(primaryColor: mPrimaryColor),
+            Preferences(primaryColor: _primaryColor,context:context),
+            SizedBox(
+              height: 15,
+            ),
             Divider(
               height: 2,
               color: Colors.grey[500],

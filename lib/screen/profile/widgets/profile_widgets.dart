@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 import 'package:qstar/widget/utils.dart';
 
@@ -98,7 +99,7 @@ Widget bio({required Color primaryColor}) {
     ),
   );
 }
-Widget Preferences({required Color primaryColor}) {
+Widget Preferences({required Color primaryColor,required BuildContext context}) {
   return Container(
     color: Colors.white,
     padding: const EdgeInsets.only(left: 10, right: 10),
@@ -110,7 +111,16 @@ Widget Preferences({required Color primaryColor}) {
           borderRadius: BorderRadius.circular(5),
           border: Border.all(color: mPrimaryColor)),
       child: FlatButton(
-        onPressed: () {},
+        onPressed: () {
+           Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) {
+                      return PersonalInfo();
+                    },
+                  ),
+                );
+        },
         child: Center(
             child: Text(
           'Perfect match preferences',

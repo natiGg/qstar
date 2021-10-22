@@ -26,6 +26,9 @@ class _CategoryVideo2 extends State<CategoryVideo>
     'assets/images/profile3.jpg',
     'assets/images/profile4.jpg',
     'assets/images/profile5.jpg',
+    'assets/images/profile2.jpg',
+    'assets/images/profile1.jpg',
+    'assets/images/profile4.jpg',
   ];
 
   @override
@@ -33,31 +36,17 @@ class _CategoryVideo2 extends State<CategoryVideo>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 8,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
+        leadingWidth: 100,
         backgroundColor: Colors.white,
-        title: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 0.5),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Container(
-            height: 40,
-            width: 800,
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                border: InputBorder.none,
-              ),
+        leading: Container(
+          padding: EdgeInsets.only(left: 20, top: 15),
+          width: 100,
+          child: Text(
+            "Q video",
+            style: TextStyle(
+              color: mPrimaryColor,
+              fontSize: 27,
+              fontFamily: 'font1',
             ),
           ),
         ),
@@ -68,7 +57,7 @@ class _CategoryVideo2 extends State<CategoryVideo>
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Expanded(
                   child: GridView.count(
@@ -161,6 +150,20 @@ class _CategoryVideo2 extends State<CategoryVideo>
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => Qvideoscreen(),
+              transitionDuration: Duration.zero,
+            ),
+          );
+        },
+        label: const Text('Random'),
+        icon: const Icon(Icons.compare_arrows),
+        backgroundColor: mPrimaryColor,
       ),
     );
   }

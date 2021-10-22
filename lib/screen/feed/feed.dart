@@ -414,21 +414,26 @@ class _FeedState extends State<Feed> {
               height: 15,
             ),
             Divider(),
-            Text(
-              'Top 10 Perfect Match for you',
-              style: TextStyle(
-                color: mPrimaryColor,
-                fontSize: 15,
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Text(
+                  'Top 10 Perfect Match for you',
+                  style: TextStyle(
+                      color: mPrimaryColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
+            ]),
+
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(25),
               child: Container(
-                height: 168,
+                height: 260,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    SizedBox(height: 5),
                     Row(children: _users.map((e) => UserStories(e)).toList()),
                   ],
                 ),
@@ -439,7 +444,7 @@ class _FeedState extends State<Feed> {
             ),
             ..._posts.map((item) {
               return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 18.0),
                 child: WPost(
                   post: item,
                 ),
@@ -759,23 +764,20 @@ class _UserStoriesState extends State<UserStories> {
                     Colors.black.withOpacity(.9),
                     Colors.black.withOpacity(.1),
                   ])),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 38.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: 60,
-                      height: 65,
-                    ),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 110,
+                    height: 200,
+                  ),
+                ],
               ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 5.0, left: 9),
+          padding: const EdgeInsets.only(top: 1.0, left: 9),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -1102,7 +1104,7 @@ class _WPostState extends State<WPost> {
                     children: [
                       SizedBox(height: 10),
                       Text(
-                          '@${_users.where((element) => element.id == this.widget.post.userid).first.userName}     129K',
+                          '${_users.where((element) => element.id == this.widget.post.userid).first.userName}     129K',
                           style: TextStyle(color: Colors.black)),
                       SizedBox(
                         height: 5,
@@ -1249,7 +1251,10 @@ class _WPostState extends State<WPost> {
           Padding(
             padding: const EdgeInsets.all(2.0),
             child: InfoWidget(),
-          )
+          ),
+          Divider(
+            thickness: 1.0,
+          ),
         ],
       ),
     );
