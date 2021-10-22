@@ -21,7 +21,6 @@ class LoginForm extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0)),
             child: TextFormField(
               obscureText: false,
-              autofocus: true,
               decoration: InputDecoration(
                   prefixText: "@",
                   hintText: "Username",

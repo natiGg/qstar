@@ -103,6 +103,40 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
               }
             },
           ),
+          GestureDetector(
+            child: Container(
+              color: mPrimaryColor,
+              width: _screenWidth / 3,
+              height: widget.height,
+              child: Stack(
+                children: <Widget>[
+                  Align(
+                    child: Icon(
+                      Feather.save,
+                      color: isTag ? _selectedColor : _unSelectedColor,
+                    ),
+                  ),
+                  isTag
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 2,
+                            color: mPrimaryColor,
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ),
+            onTap: () {
+              if (!isTag) {
+                setState(() {
+                  setFlags(tabName: 'tag');
+                  widget.onTap(2);
+                });
+              }
+            },
+          ),
         ],
       ),
     );
