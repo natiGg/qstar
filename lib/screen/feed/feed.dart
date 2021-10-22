@@ -8,7 +8,6 @@ import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
-import 'package:qstar/screen/videocall/home_page.dart';
 
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
@@ -109,14 +108,14 @@ class _FeedState extends State<Feed> {
             icon: Icon(FontAwesome.heartbeat),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      GroupCallScreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              // Navigator.pushReplacement(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, animation1, animation2) =>
+              //         GroupCallScreen(),
+              //     transitionDuration: Duration.zero,
+              //   ),
+              // );
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(

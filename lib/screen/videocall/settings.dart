@@ -1,3 +1,0 @@
-const APP_ID = 'd2cdd8fdca29481282aff883d7236395';
-const Token =
-    '006d2cdd8fdca29481282aff883d7236395IAB04CVgu8HSaNVrz0+cSRjjnAWqo9L79hmKvMxpzsr5TbGeB4IAAAAAEADmp+kbrVlxYQEAAQAzWnFh';

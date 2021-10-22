@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/profile/PerfectMatch/backgroundinfo.dart';
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform2.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
@@ -14,38 +13,38 @@ import 'package:email_validator/email_validator.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 
 
-class PersonalInfo2 extends StatefulWidget {
+class BackgroundInfo extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<PersonalInfo2> {
+class _MyHomePageState extends State<BackgroundInfo> {
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue = 'Ortodox';
+    String? dropdownvalue = 'Education';
     String newValue;
     var items = [
-      'Ortodox',
+      'Education',
       'Muslim',
       'Protestant',
       'catolic',
       'Others',
     ];
 
-    String? dropdownvalue2 = 'English';
+    String? dropdownvalue2 = 'Employmnet';
     String newValue2;
     var items2 = [
-      'English',
+      'Employmnet',
       'Arabic ',
       'Somali',
       'Amahric',
       'French',
     ];
 
-    String? dropdownvalue3 = 'Music';
+    String? dropdownvalue3 = 'occupation';
     String newValue3;
     var items3 = [
-      'Music',
+      'occupation',
       'Art ',
       'Sport',
       'Reading',
@@ -87,7 +86,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 ),
                 Center(
                   child:Text(
-              "General Information",
+              "Background Information",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
                 color: mPrimaryColor, // set the color
@@ -104,7 +103,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
 
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Live In"),
+                      hint: Text("Education"),
                       value: dropdownvalue,
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: items.map((String items) {
@@ -118,23 +117,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   )),
-                    TextFieldWidget(
-                  label: 'Height',
-                  text: "1.68",
-                  onChanged: (name) {},
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  alignment: Alignment.center,
-                  child: RichText(
-                    text:
-                        TextSpan(style: TextStyle(color: Colors.grey), children: [
-                      TextSpan(
-                          text:
-                              "By your height we can match your account with other account"),
-                    ]),
-                  ),
-                ),
+                  
                 const SizedBox(height: 24),
 
               Container(
@@ -143,7 +126,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
 
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Language"),
+                      hint: Text("Employemnet"),
                       value: dropdownvalue2,
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: items2.map((String items2) {
@@ -165,7 +148,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                         TextSpan(style: TextStyle(color: Colors.grey), children: [
                       TextSpan(
                           text:
-                              "Choose your native languagem please"),
+                              "Choose your employement type please"),
                     ]),
                   ),
                 ),
@@ -177,7 +160,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
 
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                      hint: Text("Hobies"),
+                      hint: Text("Occupation"),
                       value: dropdownvalue3,
                       icon: Icon(Icons.keyboard_arrow_down),
                       items: items3.map((String items3) {
@@ -191,24 +174,8 @@ class _MyHomePageState extends State<PersonalInfo2> {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   )),
-                   Container(
-                  padding: const EdgeInsets.all(8),
-                  alignment: Alignment.center,
-                  child: RichText(
-                    text:
-                        TextSpan(style: TextStyle(color: Colors.grey), children: [
-                      TextSpan(
-                          text:
-                              "Choose your Hobbies "),
-                    ]),
-                  ),
-                ),
-             const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Gender',
-                  text: "natiG",
-                  onChanged: (email) {},
-                ),
+                
+         
                 Container(
                   padding: const EdgeInsets.all(8),
                   alignment: Alignment.center,
@@ -217,23 +184,14 @@ class _MyHomePageState extends State<PersonalInfo2> {
                         TextSpan(style: TextStyle(color: Colors.grey), children: [
                       TextSpan(
                           text:
-                              "Choose Your gender"),
+                              "Choose Your occupation"),
                     
                     ]),
                   ),
                 ),
            
-                TextFieldWidget(
-                  label: 'location',
-                  text: "sheger",
-                  onChanged: (email) {},
-                ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Birth day',
-                  text: "mnshe nw",
-                  onChanged: (email) {},
-                ),
+            
                 Container(
                   padding: const EdgeInsets.all(8),
                   alignment: Alignment.center,
@@ -242,36 +200,13 @@ class _MyHomePageState extends State<PersonalInfo2> {
                         TextSpan(style: TextStyle(color: Colors.grey), children: [
                       TextSpan(
                           text:
-                              "please make sure to put your correct birth date.."),
+                              "please make sure to put your correct occupation.."),
                     ]),
                   ),
                 ),
-              Container(
-                  width: 400.0,
-                   padding: const EdgeInsets.all(8),
-
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      hint: Text("Live In"),
-                      value: dropdownvalue,
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      items: items.map((String items) {
-                        return DropdownMenuItem(value: items, child: Text(items));
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          dropdownvalue = newValue as String;
-                        });
-                      },
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  )),
+         
                const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Phone',
-                  text: "+25194555555",
-                  onChanged: (email) {},
-                ),
+               
               SizedBox(height: 10),
               Container(
                   padding: const EdgeInsets.all(8),
@@ -281,10 +216,14 @@ class _MyHomePageState extends State<PersonalInfo2> {
                   ),
                   color: mPrimaryColor,
                   onPressed: () {
-                   
-                  Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2){
-                      return BackgroundInfo();
-                  }));
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) {
+                          return BackgroundInfo();
+                        },
+                      ),
+                    );
                   },
                   child: Container(
                     width: double.infinity,
