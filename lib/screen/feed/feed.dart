@@ -108,14 +108,14 @@ class _FeedState extends State<Feed> {
             icon: Icon(FontAwesome.heartbeat),
             color: mPrimaryColor,
             onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   PageRouteBuilder(
-              //     pageBuilder: (context, animation1, animation2) =>
-              //         GroupCallScreen(),
-              //     transitionDuration: Duration.zero,
-              //   ),
-              // );
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      GroupCallScreen(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
