@@ -186,32 +186,34 @@ class _FeedState extends State<Feed> {
                                 AssetImage('assets/images/profile1.jpg')),
                         const SizedBox(width: 8.0),
 
-                        Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.only(left: 10, right: 10),
+                        Expanded(
                           child: Container(
-                            height: 40,
-                            width: 300,
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                    color: Colors.grey.withOpacity(0.9))),
-                            child: FlatButton(
-                              onPressed: () {
-                                _postModal(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'What\'s on your mind?',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.withOpacity(0.9),
-                                      ),
-                                    )),
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Container(
+                              height: 40,
+                              width: 300,
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: Colors.grey.withOpacity(0.9))),
+                              child: FlatButton(
+                                onPressed: () {
+                                  _postModal(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'What\'s on your mind?',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.withOpacity(0.9),
+                                        ),
+                                      )),
+                                ),
                               ),
                             ),
                           ),
@@ -507,223 +509,227 @@ class _FeedState extends State<Feed> {
         builder: (BuildContext bc) {
           return Container(
               height: MediaQuery.of(context).size.height,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/profile1.jpg')),
-                        const SizedBox(width: 8.0),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Text(
-                                        "@Betty",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/profile1.jpg')),
+                          const SizedBox(width: 8.0),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text(
+                                          "@Betty",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                                                Row(
-                                  children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Container(
-                                    width: 100,
-                                    height: 50,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                   
-                                    child: Column(
-                                      children: [
-                                        DropdownButton<String>(
-                                          onChanged: (value) {
-                                            setState(() {});
-                                          },
-
-                                          // Hide the default underline
-                                          underline: Container(),
-                                          hint: Align(
-                                              alignment: Alignment.center,
+                                                                  Row(
+                                    children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 50,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                     
+                                      child: Column(
+                                        children: [
+                                          DropdownButton<String>(
+                                            onChanged: (value) {
+                                              setState(() {});
+                                            },
+                    
+                                            // Hide the default underline
+                                            underline: Container(),
+                                            hint: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                              'Public',
+                                              style: TextStyle(
+                                                color: mPrimaryColor,
+                                                fontSize: 10
+                                              ),
+                                            )),
+                                            icon: Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Icon(
+                                                Icons.arrow_drop_down,
+                                                color: mPrimaryColor,
+                                                
+                                              ),
+                                            ),
+                                            isExpanded: true,
+                    
+                                            // The list of options
+                                            items: _animals
+                                                .map((e) => DropdownMenuItem(
+                                                      child: Container(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          e,
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        ),
+                                                      ),
+                                                      value: e,
+                                                    ))
+                                                .toList(),
+                    
+                                            // Customize the selected item
+                                            selectedItemBuilder:
+                                                (BuildContext context) =>
+                                                    _animals
+                                                        .map((e) => Center(
+                                                              child: Text(
+                                                                e,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .amber,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .italic,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ))
+                                                        .toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                    ],
+                                  ),
+                                 Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 80, right: 10),
+                                    child: Expanded(
+                                      child: Container(
+                                        height: 40,
+                                        width: 80,
+                                        margin: EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
+                                            color: mPrimaryColor,
+                                            borderRadius: BorderRadius.circular(5),
+                                            border:
+                                                Border.all(color: mPrimaryColor)),
+                                        child: FlatButton(
+                                          onPressed: () {},
+                                          child: Center(
                                               child: Text(
-                                            'Public',
+                                            'Post',
                                             style: TextStyle(
-                                              color: mPrimaryColor,
-                                              fontSize: 10
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             ),
                                           )),
-                                          icon: Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Icon(
-                                              Icons.arrow_drop_down,
-                                              color: mPrimaryColor,
-                                              
-                                            ),
-                                          ),
-                                          isExpanded: true,
-
-                                          // The list of options
-                                          items: _animals
-                                              .map((e) => DropdownMenuItem(
-                                                    child: Container(
-                                                      alignment: Alignment
-                                                          .centerLeft,
-                                                      child: Text(
-                                                        e,
-                                                        style: TextStyle(
-                                                            fontSize: 12),
-                                                      ),
-                                                    ),
-                                                    value: e,
-                                                  ))
-                                              .toList(),
-
-                                          // Customize the selected item
-                                          selectedItemBuilder:
-                                              (BuildContext context) =>
-                                                  _animals
-                                                      .map((e) => Center(
-                                                            child: Text(
-                                                              e,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      18,
-                                                                  color: Colors
-                                                                      .amber,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ))
-                                                      .toList(),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                  ],
-                                ),
-                               Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 80, right: 10),
-                                  child: Container(
-                                    height: 40,
-                                    width: 80,
-                                    margin: EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                        color: mPrimaryColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border:
-                                            Border.all(color: mPrimaryColor)),
-                                    child: FlatButton(
-                                      onPressed: () {},
-                                      child: Center(
-                                          child: Text(
-                                        'Post',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      )),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                
-                      ],
-                    ),
-
-                    const Divider(height: 5.0, thickness: 0.5),
-                    SizedBox(
-                      height: 45,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        height: 50,
-                        child: Expanded(
-                          child: TextField(
-                            decoration: InputDecoration.collapsed(
-                              hintText: 'What\'s on your mind?',
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      
-                    ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-            
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FlatButton.icon(
-                            onPressed: () {
-                            },
-                            icon: const Icon(
-                              FontAwesome.video_camera,
-                              color: Colors.red,
-                            ),
-                            label: Text('Add your Video'),
-                          ),
-                          FlatButton.icon(
-                            onPressed: () => print('Photo'),
-                            icon: const Icon(
-                              FontAwesome.photo,
-                              color: Colors.green,
-                            ),
-                            label: Text(' Add Photo'),
-                          ),
-                          FlatButton.icon(
-                            onPressed: () => print('Room'),
-                            icon: const Icon(
-                              FontAwesome.user,
-                              color: mPrimaryColor,
-                            ),
-                            label: Text('Add People'),
-                          ),
-                            FlatButton.icon(
-                            onPressed: () => print('Room'),
-                            icon: const Icon(
-                              FontAwesome.smile_o,
-                              color: Colors.amber,
-                            ),
-                            label: Text('Feeling Activity'),
-                          ),
-                              FlatButton.icon(
-                            onPressed: () => print('Room'),
-                            icon: const Icon(
-                              FontAwesome.location_arrow,
-                              color: Colors.green,
-                            ),
-                            label: Text('Add  Location'),
-                          ),
+                                
                         ],
                       ),
-                    ),
-                                  ],
-                                ),
-                  ],
+                    
+                      const Divider(height: 5.0, thickness: 0.5),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          height: 50,
+                          child: Expanded(
+                            child: TextField(
+                              decoration: InputDecoration.collapsed(
+                                hintText: 'What\'s on your mind?',
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                      ),
+                                  SizedBox(
+                                    height: 200,
+                                    child: ListView(
+                                        scrollDirection: Axis.vertical,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              FlatButton.icon(
+                                                onPressed: () {
+                                                },
+                                                icon: const Icon(
+                                                  FontAwesome.video_camera,
+                                                  color: Colors.red,
+                                                ),
+                                                label: Text('Add your Video'),
+                                              ),
+                                              FlatButton.icon(
+                                                onPressed: () => print('Photo'),
+                                                icon: const Icon(
+                                                  FontAwesome.photo,
+                                                  color: Colors.green,
+                                                ),
+                                                label: Text(' Add Photo'),
+                                              ),
+                                              FlatButton.icon(
+                                                onPressed: () => print('Room'),
+                                                icon: const Icon(
+                                                  FontAwesome.user,
+                                                  color: mPrimaryColor,
+                                                ),
+                                                label: Text('Add People'),
+                                              ),
+                                                FlatButton.icon(
+                                                onPressed: () => print('Room'),
+                                                icon: const Icon(
+                                                  FontAwesome.smile_o,
+                                                  color: Colors.amber,
+                                                ),
+                                                label: Text('Feeling Activity'),
+                                              ),
+                                                  FlatButton.icon(
+                                                onPressed: () => print('Room'),
+                                                icon: const Icon(
+                                                  FontAwesome.location_arrow,
+                                                  color: Colors.green,
+                                                ),
+                                                label: Text('Add  Location'),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                    
+                                    ),
+                                  ),
+                    ],
+                  ),
                 ),
               ));
         });
