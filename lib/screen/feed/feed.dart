@@ -106,7 +106,7 @@ class _FeedState extends State<Feed> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
-            icon: Icon(Icons.video_call),
+            icon: Icon(FontAwesome.heartbeat),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.pushReplacement(
@@ -538,101 +538,101 @@ class _FeedState extends State<Feed> {
                                       ),
                                     ),
                                   ),
-                                                                  Row(
+                                  Row(
                                     children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                     
-                                      child: Column(
-                                        children: [
-                                          DropdownButton<String>(
-                                            onChanged: (value) {
-                                              setState(() {});
-                                            },
-                    
-                                            // Hide the default underline
-                                            underline: Container(),
-                                            hint: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                              'Public',
-                                              style: TextStyle(
-                                                color: mPrimaryColor,
-                                                fontSize: 10
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Container(
+                                          width: 100,
+                                          height: 50,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Column(
+                                            children: [
+                                              DropdownButton<String>(
+                                                onChanged: (value) {
+                                                  setState(() {});
+                                                },
+
+                                                // Hide the default underline
+                                                underline: Container(),
+                                                hint: Align(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Public',
+                                                      style: TextStyle(
+                                                          color: mPrimaryColor,
+                                                          fontSize: 10),
+                                                    )),
+                                                icon: Align(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  child: Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: mPrimaryColor,
+                                                  ),
+                                                ),
+                                                isExpanded: true,
+
+                                                // The list of options
+                                                items: _animals
+                                                    .map((e) =>
+                                                        DropdownMenuItem(
+                                                          child: Container(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Text(
+                                                              e,
+                                                              style: TextStyle(
+                                                                  fontSize: 12),
+                                                            ),
+                                                          ),
+                                                          value: e,
+                                                        ))
+                                                    .toList(),
+
+                                                // Customize the selected item
+                                                selectedItemBuilder:
+                                                    (BuildContext context) =>
+                                                        _animals
+                                                            .map((e) => Center(
+                                                                  child: Text(
+                                                                    e,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            18,
+                                                                        color: Colors
+                                                                            .amber,
+                                                                        fontStyle:
+                                                                            FontStyle
+                                                                                .italic,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ))
+                                                            .toList(),
                                               ),
-                                            )),
-                                            icon: Align(
-                                              alignment: Alignment.topCenter,
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: mPrimaryColor,
-                                                
-                                              ),
-                                            ),
-                                            isExpanded: true,
-                    
-                                            // The list of options
-                                            items: _animals
-                                                .map((e) => DropdownMenuItem(
-                                                      child: Container(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Text(
-                                                          e,
-                                                          style: TextStyle(
-                                                              fontSize: 12),
-                                                        ),
-                                                      ),
-                                                      value: e,
-                                                    ))
-                                                .toList(),
-                    
-                                            // Customize the selected item
-                                            selectedItemBuilder:
-                                                (BuildContext context) =>
-                                                    _animals
-                                                        .map((e) => Center(
-                                                              child: Text(
-                                                                e,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    color: Colors
-                                                                        .amber,
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .italic,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ))
-                                                        .toList(),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
                                     ],
                                   ),
-                                 Container(
+                                  Container(
                                     padding: const EdgeInsets.only(
                                         left: 80, right: 10),
                                     child: Expanded(
                                       child: Container(
                                         height: 40,
                                         width: 80,
-                                        margin: EdgeInsets.symmetric(vertical: 10),
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 10),
                                         decoration: BoxDecoration(
                                             color: mPrimaryColor,
-                                            borderRadius: BorderRadius.circular(5),
-                                            border:
-                                                Border.all(color: mPrimaryColor)),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: mPrimaryColor)),
                                         child: FlatButton(
                                           onPressed: () {},
                                           child: Center(
@@ -651,10 +651,8 @@ class _FeedState extends State<Feed> {
                               ),
                             ],
                           ),
-                                
                         ],
                       ),
-                    
                       const Divider(height: 5.0, thickness: 0.5),
                       SizedBox(
                         height: 45,
@@ -671,63 +669,60 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                         ),
-                        
                       ),
-                                  SizedBox(
-                                    height: 200,
-                                    child: ListView(
-                                        scrollDirection: Axis.vertical,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              FlatButton.icon(
-                                                onPressed: () {
-                                                },
-                                                icon: const Icon(
-                                                  FontAwesome.video_camera,
-                                                  color: Colors.red,
-                                                ),
-                                                label: Text('Add your Video'),
-                                              ),
-                                              FlatButton.icon(
-                                                onPressed: () => print('Photo'),
-                                                icon: const Icon(
-                                                  FontAwesome.photo,
-                                                  color: Colors.green,
-                                                ),
-                                                label: Text(' Add Photo'),
-                                              ),
-                                              FlatButton.icon(
-                                                onPressed: () => print('Room'),
-                                                icon: const Icon(
-                                                  FontAwesome.user,
-                                                  color: mPrimaryColor,
-                                                ),
-                                                label: Text('Add People'),
-                                              ),
-                                                FlatButton.icon(
-                                                onPressed: () => print('Room'),
-                                                icon: const Icon(
-                                                  FontAwesome.smile_o,
-                                                  color: Colors.amber,
-                                                ),
-                                                label: Text('Feeling Activity'),
-                                              ),
-                                                  FlatButton.icon(
-                                                onPressed: () => print('Room'),
-                                                icon: const Icon(
-                                                  FontAwesome.location_arrow,
-                                                  color: Colors.green,
-                                                ),
-                                                label: Text('Add  Location'),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                    
-                                    ),
+                      SizedBox(
+                        height: 200,
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FlatButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    FontAwesome.video_camera,
+                                    color: Colors.red,
                                   ),
+                                  label: Text('Add your Video'),
+                                ),
+                                FlatButton.icon(
+                                  onPressed: () => print('Photo'),
+                                  icon: const Icon(
+                                    FontAwesome.photo,
+                                    color: Colors.green,
+                                  ),
+                                  label: Text(' Add Photo'),
+                                ),
+                                FlatButton.icon(
+                                  onPressed: () => print('Room'),
+                                  icon: const Icon(
+                                    FontAwesome.user,
+                                    color: mPrimaryColor,
+                                  ),
+                                  label: Text('Add People'),
+                                ),
+                                FlatButton.icon(
+                                  onPressed: () => print('Room'),
+                                  icon: const Icon(
+                                    FontAwesome.smile_o,
+                                    color: Colors.amber,
+                                  ),
+                                  label: Text('Feeling Activity'),
+                                ),
+                                FlatButton.icon(
+                                  onPressed: () => print('Room'),
+                                  icon: const Icon(
+                                    FontAwesome.location_arrow,
+                                    color: Colors.green,
+                                  ),
+                                  label: Text('Add  Location'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

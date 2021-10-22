@@ -60,7 +60,6 @@ dependencies:
 
   email_validator: ^2.0.1
   date_format: ^2.0.4
-  agora_rtc_engine: ^4.0.7
   gender_picker: ^1.1.0
   material_floating_search_bar: ^0.2.6
   #permission_handler: ^8.2.5
