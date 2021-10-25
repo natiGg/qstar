@@ -78,6 +78,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,

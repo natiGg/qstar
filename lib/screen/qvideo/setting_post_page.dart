@@ -31,6 +31,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
       child: Builder(
         builder: (context) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(

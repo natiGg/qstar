@@ -22,6 +22,7 @@ class GenderClass extends StatelessWidget {
       color: Colors.white,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
@@ -42,8 +43,8 @@ class GenderClass extends StatelessWidget {
             selectedGender: Gender.Male,
             selectedGenderTextStyle: TextStyle(
                 color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
-            unSelectedGenderTextStyle: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.normal),
+            unSelectedGenderTextStyle:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
             onChanged: (Gender? gender) {
               print(gender);
             },

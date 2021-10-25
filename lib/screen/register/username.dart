@@ -18,6 +18,7 @@ class Username extends StatelessWidget {
     );
     var _controller;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,

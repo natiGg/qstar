@@ -44,6 +44,7 @@ class _SetPhoneState extends State<SetPhone> {
     return Form(
       key: formKey,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,

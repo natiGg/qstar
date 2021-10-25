@@ -49,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var _primaryColor = Colors.transparent;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leadingWidth: 100,
         backgroundColor: Colors.white,

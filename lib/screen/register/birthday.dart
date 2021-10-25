@@ -87,6 +87,7 @@ class _DateTimePickerState extends State<BirthDay> {
     _width = MediaQuery.of(context).size.width;
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(bottom: 58.0),
         child: Container(

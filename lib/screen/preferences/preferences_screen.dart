@@ -15,6 +15,7 @@ class PreferencesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: buildAppBar(context),
       body: Column(
         children: <Widget>[
@@ -54,10 +55,10 @@ class PreferencesScreen extends StatelessWidget {
           ),
           TotalPrice(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: RoundButton(
               title: 'Add to cart',
-              press: (){},
+              press: () {},
             ),
           )
         ],
@@ -87,4 +88,3 @@ class PreferencesScreen extends StatelessWidget {
     );
   }
 }
-

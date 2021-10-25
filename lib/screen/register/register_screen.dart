@@ -12,6 +12,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,

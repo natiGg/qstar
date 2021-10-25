@@ -34,6 +34,7 @@ class Phonevarification extends StatelessWidget {
     String initialCountry = 'ET';
     PhoneNumber number = PhoneNumber(isoCode: 'ET');
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,

@@ -6,10 +6,13 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: buildAppBar(context),
       body: ListView.builder(
         itemCount: coffeeNames.length,
-        itemBuilder: (context, index) => MenuItem(index: index,),
+        itemBuilder: (context, index) => MenuItem(
+          index: index,
+        ),
       ),
     );
   }
@@ -43,4 +46,3 @@ class MenuScreen extends StatelessWidget {
     );
   }
 }
-

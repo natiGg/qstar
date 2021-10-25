@@ -72,6 +72,7 @@ class _SetPState extends State<VerifyOTP> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment:

@@ -54,6 +54,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
       color: Colors.white,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: Container(

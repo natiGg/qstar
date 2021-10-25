@@ -11,6 +11,7 @@ import 'package:qstar/screen/post/camera_screen.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as imageLib;
+import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
@@ -22,29 +23,53 @@ class PreviewImageScreengallery extends StatefulWidget {
 }
 
 class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
-  List<Filter> filters = presetFiltersList;
-   imageLib.Image? _image;
   late String fileName;
-  late Filter _filter;
+  List<Filter> filters = presetFiltersList;
+  File? imageFile;
 
   @override
   void initState() {
     super.initState();
-    getImage();
+    getImage(context);
   }
 
-  Future getImage() async {
+  Future getImage(context) async {
+    //  imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+    Uri uri = Uri.parse(widget.imagePath.toString());
     fileName = basename(widget.imagePath);
-    var image = Image.file(File(widget.imagePath));
-   
-    setState(() {
-      _image = image as imageLib.Image;
-    });
+
+    imageFile = await toFile(uri);
+
+    var image = imageLib.decodeImage(imageFile!.readAsBytesSync());
+    image = imageLib.copyResize(image!, width: 600);
+    Map imagefile = await Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new PhotoFilterSelector(
+          title: Text("Photo Filter "),
+          image: image!,
+          filters: presetFiltersList,
+          filename: fileName,
+          loader: Center(child: CircularProgressIndicator()),
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+      setState(() {
+        imageFile = imagefile['image_filtered'];
+      });
+      print(imageFile!.path);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if (imageFile == null) {
+      getImage(context);
+    }
+    return new Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -74,32 +99,26 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-                flex: 2,
-                child: Image.file(File(widget.imagePath), fit: BoxFit.fill)),
-            SizedBox(height: 5.0),
-            Flexible(
-              flex: 1,
-              child: Container(
-                alignment: Alignment(0.0, 0.0),
-                child: _image  == null
-                    ? new Text('filter unavalable.')
-                    // ignore: unnecessary_new
-                    : new PhotoFilterSelector(
-                        title: Text("f"),
-                        image: _image! ,
-                        filters: presetFiltersList,
-                        filename: fileName,
-                        loader: Center(child: CircularProgressIndicator()),
-                      ),
-              ),
-            ),
-          ],
+      body: Center(
+        child: new Container(
+          child: imageFile == null
+              ? Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Expanded(
+                          flex: 2, child: Image.file(File(widget.imagePath))),
+                      SizedBox(height: 5.0),
+                    ],
+                  ),
+                )
+              : Image.file(imageFile!),
         ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: () => getImage(context),
+        tooltip: 'refreshe',
+        child: new Icon(Icons.edit),
       ),
     );
   }

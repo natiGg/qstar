@@ -75,6 +75,7 @@ class _CameraScreenState extends State {
       return Scaffold();
     } else {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(

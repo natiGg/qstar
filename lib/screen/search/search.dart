@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: FloatingSearchBar(
         controller: controller,
         iconColor: mPrimaryColor,
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),
         title: Text(
-          selectedTerm ?? 'Search',
+          selectedTerm,
           style: TextStyle(
               fontFamily: "font1", color: mPrimaryColor, fontSize: 25),
         ),

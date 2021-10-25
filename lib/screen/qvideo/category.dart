@@ -34,6 +34,7 @@ class _CategoryVideo2 extends State<CategoryVideo>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leadingWidth: 100,

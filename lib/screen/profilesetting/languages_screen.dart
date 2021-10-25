@@ -13,6 +13,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           "Language",

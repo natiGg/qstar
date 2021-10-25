@@ -19,6 +19,7 @@ class Email extends StatelessWidget {
       color: Colors.white,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,

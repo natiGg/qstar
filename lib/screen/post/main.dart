@@ -47,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late String image;
   List<FileModel>? files;
 
-
   @override
   void initState() {
     super.initState();
@@ -60,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _getImagesPath() async {
-   var imagePath = await StoragePath.imagesPath;
-   
+    var imagePath = await StoragePath.imagesPath;
+
     var images = jsonDecode(imagePath) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
     print(files.toString());
@@ -69,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         selectedModel = files![0];
         image = files![0].files[0];
-       
       });
     }
   }
@@ -84,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return Scaffold();
     } else {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
@@ -142,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PreviewImageScreengallery(
-                                    imagePath: image)));
+                                    imagePath: image,)));
                       },
                       child: new Text(
                         'Next',

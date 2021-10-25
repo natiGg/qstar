@@ -42,6 +42,7 @@ class _BottomNavPageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {

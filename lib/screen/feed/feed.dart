@@ -102,6 +102,7 @@ class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,

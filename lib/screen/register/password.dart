@@ -38,6 +38,7 @@ class _SetPState extends State<SetP> {
       color: Colors.white,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,

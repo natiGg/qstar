@@ -31,6 +31,7 @@ class Suggested extends StatelessWidget {
       color: Colors.white,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
@@ -122,6 +123,7 @@ class Suggested extends StatelessWidget {
     );
   }
 }
+
 class SuggestedUsers extends StatelessWidget {
   final User user;
 
