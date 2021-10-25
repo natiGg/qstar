@@ -24,7 +24,7 @@ List<String> coffeeNames = [
   'Espresso','Cappuccino','Macciato','Mocha','Latte',
 ];
  final TextStyle bodyTextMessage =
-      TextStyle(fontSize: 15, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w400);
 
 final TextStyle bodyTextTime = TextStyle(
     color: Color(0xffAEABC9),
