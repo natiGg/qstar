@@ -141,6 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         toolbarHeight: 100,
         centerTitle: false,
@@ -193,6 +194,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
+              physics: ScrollPhysics(),
                 reverse: false,
                 itemCount: messages.length,
                 itemBuilder: (context, int index) {
@@ -200,6 +202,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   bool isMe = message.sender.id == currentUser.id;
                   return Container(
                     margin: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.all(15),
                     child: Column(
                       children: [
                         Column(
@@ -222,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   constraints: BoxConstraints(
                                       maxWidth: MediaQuery.of(context).size.width * 0.6),
                                   decoration: BoxDecoration(
-                                      color: isMe ?mPrimaryColor : Colors.grey[200],
+                                      color: isMe ?mPrimaryColor.withOpacity(0.80) : Colors.grey[200],
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
@@ -262,7 +265,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ],
                               ),
                             ),
-                   
                           ],
           
                         ),   
