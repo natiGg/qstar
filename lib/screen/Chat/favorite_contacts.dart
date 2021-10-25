@@ -59,6 +59,7 @@ class FavoriteContacts extends StatelessWidget {
                           backgroundImage:
                               AssetImage(favorites[index].imageUrl),
                         ),
+                        
                         SizedBox(height: 6.0),
                         Text(
                           favorites[index].name,
