@@ -19,6 +19,7 @@ import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
 
 import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
+import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -112,7 +113,7 @@ class _FeedState extends State<Feed> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      GroupCallScreen(),
+                      PersonalInfo(),
                   transitionDuration: Duration.zero,
                 ),
               );
