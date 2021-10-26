@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform2.dart';
+
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
