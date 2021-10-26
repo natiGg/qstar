@@ -3,10 +3,12 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+import 'package:qstar/screen/profile/followers.dart';
+import 'package:qstar/screen/profile/following.dart';
 
 import 'package:qstar/widget/utils.dart';
 
-Widget profileStats({required Size screen, required Color color}) {
+Widget profileStats({required Size screen, required Color color,required BuildContext context}) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
     child: Column(
@@ -60,8 +62,32 @@ Widget profileStats({required Size screen, required Color color}) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               statsBox(count: '57', title: 'Posts'),
-              statsBox(count: '185', title: 'Followers'),
-              statsBox(count: '241', title: 'Following'),
+              GestureDetector(
+                onTap: (){
+                      Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            Followers(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                },
+                child: statsBox(count: '185', title: 'Followers')),
+              GestureDetector(
+                onTap: (){
+                      Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            Followed(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                },
+                child: statsBox(count: '241', title: 'Following')),
             ],
           ),
         ),
@@ -124,7 +150,56 @@ Widget editProfile(
     ),
   );
 }
-
+Widget Following() {
+  return Container(
+    color: Colors.transparent,
+    padding: const EdgeInsets.only(left: 10, right: 10),
+    child: Container(
+      height: 30,
+      width: 100,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      
+     
+      decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: mPrimaryColor)),
+      child: Center(
+          child: Text(
+        'remove',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: mPrimaryColor,
+        ),
+      )),
+    ),
+  );
+}
+Widget Unfollow() {
+  return Container(
+    color: Colors.transparent,
+    padding: const EdgeInsets.only(left: 10, right: 10),
+    child: Container(
+      height: 30,
+      width: 100,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      
+     
+      decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: mPrimaryColor)),
+      child: Center(
+          child: Text(
+        'Following',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: mPrimaryColor,
+        ),
+      )),
+    ),
+  );
+}
 Widget storyHighlight({@required primaryColor}) {
   return Container(
     color: Colors.white,

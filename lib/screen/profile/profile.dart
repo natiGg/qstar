@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    profileStats(screen: _screen, color: mPrimaryColor),
+                    profileStats(screen: _screen, color: mPrimaryColor,context: context),
                     SizedBox(
                       height: 15,
                     ),

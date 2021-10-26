@@ -200,7 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 itemBuilder: (context, int index) {
                   final message = messages[index];
                   bool isMe = message.sender.id == currentUser.id;
-                  return Container(
+                  return Container(                                                                                             
                     margin: EdgeInsets.only(top: 10),
                     padding: EdgeInsets.all(15),
                     child: Column(

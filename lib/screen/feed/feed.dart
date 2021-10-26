@@ -413,17 +413,27 @@ class _FeedState extends State<Feed> {
             ),
             Divider(),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25.0),
-                child: Text(
-                  'Top 10 Perfect Match for you',
-                  style: TextStyle(
-                      color: mPrimaryColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      'Perfect match for you',
+                      style: TextStyle(
+                          color: mPrimaryColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(width: 220,),
+                  Icon(
+                    FontAwesome.refresh,
+                    color: mPrimaryColor,
+                  ),
+                ],
               ),
             ]),
+         
 
             Padding(
               padding: EdgeInsets.all(25),

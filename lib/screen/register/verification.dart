@@ -93,7 +93,7 @@ class _SetPState extends State<VerifyOTP> {
           ),
           SizedBox(height: 20),
           Text(
-            "Enter the code sent to: +2519232323",
+            "Enter the code sent to: +251",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
               color: mPrimaryColor, // set the color
@@ -172,18 +172,7 @@ class _SetPState extends State<VerifyOTP> {
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Text(
-              hasError ? "*Please fill up all the cells properly" : "",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 200.0),
+            padding: const EdgeInsets.only(left: 350.0),
             child: Flexible(
                 child: TextButton(
               child: Text(
@@ -195,6 +184,18 @@ class _SetPState extends State<VerifyOTP> {
               },
             )),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Text(
+              hasError ? "*Please fill up all the cells properly" : "",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
+            ),
+          ),
+
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
