@@ -7,16 +7,32 @@ import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:qstar/screen/register/email.dart';
+import 'package:qstar/screen/feed/model/user.dart';
 
-class Username extends StatelessWidget {
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
+class Username extends StatefulWidget {
   const Username({Key? key}) : super(key: key);
 
+  @override
+  State<Username> createState() => _UsernameState();
+}
+
+class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
     const textStyle = const TextStyle(
       color: Colors.white,
     );
     var _controller;
+
+List<String> _kOptions = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -41,30 +57,76 @@ class Username extends StatelessWidget {
               fontSize: 10.0, // and the font size
             ),
           ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(
+          //     vertical: 20,
+          //     horizontal: 30,
+          //   ),
+          //   child: Material(
+          //     elevation: 20.0,
+          //     shadowColor: Colors.white,
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(25.0)),
+          //     child: TextFormField(
+          //       obscureText: false,
+          //       controller: _controller,
+          //       autofocus: true,
+          //       decoration: InputDecoration(
+          //           prefixText: "@",
+          //           fillColor: Colors.white,
+          //           filled: true,
+          //           contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          //           enabledBorder: OutlineInputBorder(
+          //               borderRadius: BorderRadius.circular(25.0),
+          //               borderSide:
+          //                   BorderSide(color: Colors.white, width: 3.0))),
+          //     ),
+              
+          //   ),
+          // ),
           Container(
-            padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
               vertical: 20,
               horizontal: 30,
             ),
             child: Material(
-              elevation: 20.0,
+                elevation: 20.0,
               shadowColor: Colors.white,
+              
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0)),
-              child: TextFormField(
-                obscureText: false,
-                controller: _controller,
-                autofocus: true,
-                decoration: InputDecoration(
-                    prefixText: "@",
+              child: InputDecorator(
+               decoration: InputDecoration(
+                       prefixText: "@",
                     fillColor: Colors.white,
                     filled: true,
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide:
-                            BorderSide(color: Colors.white, width: 3.0))),
-              ),
+                            BorderSide(color: Colors.white, width: 3.0)),
+                                hintText: "Search..",
+                              ),
+                              
+                              child: Autocomplete(
+                                
+                                optionsBuilder:
+                                    (TextEditingValue textEditingValue) {
+                                  if (textEditingValue.text == '') {
+                                    return const Iterable<String>.empty();
+                                  }
+                                  return _kOptions.where((String option) {
+                                    return option.contains(
+                                        textEditingValue.text.toLowerCase());
+                                  });
+                                },
+                                //   onSelected: (User selection) {
+                                //   //   print(
+                                //   //       'You just selected ${_displayStringForOption(selection)}');
+                                //   // },
+                                // ),
+                              ),
+                            ),
             ),
           ),
           Container(
@@ -74,6 +136,14 @@ class Username extends StatelessWidget {
             ),
             alignment: Alignment.center,
           ),
+
+             
+          SizedBox(
+            height: 30,
+          ),
+          // Text(_selectedAnimal != null
+          //     ? _selectedAnimal
+          //     : 'Type something (a, b, c, etc)'),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: FlatButton(
