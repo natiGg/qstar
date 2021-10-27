@@ -425,15 +425,19 @@ class _FeedState extends State<Feed> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(width: 220,),
-                  Icon(
-                    FontAwesome.refresh,
-                    color: mPrimaryColor,
+                  SizedBox(
+                    width: 198,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      FontAwesome.refresh,
+                      color: mPrimaryColor,
+                    ),
                   ),
                 ],
               ),
             ]),
-         
 
             Padding(
               padding: EdgeInsets.all(25),

@@ -4,9 +4,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/comment/comment_page.dart';
+
 import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
 import 'package:qstar/screen/qvideo/category.dart';
+import 'package:qstar/screen/qvideo/comment/comment_page.dart';
+import 'package:qstar/screen/qvideo/useraudio.dart';
+import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
@@ -40,6 +43,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   ScrollController _scrollController = ScrollController(initialScrollOffset: 0);
   PageController foryouController = new PageController();
   late VoidCallback _onShowMenu;
+  late VoidCallback _onShowshare;
   @override
   void initState() {
     super.initState();
@@ -58,7 +62,13 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         BottomSheetAction(
             iconData: Icons.description, title: 'Description', id: 0),
         BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
-        BottomSheetAction(iconData: Icons.forward, title: 'Go to post', id: 2),
+      ]);
+    };
+    _onShowshare = () {
+      context.showBottomSheet([
+        BottomSheetAction(iconData: Icons.share, title: 'Share to', id: 2),
+        BottomSheetAction(iconData: Icons.account_box, title: 'User 1', id: 3),
+        BottomSheetAction(iconData: Icons.account_box, title: 'User 2', id: 4),
       ]);
     };
   }
@@ -193,14 +203,27 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 height: 42,
                                 child: Stack(
                                   children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: Colors.white,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1,
+                                                    animation2) =>
+                                                UserProfile(),
+                                            transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
                                       child: CircleAvatar(
-                                        radius: 19,
-                                        backgroundColor: Colors.black,
-                                        backgroundImage:
-                                            AssetImage('assets/spook.png'),
+                                        radius: 20,
+                                        backgroundColor: Colors.white,
+                                        child: CircleAvatar(
+                                          radius: 19,
+                                          backgroundColor: Colors.black,
+                                          backgroundImage:
+                                              AssetImage('assets/spook.png'),
+                                        ),
                                       ),
                                     ),
                                     Align(
@@ -216,21 +239,36 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                           backgroundColor:
                                               mPrimaryColor.withOpacity(1),
                                           child: Center(
-                                              child: Icon(Icons.add,
-                                                  size: 11,
-                                                  color: Colors.white)),
+                                              child: GestureDetector(
+                                            onTap: () {},
+                                            child: Icon(Icons.add,
+                                                size: 11, color: Colors.white),
+                                          )),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Text.rich(
-                                TextSpan(children: <TextSpan>[
-                                  TextSpan(text: 'UserName'),
-                                ]),
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              UserProfile(),
+                                      transitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                },
+                                child: Text.rich(
+                                  TextSpan(children: <TextSpan>[
+                                    TextSpan(text: 'UserName'),
+                                  ]),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
                               )
                             ],
                           ),
@@ -240,24 +278,59 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.only(bottom: 10, right: 10),
+                    padding: EdgeInsets.only(bottom: 25, right: 10),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Container(
                         width: 70,
-                        height: 400,
+                        height: 450,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(top: 53),
+                              margin: EdgeInsets.only(top: 50),
                               width: 40,
-                              height: 50,
+                              height: 25,
                               child: Stack(
                                 children: <Widget>[],
                               ),
                             ),
                             // ignore: unnecessary_new
+                            new GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            UserProfile(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Transform(
+                                      alignment: Alignment.center,
+                                      transform: Matrix4.rotationY(math.pi),
+                                      // ignore: prefer_const_constructors
+                                      child: Icon(
+                                        Icons.arrow_circle_up_outlined,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    // ignore: prefer_const_constructors
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             new GestureDetector(
                               onTap: () {
                                 _onShowMenu();
@@ -311,56 +384,87 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 ],
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
-                                      child: Icon(Icons.sms,
-                                          size: 20, color: Colors.white)),
-                                  Text('2051',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10))
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
-                                      child: Icon(Icons.reply,
-                                          size: 20, color: Colors.white)),
-                                  Text('Share',
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 10))
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: AnimatedBuilder(
-                                animation: animationController,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      Color(0x222222).withOpacity(1),
-                                  child: CircleAvatar(
-                                    radius: 12,
-                                    backgroundImage:
-                                        AssetImage('assets/images/music.jpg'),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            CommentPage(),
+                                    transitionDuration: Duration.zero,
                                   ),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Transform(
+                                        alignment: Alignment.center,
+                                        transform: Matrix4.rotationY(math.pi),
+                                        child: Icon(Icons.sms,
+                                            size: 20, color: Colors.white)),
+                                    Text('2051',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 10))
+                                  ],
                                 ),
-                                builder: (context, _widget) {
-                                  return Transform.rotate(
-                                      angle: animationController.value * 6.3,
-                                      child: _widget);
-                                },
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                _onShowshare();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Transform(
+                                        alignment: Alignment.center,
+                                        transform: Matrix4.rotationY(math.pi),
+                                        child: Icon(Icons.reply,
+                                            size: 20, color: Colors.white)),
+                                    Text('Share',
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 10))
+                                  ],
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            Useraudeio(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                child: AnimatedBuilder(
+                                  animation: animationController,
+                                  child: CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor:
+                                        Color(0x222222).withOpacity(1),
+                                    child: CircleAvatar(
+                                      radius: 12,
+                                      backgroundImage:
+                                          AssetImage('assets/images/music.jpg'),
+                                    ),
+                                  ),
+                                  builder: (context, _widget) {
+                                    return Transform.rotate(
+                                        angle: animationController.value * 6.3,
+                                        child: _widget);
+                                  },
+                                ),
                               ),
                             )
                           ],
