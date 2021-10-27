@@ -1,12 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:qstar/screen/Chat/nearby.dart';
+import 'package:qstar/screen/Chat/online.dart';
 import 'category_selector.dart';
 import 'favorite_contacts.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget   {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>  with TickerProviderStateMixin{
+   TabController ? tabController;
+  int currentTabIndex = 0;
+
+  void onTabChange() {
+    setState(() {
+      currentTabIndex = tabController!.index;
+      print(currentTabIndex);
+    });
+  }
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+
+    tabController?.addListener(() {
+      onTabChange();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController?.addListener(() {
+      onTabChange();
+    });
+
+    tabController?.dispose();
+
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -69,22 +107,27 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          CategorySelector(),
+          CategorySelector(tabController:tabController!),
           SizedBox(
             height: 5,
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
                 ),
               ),
-              child: Column(
-                children: <Widget>[
+              child: TabBarView(
+
+                controller: tabController,
+                children: [
                   RecentChats(),
+                  Online(),
+                  Nearby()
+   
                 ],
               ),
             ),
