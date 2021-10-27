@@ -90,6 +90,69 @@ List<Message> chats = [
 
 ];
 
+// EXAMPLE CHATS ON HOME SCREEN
+List<Message> chats2 = [
+  Message(
+    sender: olivia,
+    time: '5:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: true,
+    activeTime: 'online'
+  ),
+  Message(
+    sender: john,
+    time: '4:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: true,
+        activeTime: '8 hrs'
+
+  ),
+  Message(
+    sender: greg,
+    time: '3:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: true,
+        activeTime: '2 day'
+
+  ),
+
+];
+
+// EXAMPLE CHATS ON HOME SCREEN
+List<Message> chats3 = [
+  Message(
+    sender: greg,
+    time: '5:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: true,
+    activeTime: 'online'
+  ),
+  Message(
+    sender: john,
+    time: '4:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: true,
+        activeTime: '8 hrs'
+
+  ),
+  Message(
+    sender: sam,
+    time: '3:30 PM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: false,
+        activeTime: '2 day'
+
+  ),
+
+];
+
+
 // EXAMPLE MESSAGES IN CHAT SCREEN
 List<Message> messages = [
   Message(
