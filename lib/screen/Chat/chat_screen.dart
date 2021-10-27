@@ -278,7 +278,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }),
           ),
-     
+     _buildMessageComposer()
         ],
       ),
     );
