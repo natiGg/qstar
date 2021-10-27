@@ -83,14 +83,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
   _buildMessageComposer() {
     return Container(
-    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-    color: Colors.white,
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    height: 70,
+    decoration: BoxDecoration(
+      color: mPrimaryColor.withOpacity(0.05),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+    ),
+
     child: Row(
       children: [
         Expanded(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 14),
-            height: 60,
+            height: 50,
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(30),
@@ -133,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> {
         )
       ],
     ),
-  );
+    );
   }
 
 
@@ -273,7 +278,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }),
           ),
-          _buildMessageComposer()
+     
         ],
       ),
     );
