@@ -134,9 +134,17 @@ class _ProfileScreenState extends State<UserProfile> {
                             primaryColor: mPrimaryColor,
                           ),
                         ),
-                        SocialMedia(),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SocialMedia(),
+                        ],
+                      ),
+                    )
                   ],
                 )),
             SizedBox(

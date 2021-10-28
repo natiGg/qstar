@@ -139,20 +139,19 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         children: <Widget>[
           homescreen(),
           Container(
-              height: 500,
-              child: Center(
-                child: SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: FlareActor(
-                    'assets/images/instagram_like.flr',
-                    controller: flareControls,
-                    animation: 'idle',
-                  ),
+            height: 500,
+            child: Center(
+              child: SizedBox(
+                width: 80,
+                height: 80,
+                child: FlareActor(
+                  'assets/images/instagram_like.flr',
+                  controller: flareControls,
+                  animation: 'idle',
                 ),
               ),
             ),
-
+          ),
         ],
       ),
     );
@@ -171,18 +170,18 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         itemCount: 5,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onDoubleTap: (){
+            onDoubleTap: () {
               setState(() {
-                  if (isdisActive && !isActive) {
-                    isdisActive = !isdisActive;
-                    isActive = !isActive;
-                  } else if (!isActive) {
-                    isActive = !isActive;
-                  }
+                if (isdisActive && !isActive) {
+                  isdisActive = !isdisActive;
+                  isActive = !isActive;
+                } else if (!isActive) {
+                  isActive = !isActive;
+                }
 
-                  // _isPlaying ? null : _controller.isActive = true;
-                });
-                flareControls.play("like");
+                // _isPlaying ? null : _controller.isActive = true;
+              });
+              flareControls.play("like");
             },
             child: Container(
               child: Stack(
@@ -274,7 +273,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                                 child: GestureDetector(
                                               onTap: () {},
                                               child: Icon(Icons.add,
-                                                  size: 11, color: Colors.white),
+                                                  size: 11,
+                                                  color: Colors.white),
                                             )),
                                           ),
                                         ),
@@ -327,42 +327,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                   children: <Widget>[],
                                 ),
                               ),
-                              // ignore: unnecessary_new
-                              new GestureDetector(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder:
-                                          (context, animation1, animation2) =>
-                                              UserProfile(),
-                                      transitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.rotationY(math.pi),
-                                        // ignore: prefer_const_constructors
-                                        child: Icon(
-                                          Icons.arrow_circle_up_outlined,
-                                          size: 20,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      // ignore: prefer_const_constructors
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+
                               new GestureDetector(
                                 onTap: () {
                                   _onShowMenu();
@@ -370,7 +335,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 5),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Transform(
                                         alignment: Alignment.center,
@@ -390,26 +356,68 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                   ),
                                 ),
                               ),
+                              // ignore: unnecessary_new
+                              new GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              UserProfile(),
+                                      transitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Transform(
+                                        alignment: Alignment.center,
+                                        transform: Matrix4.rotationY(math.pi),
+                                        // ignore: prefer_const_constructors
+                                        child: Icon(
+                                          Icons.arrow_forward_outlined,
+                                          size: 20,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      // ignore: prefer_const_constructors
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
                               Container(
                                 padding: const EdgeInsets.only(bottom: 30),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     GestureDetector(
-                                      onTap: (){
+                                      onTap: () {
                                         setState(() {
-                                             if (isdisActive && !isActive) {
-                                              isActive = !isActive;
-                                              isdisActive = !isdisActive;
-                                            } else if (!isdisActive && isActive) {
-                                              isActive = !isActive;
-                                            } else if (!isdisActive && !isActive) {
-                                              isActive = !isActive;
-                                            }
+                                          if (isdisActive && !isActive) {
+                                            isActive = !isActive;
+                                            isdisActive = !isdisActive;
+                                          } else if (!isdisActive && isActive) {
+                                            isActive = !isActive;
+                                          } else if (!isdisActive &&
+                                              !isActive) {
+                                            isActive = !isActive;
+                                          }
                                         });
                                       },
                                       child: Icon(Icons.thumb_up,
-                                          size: 20, color: isActive ? mPrimaryColor: Colors.white),
+                                          size: 20,
+                                          color: isActive
+                                              ? mPrimaryColor
+                                              : Colors.white),
                                     ),
                                     Text('427.9K',
                                         style: TextStyle(
@@ -422,22 +430,25 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    
                                     GestureDetector(
-                                      onTap: (){
-                                            setState(() {
-                                            if (isActive && !isdisActive) {
-                                              isActive = !isActive;
-                                              isdisActive = !isdisActive;
-                                            } else if (isdisActive && !isActive) {
-                                              isdisActive = !isdisActive;
-                                            } else if (!isdisActive && !isActive) {
-                                              isdisActive = !isdisActive;
-                                            }
-                                          });
-                                        },
+                                      onTap: () {
+                                        setState(() {
+                                          if (isActive && !isdisActive) {
+                                            isActive = !isActive;
+                                            isdisActive = !isdisActive;
+                                          } else if (isdisActive && !isActive) {
+                                            isdisActive = !isdisActive;
+                                          } else if (!isdisActive &&
+                                              !isActive) {
+                                            isdisActive = !isdisActive;
+                                          }
+                                        });
+                                      },
                                       child: Icon(Icons.thumb_down,
-                                          size: 20, color: isdisActive? mPrimaryColor:Colors.white),
+                                          size: 20,
+                                          color: isdisActive
+                                              ? mPrimaryColor
+                                              : Colors.white),
                                     ),
                                     Text('Dislike',
                                         style: TextStyle(
@@ -460,7 +471,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 5),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Transform(
                                           alignment: Alignment.center,
@@ -469,7 +481,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                               size: 20, color: Colors.white)),
                                       Text('2051',
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: 10))
+                                              color: Colors.white,
+                                              fontSize: 10))
                                     ],
                                   ),
                                 ),
@@ -481,7 +494,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 20),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Transform(
                                           alignment: Alignment.center,
@@ -490,7 +504,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                               size: 20, color: Colors.white)),
                                       Text('Share',
                                           style: const TextStyle(
-                                              color: Colors.white, fontSize: 10))
+                                              color: Colors.white,
+                                              fontSize: 10))
                                     ],
                                   ),
                                 ),
@@ -516,13 +531,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                           Color(0x222222).withOpacity(1),
                                       child: CircleAvatar(
                                         radius: 12,
-                                        backgroundImage:
-                                            AssetImage('assets/images/music.jpg'),
+                                        backgroundImage: AssetImage(
+                                            'assets/images/music.jpg'),
                                       ),
                                     ),
                                     builder: (context, _widget) {
                                       return Transform.rotate(
-                                          angle: animationController.value * 6.3,
+                                          angle:
+                                              animationController.value * 6.3,
                                           child: _widget);
                                     },
                                   ),
