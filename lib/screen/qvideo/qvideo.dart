@@ -425,14 +425,16 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                     
                                     GestureDetector(
                                       onTap: (){
-                                          if (isActive && !isdisActive) {
-                                            isActive = !isActive;
-                                            isdisActive = !isdisActive;
-                                          } else if (isdisActive && !isActive) {
-                                            isdisActive = !isdisActive;
-                                          } else if (!isdisActive && !isActive) {
-                                            isdisActive = !isdisActive;
-                                          }
+                                            setState(() {
+                                            if (isActive && !isdisActive) {
+                                              isActive = !isActive;
+                                              isdisActive = !isdisActive;
+                                            } else if (isdisActive && !isActive) {
+                                              isdisActive = !isdisActive;
+                                            } else if (!isdisActive && !isActive) {
+                                              isdisActive = !isdisActive;
+                                            }
+                                          });
                                         },
                                       child: Icon(Icons.thumb_down,
                                           size: 20, color: isdisActive? mPrimaryColor:Colors.white),
