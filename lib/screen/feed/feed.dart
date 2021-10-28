@@ -418,45 +418,46 @@ class _FeedState extends State<Feed> {
               height: 15,
             ),
             Divider(),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: Text(
-                      'Perfect match for you',
-                      style: TextStyle(
-                          color: mPrimaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: Text(
+                    'Perfect match for you',
+                    style: TextStyle(
+                        color: mPrimaryColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    width: 198,
-                  ),
-                  Padding(
+                ),
+                SizedBox(width: 160,),
+            
+                Expanded(
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       FontAwesome.refresh,
                       color: mPrimaryColor,
                     ),
                   ),
+                ),
+              ],
+            ),
+              Padding(
+            padding: EdgeInsets.all(25),
+            child: Container(
+              height: 260,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Row(children: _users.map((e) => UserStories(e)).toList()),
                 ],
               ),
-            ]),
-
-            Padding(
-              padding: EdgeInsets.all(25),
-              child: Container(
-                height: 260,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Row(children: _users.map((e) => UserStories(e)).toList()),
-                  ],
-                ),
-              ),
             ),
+            ),
+
+            
             Divider(
               thickness: 1.0,
             ),
