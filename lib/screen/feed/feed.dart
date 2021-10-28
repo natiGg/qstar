@@ -137,9 +137,15 @@ class _FeedState extends State<Feed> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
                 );
+
                 // Navigator.pushReplacement(
                 //   context,
                 //   PageRouteBuilder(

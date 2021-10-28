@@ -3,14 +3,12 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 
 class CategorySelector extends StatelessWidget {
-    final TabController tabController;
-    
-    const CategorySelector({
-    Key ?key,
+  final TabController tabController;
+
+  const CategorySelector({
+    Key? key,
     required this.tabController,
   }) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -20,94 +18,126 @@ class CategorySelector extends StatelessWidget {
       height: 80,
       child: TabBar(
         controller: tabController,
-         indicatorSize: TabBarIndicatorSize.label,
-            labelColor: Color(0xff1967d2),
-            unselectedLabelColor: Color(0xff5f6368),
-            isScrollable: true,
-            indicator: MD2Indicator(
-              indicatorSize: MD2IndicatorSize.full,
-              indicatorHeight: 6.0,
-              indicatorColor: mPrimaryColor,
-            ),
-    
+        indicatorSize: TabBarIndicatorSize.label,
+        labelColor: Color(0xff1967d2),
+        unselectedLabelColor: Color(0xff5f6368),
+        isScrollable: true,
+        indicator: MD2Indicator(
+          indicatorSize: MD2IndicatorSize.full,
+          indicatorHeight: 6.0,
+          indicatorColor: mPrimaryColor,
+        ),
         tabs: [
           Tab(
-            icon: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: RichText(
-  text: TextSpan(
-    style: TextStyle(
+              icon: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
                   fontWeight: FontWeight.w600,
                 ),
-    children: [
-      TextSpan(text: 'Friends'),
-      WidgetSpan(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
-          child: Icon(FontAwesome.users,size: 15,color: mPrimaryColor,),
-        ),
-      ),
-      
-    ],
-  ),
-),
-            )
-          ),
+                children: [
+                  TextSpan(text: 'Friends'),
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      child: Icon(
+                        FontAwesome.users,
+                        size: 15,
+                        color: mPrimaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
           Tab(
-            icon: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: RichText(
-  text: TextSpan(
-    style: TextStyle(
+              icon: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
                   fontWeight: FontWeight.w600,
                 ),
-    children: [
-      TextSpan(text: 'Online'),
-      WidgetSpan(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
-          child: Icon(FontAwesome.circle,size: 15,color: Colors.green,),
-        ),
-      ),
-      
-    ],
-  ),
-),
-            )
-          ),
+                children: [
+                  TextSpan(text: 'Online'),
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      child: Icon(
+                        FontAwesome.circle,
+                        size: 15,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
           Tab(
-            icon: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: RichText(
-  text: TextSpan(
-    style: TextStyle(
+              icon: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
                   fontWeight: FontWeight.w600,
                 ),
-    children: [
-      TextSpan(text: 'Nearby'),
-      WidgetSpan(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
-          child: Icon(FontAwesome.map_marker,size: 18,color: Colors.blue,),
-        ),
-      ),
-      
-    ],
-  ),
-),
-            )
-          ),
+                children: [
+                  TextSpan(text: 'Nearby'),
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      child: Icon(
+                        FontAwesome.map_marker,
+                        size: 18,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
+          Tab(
+              icon: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: mPrimaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      children: [
+                        TextSpan(text: 'Match'),
+                        WidgetSpan(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 6.0),
+                            child: Icon(
+                              FontAwesome.heart,
+                              size: 18,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )))
         ],
       ),
     );
   }
 }
+
 enum MD2IndicatorSize {
   tiny,
   normal,
@@ -125,7 +155,7 @@ class MD2Indicator extends Decoration {
       required this.indicatorSize});
 
   @override
-  _MD2Painter createBoxPainter([VoidCallback ?onChanged]) {
+  _MD2Painter createBoxPainter([VoidCallback? onChanged]) {
     return new _MD2Painter(this, onChanged!);
   }
 }
@@ -142,7 +172,7 @@ class _MD2Painter extends BoxPainter {
     assert(configuration != null);
     assert(configuration.size != null);
 
-    Rect ?rect;
+    Rect? rect;
     if (decoration.indicatorSize == MD2IndicatorSize.full) {
       rect = Offset(offset.dx,
               (configuration.size!.height - decoration.indicatorHeight ?? 3)) &

@@ -83,64 +83,62 @@ class _ChatScreenState extends State<ChatScreen> {
 
   _buildMessageComposer() {
     return Container(
-    padding: EdgeInsets.symmetric(horizontal: 20),
-    height: 70,
-    decoration: BoxDecoration(
-      color: mPrimaryColor.withOpacity(0.05),
-      borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-    ),
-
-    child: Row(
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 14),
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.emoji_emotions_outlined,
-                  color: Colors.grey[500],
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Type your message ...',
-                      hintStyle: TextStyle(color: Colors.grey[500]),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      height: 70,
+      decoration: BoxDecoration(
+        color: mPrimaryColor.withOpacity(0.05),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 14),
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.emoji_emotions_outlined,
+                    color: Colors.grey[500],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Type your message ...',
+                        hintStyle: TextStyle(color: Colors.grey[500]),
+                      ),
                     ),
                   ),
-                ),
-                Icon(
-                  Icons.attach_file,
-                  color: Colors.grey[500],
-                )
-              ],
+                  Icon(
+                    Icons.attach_file,
+                    color: Colors.grey[500],
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 16,
-        ),
-        CircleAvatar(
-          backgroundColor: mPrimaryColor,
-          child: Icon(
-            Icons.send,
-            color: Colors.white,
+          SizedBox(
+            width: 16,
           ),
-        )
-      ],
-    ),
+          CircleAvatar(
+            backgroundColor: mPrimaryColor,
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +148,19 @@ class _ChatScreenState extends State<ChatScreen> {
         toolbarHeight: 100,
         centerTitle: false,
         backgroundColor: mPrimaryColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      HomeScreen(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            }),
         title: Row(
           children: [
             CircleAvatar(
@@ -177,14 +188,13 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
-         
           IconButton(
               icon: Icon(
                 Icons.call,
                 size: 28,
               ),
               onPressed: () {}),
-               IconButton(
+          IconButton(
               icon: Icon(
                 Icons.videocam_outlined,
                 size: 28,
@@ -198,13 +208,13 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              physics: ScrollPhysics(),
+                physics: ScrollPhysics(),
                 reverse: false,
                 itemCount: messages.length,
                 itemBuilder: (context, int index) {
                   final message = messages[index];
                   bool isMe = message.sender.id == currentUser.id;
-                  return Container(                                                                                             
+                  return Container(
                     margin: EdgeInsets.only(top: 10),
                     padding: EdgeInsets.all(15),
                     child: Column(
@@ -212,14 +222,16 @@ class _ChatScreenState extends State<ChatScreen> {
                         Column(
                           children: [
                             Row(
-                              mainAxisAlignment:
-                                  isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                              mainAxisAlignment: isMe
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 if (!isMe)
                                   CircleAvatar(
                                     radius: 15,
-                                    backgroundImage: AssetImage(widget.user.imageUrl),
+                                    backgroundImage:
+                                        AssetImage(widget.user.imageUrl),
                                   ),
                                 SizedBox(
                                   width: 10,
@@ -227,19 +239,27 @@ class _ChatScreenState extends State<ChatScreen> {
                                 Container(
                                   padding: EdgeInsets.all(10),
                                   constraints: BoxConstraints(
-                                      maxWidth: MediaQuery.of(context).size.width * 0.6),
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.6),
                                   decoration: BoxDecoration(
-                                      color: isMe ?mPrimaryColor.withOpacity(0.80) : Colors.grey[200],
+                                      color: isMe
+                                          ? mPrimaryColor.withOpacity(0.80)
+                                          : Colors.grey[200],
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
                                         topRight: Radius.circular(16),
-                                        bottomLeft: Radius.circular(isMe ? 12 : 0),
-                                        bottomRight: Radius.circular(isMe ? 0 : 12),
+                                        bottomLeft:
+                                            Radius.circular(isMe ? 12 : 0),
+                                        bottomRight:
+                                            Radius.circular(isMe ? 0 : 12),
                                       )),
                                   child: Text(
                                     messages[index].text,
                                     style: bodyTextMessage.copyWith(
-                                        color: isMe ? Colors.white : Colors.grey[800]),
+                                        color: isMe
+                                            ? Colors.white
+                                            : Colors.grey[800]),
                                   ),
                                 ),
                               ],
@@ -247,8 +267,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Row(
-                                mainAxisAlignment:
-                                    isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                mainAxisAlignment: isMe
+                                    ? MainAxisAlignment.end
+                                    : MainAxisAlignment.start,
                                 children: [
                                   if (!isMe)
                                     SizedBox(
@@ -270,15 +291,13 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                           ],
-          
-                        ),   
+                        ),
                       ],
                     ),
-                      
                   );
                 }),
           ),
-     _buildMessageComposer()
+          _buildMessageComposer()
         ],
       ),
     );
