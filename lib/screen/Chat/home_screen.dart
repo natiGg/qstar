@@ -68,14 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: Icon(Icons.arrow_back),
                 color: mPrimaryColor,
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          UsersFeed(),
-                      transitionDuration: Duration.zero,
-                    ),
-                  );
+                  Navigator.of(context).pop(true);
                 })
             : Container(),
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
