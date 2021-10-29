@@ -40,7 +40,7 @@ class _MyHomePageState extends State<PersonalInfo> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) => UsersFeed(),
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: (isLastStep)
                       ? GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:

@@ -64,7 +64,7 @@ Widget profileStats({required Size screen, required Color color,required BuildCo
               statsBox(count: '57', title: 'Posts'),
               GestureDetector(
                 onTap: (){
-                      Navigator.pushReplacement(
+                      Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder:
@@ -77,7 +77,7 @@ Widget profileStats({required Size screen, required Color color,required BuildCo
                 child: statsBox(count: '185', title: 'Followers')),
               GestureDetector(
                 onTap: (){
-                      Navigator.pushReplacement(
+                      Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder:

@@ -76,21 +76,17 @@ class _UsersFeedState extends State<UsersFeed> {
       ]);
     };
   }
-
+ 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Feed',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: mBackgroundColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Feed(),
+
+    return Scaffold(
+      body: Feed(),
+      
     );
   }
 }
-
+ 
 class Feed extends StatefulWidget {
   @override
   State<Feed> createState() => _FeedState();
@@ -111,7 +107,7 @@ class _FeedState extends State<Feed> {
             icon: Icon(FontAwesome.heartbeat),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) => MyPages(),
@@ -124,7 +120,7 @@ class _FeedState extends State<Feed> {
             icon: Icon(Icons.add),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) => MyApp(),
@@ -137,7 +133,7 @@ class _FeedState extends State<Feed> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
@@ -146,7 +142,7 @@ class _FeedState extends State<Feed> {
                   ),
                 );
 
-                // Navigator.pushReplacement(
+                // Navigator.push(
                 //   context,
                 //   PageRouteBuilder(
                 //     pageBuilder: (context, animation1, animation2) =>
@@ -179,7 +175,7 @@ class _FeedState extends State<Feed> {
             //     ),
             //   ),
             // ),
-
+      
             Card(
               margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
               elevation: 2,
@@ -195,7 +191,7 @@ class _FeedState extends State<Feed> {
                             backgroundImage:
                                 AssetImage('assets/images/profile1.jpg')),
                         const SizedBox(width: 8.0),
-
+      
                         Expanded(
                           child: Container(
                             color: Colors.white,
@@ -326,7 +322,7 @@ class _FeedState extends State<Feed> {
                       ],
                     ),
                     const Divider(height: 5.0, thickness: 0.5),
-
+      
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     //   children: [
@@ -456,7 +452,7 @@ class _FeedState extends State<Feed> {
               ),
             ),
             ),
-
+      
             
             Divider(
               thickness: 1.0,
@@ -1241,7 +1237,7 @@ class _WPostState extends State<WPost> {
                     child: activedisLikeButton(isdisActive)),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>

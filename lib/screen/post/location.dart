@@ -12,7 +12,7 @@ class Searchlocation extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>

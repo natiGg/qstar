@@ -142,7 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: mPrimaryColor,
               ),
               onPressed: (context) {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>

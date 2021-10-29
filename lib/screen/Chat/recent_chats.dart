@@ -6,6 +6,7 @@ import 'package:qstar/constant.dart';
 class RecentChats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
@@ -27,7 +28,7 @@ class RecentChats extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final Message chat = chats[index];
               return GestureDetector(
-                onTap: () => Navigator.pushReplacement(
+                onTap: () => Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>

@@ -64,7 +64,7 @@ Widget profileStats(
               statsBox(count: '57', title: 'Posts'),
               GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
@@ -76,7 +76,7 @@ Widget profileStats(
                   child: statsBox(count: '185', title: 'Followers')),
               GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>

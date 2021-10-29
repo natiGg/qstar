@@ -27,7 +27,7 @@ class Match extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final Message chat = chats3[index];
               return GestureDetector(
-                onTap: () => Navigator.pushReplacement(
+                onTap: () => Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>

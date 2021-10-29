@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             alignment: Alignment.centerLeft,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder:

@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<Useraudeio> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
@@ -174,7 +174,7 @@ class _ProfileScreenState extends State<Useraudeio> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation1, animation2) =>
