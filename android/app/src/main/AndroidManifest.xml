@@ -2,9 +2,7 @@
 
     package="com.example.qstar">
     	<uses-permission
-    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-    android:maxSdkVersion="28"
-    tools:ignore="ScopedStorage"/>
+    android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    
   
     <uses-permission android:name="android.permission.INTERNET" />

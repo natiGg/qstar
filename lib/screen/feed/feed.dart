@@ -82,6 +82,7 @@ class _UsersFeedState extends State<UsersFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Feed(),
     );
   }
@@ -213,7 +214,7 @@ class _FeedState extends State<Feed> {
                                   child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'Sahre us your thought',
+                                        'share us your thought',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.withOpacity(0.9),
@@ -391,7 +392,7 @@ class _FeedState extends State<Feed> {
                               Icons.videocam,
                               color: Colors.red,
                             ),
-                            label: Text('Live'),
+                            label: Text('go Live'),
                           ),
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
@@ -400,9 +401,18 @@ class _FeedState extends State<Feed> {
                               Icons.photo_library,
                               color: Colors.green,
                             ),
-                            label: Text('Photo'),
+                            label: Text(' Post'),
                           ),
-                          const VerticalDivider(width: 8.0),
+                          FlatButton.icon(
+                            onPressed: () {
+                              _postModal(context);
+                            },
+                            icon: const Icon(
+                              Icons.video_collection_sharp,
+                              color: Colors.blue,
+                            ),
+                            label: Text(' Video'),
+                          ),
                         ],
                       ),
                     ),
@@ -538,8 +548,7 @@ class _FeedState extends State<Feed> {
                       Column(
                         children: [
                           Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
                                 child: Center(
