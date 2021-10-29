@@ -76,17 +76,15 @@ class _UsersFeedState extends State<UsersFeed> {
       ]);
     };
   }
- 
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Feed(),
-      
     );
   }
 }
- 
+
 class Feed extends StatefulWidget {
   @override
   State<Feed> createState() => _FeedState();
@@ -99,7 +97,7 @@ class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -175,7 +173,7 @@ class _FeedState extends State<Feed> {
             //     ),
             //   ),
             // ),
-      
+
             Card(
               margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
               elevation: 2,
@@ -191,7 +189,7 @@ class _FeedState extends State<Feed> {
                             backgroundImage:
                                 AssetImage('assets/images/profile1.jpg')),
                         const SizedBox(width: 8.0),
-      
+
                         Expanded(
                           child: Container(
                             color: Colors.white,
@@ -322,7 +320,7 @@ class _FeedState extends State<Feed> {
                       ],
                     ),
                     const Divider(height: 5.0, thickness: 0.5),
-      
+
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     //   children: [
@@ -427,8 +425,9 @@ class _FeedState extends State<Feed> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(width: 160,),
-            
+                SizedBox(
+                  width: 160,
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -440,20 +439,19 @@ class _FeedState extends State<Feed> {
                 ),
               ],
             ),
-              Padding(
-            padding: EdgeInsets.all(25),
-            child: Container(
-              height: 260,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Row(children: _users.map((e) => UserStories(e)).toList()),
-                ],
+            Padding(
+              padding: EdgeInsets.all(25),
+              child: Container(
+                height: 260,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Row(children: _users.map((e) => UserStories(e)).toList()),
+                  ],
+                ),
               ),
             ),
-            ),
-      
-            
+
             Divider(
               thickness: 1.0,
             ),
@@ -518,229 +516,231 @@ class _FeedState extends State<Feed> {
 
   void _postModal(context) {
     showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
         context: context,
-        builder: (BuildContext bc) {
-          return Container(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
                     children: [
-                      Row(
+                      CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/profile1.jpg')),
+                      const SizedBox(width: 8.0),
+                      Column(
                         children: [
-                          CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile1.jpg')),
-                          const SizedBox(width: 8.0),
-                          Column(
+                          Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          "@Betty",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
+                              Container(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Text(
+                                      "@Betty",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Container(
-                                          width: 100,
-                                          height: 50,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Column(
-                                            children: [
-                                              DropdownButton<String>(
-                                                onChanged: (value) {
-                                                  setState(() {});
-                                                },
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Container(
+                                      width: 100,
+                                      height: 50,
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Column(
+                                        children: [
+                                          DropdownButton<String>(
+                                            onChanged: (value) {
+                                              setState(() {});
+                                            },
 
-                                                // Hide the default underline
-                                                underline: Container(),
-                                                hint: Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      'Public',
-                                                      style: TextStyle(
-                                                          color: mPrimaryColor,
-                                                          fontSize: 10),
-                                                    )),
-                                                icon: Align(
-                                                  alignment:
-                                                      Alignment.topCenter,
-                                                  child: Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: mPrimaryColor,
-                                                  ),
-                                                ),
-                                                isExpanded: true,
-
-                                                // The list of options
-                                                items: _animals
-                                                    .map((e) =>
-                                                        DropdownMenuItem(
-                                                          child: Container(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Text(
-                                                              e,
-                                                              style: TextStyle(
-                                                                  fontSize: 12),
-                                                            ),
-                                                          ),
-                                                          value: e,
-                                                        ))
-                                                    .toList(),
-
-                                                // Customize the selected item
-                                                selectedItemBuilder:
-                                                    (BuildContext context) =>
-                                                        _animals
-                                                            .map((e) => Center(
-                                                                  child: Text(
-                                                                    e,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .amber,
-                                                                        fontStyle:
-                                                                            FontStyle
-                                                                                .italic,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  ),
-                                                                ))
-                                                            .toList(),
+                                            // Hide the default underline
+                                            underline: Container(),
+                                            hint: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Public',
+                                                  style: TextStyle(
+                                                      color: mPrimaryColor,
+                                                      fontSize: 10),
+                                                )),
+                                            icon: Align(
+                                              alignment: Alignment.topCenter,
+                                              child: Icon(
+                                                Icons.arrow_drop_down,
+                                                color: mPrimaryColor,
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 80, right: 10),
-                                    child: Expanded(
-                                      child: Container(
-                                        height: 40,
-                                        width: 80,
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        decoration: BoxDecoration(
-                                            color: mPrimaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: mPrimaryColor)),
-                                        child: FlatButton(
-                                          onPressed: () {},
-                                          child: Center(
-                                              child: Text(
-                                            'Post',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
                                             ),
-                                          )),
-                                        ),
+                                            isExpanded: true,
+
+                                            // The list of options
+                                            items: _animals
+                                                .map((e) => DropdownMenuItem(
+                                                      child: Container(
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Text(
+                                                          e,
+                                                          style: TextStyle(
+                                                              fontSize: 12),
+                                                        ),
+                                                      ),
+                                                      value: e,
+                                                    ))
+                                                .toList(),
+
+                                            // Customize the selected item
+                                            selectedItemBuilder:
+                                                (BuildContext context) =>
+                                                    _animals
+                                                        .map((e) => Center(
+                                                              child: Text(
+                                                                e,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .amber,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .italic,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ))
+                                                        .toList(),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 80, right: 10),
+                                child: Expanded(
+                                  child: Container(
+                                    height: 40,
+                                    width: 80,
+                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: mPrimaryColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border:
+                                            Border.all(color: mPrimaryColor)),
+                                    child: FlatButton(
+                                      onPressed: () {},
+                                      child: Center(
+                                          child: Text(
+                                        'Post',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ],
                       ),
-                      const Divider(height: 5.0, thickness: 0.5),
-                      SizedBox(
-                        height: 45,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 50,
-                          child: Expanded(
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Container(
+                      height: 300,
+                      child: Column(
+                        children: [
+                          Expanded(
                             child: TextField(
                               decoration: InputDecoration.collapsed(
                                 hintText: 'What\'s on your mind?',
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: ListView(
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(
+                            height: 200,
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
                               children: [
-                                FlatButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    FontAwesome.video_camera,
-                                    color: Colors.red,
-                                  ),
-                                  label: Text('Add your Video'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Photo'),
-                                  icon: const Icon(
-                                    FontAwesome.photo,
-                                    color: Colors.green,
-                                  ),
-                                  label: Text(' Add Photo'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.user,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Add People'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.smile_o,
-                                    color: Colors.amber,
-                                  ),
-                                  label: Text('Feeling Activity'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.location_arrow,
-                                    color: Colors.green,
-                                  ),
-                                  label: Text('Add  Location'),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FlatButton.icon(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        FontAwesome.video_camera,
+                                        color: Colors.red,
+                                      ),
+                                      label: Text('Add your Video'),
+                                    ),
+                                    FlatButton.icon(
+                                      onPressed: () => print('Photo'),
+                                      icon: const Icon(
+                                        FontAwesome.photo,
+                                        color: Colors.green,
+                                      ),
+                                      label: Text(' Add Photo'),
+                                    ),
+                                    FlatButton.icon(
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.user,
+                                        color: mPrimaryColor,
+                                      ),
+                                      label: Text('Add People'),
+                                    ),
+                                    FlatButton.icon(
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.smile_o,
+                                        color: Colors.amber,
+                                      ),
+                                      label: Text('Feeling Activity'),
+                                    ),
+                                    FlatButton.icon(
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.location_arrow,
+                                        color: Colors.green,
+                                      ),
+                                      label: Text('Add  Location'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ));
-        });
+                ],
+              ),
+            ));
   }
 }
 

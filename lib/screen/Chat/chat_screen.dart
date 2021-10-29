@@ -150,20 +150,22 @@ Future<bool> _onBackPressed() {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 70,
         centerTitle: false,
-        backgroundColor: mPrimaryColor,
+        backgroundColor: Colors.white,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.white,
+            color: mPrimaryColor,
             onPressed: () {
               Navigator.of(context).pop(true);
             }),
         title: Row(
           children: [
-            Container(
-                      width: 70,
-                      height: 70,
+            Stack(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
                       decoration: BoxDecoration(
                           border: Border.all(
                               width: 4,
@@ -176,14 +178,41 @@ Future<bool> _onBackPressed() {
                                 offset: Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                         ),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(
-                  widget.user.imageUrl,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                widget.user.imageUrl
+                              ))),
+                    ),
+                    Positioned(
+                        bottom: 10,
+                        right: 0,
+                        child: Container(
+                           decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2,
+                            
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          
+                          shape: BoxShape.circle,
+                          color: Colors.white
+                          ),
+                   
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 10,
+                          ),
+                        )),
+                  ],
                 ),
-              ),
-            ),
             SizedBox(
               width: 20,
             ),
@@ -196,7 +225,7 @@ Future<bool> _onBackPressed() {
                 ),
                 Text(
                   'online',
-                  style: bodyText1.copyWith(fontSize: 18),
+                  style: bodyText1.copyWith(fontSize: 10),
                 ),
               ],
             ),
@@ -207,16 +236,19 @@ Future<bool> _onBackPressed() {
               icon: Icon(
                 Icons.call,
                 size: 28,
+                color: mPrimaryColor,
               ),
               onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.videocam_outlined,
                 size: 28,
+                color: mPrimaryColor,
+
               ),
               onPressed: () {}),
         ],
-        elevation: 0,
+        elevation: 2,
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
@@ -231,7 +263,7 @@ Future<bool> _onBackPressed() {
                   final message = messages[index];
                   bool isMe = message.sender.id == currentUser.id;
                   return Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: 20),
                     padding: EdgeInsets.all(15),
                     child: Column(
                       children: [
