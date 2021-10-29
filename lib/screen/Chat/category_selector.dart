@@ -106,32 +106,6 @@ class CategorySelector extends StatelessWidget {
               ),
             ),
           )),
-          Tab(
-              icon: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      children: [
-                        TextSpan(text: 'Match'),
-                        WidgetSpan(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 6.0),
-                            child: Icon(
-                              FontAwesome.heart,
-                              size: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )))
         ],
       ),
     );
