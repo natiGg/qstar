@@ -59,8 +59,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ? BackButton(
                 color: mPrimaryColor,
               )
-            : Container(),
-        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+            : IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: mPrimaryColor,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          UsersFeed(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+                }),
+        title: _isSearching
+            ? _buildSearchField()
+            : Text(
+                "Chat",
+                style: TextStyle(
+                  color: mPrimaryColor,
+                  fontSize: 27,
+                  fontFamily: 'font1',
+                ),
+              ),
         actions: _buildActions(),
       ),
       body: Column(
@@ -145,32 +166,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return <Widget>[
       IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: mPrimaryColor,
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => UsersFeed(),
-                transitionDuration: Duration.zero,
-              ),
-            );
-          }),
-      SizedBox(
-        width: 10,
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 210.0, top: 16),
-        child: Text(
-          "Chat",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 27,
-            fontFamily: 'font1',
-          ),
-        ),
-      ),
-      IconButton(
         icon: const Icon(Icons.search),
         onPressed: _startSearch,
         color: mPrimaryColor,
@@ -208,5 +203,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
-  _buildTitle(BuildContext context) {}
+  _buildTitle() {
+    title:
+    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[]);
+  }
 }
