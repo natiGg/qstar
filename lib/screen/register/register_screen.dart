@@ -38,17 +38,28 @@ class RegisterScreen extends StatelessWidget {
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
                 TextSpan(
                     text:
-                        'By tapping Next  & accept you acknowledge that you have read the privacy policy and agree to the Term of Service.'),
-                // TextSpan(
-                //   text: 'See More',
-                //   style: TextStyle(
-                //     color: mPrimaryColor,
-                //   ),
-                //   recognizer: TapGestureRecognizer()
-                //     ..onTap = () {
-                //       Navigator.pop(context);
-                //     },
-                // ),
+                        'By tapping Next  & accept you acknowledge that you have read the '),
+                TextSpan(
+                  text: 'privacy policy',
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pop(context);
+                    },
+                ),
+                TextSpan(text: 'and agree to the '),
+                TextSpan(
+                  text: 'Term of Service.',
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.pop(context);
+                    },
+                ),
               ]),
             ),
           ),

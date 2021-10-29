@@ -431,8 +431,9 @@ class _FeedState extends State<Feed> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(width: 160,),
-            
+                SizedBox(
+                  width: 160,
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -444,20 +445,19 @@ class _FeedState extends State<Feed> {
                 ),
               ],
             ),
-              Padding(
-            padding: EdgeInsets.all(25),
-            child: Container(
-              height: 260,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Row(children: _users.map((e) => UserStories(e)).toList()),
-                ],
+            Padding(
+              padding: EdgeInsets.all(25),
+              child: Container(
+                height: 260,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Row(children: _users.map((e) => UserStories(e)).toList()),
+                  ],
+                ),
               ),
             ),
-            ),
 
-            
             Divider(
               thickness: 1.0,
             ),
