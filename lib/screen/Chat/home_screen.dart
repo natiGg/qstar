@@ -56,19 +56,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _isSearching
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
+            ? BackButton(
                 color: mPrimaryColor,
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          UsersFeed(),
-                      transitionDuration: Duration.zero,
-                    ),
-                  );
-                })
+              )
             : Container(),
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
         actions: _buildActions(),
@@ -154,8 +144,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     return <Widget>[
+      IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: mPrimaryColor,
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => UsersFeed(),
+                transitionDuration: Duration.zero,
+              ),
+            );
+          }),
+      SizedBox(
+        width: 10,
+      ),
       Padding(
-        padding: const EdgeInsets.only(right: 255.0, top: 20),
+        padding: const EdgeInsets.only(right: 210.0, top: 16),
         child: Text(
           "Chat",
           style: TextStyle(
