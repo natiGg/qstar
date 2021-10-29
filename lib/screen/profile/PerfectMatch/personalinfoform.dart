@@ -64,7 +64,6 @@ class _MyHomePageState extends State<PersonalInfo> {
           primary: mPrimaryColor,
         )),
         child: Stepper(
-          type: StepperType.horizontal,
           steps: getSteps(),
           controlsBuilder: (BuildContext context,
               {VoidCallback? onStepContinue,
@@ -446,7 +445,7 @@ class _MyHomePageState extends State<PersonalInfo> {
             ),
             RangeSlider(
               values: _currentRangeValues,
-              min: 0,
+              min: 18,
               max: 100,
               divisions: 10,
               labels: RangeLabels(
