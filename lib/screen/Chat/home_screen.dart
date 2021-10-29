@@ -17,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
+  TextEditingController _searchQueryController = TextEditingController();
+  bool _isSearching = false;
+  String searchQuery = "Search query";
 
   void onTabChange() {
     setState(() {
@@ -60,20 +63,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: mPrimaryColor,
-            onPressed: () {
-                Navigator.of(context).pop(true);
-            }),
-        title: Text(
-          "Chat",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 27,
-            fontFamily: 'font1',
-          ),
-        ),
+        leading: _isSearching
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: mPrimaryColor,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          UsersFeed(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+                })
+            : Container(),
+        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+        actions: _buildActions(),
       ),
       body: WillPopScope(
         onWillPop: _onBackPressed,
@@ -155,4 +161,88 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
     );
   }
+
+  Widget _buildSearchField() {
+    return TextField(
+      controller: _searchQueryController,
+      autofocus: true,
+      decoration: InputDecoration(
+        hintText: "Search Data...",
+        border: InputBorder.none,
+        hintStyle: TextStyle(color: mPrimaryColor),
+      ),
+      style: TextStyle(color: Colors.black, fontSize: 16.0),
+      onChanged: (query) => updateSearchQuery(query),
+    );
+  }
+
+  List<Widget> _buildActions() {
+    if (_isSearching) {
+      return <Widget>[
+        IconButton(
+          icon: const Icon(Icons.clear),
+          color: mPrimaryColor,
+          onPressed: () {
+            if (_searchQueryController == null ||
+                _searchQueryController.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _clearSearchQuery();
+          },
+        ),
+      ];
+    }
+
+    return <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(right: 255.0, top: 20),
+        child: Text(
+          "Chat",
+          style: TextStyle(
+            color: mPrimaryColor,
+            fontSize: 27,
+            fontFamily: 'font1',
+          ),
+        ),
+      ),
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _startSearch,
+        color: mPrimaryColor,
+      ),
+    ];
+  }
+
+  void _startSearch() {
+    ModalRoute.of(context)!
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void updateSearchQuery(String newQuery) {
+    setState(() {
+      searchQuery = newQuery;
+    });
+  }
+
+  void _stopSearching() {
+    _clearSearchQuery();
+
+    setState(() {
+      _isSearching = false;
+    });
+  }
+
+  void _clearSearchQuery() {
+    setState(() {
+      _searchQueryController.clear();
+      updateSearchQuery("");
+    });
+  }
+
+  _buildTitle(BuildContext context) {}
 }

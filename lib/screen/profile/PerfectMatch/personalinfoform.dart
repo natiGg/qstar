@@ -28,7 +28,7 @@ class _MyHomePageState extends State<PersonalInfo> {
   String? _gender, _hob, _edu, _emp, _occ;
   String? list2 = "Counrty";
   String? lan = "Language";
-  RangeValues _currentRangeValues = const RangeValues(0, 100);
+  RangeValues _currentRangeValues = const RangeValues(18, 65);
 
   @override
   Widget build(BuildContext context) {
@@ -58,73 +58,79 @@ class _MyHomePageState extends State<PersonalInfo> {
           ),
         ),
       ),
-      body: Stepper(
-        steps: getSteps(),
-        controlsBuilder: (BuildContext context,
-            {VoidCallback? onStepContinue,
-            VoidCallback? onStepCancel,
-            VoidCallback? onStpeFinish}) {
-          final isLastStep = currentStep == getSteps().length - 1;
-          return Row(
-            children: <Widget>[
-              OutlinedButton(
-                  onPressed: onStepContinue,
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
-                  ),
-                  child: (isLastStep)
-                      ? GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation1, animation2) =>
-                                        UsersFeed(),
-                                transitionDuration: Duration.zero,
-                              ),
-                            );
-                          },
-                          child: const Text('Submit'))
-                      : const Text(
-                          'Next',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mPrimaryColor,
-                          ),
-                        )),
-              SizedBox(
-                width: 15,
-              ),
-              OutlinedButton(
-                  onPressed: onStepCancel,
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
-                  ),
-                  child: const Text(
-                    'Go back',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: mPrimaryColor,
+      body: Theme(
+        data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+          primary: mPrimaryColor,
+        )),
+        child: Stepper(
+          steps: getSteps(),
+          controlsBuilder: (BuildContext context,
+              {VoidCallback? onStepContinue,
+              VoidCallback? onStepCancel,
+              VoidCallback? onStpeFinish}) {
+            final isLastStep = currentStep == getSteps().length - 1;
+            return Row(
+              children: <Widget>[
+                OutlinedButton(
+                    onPressed: onStepContinue,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
                     ),
-                  )),
-            ],
-          );
-        },
-        currentStep: currentStep,
-        onStepTapped: (int step) {
-          setState(() {
-            currentStep = step;
-          });
-        },
-        onStepCancel: () {
-          currentStep > 0 ? setState(() => currentStep -= 1) : null;
-        },
-        onStepContinue: () {
-          currentStep < 3 ? setState(() => currentStep += 1) : null;
-        },
+                    child: (isLastStep)
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          UsersFeed(),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
+                            },
+                            child: const Text('Submit'))
+                        : const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: mPrimaryColor,
+                            ),
+                          )),
+                SizedBox(
+                  width: 15,
+                ),
+                OutlinedButton(
+                    onPressed: onStepCancel,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
+                    ),
+                    child: const Text(
+                      'Go back',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: mPrimaryColor,
+                      ),
+                    )),
+              ],
+            );
+          },
+          currentStep: currentStep,
+          onStepTapped: (int step) {
+            setState(() {
+              currentStep = step;
+            });
+          },
+          onStepCancel: () {
+            currentStep > 0 ? setState(() => currentStep -= 1) : null;
+          },
+          onStepContinue: () {
+            currentStep < 3 ? setState(() => currentStep += 1) : null;
+          },
+        ),
       ),
     );
   }
@@ -431,7 +437,7 @@ class _MyHomePageState extends State<PersonalInfo> {
               height: 15,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 228.0),
+              padding: const EdgeInsets.only(right: 208.0),
               child: const Text('Age preference'),
             ),
             SizedBox(
@@ -439,7 +445,7 @@ class _MyHomePageState extends State<PersonalInfo> {
             ),
             RangeSlider(
               values: _currentRangeValues,
-              min: 0,
+              min: 18,
               max: 100,
               divisions: 10,
               labels: RangeLabels(
