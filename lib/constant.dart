@@ -40,13 +40,14 @@ final TextStyle bodyTextTime = TextStyle(
     letterSpacing: 1.5,
   );
  final TextStyle chatSenderName = TextStyle(
-    color: Colors.white,
-    fontSize: 24,
+    color: mPrimaryColor,
+    fontSize: 25,
     fontWeight: FontWeight.bold,
+    fontFamily: "font1",
     letterSpacing: 1.5,
   );
  final TextStyle bodyText1 = TextStyle(
       color: Color(0xffAEABC9),
-      fontSize: 14,
+      fontSize: 10,
       fontWeight: FontWeight.w500);
 

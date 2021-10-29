@@ -66,7 +66,7 @@ class _CategoryVideo2 extends State<CategoryVideo>
                 children: _listItem
                     .map((item) => GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:
@@ -110,7 +110,7 @@ class _CategoryVideo2 extends State<CategoryVideo>
                                                     size: 40.0,
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.pushReplacement(
+                                                    Navigator.push(
                                                       context,
                                                       PageRouteBuilder(
                                                         pageBuilder: (context,
@@ -154,7 +154,7 @@ class _CategoryVideo2 extends State<CategoryVideo>
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation1, animation2) => Qvideoscreen(),

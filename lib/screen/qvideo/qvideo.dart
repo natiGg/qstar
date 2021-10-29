@@ -98,7 +98,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         leading: new IconButton(
             icon: new Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
@@ -123,7 +123,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
@@ -236,7 +236,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                     children: <Widget>[
                                       GestureDetector(
                                         onTap: () {
-                                          Navigator.pushReplacement(
+                                          Navigator.push(
                                             context,
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
@@ -284,7 +284,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       PageRouteBuilder(
                                         pageBuilder:
@@ -458,7 +458,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     PageRouteBuilder(
                                       pageBuilder:
@@ -512,7 +512,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     PageRouteBuilder(
                                       pageBuilder:

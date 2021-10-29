@@ -36,7 +36,7 @@ class InfoWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5),
             ),
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>

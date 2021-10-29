@@ -20,13 +20,7 @@ class MyPages extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => UsersFeed(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         // ignore: prefer_const_constructors
         title: Text(
@@ -52,7 +46,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation1, animation2) => PersonalInfo(),

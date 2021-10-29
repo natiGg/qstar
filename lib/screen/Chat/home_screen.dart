@@ -49,7 +49,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+
+
   Widget build(BuildContext context) {
+     Future<bool> _onBackPressed() async {
+ // This dialog will exit your app on saying yes
+   Navigator.of(context).pop(true);
+   return Future.value(false);
+           
+  }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -63,14 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 icon: Icon(Icons.arrow_back),
                 color: mPrimaryColor,
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) =>
-                          UsersFeed(),
-                      transitionDuration: Duration.zero,
-                    ),
-                  );
+                  Navigator.of(context).pop(true);
                 }),
         title: _isSearching
             ? _buildSearchField()
@@ -84,40 +85,73 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
         actions: _buildActions(),
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 5,
-          ),
-          CategorySelector(tabController: tabController!),
-          SizedBox(
-            height: 5,
-          ),
-          Expanded(
-            child: Container(
+      body: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 1),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
+                color: Colors.black38.withAlpha(10),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
                 ),
               ),
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  RecentChats(),
-                  Online(),
-                  Nearby(),
-                  Match(),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search ",
+                        hintStyle: TextStyle(
+                          color: Colors.black.withAlpha(120),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (String keyword) {},
+                    ),
+                  ),
+                  Icon(
+                    Icons.search,
+                    color: Colors.black.withAlpha(120),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+            CategorySelector(tabController: tabController!),
+            SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
+                ),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    RecentChats(),
+                    Online(),
+                    Nearby(),
+                    Match(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Navigator.pushReplacement(
+          // Navigator.push(
           //   context,
           //   PageRouteBuilder(
           //     pageBuilder: (context, animation1, animation2) => Qvideoscreen(),

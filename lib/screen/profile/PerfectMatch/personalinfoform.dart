@@ -40,13 +40,7 @@ class _MyHomePageState extends State<PersonalInfo> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => UsersFeed(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         // ignore: prefer_const_constructors
         title: Text(

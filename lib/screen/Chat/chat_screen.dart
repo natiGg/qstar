@@ -84,9 +84,9 @@ class _ChatScreenState extends State<ChatScreen> {
   _buildMessageComposer() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: 70,
+      height: 60,
       decoration: BoxDecoration(
-        color: mPrimaryColor.withOpacity(0.05),
+        color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
       ),
       child: Row(
@@ -94,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 14),
-              height: 50,
+              height: 40,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(30),
@@ -139,36 +139,80 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+  
+Future<bool> _onBackPressed() {
+  Navigator.of(context).pop(true);
+    return Future.value(false);
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 70,
         centerTitle: false,
-        backgroundColor: mPrimaryColor,
+        backgroundColor: Colors.white,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.white,
+            color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      HomeScreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         title: Row(
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(
-                widget.user.imageUrl,
-              ),
-            ),
+            Stack(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                widget.user.imageUrl
+                              ))),
+                    ),
+                    Positioned(
+                        bottom: 10,
+                        right: 0,
+                        child: Container(
+                           decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2,
+                            
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          
+                          shape: BoxShape.circle,
+                          color: Colors.white
+                          ),
+                   
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 10,
+                          ),
+                        )),
+                  ],
+                ),
             SizedBox(
               width: 20,
             ),
@@ -181,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 Text(
                   'online',
-                  style: bodyText1.copyWith(fontSize: 18),
+                  style: bodyText1.copyWith(fontSize: 10),
                 ),
               ],
             ),
@@ -192,30 +236,34 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(
                 Icons.call,
                 size: 28,
+                color: mPrimaryColor,
               ),
               onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.videocam_outlined,
                 size: 28,
+                color: mPrimaryColor,
+
               ),
               onPressed: () {}),
         ],
-        elevation: 0,
+        elevation: 2,
       ),
-      backgroundColor: Colors.transparent,
-      body: Column(
-        children: [
-          Expanded(
+      backgroundColor: Colors.white,
+      body: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: Column(
+          children: [
+                      Expanded(
             child: ListView.builder(
-                physics: ScrollPhysics(),
-                reverse: false,
+                reverse: true,
                 itemCount: messages.length,
                 itemBuilder: (context, int index) {
                   final message = messages[index];
                   bool isMe = message.sender.id == currentUser.id;
                   return Container(
-                    margin: EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: 20),
                     padding: EdgeInsets.all(15),
                     child: Column(
                       children: [
@@ -297,9 +345,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }),
           ),
-          _buildMessageComposer()
-        ],
+           _buildMessageComposer()
+      
+          
+          ],
+        ),
       ),
+      
     );
   }
 }

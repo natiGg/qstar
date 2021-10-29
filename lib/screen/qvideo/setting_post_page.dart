@@ -69,7 +69,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
                     title: Text('Tag People'),
                     dense: true,
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
@@ -88,7 +88,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
                       title: Text('Add Location'),
                       dense: true,
                       onTap: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) =>
@@ -136,7 +136,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
                     title: Text('Setting'),
                     dense: true,
                     onTap: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>

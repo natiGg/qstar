@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               icon: Icon(Icons.camera,
                                   size: 16, color: Colors.white),
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder:

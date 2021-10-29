@@ -23,7 +23,7 @@ class _CommentPageState extends State<CommentPage> {
     // ignore: unnecessary_new
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => UsersFeed()));
         return true;
       },
@@ -35,7 +35,7 @@ class _CommentPageState extends State<CommentPage> {
               icon: Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
@@ -122,5 +122,5 @@ class _CommentPageState extends State<CommentPage> {
   //   return true; //
   // }
   // _moveToScreen2(BuildContext context) =>
-  //     Navigator.pushReplacementNamed(context, "screen2");
+  //     Navigator.pushNamed(context, "screen2");
 }
