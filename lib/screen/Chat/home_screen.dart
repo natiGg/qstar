@@ -64,14 +64,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _isSearching
-            ? IconButton(
+            ? BackButton(
+                color: mPrimaryColor,
+              )
+            : IconButton(
                 icon: Icon(Icons.arrow_back),
                 color: mPrimaryColor,
                 onPressed: () {
-                  Navigator.of(context).pop(true);
-                })
-            : Container(),
-        title: _isSearching ? _buildSearchField() : _buildTitle(context),
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          UsersFeed(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+                }),
+        title: _isSearching
+            ? _buildSearchField()
+            : Text(
+                "Chat",
+                style: TextStyle(
+                  color: mPrimaryColor,
+                  fontSize: 27,
+                  fontFamily: 'font1',
+                ),
+              ),
         actions: _buildActions(),
       ),
       body: WillPopScope(
@@ -188,17 +206,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     return <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(right: 255.0, top: 20),
-        child: Text(
-          "Chat",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 27,
-            fontFamily: 'font1',
-          ),
-        ),
-      ),
       IconButton(
         icon: const Icon(Icons.search),
         onPressed: _startSearch,
@@ -237,5 +244,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
-  _buildTitle(BuildContext context) {}
+  _buildTitle() {
+    title:
+    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[]);
+  }
 }

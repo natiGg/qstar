@@ -108,30 +108,30 @@ class CategorySelector extends StatelessWidget {
           )),
           Tab(
               icon: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.w600,
+            padding: const EdgeInsets.all(5.0),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 15,
+                  color: mPrimaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+                children: [
+                  TextSpan(text: 'Match'),
+                  WidgetSpan(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      child: Icon(
+                        FontAwesome.heart,
+                        size: 18,
+                        color: Colors.red,
                       ),
-                      children: [
-                        TextSpan(text: 'Match'),
-                        WidgetSpan(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 6.0),
-                            child: Icon(
-                              FontAwesome.heart,
-                              size: 18,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
-                  )))
+                  ),
+                ],
+              ),
+            ),
+          )),
         ],
       ),
     );
@@ -175,20 +175,20 @@ class _MD2Painter extends BoxPainter {
     Rect? rect;
     if (decoration.indicatorSize == MD2IndicatorSize.full) {
       rect = Offset(offset.dx,
-              (configuration.size!.height - decoration.indicatorHeight)) &
-          Size(configuration.size!.width, decoration.indicatorHeight);
+              (configuration.size!.height - decoration.indicatorHeight ?? 3)) &
+          Size(configuration.size!.width, decoration.indicatorHeight ?? 3);
     } else if (decoration.indicatorSize == MD2IndicatorSize.normal) {
       rect = Offset(offset.dx + 6,
-              (configuration.size!.height - decoration.indicatorHeight)) &
-          Size(configuration.size!.width - 12, decoration.indicatorHeight);
+              (configuration.size!.height - decoration.indicatorHeight ?? 3)) &
+          Size(configuration.size!.width - 12, decoration.indicatorHeight ?? 3);
     } else if (decoration.indicatorSize == MD2IndicatorSize.tiny) {
       rect = Offset(offset.dx + configuration.size!.width / 2 - 8,
-              (configuration.size!.height - decoration.indicatorHeight)) &
-          Size(16, decoration.indicatorHeight);
+              (configuration.size!.height - decoration.indicatorHeight ?? 3)) &
+          Size(16, decoration.indicatorHeight ?? 3);
     }
 
     final Paint paint = Paint();
-    paint.color = decoration.indicatorColor;
+    paint.color = decoration.indicatorColor ?? Color(0xff1967d2);
     paint.style = PaintingStyle.fill;
     canvas.drawRRect(
         RRect.fromRectAndCorners(rect!,
