@@ -23,6 +23,8 @@ List<User> _users = [
   User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
   User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
 ];
+late int ratings = 3;
+late double rating_d = 3;
 
 class Suggested extends StatelessWidget {
   @override
@@ -55,18 +57,20 @@ class Suggested extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Connect with your best friend on Q star",
+                  "Connect with your best friend on Qstar",
                   style: TextStyle(
                       // we use the [TextStyle] widget to customize text
-                      color: mPrimaryColor, // set the color
+                      color: Colors.black, // set the color
                       fontSize: 15.0,
-                      fontWeight: FontWeight.bold // and the font size
+                      fontWeight: FontWeight.normal,
+                      fontStyle: FontStyle.italic
+                      // and the font size
                       ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, left: 30.0, right: 30),
                   child: Text(
-                    "Reward your 1st star to your profile by following suggested friends on Q star.",
+                    "Reward your 1st star to your profile by following suggested friends on Qstar.",
                     style: TextStyle(
                       color: mPrimaryColor,
                       decorationStyle: TextDecorationStyle.wavy,
@@ -170,14 +174,24 @@ class SuggestedUsers extends StatelessWidget {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 26),
+                    child: Text(
+                      "Full name",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: mPrimaryColor),
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: RatingBarIndicator(
-                      rating: 2.75,
+                      rating: rating_d,
                       itemBuilder: (context, index) => Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      itemCount: 5,
+                      itemCount: ratings,
                       itemSize: 20.0,
                       direction: Axis.horizontal,
                     ),

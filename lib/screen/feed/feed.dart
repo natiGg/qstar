@@ -45,6 +45,8 @@ List<Post> _posts = [
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
 List<bool> _isFF = [true, false, false, true, false];
+late int ratings = 3;
+late double rating_d = 3;
 
 void main() {
   runApp(const UsersFeed());
@@ -217,7 +219,7 @@ class _FeedState extends State<Feed> {
                                   child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'What\'s on your mind?',
+                                        'Sahre us your thought',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.withOpacity(0.9),
@@ -431,8 +433,9 @@ class _FeedState extends State<Feed> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(width: 160,),
-            
+                SizedBox(
+                  width: 160,
+                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -444,20 +447,19 @@ class _FeedState extends State<Feed> {
                 ),
               ],
             ),
-              Padding(
-            padding: EdgeInsets.all(25),
-            child: Container(
-              height: 260,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Row(children: _users.map((e) => UserStories(e)).toList()),
-                ],
+            Padding(
+              padding: EdgeInsets.all(25),
+              child: Container(
+                height: 260,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Row(children: _users.map((e) => UserStories(e)).toList()),
+                  ],
+                ),
               ),
             ),
-            ),
 
-            
             Divider(
               thickness: 1.0,
             ),
@@ -949,12 +951,12 @@ class _UserAvatarState extends State<UserAvatar> {
                     style: TextStyle(color: mPrimaryColor),
                   )),
                   RatingBarIndicator(
-                    rating: 2.75,
+                    rating: rating_d,
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
-                    itemCount: 5,
+                    itemCount: ratings,
                     itemSize: 20.0,
                     direction: Axis.horizontal,
                   ),
@@ -1088,10 +1090,9 @@ class _WPostState extends State<WPost> {
                             shrinkWrap: true,
                             children: [
                               'Report...',
-                              'Turn on Post notification',
-                              'Copy Link',
-                              'Share to...',
-                              'Mute'
+                              'Hide',
+                              'unfollow',
+                              'Block',
                             ]
                                 .map((e) => InkWell(
                                       child: Container(
@@ -1128,12 +1129,12 @@ class _WPostState extends State<WPost> {
                         height: 5,
                       ),
                       RatingBarIndicator(
-                        rating: 2.75,
+                        rating: rating_d,
                         itemBuilder: (context, index) => Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
-                        itemCount: 5,
+                        itemCount: ratings,
                         itemSize: 20.0,
                         direction: Axis.horizontal,
                       ),

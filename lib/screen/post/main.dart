@@ -43,8 +43,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late FileModel selectedModel;
-  late String image;
+  FileModel? selectedModel;
+  String? image;
   List<FileModel>? files;
 
   @override
@@ -141,7 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PreviewImageScreengallery(
-                                    imagePath: image,)));
+                                      imagePath: image!,
+                                    )));
                       },
                       child: new Text(
                         'Next',
@@ -155,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: image != null
-                      ? Image.file(File(image),
+                      ? Image.file(File(image!),
                           height: MediaQuery.of(context).size.height * 0.25,
                           width: MediaQuery.of(context).size.width)
                       : Container()),
@@ -212,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               const Divider(),
               // ignore: unnecessary_null_comparison, prefer_is_empty
-              if (selectedModel == null && selectedModel.files.length < 1)
+              if (selectedModel == null && selectedModel!.files.length < 1)
                 Container()
               else
                 Container(
@@ -225,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               crossAxisSpacing: 4,
                               mainAxisSpacing: 4),
                       itemBuilder: (_, i) {
-                        var file = selectedModel.files[i];
+                        var file = selectedModel!.files[i];
                         return GestureDetector(
                           child: Image.file(
                             File(file),
@@ -238,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         );
                       },
-                      itemCount: selectedModel.files.length),
+                      itemCount: selectedModel!.files.length),
                 )
             ],
           ),
