@@ -95,7 +95,7 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   FocusNode _focus = new FocusNode();
-  List<String> _animals = ["Friends", "public", "only me"];
+  List<String> _animals = ["Friends", "public", "only me(stars)"];
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class _FeedState extends State<Feed> {
             // ),
 
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
+              margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
               elevation: 2,
               shape: null,
               child: Container(
@@ -214,7 +214,7 @@ class _FeedState extends State<Feed> {
                                   child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        'share us your thought',
+                                        'Share us your thought',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey.withOpacity(0.9),

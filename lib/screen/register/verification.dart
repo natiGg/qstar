@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/register/hobbieselector.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
@@ -93,7 +94,7 @@ class _SetPState extends State<VerifyOTP> {
           ),
           SizedBox(height: 20),
           Text(
-            "Enter the code sent to: +251",
+            "Enter the code sent to: the phone number you enterd",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
               color: mPrimaryColor, // set the color
@@ -195,7 +196,6 @@ class _SetPState extends State<VerifyOTP> {
             ),
           ),
 
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -229,7 +229,7 @@ class _SetPState extends State<VerifyOTP> {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Suggested();
+                      return Hobbieselector();
                     },
                   ),
                 );
