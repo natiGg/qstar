@@ -21,7 +21,7 @@ class LoginButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MyHomePage(),
+              builder: (context) => const MyHomePage(),
             ),
           );
         },
@@ -29,7 +29,7 @@ class LoginButton extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Login',
             style: TextStyle(
               color: Colors.white,

@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static List<Animal> _animals = [
+  static final List<Animal> _animals = [
     Animal(id: 1, name: "Book clubs"),
     Animal(id: 2, name: "Running clubs"),
     Animal(id: 3, name: "Volunteering"),
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
   //List<Animal> _selectedAnimals = [];
-  List<Animal> _selectedAnimals2 = [];
+  final List<Animal> _selectedAnimals2 = [];
   //List<Animal> _selectedAnimals4 = [];
 
   @override
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ActivityItemWidget extends StatelessWidget {
+  const ActivityItemWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Material(
         color: Theme.of(context).cardColor,
         child: InkWell(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
             child: Row(
               children: <Widget>[
-                CircleAvatar(
+                const CircleAvatar(
                     maxRadius: 19,
                     backgroundImage: AssetImage('assets/images/1.jpg')),
                 Expanded(
                     child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: RichText(
                             text: TextSpan(children: [
                           TextSpan(

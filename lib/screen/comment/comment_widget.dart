@@ -1,20 +1,24 @@
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class CommentWidget extends StatelessWidget {
+  const CommentWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             backgroundImage: AssetImage('assets/images/2.jpg'),
             radius: 18,
           ),
           Expanded(
               child: Container(
             child: Padding(
-              padding: EdgeInsets.only(left: 16),
+              padding: const EdgeInsets.only(left: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -30,13 +34,14 @@ class CommentWidget extends StatelessWidget {
                     ]),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.only(top: 4),
                     child: DefaultTextStyle(
                         style: Theme.of(context).textTheme.caption!.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w400),
                         child: Row(
+                          // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text('5d'),
+                            const Text('5d'),
                             SizedBox(
                               width: 24,
                             ),

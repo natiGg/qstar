@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static const historyLength = 5;
 
-  List<String> _searchHistory = [
+  final List<String> _searchHistory = [
     'User',
     'Video',
     'Posts',
@@ -210,7 +210,7 @@ class SearchResultsListView extends StatelessWidget {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: const [
             Icon(
               Icons.search,
               size: 64,
@@ -240,7 +240,7 @@ class SearchResultsListView extends StatelessWidget {
                   padding: EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
-                      "$searchTerm" == "Search"
+                      searchTerm == "Search"
                           ? Icon(
                               Icons.search_sharp,
                               size: 0,
@@ -250,9 +250,9 @@ class SearchResultsListView extends StatelessWidget {
                               size: 15,
                             ),
                       Padding(
-                        child: "$searchTerm" == "Search"
+                        child: searchTerm == "Search"
                             ? Text('')
-                            : Text('$searchTerm'),
+                            : Text(searchTerm),
                         padding: EdgeInsets.only(left: 10),
                       ),
                     ],

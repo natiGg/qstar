@@ -15,7 +15,7 @@ class _SetPState extends State<Password> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(

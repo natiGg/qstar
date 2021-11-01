@@ -15,7 +15,7 @@ class Username extends StatefulWidget {
 class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
 

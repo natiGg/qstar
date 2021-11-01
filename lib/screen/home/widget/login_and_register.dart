@@ -19,7 +19,7 @@ class LoginAndRegister extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25.0),
                 color: Colors.white,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
                     offset: Offset(0.0, 1.0), //(x,y)
@@ -38,7 +38,7 @@ class LoginAndRegister extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return RegisterScreen();
+                        return const RegisterScreen();
                       },
                     ),
                   );
@@ -47,7 +47,7 @@ class LoginAndRegister extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
                   width: double.infinity,
-                  child: Text(
+                  child: const Text(
                     'Sign up',
                     style: TextStyle(
                       color: Colors.white,
@@ -57,7 +57,7 @@ class LoginAndRegister extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 30,
           ),
           Expanded(
@@ -65,7 +65,7 @@ class LoginAndRegister extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25.0),
                 color: Colors.white,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.grey,
                     offset: Offset(0.0, 1.0), //(x,y)
@@ -77,13 +77,13 @@ class LoginAndRegister extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(36),
-                    side: BorderSide(color: mPrimaryColor)),
+                    side: const BorderSide(color: mPrimaryColor)),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return LoginScreen();
+                        return const LoginScreen();
                       },
                     ),
                   );
@@ -92,7 +92,7 @@ class LoginAndRegister extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
                   width: double.infinity,
-                  child: Text(
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                       color: mPrimaryColor,

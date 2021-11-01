@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return SettingsList(
       sections: [
         SettingsSection(
-          tiles: [
+          tiles: const [
             SettingsTile(
                 title: 'Personal Information',
                 leading: Icon(
@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
         SettingsSection(
-          tiles: [
+          tiles: const [
             SettingsTile(
                 title: 'Password',
                 leading: Icon(
@@ -82,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
         SettingsSection(
-          tiles: [
+          tiles: const [
             SettingsTile(
                 title: 'Terms of Service',
                 leading: Icon(

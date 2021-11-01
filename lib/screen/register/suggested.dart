@@ -26,7 +26,7 @@ late double rating_d = 3;
 class Suggested extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -77,7 +77,7 @@ class Suggested extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.all(20),
-                  child: Container(
+                  child: SizedBox(
                     height: 400,
                     child: ListView(
                       scrollDirection: Axis.vertical,
@@ -128,11 +128,11 @@ class Suggested extends StatelessWidget {
 class SuggestedUsers extends StatelessWidget {
   final User user;
 
-  SuggestedUsers(this.user);
+  const SuggestedUsers(this.user);
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Column(children: <Widget>[
@@ -148,7 +148,7 @@ class SuggestedUsers extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/images/profile${this.user.id}.jpg',
+                    'assets/images/profile${user.id}.jpg',
                   ),
                 ),
               ),
@@ -206,7 +206,7 @@ class SuggestedUsers extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
-                    child: Container(
+                    child: SizedBox(
                       width: 100,
                       height: 30,
                       child: FlatButton(

@@ -16,7 +16,7 @@ class Phonevarification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     PhoneNumber number = PhoneNumber(isoCode: 'ET');
@@ -84,7 +84,7 @@ class Phonevarification extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
+              text: TextSpan(style: TextStyle(color: Colors.grey), children: const [
                 TextSpan(text: "We'll send you an SMS & verification code"),
               ]),
             ),

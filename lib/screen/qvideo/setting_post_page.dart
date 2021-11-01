@@ -19,7 +19,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    ModalRoute.of(context)!.overlayEntries.forEach((element) {});
+    for (var element in ModalRoute.of(context)!.overlayEntries) {}
   }
 
   @override

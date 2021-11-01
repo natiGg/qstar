@@ -18,7 +18,7 @@ Widget profileStats(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
     child: Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: 100,
           child: Align(
             alignment: Alignment.centerLeft,
@@ -57,7 +57,7 @@ Widget profileStats(
         SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
           width: screen.width - 100 - 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +110,7 @@ Widget bio({required Color primaryColor}) {
         children: <Widget>[
           RichText(
             text: TextSpan(
-              children: [
+              children: const [
                 TextSpan(
                   text: 'It is what it is...',
                   style: TextStyle(
@@ -203,7 +203,7 @@ Widget storyHighlight({@required primaryColor}) {
     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           'Story Highligts',
           style: TextStyle(
@@ -223,7 +223,7 @@ Widget storyHighlight({@required primaryColor}) {
 Widget SocialMedia() {
   return Row(
     children: [
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -231,7 +231,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/yt.png"),
+            image: AssetImage("assets/images/yt.png"),
             width: 20,
             height: 20,
           ),
@@ -242,7 +242,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -250,7 +250,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/fb.png"),
+            image: AssetImage("assets/images/fb.png"),
             width: 20,
             height: 20,
           ),
@@ -261,7 +261,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -269,7 +269,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/tiktok.png"),
+            image: AssetImage("assets/images/tiktok.png"),
             width: 20,
             height: 20,
           ),
@@ -280,7 +280,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -288,7 +288,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/inst.png"),
+            image: AssetImage("assets/images/inst.png"),
             width: 20,
             height: 20,
           ),

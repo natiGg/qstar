@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 width: size.width,
                 height: defaultLongSize,
                 child: Column(

@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'message_model.dart';
 import 'user_model.dart';
@@ -15,17 +17,18 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   _buildMessageComposer() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       height: 60,
+      // ignore: prefer_const_constructors
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
       ),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 14),
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
@@ -37,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     Icons.emoji_emotions_outlined,
                     color: Colors.grey[500],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -57,10 +60,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: mPrimaryColor,
             child: Icon(
               Icons.send,
@@ -86,7 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: false,
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.of(context).pop(true);
@@ -107,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             spreadRadius: 2,
                             blurRadius: 10,
                             color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0, 10))
+                            offset: const Offset(0, 10))
                       ],
                       shape: BoxShape.circle,
                       image: DecorationImage(
@@ -127,11 +130,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
                           color: Colors.white),
-                      child: Icon(
+                      child: const Icon(
                         Icons.circle,
                         color: Colors.green,
                         size: 10,
@@ -139,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     )),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Column(
@@ -159,13 +162,14 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         actions: [
           IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.call,
                 size: 28,
                 color: mPrimaryColor,
               ),
               onPressed: () {}),
           IconButton(
+              // ignore: prefer_const_constructors
               icon: Icon(
                 Icons.videocam_outlined,
                 size: 28,
@@ -188,8 +192,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     final message = messages[index];
                     bool isMe = message.sender.id == currentUser.id;
                     return Container(
-                      margin: EdgeInsets.only(top: 20),
-                      padding: EdgeInsets.all(15),
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         children: [
                           Column(
@@ -206,11 +210,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                       backgroundImage:
                                           AssetImage(widget.user.imageUrl),
                                     ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     constraints: BoxConstraints(
                                         maxWidth:
                                             MediaQuery.of(context).size.width *
@@ -220,8 +224,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                             ? mPrimaryColor.withOpacity(0.80)
                                             : Colors.grey[200],
                                         borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(16),
-                                          topRight: Radius.circular(16),
+                                          topLeft: const Radius.circular(16),
+                                          topRight: const Radius.circular(16),
                                           bottomLeft:
                                               Radius.circular(isMe ? 12 : 0),
                                           bottomRight:
@@ -245,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                       : MainAxisAlignment.start,
                                   children: [
                                     if (!isMe)
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 40,
                                       ),
                                     Icon(
@@ -253,7 +257,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                       size: 20,
                                       color: bodyTextTime.color,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 8,
                                     ),
                                     Text(

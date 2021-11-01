@@ -19,18 +19,18 @@ class LoginScreen extends StatelessWidget {
       // This dialog will exit your app on saying yes
       return (await showDialog(
             context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text('Are you sure?'),
-              content: new Text('Do you want to exit an App'),
+            builder: (context) => AlertDialog(
+              title: const Text('Are you sure?'),
+              content: const Text('Do you want to exit an App'),
               actions: <Widget>[
                 // ignore: deprecated_member_use
-                new FlatButton(
+                FlatButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: new Text('No'),
+                  child: const Text('No'),
                 ),
-                new FlatButton(
+                FlatButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Yes'),
+                  child: const Text('Yes'),
                 ),
               ],
             ),
@@ -45,8 +45,8 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            WelcomeBack(),
-            LoginForm(),
+            const WelcomeBack(),
+            const LoginForm(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerRight,
@@ -56,21 +56,21 @@ class LoginScreen extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) {
-                        return Forgotpassword();
+                        return const Forgotpassword();
                       },
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Forgot password?',
                   style: TextStyle(color: mPrimaryColor),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
-            LoginButton(),
+            const LoginButton(),
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 30,
@@ -78,26 +78,28 @@ class LoginScreen extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: RichText(
-                text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                  TextSpan(text: 'Don\'t you have an account? '),
-                  TextSpan(
-                    text: 'Signup',
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) {
-                              return RegisterScreen();
-                            },
-                          ),
-                        );
-                      },
-                  ),
-                ]),
+                text: TextSpan(
+                    style: const TextStyle(color: Colors.grey),
+                    children: [
+                      const TextSpan(text: 'Don\'t you have an account? '),
+                      TextSpan(
+                        text: 'Signup',
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation1, animation2) {
+                                  return const RegisterScreen();
+                                },
+                              ),
+                            );
+                          },
+                      ),
+                    ]),
               ),
             )
           ],

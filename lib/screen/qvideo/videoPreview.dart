@@ -57,7 +57,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       body: ListView(
         children: <Widget>[
           if (widget.imagePath != null)
-            Container(
+            SizedBox(
               height: 600,
               child: NetworkPlayerLifeCycle(
                 widget.imagePath,
@@ -212,11 +212,11 @@ class _FadeAnimationState extends State<FadeAnimation>
   }
 }
 
-typedef Widget VideoWidgetBuilder(
+typedef VideoWidgetBuilder = Widget Function(
     BuildContext context, VideoPlayerController controller);
 
 abstract class PlayerLifeCycle extends StatefulWidget {
-  PlayerLifeCycle(this.dataSource, this.childBuilder);
+  const PlayerLifeCycle(this.dataSource, this.childBuilder);
 
   final VideoWidgetBuilder childBuilder;
   final String dataSource;
@@ -225,7 +225,7 @@ abstract class PlayerLifeCycle extends StatefulWidget {
 /// A widget connecting its life cycle to a [VideoPlayerController] using
 /// a data source from the network.
 class NetworkPlayerLifeCycle extends PlayerLifeCycle {
-  NetworkPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
+  const NetworkPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
       : super(dataSource, childBuilder);
 
   @override
@@ -235,7 +235,7 @@ class NetworkPlayerLifeCycle extends PlayerLifeCycle {
 /// A widget connecting its life cycle to a [VideoPlayerController] using
 /// an asset as data source
 class AssetPlayerLifeCycle extends PlayerLifeCycle {
-  AssetPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
+  const AssetPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
       : super(dataSource, childBuilder);
 
   @override
@@ -315,7 +315,7 @@ Widget buildCard(String title) {
 }
 
 class AspectRatioVideo extends StatefulWidget {
-  AspectRatioVideo(this.controller);
+  const AspectRatioVideo(this.controller);
 
   final VideoPlayerController controller;
 

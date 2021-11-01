@@ -8,7 +8,7 @@ import 'package:qstar/screen/profilesetting/setting.dart';
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
 
-  BottomSheetActionWidget(this.action);
+  const BottomSheetActionWidget(this.action);
 
   @override
   Widget build(BuildContext context) {

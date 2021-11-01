@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
 
 class InfoWidget extends StatelessWidget {
+  const InfoWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +23,7 @@ class InfoWidget extends StatelessWidget {
               )),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 0,
             ),
           ),
@@ -31,7 +33,7 @@ class InfoWidget extends StatelessWidget {
                 'View all 4 comment',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 5),
             ),
             onTap: () {
               Navigator.push(

@@ -12,7 +12,7 @@ class Email extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(

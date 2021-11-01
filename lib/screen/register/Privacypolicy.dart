@@ -46,7 +46,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             text:
                 'This policy describes the information we process to support Facebook, Instagram, Messenger and other products and features offered by Facebook (Facebook Products or Products). You can find additional tools and information in the Facebook Settings and Instagram Settings.\n',
             style: DefaultTextStyle.of(context).style,
-            children: <TextSpan>[
+            children: const <TextSpan>[
               TextSpan(
                   text: 'I. What kinds of information do we collect?\n',
                   style: TextStyle(fontWeight: FontWeight.bold)),

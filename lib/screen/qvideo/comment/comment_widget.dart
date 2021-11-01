@@ -35,7 +35,7 @@ class CommentWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.caption!.copyWith(
                             fontSize: 12, fontWeight: FontWeight.w400),
                         child: Row(
-                          children: [
+                          children: const [
                             Text('5d'),
                             SizedBox(
                               width: 24,

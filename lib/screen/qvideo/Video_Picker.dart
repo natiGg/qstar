@@ -41,7 +41,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
-      if (cameras.length > 0) {
+      if (cameras.isNotEmpty) {
         setState(() {
           selectedCameraIdx = 0;
         });
@@ -78,6 +78,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
 
   VideoPlayerController? _controller;
   VideoPlayerController? _toBeDisposed;
+  @override
   void dispose() {
     _disposeVideoController();
 
@@ -215,7 +216,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
               color: mPrimaryColor,
             ),
             label: Text(
-                "${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1)}")),
+                lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1))),
       ),
     );
   }
@@ -359,7 +360,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     final String videoDirectory = '${appDirectory.path}/Videos';
     await Directory(videoDirectory).create(recursive: true);
     final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
-    final String filePath = '$videoDirectory/${currentTime}.mp4';
+    final String filePath = '$videoDirectory/$currentTime.mp4';
 
     try {
       await controller!.startVideoRecording(filePath);
@@ -374,14 +375,14 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
 
   Future<void> _stopVideoRecording() async {
     if (!controller!.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {
       await controller!.stopVideoRecording();
     } on CameraException catch (e) {
       _showCameraException(e);
-      return null;
+      return;
     }
   }
 

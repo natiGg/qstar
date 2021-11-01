@@ -1,5 +1,5 @@
 // ignore: import_of_legacy_library_into_null_safe
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print, duplicate_ignore
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:camera/camera.dart';
@@ -11,6 +11,8 @@ import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/constant.dart';
 
 class CameraScreen extends StatefulWidget {
+  const CameraScreen({Key? key}) : super(key: key);
+
   @override
   _CameraScreenState createState() {
     return _CameraScreenState();
@@ -29,7 +31,7 @@ class _CameraScreenState extends State {
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
-      if (cameras.length > 0) {
+      if (cameras.isNotEmpty) {
         setState(() {
           selectedCameraIdx = 0;
         });
@@ -76,7 +78,7 @@ class _CameraScreenState extends State {
   @override
   Widget build(BuildContext context) {
     if (controller == null) {
-      return Scaffold();
+      return const Scaffold();
     } else {
       return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -105,6 +107,7 @@ class _CameraScreenState extends State {
             ),
           ),
         ),
+        // ignore: avoid_unnecessary_containers
         body: Container(
           child: SafeArea(
             child: Column(
@@ -114,16 +117,16 @@ class _CameraScreenState extends State {
                   flex: 1,
                   child: _cameraPreviewWidget(),
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _cameraTogglesRowWidget(),
                     _captureControlRowWidget(context),
-                    Spacer()
+                    const Spacer()
                   ],
                 ),
-                SizedBox(height: 20.0)
+                const SizedBox(height: 20.0)
               ],
             ),
           ),
@@ -161,7 +164,7 @@ class _CameraScreenState extends State {
           mainAxisSize: MainAxisSize.max,
           children: [
             FloatingActionButton(
-                child: Icon(Icons.camera),
+                child: const Icon(Icons.camera),
                 backgroundColor: mPrimaryColor,
                 onPressed: () {
                   _onCapturePressed(context);
@@ -175,7 +178,7 @@ class _CameraScreenState extends State {
   /// Display a row of toggle to select the camera (or a message if no camera is available).
   Widget _cameraTogglesRowWidget() {
     if (cameras.isEmpty) {
-      return Spacer();
+      return const Spacer();
     }
 
     CameraDescription selectedCamera = cameras[selectedCameraIdx];
@@ -187,8 +190,9 @@ class _CameraScreenState extends State {
         child: FlatButton.icon(
             onPressed: _onSwitchCamera,
             icon: Icon(_getCameraLensIcon(lensDirection)),
-            label: Text(
-                "${lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1)}")),
+            label: Text(lensDirection
+                .toString()
+                .substring(lensDirection.toString().indexOf('.') + 1))),
       ),
     );
   }

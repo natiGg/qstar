@@ -54,7 +54,7 @@ class _SetPState extends State<Verification> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
 
@@ -131,7 +131,7 @@ class _SetPState extends State<Verification> {
                   errorAnimationController: errorController,
                   controller: textEditingController,
                   keyboardType: TextInputType.number,
-                  boxShadows: [
+                  boxShadows: const [
                     BoxShadow(
                       offset: Offset(0, 1),
                       color: Colors.black12,

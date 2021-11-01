@@ -3,6 +3,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/menu/widget/menu_item.dart';
 
 class MenuScreen extends StatelessWidget {
+  const MenuScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class MenuScreen extends StatelessWidget {
           height: 1,
           color: mPrimaryTextColor.withOpacity(0.5),
         ),
-        preferredSize: Size.fromHeight(1),
+        preferredSize: const Size.fromHeight(1),
       ),
     );
   }

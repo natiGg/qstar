@@ -43,7 +43,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
       'Walking',
     ];
 
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "By your height we can match your account with other account"),
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your native languagem please"),
                   ]),
                 ),
@@ -161,7 +161,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your Hobbies "),
                   ]),
                 ),
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose Your gender"),
                   ]),
                 ),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "please make sure to put your correct birth date.."),

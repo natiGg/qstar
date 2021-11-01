@@ -1,20 +1,24 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'message_model.dart';
 import 'chat_screen.dart';
 
 class FavoriteContacts extends StatelessWidget {
+  const FavoriteContacts({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
+                const Text(
                   'Favorite Contacts',
                   style: TextStyle(
                     color: Colors.blueGrey,
@@ -24,6 +28,7 @@ class FavoriteContacts extends StatelessWidget {
                   ),
                 ),
                 IconButton(
+                  // ignore: prefer_const_constructors
                   icon: Icon(
                     Icons.more_horiz,
                   ),
@@ -37,7 +42,7 @@ class FavoriteContacts extends StatelessWidget {
           Container(
             height: 120.0,
             child: ListView.builder(
-              padding: EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 10.0),
               scrollDirection: Axis.horizontal,
               itemCount: favorites.length,
               itemBuilder: (BuildContext context, int index) {
@@ -51,7 +56,7 @@ class FavoriteContacts extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
                       children: <Widget>[
                         CircleAvatar(
@@ -59,11 +64,10 @@ class FavoriteContacts extends StatelessWidget {
                           backgroundImage:
                               AssetImage(favorites[index].imageUrl),
                         ),
-                        
-                        SizedBox(height: 6.0),
+                        const SizedBox(height: 6.0),
                         Text(
                           favorites[index].name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.blueGrey,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w600,

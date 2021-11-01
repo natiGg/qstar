@@ -23,16 +23,18 @@ class StoreName extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Row(
-            children: <Widget>[
+            children: const <Widget>[
               IconText(
                 iconUrl: 'assets/icons/distance.svg',
                 title: '4,23 mi',
               ),
-              SizedBox(width: 60,),
+              SizedBox(
+                width: 60,
+              ),
               IconText(
                 iconUrl: 'assets/icons/time.svg',
                 title: '20 min',
@@ -44,5 +46,3 @@ class StoreName extends StatelessWidget {
     );
   }
 }
-
-

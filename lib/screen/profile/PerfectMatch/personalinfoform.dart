@@ -123,7 +123,7 @@ class _MyHomePageState extends State<PersonalInfo> {
   List<Step> getSteps() {
     return [
       Step(
-        title: new Text('Genral Info'),
+        title: Text('Genral Info'),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                     ),
                   ),
                   onSelect: (Country country) => setState(() {
-                    list2 = "${country.displayName}";
+                    list2 = country.displayName;
                   }),
                 );
               },
@@ -219,7 +219,7 @@ class _MyHomePageState extends State<PersonalInfo> {
         state: currentStep == 0 ? StepState.editing : StepState.complete,
       ),
       Step(
-        title: new Text('Personal Details'),
+        title: Text('Personal Details'),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -291,7 +291,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: new Text("BackGround Info"),
+        title: Text("BackGround Info"),
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
@@ -377,7 +377,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: new Text("Match Perference"),
+        title: Text("Match Perference"),
         content: Column(
           children: <Widget>[
             TextFormField(

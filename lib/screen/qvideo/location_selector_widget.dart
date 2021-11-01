@@ -12,7 +12,7 @@ class LocationSelectorWidget extends StatefulWidget {
 class _LocationSelectorWidgetState extends State<LocationSelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 48,
       child: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -21,7 +21,7 @@ class _LocationSelectorWidgetState extends State<LocationSelectorWidget> {
             return InkWell(
               child: Container(
                 child: Text(
-                  '${context.watch<PostCreateViewModel>().locationSuggest[index]}',
+                  context.watch<PostCreateViewModel>().locationSuggest[index],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),

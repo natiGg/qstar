@@ -36,12 +36,12 @@ class MenuItem extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            Container(
+            SizedBox(
               width: 55,
               height: 55,
               child: SvgPicture.asset('assets/icons/${coffeeNames[index]}.svg'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 30,
             ),
             Expanded(
@@ -54,7 +54,7 @@ class MenuItem extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(
+            const Icon(
               Icons.keyboard_arrow_right,
               color: mPrimaryColor,
             )

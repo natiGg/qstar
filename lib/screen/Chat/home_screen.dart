@@ -9,6 +9,8 @@ import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -16,14 +18,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
-  TextEditingController _searchQueryController = TextEditingController();
+  final TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
 
   void onTabChange() {
     setState(() {
       currentTabIndex = tabController!.index;
-      print(currentTabIndex);
+      // print(currentTabIndex);
     });
   }
 
@@ -48,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() async {
       // This dialog will exit your app on saying yes
@@ -61,18 +64,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _isSearching
-            ? BackButton(
+            ? const BackButton(
                 color: mPrimaryColor,
               )
             : IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 color: mPrimaryColor,
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 }),
         title: _isSearching
             ? _buildSearchField()
-            : Text(
+            : const Text(
                 "Chat",
                 style: TextStyle(
                   color: mPrimaryColor,
@@ -86,26 +89,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onWillPop: _onBackPressed,
         child: Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Container(
-              margin: EdgeInsets.only(top: 1),
+              margin: const EdgeInsets.only(top: 1),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
               decoration: BoxDecoration(
                 color: Colors.black38.withAlpha(10),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
             ),
             CategorySelector(tabController: tabController!),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30.0),
@@ -114,11 +117,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 child: TabBarView(
                   controller: tabController,
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    RecentChats(),
-                    Online(),
-                    Nearby(),
-                    Match(),
+                    const RecentChats(),
+                    const Online(),
+                    const Nearby(),
+                    const Match(),
                   ],
                 ),
               ),
@@ -147,12 +151,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return TextField(
       controller: _searchQueryController,
       autofocus: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Search Data...",
         border: InputBorder.none,
         hintStyle: TextStyle(color: mPrimaryColor),
       ),
-      style: TextStyle(color: Colors.black, fontSize: 16.0),
+      style: const TextStyle(color: Colors.black, fontSize: 16.0),
       onChanged: (query) => updateSearchQuery(query),
     );
   }

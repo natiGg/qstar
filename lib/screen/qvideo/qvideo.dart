@@ -7,8 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
-
-import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
+import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 
 import 'package:qstar/screen/qvideo/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/useraudio.dart';
@@ -17,7 +16,7 @@ import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
-import 'package:qstar/screen/qvideo/bottomsheet/bottom_sheet_action.dart';
+
 import 'package:qstar/screen/qvideo/Video_Picker.dart';
 
 class Qvideoscreen extends StatefulWidget {
@@ -37,13 +36,13 @@ class _QvideoState2 extends State<Qvideoscreen>
   late AnimationController animationController;
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.8);
-  PageController foryouController = new PageController();
+  PageController foryouController = PageController();
   late VoidCallback _onShowMenu;
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
-        vsync: this, duration: new Duration(seconds: 5));
+    animationController = AnimationController(
+        vsync: this, duration: Duration(seconds: 5));
     animationController.repeat();
     _controller = VideoPlayerController.asset('assets/vod.mp4')
       ..initialize().then((value) {
@@ -51,14 +50,6 @@ class _QvideoState2 extends State<Qvideoscreen>
         _controller.setLooping(true);
         setState(() {});
       });
-
-    _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(
-            iconData: Icons.description, title: 'Description', id: 0),
-        BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
-      ]);
-    };
   }
 
   @override
@@ -81,14 +72,14 @@ class _QvideoState2 extends State<Qvideoscreen>
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: mPrimaryColor),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
               Navigator.of(context).pop(true);
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
@@ -105,7 +96,7 @@ class _QvideoState2 extends State<Qvideoscreen>
         ]),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.switch_video_outlined),
+            icon: const Icon(Icons.switch_video_outlined),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {},
@@ -115,7 +106,7 @@ class _QvideoState2 extends State<Qvideoscreen>
       body: Stack(
         children: <Widget>[
           homescreen(),
-          Container(
+          SizedBox(
             height: 500,
             child: Center(
               child: SizedBox(
@@ -175,7 +166,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                           }
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
                         child: VideoPlayer(_controller),
@@ -184,7 +175,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                     padding: EdgeInsets.only(bottom: 0, top: 100),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width - 100,
                         height: 90,
                         child: Column(
@@ -272,7 +263,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                     );
                                   },
                                   child: Text.rich(
-                                    TextSpan(children: <TextSpan>[
+                                    TextSpan(children: const <TextSpan>[
                                       TextSpan(text: 'UserName'),
                                     ]),
                                     style: TextStyle(
@@ -290,7 +281,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                       padding: EdgeInsets.only(bottom: 25, right: 10),
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Container(
+                        child: SizedBox(
                           width: 70,
                           height: 450,
                           child: Column(
@@ -301,11 +292,11 @@ class _QvideoState2 extends State<Qvideoscreen>
                                 width: 40,
                                 height: 25,
                                 child: Stack(
-                                  children: <Widget>[],
+                                  children: const <Widget>[],
                                 ),
                               ),
 
-                              new GestureDetector(
+                              GestureDetector(
                                 onTap: () {
                                   _onShowMenu();
                                 },
@@ -540,17 +531,17 @@ class _QvideoState2 extends State<Qvideoscreen>
             height: 780,
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-            child: new Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    new Container(
+                    Container(
                       height: 5,
                     ),
-                    new Text(
+                    Text(
                       "Send to",
                       style: TextStyle(
                         color: mPrimaryColor,
@@ -560,24 +551,24 @@ class _QvideoState2 extends State<Qvideoscreen>
                     )
                   ],
                 )),
-                new Container(
+                Container(
                   height: 10,
                 ),
-                new Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.account_box,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("user1",
+                        Text("user1",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -587,14 +578,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.account_box,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("user2",
+                        Text("user2",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -604,14 +595,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.account_box,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("user3",
+                        Text("user3",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -621,14 +612,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.search,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("Search",
+                        Text("Search",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -636,10 +627,10 @@ class _QvideoState2 extends State<Qvideoscreen>
                     )),
                   ],
                 ),
-                new Container(
+                Container(
                   height: 10,
                 ),
-                new Row(
+                Row(
 //                mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
@@ -647,11 +638,11 @@ class _QvideoState2 extends State<Qvideoscreen>
                     ),
                   ],
                 ),
-                new Container(
+                Container(
                   height: 10,
                 ),
-                new Divider(indent: 18, endIndent: 18, color: Colors.grey),
-                new Text(
+                Divider(indent: 18, endIndent: 18, color: Colors.grey),
+                Text(
                   "Share to",
                   style: TextStyle(
                     color: mPrimaryColor,
@@ -662,7 +653,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                 Container(
                   height: 5,
                 ),
-                new Row(
+                Row(
                   //     mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
@@ -672,14 +663,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.copy,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("copy link",
+                        Text("copy link",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -692,14 +683,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.whatsapp,
                           color: Colors.green,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("whatsapp",
+                        Text("whatsapp",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -712,14 +703,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.facebook,
                           color: Colors.blue,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("More Apps",
+                        Text("More Apps",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -732,14 +723,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.instagram,
                           color: Colors.redAccent,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("Instagram",
+                        Text("Instagram",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -747,10 +738,10 @@ class _QvideoState2 extends State<Qvideoscreen>
                     )),
                   ],
                 ),
-                new Container(
+                Container(
                   height: 10,
                 ),
-                new Row(
+                Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
@@ -760,14 +751,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.telegram,
                           color: Colors.blue,
                         ),
-                        new Container(
+                        Container(
                           height: 10,
                         ),
-                        new Text("Telegram",
+                        Text("Telegram",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -780,14 +771,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.twitter,
                           color: Colors.blue,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("twitter",
+                        Text("twitter",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -800,14 +791,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.google_plus,
                           color: Colors.red,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("google_plus",
+                        Text("google_plus",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -820,14 +811,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.twitch,
                           color: Colors.redAccent,
                         ),
-                        new Container(
+                        Container(
                           height: 5,
                         ),
-                        new Text("twitch",
+                        Text("twitch",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -835,10 +826,10 @@ class _QvideoState2 extends State<Qvideoscreen>
                     )),
                   ],
                 ),
-                new Container(
+                Container(
                   height: 5,
                 ),
-                new Row(
+                Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
@@ -848,14 +839,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.youtube,
                           color: Colors.red,
                         ),
-                        new Container(
+                        Container(
                           height: 8,
                         ),
-                        new Text("youtube",
+                        Text("youtube",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -868,14 +859,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           FontAwesome.google,
                           color: Colors.redAccent,
                         ),
-                        new Container(
+                        Container(
                           height: 2,
                         ),
-                        new Text("google",
+                        Text("google",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))
@@ -888,14 +879,14 @@ class _QvideoState2 extends State<Qvideoscreen>
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        new Icon(
+                        Icon(
                           Icons.more_horiz_sharp,
                           color: mPrimaryColor,
                         ),
-                        new Container(
+                        Container(
                           height: 2,
                         ),
-                        new Text("More App",
+                        Text("More App",
                             style: TextStyle(
                               color: Colors.grey[400],
                             ))

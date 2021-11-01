@@ -135,7 +135,7 @@ class RecomendPlantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return GestureDetector(
@@ -185,7 +185,7 @@ class RecomendPlantCard extends StatelessWidget {
                             text: "$title\n".toUpperCase(),
                             style: Theme.of(context).textTheme.button),
                         TextSpan(
-                          text: "$country".toUpperCase(),
+                          text: country.toUpperCase(),
                           style: TextStyle(
                             color: Color(0xFF58269f).withOpacity(0.5),
                           ),

@@ -8,7 +8,7 @@ class BottomSheetScrollable extends StatelessWidget {
   final List<BottomSheetAction> actions;
   final ScrollController scrollController;
 
-  BottomSheetScrollable(
+  const BottomSheetScrollable(
       {required this.actions, required this.scrollController});
 
   @override

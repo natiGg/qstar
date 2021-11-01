@@ -67,7 +67,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       fontFamily: "font1",
     );
 
-    const pageDecoration = const PageDecoration(
+    const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
           fontSize: 24.0, fontWeight: FontWeight.w400, color: mPrimaryColor),
       bodyTextStyle: bodyStyle,

@@ -23,7 +23,7 @@ class LoginWithFacebook extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SvgPicture.asset('assets/images/facebook.svg'),
-              SizedBox(
+              const SizedBox(
                 width: 12,
               ),
               Text(

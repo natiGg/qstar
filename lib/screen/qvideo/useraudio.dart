@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<Useraudeio> {
                   ),
                   RichText(
                     text: TextSpan(
-                      children: [
+                      children: const [
                         TextSpan(
                           text: 'Videos using this Sound',
                           style: TextStyle(

@@ -4,7 +4,10 @@ import 'post_create_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LocationSelectorWidget extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = 'LocationSelectorWidget';
+
+  const LocationSelectorWidget({Key? key}) : super(key: key);
   @override
   _LocationSelectorWidgetState createState() => _LocationSelectorWidgetState();
 }
@@ -12,21 +15,22 @@ class LocationSelectorWidget extends StatefulWidget {
 class _LocationSelectorWidgetState extends State<LocationSelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 48,
       child: ListView.separated(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return InkWell(
               child: Container(
                 child: Text(
-                  '${context.watch<PostCreateViewModel>().locationSuggest[index]}',
+                  context.watch<PostCreateViewModel>().locationSuggest[index],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
                     color: Theme.of(context).hintColor.withOpacity(0.12)),
@@ -37,7 +41,7 @@ class _LocationSelectorWidgetState extends State<LocationSelectorWidget> {
               },
             );
           },
-          separatorBuilder: (context, index) => SizedBox(
+          separatorBuilder: (context, index) => const SizedBox(
                 width: 16,
                 height: 0,
               ),

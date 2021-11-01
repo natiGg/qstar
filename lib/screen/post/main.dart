@@ -23,7 +23,7 @@ class _MyHomePageState extends State<PostPage> {
   FileModel? selectedModel;
   String? image;
   List<FileModel>? files;
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<PostPage> {
     var images = jsonDecode(imagePath) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
     print(files.toString());
-    if (files != null && files!.length > 0) {
+    if (files != null && files!.isNotEmpty) {
       setState(() {
         selectedModel = files![0];
         image = files![0].files[0];
@@ -59,6 +59,7 @@ class _MyHomePageState extends State<PostPage> {
       return Scaffold();
     } else {
       return Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -91,7 +92,7 @@ class _MyHomePageState extends State<PostPage> {
                           child: DropdownButton<FileModel>(
                         items: getIO(),
                         onChanged: (d) {
-                          assert(d!.files.length > 0);
+                          assert(d!.files.isNotEmpty);
                           image = d!.files[0];
                           setState(() {
                             selectedModel = d;
@@ -103,18 +104,27 @@ class _MyHomePageState extends State<PostPage> {
                   ),
                   // ignore: prefer_const_constructors
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(16.0),
                     // ignore: unnecessary_new
                     child: new GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                          duration: Duration(seconds: 4),
+                          content: Row(
+                            children: const <Widget>[
+                              CircularProgressIndicator(),
+                              Text(" Loading...")
+                            ],
+                          ),
+                        ));
+                        _ondelay().whenComplete(() => Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PreviewImageScreengallery(
                                       imagePath: image!,
-                                    )));
+                                    ))));
                       },
-                      child: new Text(
+                      child: Text(
                         'Next',
                         style: TextStyle(color: mPrimaryColor),
                       ),
@@ -228,6 +238,17 @@ class _MyHomePageState extends State<PostPage> {
               value: e,
             ))
         .toList();
+  }
+
+  _ondelay() {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PreviewImageScreengallery(
+                    imagePath: image!,
+                  )));
+    });
   }
 
   // ignore: non_constant_identifier_names

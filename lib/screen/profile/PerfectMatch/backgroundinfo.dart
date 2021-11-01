@@ -38,7 +38,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
       'Walking',
     ];
 
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your employement type please"),
                   ]),
                 ),
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose Your occupation"),
                   ]),
                 ),
@@ -150,7 +150,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "please make sure to put your correct occupation.."),

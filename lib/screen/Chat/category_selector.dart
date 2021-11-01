@@ -21,10 +21,10 @@ class CategorySelector extends StatelessWidget {
       child: TabBar(
         controller: tabController,
         indicatorSize: TabBarIndicatorSize.label,
-        labelColor: Color(0xff1967d2),
-        unselectedLabelColor: Color(0xff5f6368),
+        labelColor: const Color(0xff1967d2),
+        unselectedLabelColor: const Color(0xff5f6368),
         isScrollable: true,
-        indicator: MD2Indicator(
+        indicator: const MD2Indicator(
           indicatorSize: MD2IndicatorSize.full,
           indicatorHeight: 6.0,
           indicatorColor: mPrimaryColor,
@@ -34,17 +34,18 @@ class CategorySelector extends StatelessWidget {
               icon: Padding(
             padding: const EdgeInsets.all(5.0),
             child: RichText(
+              // ignore: prefer_const_constructors
               text: TextSpan(
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
                   fontWeight: FontWeight.w600,
                 ),
-                children: [
+                children: const [
                   TextSpan(text: 'Friends'),
                   WidgetSpan(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      padding: EdgeInsets.symmetric(horizontal: 6.0),
                       child: Icon(
                         FontAwesome.users,
                         size: 15,
@@ -60,7 +61,7 @@ class CategorySelector extends StatelessWidget {
               icon: Padding(
             padding: const EdgeInsets.all(5.0),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
@@ -70,7 +71,7 @@ class CategorySelector extends StatelessWidget {
                   TextSpan(text: 'Online'),
                   WidgetSpan(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      padding: EdgeInsets.symmetric(horizontal: 6.0),
                       child: Icon(
                         FontAwesome.circle,
                         size: 15,
@@ -86,7 +87,7 @@ class CategorySelector extends StatelessWidget {
               icon: Padding(
             padding: const EdgeInsets.all(5.0),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
@@ -96,7 +97,7 @@ class CategorySelector extends StatelessWidget {
                   TextSpan(text: 'Nearby'),
                   WidgetSpan(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      padding: EdgeInsets.symmetric(horizontal: 6.0),
                       child: Icon(
                         FontAwesome.map_marker,
                         size: 18,
@@ -112,7 +113,7 @@ class CategorySelector extends StatelessWidget {
               icon: Padding(
             padding: const EdgeInsets.all(5.0),
             child: RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(
                   fontSize: 15,
                   color: mPrimaryColor,
@@ -122,7 +123,7 @@ class CategorySelector extends StatelessWidget {
                   TextSpan(text: 'Match'),
                   WidgetSpan(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                      padding: EdgeInsets.symmetric(horizontal: 6.0),
                       child: Icon(
                         FontAwesome.heart,
                         size: 18,
@@ -158,7 +159,7 @@ class MD2Indicator extends Decoration {
 
   @override
   _MD2Painter createBoxPainter([VoidCallback? onChanged]) {
-    return new _MD2Painter(this, onChanged!);
+    return _MD2Painter(this, onChanged!);
   }
 }
 
@@ -183,6 +184,7 @@ class _MD2Painter extends BoxPainter {
           Size(configuration.size!.width, decoration.indicatorHeight);
     } else if (decoration.indicatorSize !=
         MD2IndicatorSize
+            // ignore: curly_braces_in_flow_control_structures
             .normal) if (decoration.indicatorSize == MD2IndicatorSize.tiny) {
       rect = Offset(offset.dx + configuration.size!.width / 2 - 8,
               (configuration.size!.height - decoration.indicatorHeight)) &
@@ -198,7 +200,8 @@ class _MD2Painter extends BoxPainter {
     paint.style = PaintingStyle.fill;
     canvas.drawRRect(
         RRect.fromRectAndCorners(rect!,
-            topRight: Radius.circular(8), topLeft: Radius.circular(8)),
+            topRight: const Radius.circular(8),
+            topLeft: const Radius.circular(8)),
         paint);
   }
 }

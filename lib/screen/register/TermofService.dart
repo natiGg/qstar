@@ -45,7 +45,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           text: TextSpan(
             text: 'The Qstar Service\n',
             style: DefaultTextStyle.of(context).style,
-            children: <TextSpan>[
+            children: const <TextSpan>[
               TextSpan(
                   text: 'I. What kinds of information do we collect?\n',
                   style: TextStyle(fontWeight: FontWeight.bold)),

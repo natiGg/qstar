@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
 
-  BottomSheetActionWidget(this.action);
+  const BottomSheetActionWidget(this.action);
 
   @override
   Widget build(BuildContext context) {

@@ -3,13 +3,15 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
 
 class Searchlocation extends StatelessWidget {
+  const Searchlocation({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.push(
@@ -23,6 +25,7 @@ class Searchlocation extends StatelessWidget {
             }),
         automaticallyImplyLeading: false,
         elevation: 8,
+        // ignore: prefer_const_constructors
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -30,11 +33,11 @@ class Searchlocation extends StatelessWidget {
         title: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey, width: 0.5),
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
           ),
-          child: Container(
+          child: const SizedBox(
             height: 40,
             width: 800,
             child: TextField(
@@ -53,7 +56,7 @@ class Searchlocation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Divider(
+            const Divider(
               height: 10,
             ),
             ListTile(

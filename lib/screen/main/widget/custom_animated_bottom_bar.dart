@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
-
-  CustomAnimatedBottomBar({
+  const CustomAnimatedBottomBar({
     Key? key,
     this.selectedIndex = 0,
     this.showElevation = true,
@@ -16,9 +15,9 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     required this.items,
     required this.onItemSelected,
     this.curve = Curves.linear,
-  }) : assert(items.length >= 2 && items.length <= 5),
+  })  : assert(items.length >= 2 && items.length <= 5),
         super(key: key);
-  
+
   final int selectedIndex;
   final double iconSize;
   final Color? backgroundColor;
@@ -93,7 +92,7 @@ class _ItemWidget extends StatelessWidget {
     required this.itemCornerRadius,
     required this.iconSize,
     this.curve = Curves.linear,
-  })  : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,15 +106,15 @@ class _ItemWidget extends StatelessWidget {
         curve: curve,
         decoration: BoxDecoration(
           color:
-          isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
+              isSelected ? item.activeColor.withOpacity(0.2) : backgroundColor,
           borderRadius: BorderRadius.circular(itemCornerRadius),
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             width: isSelected ? 130 : 50,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -126,16 +125,14 @@ class _ItemWidget extends StatelessWidget {
                     size: iconSize,
                     color: isSelected
                         ? item.activeColor.withOpacity(1)
-                        : item.inactiveColor == null
-                        ? item.activeColor
-                        : item.inactiveColor,
+                        : item.inactiveColor ?? item.activeColor,
                   ),
                   child: item.icon,
                 ),
                 if (isSelected)
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: DefaultTextStyle.merge(
                         style: TextStyle(
                           color: item.activeColor,
@@ -155,8 +152,8 @@ class _ItemWidget extends StatelessWidget {
     );
   }
 }
-class BottomNavyBarItem {
 
+class BottomNavyBarItem {
   BottomNavyBarItem({
     required this.icon,
     required this.title,
@@ -170,5 +167,4 @@ class BottomNavyBarItem {
   final Color activeColor;
   final Color? inactiveColor;
   final TextAlign? textAlign;
-
 }

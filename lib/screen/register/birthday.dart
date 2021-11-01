@@ -27,21 +27,22 @@ class _DateTimePickerState extends State<BirthDay> {
 
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
 
-  TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime(1950),
         lastDate: DateTime(2022));
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMd().format(selectedDate);
       });
+    }
   }
 
   @override
@@ -56,7 +57,7 @@ class _DateTimePickerState extends State<BirthDay> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     _height = MediaQuery.of(context).size.height;
@@ -66,7 +67,7 @@ class _DateTimePickerState extends State<BirthDay> {
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(bottom: 58.0),
-        child: Container(
+        child: SizedBox(
           width: _width,
           height: _height,
           child: Column(
@@ -93,11 +94,11 @@ class _DateTimePickerState extends State<BirthDay> {
                       height: _height / 9,
                       margin: EdgeInsets.only(top: 30),
                       alignment: Alignment.center,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.grey[200],
                         border: Border.all(color: mPrimaryColor, width: 0.0),
                         borderRadius:
-                            new BorderRadius.all(Radius.elliptical(20, 20)),
+                            BorderRadius.all(Radius.elliptical(20, 20)),
                       ),
                       child: TextFormField(
                         style: TextStyle(

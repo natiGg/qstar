@@ -118,7 +118,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "Help people disocver your account by using the name you're known by: either your full name,nickname or business name"),
@@ -131,7 +131,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 alignment: Alignment.centerLeft,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "you can only change your name twice within 14 days"),
@@ -183,7 +183,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "In most cases,you'll be able to change your username back to natig for another 14 days."),

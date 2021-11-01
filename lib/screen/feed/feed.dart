@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, duplicate_ignore
+// ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
 import 'dart:async';
 
@@ -59,6 +59,7 @@ class UsersFeed extends StatefulWidget {
 }
 
 class _UsersFeedState extends State<UsersFeed> {
+  @override
   late BuildContext context;
 
   @override
@@ -70,8 +71,8 @@ class _UsersFeedState extends State<UsersFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: new RefreshIndicator(
-        child: Feed(),
+      body: RefreshIndicator(
+        child: const Feed(),
         onRefresh: onPullRefresh,
       ),
     );
@@ -79,7 +80,7 @@ class _UsersFeedState extends State<UsersFeed> {
 
   Future<void> onPullRefresh() async {
     //People item = Dummy.getPeopleData()[0];
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       //   adapter.addItem(item);
     });
@@ -87,12 +88,14 @@ class _UsersFeedState extends State<UsersFeed> {
 }
 
 class Feed extends StatefulWidget {
+  const Feed({Key? key}) : super(key: key);
+
   @override
   State<Feed> createState() => _FeedState();
 }
 
 class _FeedState extends State<Feed> {
-  List<String> _animals = ["Friends", "public", "only me(stars)"];
+  final List<String> _animals = ["Friends", "public", "only me(stars)"];
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,7 @@ class _FeedState extends State<Feed> {
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
-            icon: Icon(FontAwesome.heartbeat),
+            icon: const Icon(FontAwesome.heartbeat),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.push(
@@ -120,7 +123,7 @@ class _FeedState extends State<Feed> {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                        HomeScreen(),
+                        const HomeScreen(),
                     transitionDuration: Duration.zero,
                   ),
                 );
@@ -134,7 +137,7 @@ class _FeedState extends State<Feed> {
                 //   ),
                 // );
               },
-              icon: Icon(Icons.send_outlined),
+              icon: const Icon(Icons.send_outlined),
               color: mPrimaryColor),
         ],
       ),
@@ -142,7 +145,7 @@ class _FeedState extends State<Feed> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             // Padding(
@@ -160,7 +163,7 @@ class _FeedState extends State<Feed> {
             // ),
 
             Card(
-              margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
               elevation: 2,
               shape: null,
               child: Container(
@@ -170,9 +173,10 @@ class _FeedState extends State<Feed> {
                   children: [
                     Row(
                       children: [
+                        // ignore: prefer_const_constructors
                         CircleAvatar(
                             backgroundImage:
-                                AssetImage('assets/images/profile1.jpg')),
+                                const AssetImage('assets/images/profile1.jpg')),
                         const SizedBox(width: 8.0),
 
                         Expanded(
@@ -180,7 +184,7 @@ class _FeedState extends State<Feed> {
                           child: Container(
                             height: 40,
                             width: 300,
-                            margin: EdgeInsets.symmetric(vertical: 10),
+                            margin: const EdgeInsets.symmetric(vertical: 10),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 border: Border.all(
@@ -356,7 +360,7 @@ class _FeedState extends State<Feed> {
                     //     ),
                     //   ],
                     // ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Container(
@@ -372,7 +376,7 @@ class _FeedState extends State<Feed> {
                               Icons.videocam,
                               color: Colors.red,
                             ),
-                            label: Text('go Live'),
+                            label: const Text('go Live'),
                           ),
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
@@ -391,7 +395,7 @@ class _FeedState extends State<Feed> {
                               Icons.photo_library,
                               color: Colors.green,
                             ),
-                            label: Text(' Post'),
+                            label: const Text(' Post'),
                           ),
                           FlatButton.icon(
                             onPressed: () {
@@ -401,7 +405,7 @@ class _FeedState extends State<Feed> {
                               Icons.video_collection_sharp,
                               color: Colors.blue,
                             ),
-                            label: Text(' Video'),
+                            label: const Text(' Video'),
                           ),
                         ],
                       ),
@@ -410,15 +414,16 @@ class _FeedState extends State<Feed> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Divider(),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                const Padding(
+                  padding: EdgeInsets.only(left: 25.0),
                   child: Text(
                     'Perfect match for you',
                     style: TextStyle(
@@ -427,12 +432,12 @@ class _FeedState extends State<Feed> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 160,
                 ),
-                Expanded(
+                const Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       FontAwesome.refresh,
                       color: mPrimaryColor,
@@ -442,7 +447,7 @@ class _FeedState extends State<Feed> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25),
               child: Container(
                 height: 260,
                 child: ListView(
@@ -454,7 +459,7 @@ class _FeedState extends State<Feed> {
               ),
             ),
 
-            Divider(
+            const Divider(
               thickness: 1.0,
             ),
             ..._posts.map((item) {
@@ -466,8 +471,8 @@ class _FeedState extends State<Feed> {
               );
             }).toList(),
             Container(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -487,8 +492,8 @@ class _FeedState extends State<Feed> {
                 children: [
                   Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: SizedBox(height: 5),
                       ),
                       Padding(
@@ -518,7 +523,7 @@ class _FeedState extends State<Feed> {
 
   void _postModal(context) {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         backgroundColor: Colors.white,
         context: context,
@@ -531,7 +536,7 @@ class _FeedState extends State<Feed> {
                 children: <Widget>[
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                           backgroundImage:
                               AssetImage('assets/images/profile1.jpg')),
                       const SizedBox(width: 8.0),
@@ -541,9 +546,9 @@ class _FeedState extends State<Feed> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                child: Center(
+                                child: const Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
+                                    padding: EdgeInsets.all(2.0),
                                     child: Text(
                                       "@Betty",
                                       style: TextStyle(
@@ -560,8 +565,8 @@ class _FeedState extends State<Feed> {
                                     child: Container(
                                       width: 100,
                                       height: 50,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
                                       child: Column(
                                         children: [
                                           DropdownButton<String>(
@@ -571,7 +576,7 @@ class _FeedState extends State<Feed> {
 
                                             // Hide the default underline
                                             underline: Container(),
-                                            hint: Align(
+                                            hint: const Align(
                                                 alignment: Alignment.center,
                                                 child: Text(
                                                   'Public',
@@ -579,7 +584,7 @@ class _FeedState extends State<Feed> {
                                                       color: mPrimaryColor,
                                                       fontSize: 10),
                                                 )),
-                                            icon: Align(
+                                            icon: const Align(
                                               alignment: Alignment.topCenter,
                                               child: Icon(
                                                 Icons.arrow_drop_down,
@@ -596,8 +601,9 @@ class _FeedState extends State<Feed> {
                                                             .centerLeft,
                                                         child: Text(
                                                           e,
-                                                          style: TextStyle(
-                                                              fontSize: 12),
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 12),
                                                         ),
                                                       ),
                                                       value: e,
@@ -611,7 +617,7 @@ class _FeedState extends State<Feed> {
                                                         .map((e) => Center(
                                                               child: Text(
                                                                 e,
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         18,
                                                                     color: Colors
@@ -639,7 +645,8 @@ class _FeedState extends State<Feed> {
                                   child: Container(
                                     height: 40,
                                     width: 80,
-                                    margin: EdgeInsets.symmetric(vertical: 10),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
                                     decoration: BoxDecoration(
                                         color: mPrimaryColor,
                                         borderRadius: BorderRadius.circular(5),
@@ -647,7 +654,7 @@ class _FeedState extends State<Feed> {
                                             Border.all(color: mPrimaryColor)),
                                     child: FlatButton(
                                       onPressed: () {},
-                                      child: Center(
+                                      child: const Center(
                                           child: Text(
                                         'Post',
                                         style: TextStyle(
@@ -665,7 +672,7 @@ class _FeedState extends State<Feed> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   Padding(
@@ -675,7 +682,7 @@ class _FeedState extends State<Feed> {
                       height: 300,
                       child: Column(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: TextField(
                               decoration: InputDecoration.collapsed(
                                 hintText: 'What\'s on your mind?',
@@ -696,39 +703,43 @@ class _FeedState extends State<Feed> {
                                         FontAwesome.video_camera,
                                         color: Colors.red,
                                       ),
-                                      label: Text('Add your Video'),
+                                      label: const Text('Add your Video'),
                                     ),
                                     FlatButton.icon(
+                                      // ignore: avoid_print
                                       onPressed: () => print('Photo'),
                                       icon: const Icon(
                                         FontAwesome.photo,
                                         color: Colors.green,
                                       ),
-                                      label: Text(' Add Photo'),
+                                      label: const Text(' Add Photo'),
                                     ),
                                     FlatButton.icon(
+                                      // ignore: avoid_print
                                       onPressed: () => print('Room'),
                                       icon: const Icon(
                                         FontAwesome.user,
                                         color: mPrimaryColor,
                                       ),
-                                      label: Text('Add People'),
+                                      label: const Text('Add People'),
                                     ),
                                     FlatButton.icon(
+                                      // ignore: avoid_print
                                       onPressed: () => print('Room'),
                                       icon: const Icon(
                                         FontAwesome.smile_o,
                                         color: Colors.amber,
                                       ),
-                                      label: Text('Feeling Activity'),
+                                      label: const Text('Feeling Activity'),
                                     ),
                                     FlatButton.icon(
+                                      // ignore: avoid_print
                                       onPressed: () => print('Room'),
                                       icon: const Icon(
                                         FontAwesome.location_arrow,
                                         color: Colors.green,
                                       ),
-                                      label: Text('Add  Location'),
+                                      label: const Text('Add  Location'),
                                     ),
                                   ],
                                 ),
@@ -748,7 +759,7 @@ class _FeedState extends State<Feed> {
 class UserStories extends StatefulWidget {
   final User user;
 
-  UserStories(this.user);
+  const UserStories(this.user);
 
   @override
   State<UserStories> createState() => _UserStoriesState();
@@ -762,16 +773,15 @@ class _UserStoriesState extends State<UserStories> {
       children: [
         Container(
           child: Container(
-            margin: EdgeInsets.only(right: 10),
+            margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/post${this.widget.user.id}.jpg'),
+                  image: AssetImage('assets/images/post${widget.user.id}.jpg'),
                   fit: BoxFit.cover),
             ),
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   gradient:
@@ -796,7 +806,7 @@ class _UserStoriesState extends State<UserStories> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(children: <Widget>[
+              Row(children: const <Widget>[
                 Icon(
                   Icons.manage_accounts_sharp,
                   size: 9,
@@ -813,7 +823,7 @@ class _UserStoriesState extends State<UserStories> {
                   ),
                 ),
               ]),
-              Row(children: <Widget>[
+              Row(children: const <Widget>[
                 Icon(
                   Icons.calendar_today,
                   size: 9,
@@ -830,7 +840,7 @@ class _UserStoriesState extends State<UserStories> {
                   ),
                 ),
               ]),
-              Row(children: <Widget>[
+              Row(children: const <Widget>[
                 Icon(
                   Icons.location_on,
                   size: 10,
@@ -857,7 +867,7 @@ class _UserStoriesState extends State<UserStories> {
 
 class UserAvatar extends StatefulWidget {
   final User user;
-  UserAvatar(this.user);
+  const UserAvatar(this.user);
 
   @override
   State<UserAvatar> createState() => _UserAvatarState();
@@ -904,7 +914,7 @@ class _UserAvatarState extends State<UserAvatar> {
                       Container(
                         width: 68,
                         height: 68,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
                                 colors: [mPrimaryColor, mPrimaryColor],
@@ -921,7 +931,7 @@ class _UserAvatarState extends State<UserAvatar> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/images/profile${this.widget.user.id}.jpg'),
+                                        'assets/images/profile${widget.user.id}.jpg'),
                                     fit: BoxFit.cover),
                               )),
                         ),
@@ -936,17 +946,18 @@ class _UserAvatarState extends State<UserAvatar> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Center(
                       child: Text(
-                    '${this.widget.user.userName}',
+                    widget.user.userName,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: mPrimaryColor),
+                    style: const TextStyle(color: mPrimaryColor),
                   )),
                   RatingBarIndicator(
                     rating: rating_d,
+                    // ignore: prefer_const_constructors
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: Colors.amber,
@@ -962,7 +973,7 @@ class _UserAvatarState extends State<UserAvatar> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Text(
                           "12k",
                           style: TextStyle(
@@ -972,8 +983,7 @@ class _UserAvatarState extends State<UserAvatar> {
                         ),
                         Text(
                           "followers",
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
                         ),
                       ],
                     ),
@@ -989,7 +999,7 @@ class _UserAvatarState extends State<UserAvatar> {
 
   Widget followButton(isFollowed) {
     return Container(
-        margin: EdgeInsets.only(left: 50),
+        margin: const EdgeInsets.only(left: 50),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: mPrimaryColor, width: 1),
@@ -1007,7 +1017,7 @@ class _UserAvatarState extends State<UserAvatar> {
 class WPost extends StatefulWidget {
   final Post post;
 
-  WPost({required this.post});
+  const WPost({required this.post});
 
   @override
   State<WPost> createState() => _WPostState();
@@ -1027,13 +1037,13 @@ class _WPostState extends State<WPost> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Stack(children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 45),
+                      padding: const EdgeInsets.only(left: 45),
                       child: Center(
                         child: Container(
                           decoration: BoxDecoration(
@@ -1045,15 +1055,15 @@ class _WPostState extends State<WPost> {
                             child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage: AssetImage(
-                                    'assets/images/profile${this.widget.post.userid}.jpg')),
+                                    'assets/images/profile${widget.post.userid}.jpg')),
                           ),
                         ),
                       ),
                     ),
-                    _isFF[(this.widget.post.userid) - 1]
+                    _isFF[(widget.post.userid) - 1]
                         ? Container(
-                            margin:
-                                EdgeInsets.only(left: 20, top: 55, right: 20),
+                            margin: const EdgeInsets.only(
+                                left: 20, top: 55, right: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1063,13 +1073,13 @@ class _WPostState extends State<WPost> {
                               child: followButton(isFollowed),
                             ),
                           )
-                        : SizedBox(
+                        : const SizedBox(
                             width: 0,
                           ),
                   ]),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
                 onPressed: () {
                   showDialog(
@@ -1078,7 +1088,7 @@ class _WPostState extends State<WPost> {
                     builder: (context) {
                       return Dialog(
                         child: ListView(
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             shrinkWrap: true,
                             children: [
                               'Report...',
@@ -1088,7 +1098,7 @@ class _WPostState extends State<WPost> {
                             ]
                                 .map((e) => InkWell(
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 12, horizontal: 16),
                                         child: Text(e),
                                       ),
@@ -1101,7 +1111,7 @@ class _WPostState extends State<WPost> {
                     },
                   );
                 },
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
               )
             ],
           ),
@@ -1113,16 +1123,16 @@ class _WPostState extends State<WPost> {
                 children: [
                   Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                          '${_users.where((element) => element.id == this.widget.post.userid).first.userName}     129K',
-                          style: TextStyle(color: Colors.black)),
-                      SizedBox(
+                          '${_users.where((element) => element.id == widget.post.userid).first.userName}     129K',
+                          style: const TextStyle(color: Colors.black)),
+                      const SizedBox(
                         height: 5,
                       ),
                       RatingBarIndicator(
                         rating: rating_d,
-                        itemBuilder: (context, index) => Icon(
+                        itemBuilder: (context, index) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
@@ -1134,7 +1144,7 @@ class _WPostState extends State<WPost> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
@@ -1152,13 +1162,13 @@ class _WPostState extends State<WPost> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
             ],
           ),
           Stack(children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             GestureDetector(
@@ -1178,8 +1188,8 @@ class _WPostState extends State<WPost> {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/post${this.widget.post.id}.jpg"),
+                      image:
+                          AssetImage("assets/images/post${widget.post.id}.jpg"),
                       fit: BoxFit.cover),
                 ),
                 height: 500,
@@ -1201,7 +1211,7 @@ class _WPostState extends State<WPost> {
             ),
           ]),
           Container(
-            padding: EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
             child: Row(
               children: [
                 GestureDetector(
@@ -1245,25 +1255,25 @@ class _WPostState extends State<WPost> {
                     },
                     child: Comment()),
                 Share(),
-                Spacer(),
-                Spacer(),
+                const Spacer(),
+                const Spacer(),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.bookmark_border,
                       color: mPrimaryColor,
                     )),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
+          const Padding(
+            padding: EdgeInsets.all(2.0),
             child: InfoWidget(),
           ),
-          Divider(
+          const Divider(
             thickness: 1.0,
           ),
         ],
@@ -1273,7 +1283,7 @@ class _WPostState extends State<WPost> {
 
   Widget activeLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1291,7 +1301,7 @@ class _WPostState extends State<WPost> {
 
   Widget followButton(isFollowed) {
     return Container(
-        margin: EdgeInsets.only(left: 50),
+        margin: const EdgeInsets.only(left: 50),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: mPrimaryColor, width: 1),
@@ -1307,7 +1317,7 @@ class _WPostState extends State<WPost> {
 
   Widget activedisLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1325,11 +1335,11 @@ class _WPostState extends State<WPost> {
 
   Widget Comment() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: const <Widget>[
             Icon(Icons.chat, color: Colors.grey, size: 25),
           ],
         ),
@@ -1339,7 +1349,7 @@ class _WPostState extends State<WPost> {
 
   Widget Share() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1364,18 +1374,18 @@ void showSheet(context) {
         return Container(
           height: 780,
           color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-          child: new Column(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Container(
+                  Container(
                     height: 10,
                   ),
-                  new Text(
+                  const Text(
                     "Send to",
                     style: TextStyle(
                       color: mPrimaryColor,
@@ -1385,24 +1395,24 @@ void showSheet(context) {
                   )
                 ],
               )),
-              new Container(
+              Container(
                 height: 20,
               ),
-              new Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.account_box,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("user1",
+                      Text("user1",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1412,14 +1422,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.account_box,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("user2",
+                      Text("user2",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1429,14 +1439,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.account_box,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("user3",
+                      Text("user3",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1446,14 +1456,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.search,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("Search",
+                      Text("Search",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1461,10 +1471,10 @@ void showSheet(context) {
                   )),
                 ],
               ),
-              new Container(
+              Container(
                 height: 20,
               ),
-              new Row(
+              Row(
 //                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
@@ -1472,11 +1482,11 @@ void showSheet(context) {
                   ),
                 ],
               ),
-              new Container(
+              Container(
                 height: 10,
               ),
-              new Divider(indent: 18, endIndent: 18, color: Colors.grey),
-              new Text(
+              const Divider(indent: 18, endIndent: 18, color: Colors.grey),
+              const Text(
                 "Share to",
                 style: TextStyle(
                   color: mPrimaryColor,
@@ -1487,7 +1497,7 @@ void showSheet(context) {
               Container(
                 height: 10,
               ),
-              new Row(
+              Row(
                 //     mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
@@ -1497,14 +1507,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.copy,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("copy link",
+                      Text("copy link",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1517,14 +1527,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.whatsapp,
                         color: Colors.green,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("whatsapp",
+                      Text("whatsapp",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1537,14 +1547,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.facebook,
                         color: Colors.blue,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("More Apps",
+                      Text("More Apps",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1557,14 +1567,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.instagram,
                         color: Colors.redAccent,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("Instagram",
+                      Text("Instagram",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1572,10 +1582,10 @@ void showSheet(context) {
                   )),
                 ],
               ),
-              new Container(
+              Container(
                 height: 20,
               ),
-              new Row(
+              Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
@@ -1585,14 +1595,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.telegram,
                         color: Colors.blue,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("Telegram",
+                      Text("Telegram",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1605,14 +1615,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.twitter,
                         color: Colors.blue,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("twitter",
+                      Text("twitter",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1625,14 +1635,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.google_plus,
                         color: Colors.red,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("google_plus",
+                      Text("google_plus",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1645,14 +1655,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.twitch,
                         color: Colors.redAccent,
                       ),
-                      new Container(
+                      Container(
                         height: 10,
                       ),
-                      new Text("twitch",
+                      Text("twitch",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1660,10 +1670,10 @@ void showSheet(context) {
                   )),
                 ],
               ),
-              new Container(
+              Container(
                 height: 10,
               ),
-              new Row(
+              Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
@@ -1673,14 +1683,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.youtube,
                         color: Colors.red,
                       ),
-                      new Container(
+                      Container(
                         height: 8,
                       ),
-                      new Text("youtube",
+                      Text("youtube",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1693,14 +1703,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         FontAwesome.google,
                         color: Colors.redAccent,
                       ),
-                      new Container(
+                      Container(
                         height: 2,
                       ),
-                      new Text("google",
+                      Text("google",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
@@ -1713,14 +1723,14 @@ void showSheet(context) {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      new Icon(
+                      const Icon(
                         Icons.more_horiz_sharp,
                         color: mPrimaryColor,
                       ),
-                      new Container(
+                      Container(
                         height: 6,
                       ),
-                      new Text("More App",
+                      Text("More App",
                           style: TextStyle(
                             color: Colors.grey[400],
                           ))
