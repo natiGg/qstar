@@ -60,7 +60,7 @@ class Searchlocation extends StatelessWidget {
               height: 10,
             ),
             ListTile(
-              title: Text('Addis ababa,Ethiopia'),
+              title: const Text('Addis ababa,Ethiopia'),
               dense: true,
               onTap: () {},
             ),
