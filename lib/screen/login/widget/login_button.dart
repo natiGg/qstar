@@ -19,12 +19,7 @@ class LoginButton extends StatelessWidget {
         ),
         color: mPrimaryColor,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyHomePage(),
-            ),
-          );
+          
         },
         child: Container(
           width: double.infinity,
