@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/login/widget/input_text_field.dart';
 
 class LoginForm extends StatelessWidget {
   final String email;
@@ -57,7 +56,8 @@ class LoginForm extends StatelessWidget {
                 hintText: 'Password',
                 fillColor: Colors.white,
                 filled: true,
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                contentPadding:
+                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                     borderSide: BorderSide(color: Colors.white, width: 3.0)),

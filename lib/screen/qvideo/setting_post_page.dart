@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'location_selector_widget.dart';
 import 'post_create_view_model.dart';
-import 'dart:developer' as developer;
+
 import 'package:qstar/constant.dart';
 import 'write_caption_widget.dart';
 import 'package:provider/provider.dart';
@@ -16,11 +16,10 @@ class SettingPostPage extends StatefulWidget {
 }
 
 class _SettingPostPageState extends State<SettingPostPage> {
-  static const TAG = 'SettingPostPage';
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    ModalRoute.of(context)!.overlayEntries.forEach((element) {});
+    for (var element in ModalRoute.of(context)!.overlayEntries) {}
   }
 
   @override

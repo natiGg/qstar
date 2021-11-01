@@ -1,12 +1,14 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 
-import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
-import 'package:qstar/screen/qvideo/category.dart';
 import 'package:qstar/screen/qvideo/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/useraudio.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
@@ -14,25 +16,16 @@ import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
-import 'package:qstar/screen/qvideo/bottomsheet/bottom_sheet_action.dart';
+
 import 'package:qstar/screen/qvideo/Video_Picker.dart';
 
-class Qvideoscreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Qvideo(),
-    );
-  }
-}
-
-class Qvideo extends StatefulWidget {
+class Qvideoscreen extends StatefulWidget {
   @override
   _QvideoState2 createState() => _QvideoState2();
 }
 
-class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
+class _QvideoState2 extends State<Qvideoscreen>
+    with SingleTickerProviderStateMixin {
   bool abo = false;
   bool foryou = true;
   bool play = true;
@@ -43,15 +36,13 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.8);
-  ScrollController _scrollController = ScrollController(initialScrollOffset: 0);
-  PageController foryouController = new PageController();
+  PageController foryouController = PageController();
   late VoidCallback _onShowMenu;
-  late VoidCallback _onShowshare;
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
-        vsync: this, duration: new Duration(seconds: 5));
+    animationController = AnimationController(
+        vsync: this, duration: Duration(seconds: 5));
     animationController.repeat();
     _controller = VideoPlayerController.asset('assets/vod.mp4')
       ..initialize().then((value) {
@@ -59,21 +50,6 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         _controller.setLooping(true);
         setState(() {});
       });
-
-    _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(
-            iconData: Icons.description, title: 'Description', id: 0),
-        BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
-      ]);
-    };
-    _onShowshare = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.share, title: 'Share to', id: 2),
-        BottomSheetAction(iconData: Icons.account_box, title: 'User 1', id: 3),
-        BottomSheetAction(iconData: Icons.account_box, title: 'User 2', id: 4),
-      ]);
-    };
   }
 
   @override
@@ -84,8 +60,9 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
 
     _controller.dispose();
     _controller.pause();
-    super.dispose();
+
     animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,31 +72,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: mPrimaryColor),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      CategoryVid(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text(
-            "video",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
-            ),
-          ),
-        ]),
-        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.switch_video_outlined),
+            icon: const Icon(Icons.add),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
@@ -133,12 +93,20 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
               );
             },
           ),
+        ]),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.switch_video_outlined),
+            iconSize: 30.0,
+            color: mPrimaryColor,
+            onPressed: () {},
+          ),
         ],
       ),
       body: Stack(
         children: <Widget>[
           homescreen(),
-          Container(
+          SizedBox(
             height: 500,
             child: Center(
               child: SizedBox(
@@ -198,7 +166,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                           }
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height,
                         child: VideoPlayer(_controller),
@@ -207,7 +175,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                     padding: EdgeInsets.only(bottom: 0, top: 100),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width - 100,
                         height: 90,
                         child: Column(
@@ -295,7 +263,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                     );
                                   },
                                   child: Text.rich(
-                                    TextSpan(children: <TextSpan>[
+                                    TextSpan(children: const <TextSpan>[
                                       TextSpan(text: 'UserName'),
                                     ]),
                                     style: TextStyle(
@@ -313,7 +281,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                       padding: EdgeInsets.only(bottom: 25, right: 10),
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Container(
+                        child: SizedBox(
                           width: 70,
                           height: 450,
                           child: Column(
@@ -324,11 +292,11 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                                 width: 40,
                                 height: 25,
                                 child: Stack(
-                                  children: <Widget>[],
+                                  children: const <Widget>[],
                                 ),
                               ),
 
-                              new GestureDetector(
+                              GestureDetector(
                                 onTap: () {
                                   _onShowMenu();
                                 },
@@ -489,7 +457,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  _onShowshare();
+                                  showSheet(context);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 20),
@@ -550,6 +518,383 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                       ))
                 ],
               ),
+            ),
+          );
+        });
+  }
+
+  void showSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            height: 780,
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 5,
+                    ),
+                    Text(
+                      "Send to",
+                      style: TextStyle(
+                        color: mPrimaryColor,
+                        fontFamily: "font1",
+                        fontSize: 24,
+                      ),
+                    )
+                  ],
+                )),
+                Container(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("user1",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("user2",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("user3",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.search,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("Search",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                Container(
+                  height: 10,
+                ),
+                Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 10,
+                ),
+                Divider(indent: 18, endIndent: 18, color: Colors.grey),
+                Text(
+                  "Share to",
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                    fontFamily: "font1",
+                    fontSize: 24,
+                  ),
+                ),
+                Container(
+                  height: 5,
+                ),
+                Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.copy,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("copy link",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.whatsapp,
+                          color: Colors.green,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("whatsapp",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.facebook,
+                          color: Colors.blue,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("More Apps",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.instagram,
+                          color: Colors.redAccent,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("Instagram",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                Container(
+                  height: 10,
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.telegram,
+                          color: Colors.blue,
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text("Telegram",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 21,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.twitter,
+                          color: Colors.blue,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("twitter",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 26,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.google_plus,
+                          color: Colors.red,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("google_plus",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 32,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.twitch,
+                          color: Colors.redAccent,
+                        ),
+                        Container(
+                          height: 5,
+                        ),
+                        Text("twitch",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                Container(
+                  height: 5,
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 25,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.youtube,
+                          color: Colors.red,
+                        ),
+                        Container(
+                          height: 8,
+                        ),
+                        Text("youtube",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          FontAwesome.google,
+                          color: Colors.redAccent,
+                        ),
+                        Container(
+                          height: 2,
+                        ),
+                        Text("google",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 26,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.more_horiz_sharp,
+                          color: mPrimaryColor,
+                        ),
+                        Container(
+                          height: 2,
+                        ),
+                        Text("More App",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+              ],
             ),
           );
         });

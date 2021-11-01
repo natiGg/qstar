@@ -1,16 +1,7 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-
-import 'package:qstar/screen/register/phonevarification.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:qstar/screen/register/password.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 
 class BackgroundInfo extends StatefulWidget {
   @override
@@ -21,7 +12,6 @@ class _MyHomePageState extends State<BackgroundInfo> {
   @override
   Widget build(BuildContext context) {
     String? dropdownvalue = 'Education';
-    String newValue;
     var items = [
       'Education',
       'Muslim',
@@ -31,7 +21,6 @@ class _MyHomePageState extends State<BackgroundInfo> {
     ];
 
     String? dropdownvalue2 = 'Employmnet';
-    String newValue2;
     var items2 = [
       'Employmnet',
       'Arabic ',
@@ -41,7 +30,6 @@ class _MyHomePageState extends State<BackgroundInfo> {
     ];
 
     String? dropdownvalue3 = 'occupation';
-    String newValue3;
     var items3 = [
       'occupation',
       'Art ',
@@ -50,7 +38,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
       'Walking',
     ];
 
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -120,7 +108,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your employement type please"),
                   ]),
                 ),
@@ -151,7 +139,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose Your occupation"),
                   ]),
                 ),
@@ -162,7 +150,7 @@ class _MyHomePageState extends State<BackgroundInfo> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "please make sure to put your correct occupation.."),

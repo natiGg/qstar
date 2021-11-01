@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
 import 'category_selector.dart';
-import 'favorite_contacts.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,14 +18,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
-  TextEditingController _searchQueryController = TextEditingController();
+  final TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
 
   void onTabChange() {
     setState(() {
       currentTabIndex = tabController!.index;
-      print(currentTabIndex);
+      // print(currentTabIndex);
     });
   }
 
@@ -49,33 +50,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-
-
+  @override
   Widget build(BuildContext context) {
-     Future<bool> _onBackPressed() async {
- // This dialog will exit your app on saying yes
-   Navigator.of(context).pop(true);
-   return Future.value(false);
-           
-  }
+    Future<bool> _onBackPressed() async {
+      // This dialog will exit your app on saying yes
+      Navigator.of(context).pop(true);
+      return Future.value(false);
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _isSearching
-            ? BackButton(
+            ? const BackButton(
                 color: mPrimaryColor,
               )
             : IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 color: mPrimaryColor,
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 }),
         title: _isSearching
             ? _buildSearchField()
-            : Text(
+            : const Text(
                 "Chat",
                 style: TextStyle(
                   color: mPrimaryColor,
@@ -89,46 +89,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onWillPop: _onBackPressed,
         child: Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Container(
-              margin: EdgeInsets.only(top: 1),
+              margin: const EdgeInsets.only(top: 1),
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
               decoration: BoxDecoration(
                 color: Colors.black38.withAlpha(10),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search ",
-                        hintStyle: TextStyle(
-                          color: Colors.black.withAlpha(120),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      onChanged: (String keyword) {},
-                    ),
-                  ),
-                  Icon(
-                    Icons.search,
-                    color: Colors.black.withAlpha(120),
-                  )
-                ],
-              ),
             ),
             CategorySelector(tabController: tabController!),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30.0),
@@ -137,11 +117,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 child: TabBarView(
                   controller: tabController,
+                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
-                    RecentChats(),
-                    Online(),
-                    Nearby(),
-                    Match(),
+                    const RecentChats(),
+                    const Online(),
+                    const Nearby(),
+                    const Match(),
                   ],
                 ),
               ),
@@ -170,12 +151,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return TextField(
       controller: _searchQueryController,
       autofocus: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Search Data...",
         border: InputBorder.none,
         hintStyle: TextStyle(color: mPrimaryColor),
       ),
-      style: TextStyle(color: Colors.black, fontSize: 16.0),
+      style: const TextStyle(color: Colors.black, fontSize: 16.0),
       onChanged: (query) => updateSearchQuery(query),
     );
   }
@@ -187,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           icon: const Icon(Icons.clear),
           color: mPrimaryColor,
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);
@@ -235,10 +217,5 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       _searchQueryController.clear();
       updateSearchQuery("");
     });
-  }
-
-  _buildTitle() {
-    title:
-    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[]);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'dart:convert';
+// ignore_for_file: deprecated_member_use, duplicate_ignore
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

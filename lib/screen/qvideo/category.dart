@@ -3,22 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 
-class CategoryVid extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CategoryVideo(),
-    );
-  }
-}
-
-class CategoryVideo extends StatefulWidget {
+class CategoryVid extends StatefulWidget {
   @override
   _CategoryVideo2 createState() => _CategoryVideo2();
 }
 
-class _CategoryVideo2 extends State<CategoryVideo>
+class _CategoryVideo2 extends State<CategoryVid>
     with SingleTickerProviderStateMixin {
   final List<String> _listItem = [
     'assets/images/profile1.jpg',

@@ -3,12 +3,11 @@ import 'package:qstar/constant.dart';
 import 'app_context.dart';
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:qstar/screen/profilesetting/setting.dart';
 
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
 
-  BottomSheetActionWidget(this.action);
+  const BottomSheetActionWidget(this.action);
 
   @override
   Widget build(BuildContext context) {

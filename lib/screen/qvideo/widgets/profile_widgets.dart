@@ -1,8 +1,10 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+
 import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
 
@@ -16,7 +18,7 @@ Widget profileStats(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
     child: Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: 100,
           child: Align(
             alignment: Alignment.centerLeft,
@@ -55,7 +57,7 @@ Widget profileStats(
         SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
           width: screen.width - 100 - 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +110,7 @@ Widget bio({required Color primaryColor}) {
         children: <Widget>[
           RichText(
             text: TextSpan(
-              children: [
+              children: const [
                 TextSpan(
                   text: 'It is what it is...',
                   style: TextStyle(
@@ -201,7 +203,7 @@ Widget storyHighlight({@required primaryColor}) {
     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           'Story Highligts',
           style: TextStyle(
@@ -221,7 +223,7 @@ Widget storyHighlight({@required primaryColor}) {
 Widget SocialMedia() {
   return Row(
     children: [
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -229,7 +231,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/yt.png"),
+            image: AssetImage("assets/images/yt.png"),
             width: 20,
             height: 20,
           ),
@@ -240,7 +242,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -248,7 +250,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/fb.png"),
+            image: AssetImage("assets/images/fb.png"),
             width: 20,
             height: 20,
           ),
@@ -259,7 +261,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -267,7 +269,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/tiktok.png"),
+            image: AssetImage("assets/images/tiktok.png"),
             width: 20,
             height: 20,
           ),
@@ -278,7 +280,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -286,7 +288,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/inst.png"),
+            image: AssetImage("assets/images/inst.png"),
             width: 20,
             height: 20,
           ),

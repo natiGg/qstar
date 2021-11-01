@@ -1,15 +1,9 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:qstar/screen/register/email.dart';
-import 'package:qstar/screen/feed/model/user.dart';
 
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:qstar/screen/register/email.dart';
 
 class Username extends StatefulWidget {
   const Username({Key? key}) : super(key: key);
@@ -21,17 +15,15 @@ class Username extends StatefulWidget {
 class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
-    var _controller;
 
-List<String> _kOptions = <String>[
-    'aardvark',
-    'bobcat',
-    'chameleon',
-  ];
-
+    List<String> _kOptions = <String>[
+      'aardvark',
+      'bobcat',
+      'chameleon',
+    ];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -81,52 +73,47 @@ List<String> _kOptions = <String>[
           //               borderSide:
           //                   BorderSide(color: Colors.white, width: 3.0))),
           //     ),
-              
+
           //   ),
           // ),
           Container(
-                      padding: const EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 20,
               horizontal: 30,
             ),
             child: Material(
-                elevation: 20.0,
+              elevation: 20.0,
               shadowColor: Colors.white,
-              
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0)),
               child: InputDecorator(
-               decoration: InputDecoration(
-                       prefixText: "@",
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide:
-                            BorderSide(color: Colors.white, width: 3.0)),
-                                hintText: "Search..",
-                              ),
-                              
-                              child: Autocomplete(
-                                
-                                optionsBuilder:
-                                    (TextEditingValue textEditingValue) {
-                                  if (textEditingValue.text == '') {
-                                    return const Iterable<String>.empty();
-                                  }
-                                  return _kOptions.where((String option) {
-                                    return option.contains(
-                                        textEditingValue.text.toLowerCase());
-                                  });
-                                },
-                                //   onSelected: (User selection) {
-                                //   //   print(
-                                //   //       'You just selected ${_displayStringForOption(selection)}');
-                                //   // },
-                                // ),
-                              ),
-                            ),
+                decoration: InputDecoration(
+                  prefixText: "@",
+                  fillColor: Colors.white,
+                  filled: true,
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: Colors.white, width: 3.0)),
+                  hintText: "Search..",
+                ),
+                child: Autocomplete(
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return const Iterable<String>.empty();
+                    }
+                    return _kOptions.where((String option) {
+                      return option
+                          .contains(textEditingValue.text.toLowerCase());
+                    });
+                  },
+                  //   onSelected: (User selection) {
+                  //   //   print(
+                  //   //       'You just selected ${_displayStringForOption(selection)}');
+                  //   // },
+                  // ),
+                ),
+              ),
             ),
           ),
           Container(
@@ -137,7 +124,6 @@ List<String> _kOptions = <String>[
             alignment: Alignment.center,
           ),
 
-             
           SizedBox(
             height: 30,
           ),

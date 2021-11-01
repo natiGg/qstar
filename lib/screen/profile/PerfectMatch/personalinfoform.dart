@@ -1,20 +1,11 @@
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/languages.g.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/feed.dart';
 
-import 'package:qstar/screen/profile/PerfectMatch/searching.dart';
-import 'package:qstar/screen/register/phonevarification.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:qstar/screen/register/password.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:language_picker/language_picker.dart';
 
@@ -25,7 +16,7 @@ class PersonalInfo extends StatefulWidget {
 
 class _MyHomePageState extends State<PersonalInfo> {
   int currentStep = 0;
-  String? _gender, _hob, _edu, _emp, _occ;
+  String? _gender, _hob, _edu, _emp;
   String? list2 = "Counrty";
   String? lan = "Language";
   RangeValues _currentRangeValues = const RangeValues(18, 65);
@@ -132,7 +123,7 @@ class _MyHomePageState extends State<PersonalInfo> {
   List<Step> getSteps() {
     return [
       Step(
-        title: new Text('Genral Info'),
+        title: Text('Genral Info'),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -196,7 +187,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                     ),
                   ),
                   onSelect: (Country country) => setState(() {
-                    list2 = "${country.displayName}";
+                    list2 = country.displayName;
                   }),
                 );
               },
@@ -228,7 +219,7 @@ class _MyHomePageState extends State<PersonalInfo> {
         state: currentStep == 0 ? StepState.editing : StepState.complete,
       ),
       Step(
-        title: new Text('Personal Details'),
+        title: Text('Personal Details'),
         content: Column(
           children: <Widget>[
             TextFormField(
@@ -300,7 +291,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: new Text("BackGround Info"),
+        title: Text("BackGround Info"),
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
@@ -386,7 +377,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: new Text("Match Perference"),
+        title: Text("Match Perference"),
         content: Column(
           children: <Widget>[
             TextFormField(

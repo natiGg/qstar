@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
+
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 class MyPages extends StatelessWidget {
@@ -67,7 +67,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       fontFamily: "font1",
     );
 
-    const pageDecoration = const PageDecoration(
+    const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
           fontSize: 24.0, fontWeight: FontWeight.w400, color: mPrimaryColor),
       bodyTextStyle: bodyStyle,
@@ -82,16 +82,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
       pages: [
         PageViewModel(
-          title: "Perfect Match",
-          body: "one step to find your Perfect Match",
-          image: _buildImage('img1.jpg'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
           title: "Find your Perfect Match",
           body:
-              "find someone you can talk to openly, have fun with, and share your interests and activities with",
-          image: _buildImage('img2.jpg'),
+              "one step to find your Perfect Match,find someone you can talk to openly, have fun with, and share your interests and activities with",
+          image: _buildImage('img1.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(

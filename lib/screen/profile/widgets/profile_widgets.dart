@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+
 import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
 
 import 'package:qstar/widget/utils.dart';
 
-Widget profileStats({required Size screen, required Color color,required BuildContext context}) {
+Widget profileStats(
+    {required Size screen,
+    required Color color,
+    required BuildContext context}) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
     child: Column(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: 100,
           child: Align(
             alignment: Alignment.centerLeft,
@@ -55,7 +58,7 @@ Widget profileStats({required Size screen, required Color color,required BuildCo
         SizedBox(
           height: 15,
         ),
-        Container(
+        SizedBox(
           width: screen.width - 100 - 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -63,31 +66,29 @@ Widget profileStats({required Size screen, required Color color,required BuildCo
             children: <Widget>[
               statsBox(count: '57', title: 'Posts'),
               GestureDetector(
-                onTap: (){
-                      Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followers(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '185', title: 'Followers')),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            Followers(),
+                        transitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: statsBox(count: '185', title: 'Followers')),
               GestureDetector(
-                onTap: (){
-                      Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followed(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '241', title: 'Following')),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            Followed(),
+                        transitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: statsBox(count: '241', title: 'Following')),
             ],
           ),
         ),
@@ -110,7 +111,7 @@ Widget bio({required Color primaryColor}) {
         children: <Widget>[
           RichText(
             text: TextSpan(
-              children: [
+              children: const [
                 TextSpan(
                   text: 'It is what it is...',
                   style: TextStyle(
@@ -150,6 +151,7 @@ Widget editProfile(
     ),
   );
 }
+
 Widget Following() {
   return Container(
     color: Colors.transparent,
@@ -158,12 +160,9 @@ Widget Following() {
       height: 30,
       width: 100,
       margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
       child: Center(
           child: Text(
         'remove',
@@ -175,6 +174,7 @@ Widget Following() {
     ),
   );
 }
+
 Widget Unfollow() {
   return Container(
     color: Colors.transparent,
@@ -183,12 +183,9 @@ Widget Unfollow() {
       height: 30,
       width: 100,
       margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
       child: Center(
           child: Text(
         'Following',
@@ -200,13 +197,14 @@ Widget Unfollow() {
     ),
   );
 }
+
 Widget storyHighlight({@required primaryColor}) {
   return Container(
     color: Colors.white,
     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           'Story Highligts',
           style: TextStyle(
@@ -226,7 +224,7 @@ Widget storyHighlight({@required primaryColor}) {
 Widget SocialMedia() {
   return Row(
     children: [
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -234,7 +232,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/yt.png"),
+            image: AssetImage("assets/images/yt.png"),
             width: 20,
             height: 20,
           ),
@@ -245,7 +243,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -253,7 +251,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/fb.png"),
+            image: AssetImage("assets/images/fb.png"),
             width: 20,
             height: 20,
           ),
@@ -264,7 +262,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -272,7 +270,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/tiktok.png"),
+            image: AssetImage("assets/images/tiktok.png"),
             width: 20,
             height: 20,
           ),
@@ -283,7 +281,7 @@ Widget SocialMedia() {
       SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
@@ -291,7 +289,7 @@ Widget SocialMedia() {
           elevation: 2.0,
           fillColor: Colors.white,
           child: Image(
-            image: new AssetImage("assets/images/inst.png"),
+            image: AssetImage("assets/images/inst.png"),
             width: 20,
             height: 20,
           ),

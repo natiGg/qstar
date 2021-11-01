@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'dart:developer' as developer;
+
 import "package:qstar/constant.dart";
 import "package:qstar/screen/Chat/message_model.dart";
 import "package:qstar/screen/profile/widgets/profile_widgets.dart";
-
-
 
 class Followers extends StatefulWidget {
   static const ROUTE_NAME = 'Followers';
@@ -15,7 +13,6 @@ class Followers extends StatefulWidget {
 }
 
 class _FollowersState extends State<Followers> {
-  static const TAG = 'Followers';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,26 +55,24 @@ class FollowersList extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                               "assets/images/profile1.jpg"
-                              ))),
-                    ),
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                      boxShadow: [
+                        BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 10))
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/images/profile1.jpg"))),
+                ),
                 Expanded(
                     child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -94,13 +89,14 @@ class FollowersList extends StatelessWidget {
                           TextSpan(
                               text: ' follows you',
                               style: Theme.of(context).textTheme.subtitle1),
-                              TextSpan(
+                          TextSpan(
                               text: '   + follow',
-                              style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: mPrimaryColor)),
-                           
-                    
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: mPrimaryColor)),
                         ])))),
-                           Following(),
+                Following(),
               ],
             ),
           ),

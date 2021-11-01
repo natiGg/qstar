@@ -8,7 +8,7 @@ class Address extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +21,9 @@ class Address extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 6,),
+          const SizedBox(
+            height: 6,
+          ),
           Text(
             '3 Michel Bakhoum\nDokki,Cairo',
             style: TextStyle(

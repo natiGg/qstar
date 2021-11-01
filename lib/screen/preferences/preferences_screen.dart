@@ -5,12 +5,11 @@ import 'package:qstar/screen/preferences/widget/header.dart';
 import 'package:qstar/screen/preferences/widget/name_and_number.dart';
 import 'package:qstar/screen/preferences/widget/total_price.dart';
 import 'package:qstar/widget/round_button.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class PreferencesScreen extends StatelessWidget {
   final int index;
 
-  PreferencesScreen(this.index);
+  const PreferencesScreen(this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class PreferencesScreen extends StatelessWidget {
           ),
           Attribute(
             title: 'Size',
-            iconNames: [
+            iconNames: const [
               'size1',
               'size2',
               'size3',
@@ -39,7 +38,7 @@ class PreferencesScreen extends StatelessWidget {
           ),
           Attribute(
             title: 'Sugar',
-            iconNames: ['sugar1', 'sugar2', 'sugar3', 'sugar4'],
+            iconNames: const ['sugar1', 'sugar2', 'sugar3', 'sugar4'],
             check: 2,
           ),
           Divider(
@@ -47,7 +46,7 @@ class PreferencesScreen extends StatelessWidget {
           ),
           Attribute(
             title: 'Additions',
-            iconNames: ['additions1', 'additions2'],
+            iconNames: const ['additions1', 'additions2'],
             check: 2,
           ),
           Divider(

@@ -1,16 +1,9 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/PerfectMatch/backgroundinfo.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform2.dart';
-import 'package:qstar/screen/register/phonevarification.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:qstar/screen/register/password.dart';
-import 'package:email_validator/email_validator.dart';
+
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 
 class PersonalInfo2 extends StatefulWidget {
@@ -22,7 +15,6 @@ class _MyHomePageState extends State<PersonalInfo2> {
   @override
   Widget build(BuildContext context) {
     String? dropdownvalue = 'Ortodox';
-    String newValue;
     var items = [
       'Ortodox',
       'Muslim',
@@ -32,7 +24,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
     ];
 
     String? dropdownvalue2 = 'English';
-    String newValue2;
+
     var items2 = [
       'English',
       'Arabic ',
@@ -42,7 +34,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
     ];
 
     String? dropdownvalue3 = 'Music';
-    String newValue3;
+
     var items3 = [
       'Music',
       'Art ',
@@ -51,7 +43,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
       'Walking',
     ];
 
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -105,7 +97,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "By your height we can match your account with other account"),
@@ -138,7 +130,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your native languagem please"),
                   ]),
                 ),
@@ -169,7 +161,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose your Hobbies "),
                   ]),
                 ),
@@ -185,7 +177,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(text: "Choose Your gender"),
                   ]),
                 ),
@@ -206,7 +198,7 @@ class _MyHomePageState extends State<PersonalInfo2> {
                 alignment: Alignment.center,
                 child: RichText(
                   text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
+                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
                     TextSpan(
                         text:
                             "please make sure to put your correct birth date.."),

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+// ignore_for_file: constant_identifier_names
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class AuthBloc extends ChangeNotifier {
 //  User get user
 
   AuthBloc() {
-    _getUserFromLocal().then((value){
+    _getUserFromLocal().then((value) {
       user = Result.value(value);
       notifyListeners();
     });
@@ -30,18 +30,11 @@ class AuthBloc extends ChangeNotifier {
 
   ///Handle action sign in of user
   ResultFuture<bool> signIn(String username, String password) {
-    return ResultFuture<bool>(
-      Future.delayed(_defaultDelayResponse, () {
-        user = Result.value(User(
-            'dangngocduc.bk@gmail.com',
-            'dangngocduc',
-            'assets/sample/ic_avatar_1.jpg',
-            'Dang Ngoc Duc'
-        ));
-        notifyListeners();
-        return true;
-      })
-    );
+    return ResultFuture<bool>(Future.delayed(_defaultDelayResponse, () {
+      user = Result.value(User('dangngocduc.bk@gmail.com', 'dangngocduc',
+          'assets/sample/ic_avatar_1.jpg', 'Dang Ngoc Duc'));
+      notifyListeners();
+      return true;
+    }));
   }
-
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_context.dart';
+
 import 'bottom_sheet_action_widget.dart';
 
 import 'bottom_sheet_action.dart';
@@ -8,7 +8,7 @@ class BottomSheetScrollable extends StatelessWidget {
   final List<BottomSheetAction> actions;
   final ScrollController scrollController;
 
-  BottomSheetScrollable(
+  const BottomSheetScrollable(
       {required this.actions, required this.scrollController});
 
   @override

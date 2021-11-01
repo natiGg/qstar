@@ -9,7 +9,6 @@ class InstaAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
 
   const InstaAppBar({
-   
     required this.height,
     required this.leading,
     required this.center,
@@ -23,9 +22,8 @@ class InstaAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       padding: EdgeInsets.only(top: 20),
       height: height,
-      color: backgroundColor == null
-          ? Theme.of(context).primaryColor
-          : backgroundColor,
+      // ignore: unnecessary_null_comparison
+      color: backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,

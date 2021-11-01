@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/register/Privacypolicy.dart';
+import 'package:qstar/screen/register/TermofService.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
 import 'package:qstar/screen/register/widget/register_form.dart';
 
@@ -38,17 +38,42 @@ class RegisterScreen extends StatelessWidget {
               text: TextSpan(style: TextStyle(color: Colors.grey), children: [
                 TextSpan(
                     text:
-                        'By tapping Next  & accept you acknowledge that you have read the privacy policy and agree to the Term of Service.'),
-                // TextSpan(
-                //   text: 'See More',
-                //   style: TextStyle(
-                //     color: mPrimaryColor,
-                //   ),
-                //   recognizer: TapGestureRecognizer()
-                //     ..onTap = () {
-                //       Navigator.pop(context);
-                //     },
-                // ),
+                        'By tapping Next  & accept you acknowledge that you have read the'),
+                TextSpan(
+                  text: ' Privacy policy',
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            return Privacypolicy();
+                          },
+                        ),
+                      );
+                    },
+                ),
+                TextSpan(text: ' and agree to the'),
+                TextSpan(
+                  text: ' Term of Service',
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            return TermofService();
+                          },
+                        ),
+                      );
+                    },
+                ),
               ]),
             ),
           ),

@@ -1,6 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:async';
 import 'dart:convert';
 // import 'package:provider/provider.dart';
 import 'dart:io';
@@ -8,45 +7,23 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'file.dart';
 
-import 'package:camera/camera.dart';
-
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-
 // ignore: import_of_legacy_library_into_null_safe
 import "package:storage_path/storage_path.dart" show StoragePath;
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/post/setting_post_page.dart';
+
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: MyHomePage());
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+class PostPage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late FileModel selectedModel;
-  late String image;
+class _MyHomePageState extends State<PostPage> {
+  FileModel? selectedModel;
+  String? image;
   List<FileModel>? files;
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -64,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var images = jsonDecode(imagePath) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
     print(files.toString());
-    if (files != null && files!.length > 0) {
+    if (files != null && files!.isNotEmpty) {
       setState(() {
         selectedModel = files![0];
         image = files![0].files[0];
@@ -82,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return Scaffold();
     } else {
       return Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -89,14 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        UsersFeed(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+                Navigator.of(context).pop(true);
               }),
           // ignore: prefer_const_constructors
           title: Text(
@@ -121,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: DropdownButton<FileModel>(
                         items: getIO(),
                         onChanged: (d) {
-                          assert(d!.files.length > 0);
+                          assert(d!.files.isNotEmpty);
                           image = d!.files[0];
                           setState(() {
                             selectedModel = d;
@@ -133,17 +104,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   // ignore: prefer_const_constructors
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(16.0),
                     // ignore: unnecessary_new
                     child: new GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                          duration: Duration(seconds: 4),
+                          content: Row(
+                            children: const <Widget>[
+                              CircularProgressIndicator(),
+                              Text(" Loading...")
+                            ],
+                          ),
+                        ));
+                        _ondelay().whenComplete(() => Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PreviewImageScreengallery(
-                                    imagePath: image,)));
+                                      imagePath: image!,
+                                    ))));
                       },
-                      child: new Text(
+                      child: Text(
                         'Next',
                         style: TextStyle(color: mPrimaryColor),
                       ),
@@ -155,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: image != null
-                      ? Image.file(File(image),
+                      ? Image.file(File(image!),
                           height: MediaQuery.of(context).size.height * 0.25,
                           width: MediaQuery.of(context).size.width)
                       : Container()),
@@ -212,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               const Divider(),
               // ignore: unnecessary_null_comparison, prefer_is_empty
-              if (selectedModel == null && selectedModel.files.length < 1)
+              if (selectedModel == null && selectedModel!.files.length < 1)
                 Container()
               else
                 Container(
@@ -225,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               crossAxisSpacing: 4,
                               mainAxisSpacing: 4),
                       itemBuilder: (_, i) {
-                        var file = selectedModel.files[i];
+                        var file = selectedModel!.files[i];
                         return GestureDetector(
                           child: Image.file(
                             File(file),
@@ -238,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         );
                       },
-                      itemCount: selectedModel.files.length),
+                      itemCount: selectedModel!.files.length),
                 )
             ],
           ),
@@ -257,6 +238,17 @@ class _MyHomePageState extends State<MyHomePage> {
               value: e,
             ))
         .toList();
+  }
+
+  _ondelay() {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PreviewImageScreengallery(
+                    imagePath: image!,
+                  )));
+    });
   }
 
   // ignore: non_constant_identifier_names

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
@@ -9,7 +11,7 @@ class RoundButton extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final VoidCallback  press;
+  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {

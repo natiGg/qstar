@@ -1,40 +1,21 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
+
 import 'package:qstar/screen/register/phone.dart';
 
-class Password extends StatelessWidget {
-  const Password({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Remove the debug banner
-      debugShowCheckedModeBanner: false,
-      title: 'qstar',
-      home: SetP(),
-    );
-  }
-}
-
-class SetP extends StatefulWidget {
-  const SetP({Key? key}) : super(key: key);
-
+class Password extends StatefulWidget {
   @override
   _SetPState createState() => _SetPState();
 }
 
-class _SetPState extends State<SetP> {
+class _SetPState extends State<Password> {
   bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(

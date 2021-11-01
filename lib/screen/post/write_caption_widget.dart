@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:qstar/data/bloc/auth_bloc.dart';
-import 'package:provider/provider.dart';
-import 'dart:developer' as developer;
-import 'package:qstar/screen/feed/model/user.dart';
-
 class WriteCaptionWidget extends StatefulWidget {
   static const ROUTE_NAME = 'WriteCaptionWidget';
   @override
@@ -12,7 +7,6 @@ class WriteCaptionWidget extends StatefulWidget {
 }
 
 class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
-  static const TAG = 'WriteCaptionWidget';
   @override
   Widget build(BuildContext context) {
     return Container(

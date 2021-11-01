@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+// ignore_for_file: constant_identifier_names
 
 class User {
   static const TAG = 'User';
@@ -9,5 +9,4 @@ class User {
   String fullName;
 
   User(this.email, this.username, this.avatar, this.fullName);
-
 }

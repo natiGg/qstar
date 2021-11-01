@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'bottom_sheet_scrollable.dart';
@@ -15,16 +13,13 @@ extension AppContext on BuildContext {
 
   Future<BottomSheetAction?> showBottomSheet(List<BottomSheetAction> actions) {
     return showModalBottomSheet(
-      
         context: this,
         backgroundColor: Colors.transparent,
         builder: (context) {
           return DraggableScrollableSheet(
-            
               expand: false,
               builder: (context, scrollController) {
                 return BottomSheetScrollable(
-                  
                   actions: actions,
                   scrollController: scrollController,
                 );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:developer' as developer;
 
 class SearchBarWidget extends StatefulWidget implements PreferredSizeWidget {
   static const ROUTE_NAME = 'SearchBarWidget';
@@ -11,12 +10,12 @@ class SearchBarWidget extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  static const TAG = 'SearchBarWidget';
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).primaryColor,
-      child: SafeArea(child: Container(
+      child: SafeArea(
+          child: Container(
         child: Row(
           children: <Widget>[
             Expanded(

@@ -1,11 +1,8 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
+
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:qstar/screen/register/verification.dart';
 
@@ -38,7 +35,7 @@ class _SetPhoneState extends State<SetPhone> {
   PhoneNumber number = PhoneNumber(isoCode: 'ET');
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Form(
@@ -108,7 +105,7 @@ class _SetPhoneState extends State<SetPhone> {
               ),
               alignment: Alignment.center,
               child: RichText(
-                text: TextSpan(style: TextStyle(color: Colors.grey), children: [
+                text: TextSpan(style: TextStyle(color: Colors.grey), children: const [
                   TextSpan(text: "We'll send you an SMS  verification code"),
                 ]),
               ),

@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
@@ -6,7 +8,7 @@ class ProfileTabBar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   final ValueChanged<int> onTap;
 
-  ProfileTabBar({
+  const ProfileTabBar({
     required this.height,
     required this.onTap,
     Color? color,

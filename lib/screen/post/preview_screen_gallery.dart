@@ -1,15 +1,15 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/photofilters.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:qstar/screen/post/camera_screen.dart';
+
 import 'package:qstar/screen/post/setting_post_page.dart';
-import 'package:path/path.dart';
+
 import 'package:image/image.dart' as imageLib;
 import 'package:uri_to_file/uri_to_file.dart';
 
@@ -44,8 +44,8 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
     image = imageLib.copyResize(image!, width: 600);
     Map imagefile = await Navigator.push(
       context,
-      new MaterialPageRoute(
-        builder: (context) => new PhotoFilterSelector(
+      MaterialPageRoute(
+        builder: (context) => PhotoFilterSelector(
           title: Text("Photo Filter "),
           image: image!,
           filters: presetFiltersList,
@@ -55,7 +55,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         ),
       ),
     );
-    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+    if (imagefile.containsKey('image_filtered')) {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });
@@ -68,7 +68,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
     if (imageFile == null) {
       getImage(context);
     }
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -100,7 +100,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         ],
       ),
       body: Center(
-        child: new Container(
+        child: Container(
           child: imageFile == null
               ? Container(
                   child: Column(
@@ -115,10 +115,10 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               : Image.file(imageFile!),
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => getImage(context),
         tooltip: 'refreshe',
-        child: new Icon(Icons.edit),
+        child: Icon(Icons.edit),
       ),
     );
   }

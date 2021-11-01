@@ -12,7 +12,7 @@ class NumbersWidget extends StatelessWidget {
           buildButton(context, '50', 'Followers'),
         ],
       );
-  Widget buildDivider() => Container(
+  Widget buildDivider() => SizedBox(
         height: 24,
         child: VerticalDivider(),
       );

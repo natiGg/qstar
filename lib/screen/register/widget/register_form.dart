@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/login/widget/input_text_field.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({

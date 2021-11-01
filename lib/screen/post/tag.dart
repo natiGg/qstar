@@ -34,7 +34,7 @@ class Search extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          child: Container(
+          child: SizedBox(
             height: 40,
             width: 800,
             child: TextField(

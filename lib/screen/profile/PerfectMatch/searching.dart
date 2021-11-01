@@ -3,7 +3,6 @@
 // This example shows a [LinearProgressIndicator] with a changing value.
 
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/feed/feed.dart';
 
 /// This is the main application widget.
 class Searching extends StatelessWidget {
@@ -12,6 +11,7 @@ class Searching extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: _title,
       home: MyStatefulWidget(),
     );

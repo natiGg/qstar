@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/constant.dart';
 
 class WelcomeBack extends StatelessWidget {
   const WelcomeBack({

@@ -36,7 +36,6 @@ class _ProfileScreenState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
-    var _primaryColor = Colors.transparent;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
     return Scaffold(
       resizeToAvoidBottomInset: false,
