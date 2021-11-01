@@ -1,15 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/birthday.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
 
-import 'package:qstar/screen/register/password.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
 

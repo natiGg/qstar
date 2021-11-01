@@ -1,38 +1,24 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/hobbieselector.dart';
-import 'package:qstar/screen/register/suggested.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:qstar/screen/register/phone.dart';
+
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:flutter/gestures.dart';
+
 import 'dart:async';
 
-class Verification extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Remove the debug banner
-      debugShowCheckedModeBanner: false,
-      title: 'qstar',
-      home: const VerifyOTP(),
-    );
-  }
-}
-
-class VerifyOTP extends StatefulWidget {
-  const VerifyOTP({Key? key}) : super(key: key);
+class Verification extends StatefulWidget {
+  const Verification({Key? key}) : super(key: key);
 
   @override
   _SetPState createState() => _SetPState();
 }
 
-class _SetPState extends State<VerifyOTP> {
+class _SetPState extends State<Verification> {
   TextEditingController textEditingController = TextEditingController();
   // ..text = "123456";
 

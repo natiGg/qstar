@@ -1,6 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:async';
 import 'dart:convert';
 // import 'package:provider/provider.dart';
 import 'dart:io';
@@ -8,41 +7,19 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'file.dart';
 
-import 'package:camera/camera.dart';
-
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-
 // ignore: import_of_legacy_library_into_null_safe
 import "package:storage_path/storage_path.dart" show StoragePath;
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/post/setting_post_page.dart';
+
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: MyHomePage());
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+class PostPage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<PostPage> {
   FileModel? selectedModel;
   String? image;
   List<FileModel>? files;
@@ -89,14 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        UsersFeed(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+                Navigator.of(context).pop(true);
               }),
           // ignore: prefer_const_constructors
           title: Text(

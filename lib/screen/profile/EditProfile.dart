@@ -1,17 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
-import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
-import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 
-import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
-import 'package:qstar/widget/utils.dart';
-
-import 'package:qstar/screen/profile/widgets/insta_app_bar.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/gestures.dart';
 
@@ -208,6 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   SizedBox(
                     height: 35,
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton.icon(
                     onPressed: () {},
                     shape: RoundedRectangleBorder(
@@ -224,6 +216,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     splashColor: Colors.white,
                     color: mPrimaryColor,
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton.icon(
                     onPressed: () {},
                     shape: RoundedRectangleBorder(

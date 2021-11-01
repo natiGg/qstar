@@ -1,7 +1,10 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
+
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
@@ -16,11 +19,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
 
-import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
-
-import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -59,32 +58,31 @@ class UsersFeed extends StatefulWidget {
   State<UsersFeed> createState() => _UsersFeedState();
 }
 
-late VoidCallback _onShowMenu;
-
 class _UsersFeedState extends State<UsersFeed> {
+  late BuildContext context;
+
   @override
   void initState() {
     super.initState();
-
-    _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.share, title: 'Share TO', id: 0),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 1', id: 1),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 2', id: 2),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 3', id: 3),
-      ]);
-    };
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Feed(),
+      body: new RefreshIndicator(
+        child: Feed(),
+        onRefresh: onPullRefresh,
+      ),
     );
+  }
+
+  Future<void> onPullRefresh() async {
+    //People item = Dummy.getPeopleData()[0];
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      //   adapter.addItem(item);
+    });
   }
 }
 
@@ -94,7 +92,6 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  FocusNode _focus = new FocusNode();
   List<String> _animals = ["Friends", "public", "only me(stars)"];
 
   @override
@@ -116,21 +113,6 @@ class _FeedState extends State<Feed> {
                 ),
               );
             }),
-        title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            color: mPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => MyApp(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            },
-          ),
-        ]),
         actions: [
           IconButton(
               onPressed: () {
@@ -194,33 +176,31 @@ class _FeedState extends State<Feed> {
                         const SizedBox(width: 8.0),
 
                         Expanded(
+                          // ignore: duplicate_ignore, duplicate_ignore
                           child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Container(
-                              height: 40,
-                              width: 300,
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      color: Colors.grey.withOpacity(0.9))),
-                              child: FlatButton(
-                                onPressed: () {
-                                  _postModal(context);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Share us your thought',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey.withOpacity(0.9),
-                                        ),
-                                      )),
-                                ),
+                            height: 40,
+                            width: 300,
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                    color: Colors.grey.withOpacity(0.9))),
+                            // ignore: deprecated_member_use
+                            child: FlatButton(
+                              onPressed: () {
+                                _postModal(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Share us your thought',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.withOpacity(0.9),
+                                      ),
+                                    )),
                               ),
                             ),
                           ),
@@ -386,7 +366,7 @@ class _FeedState extends State<Feed> {
                         children: [
                           FlatButton.icon(
                             onPressed: () {
-                              _postModal(context);
+                              //    _postModal(context);
                             },
                             icon: const Icon(
                               Icons.videocam,
@@ -396,7 +376,17 @@ class _FeedState extends State<Feed> {
                           ),
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
-                            onPressed: () => print('Photo'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          PostPage(),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
+                            },
                             icon: const Icon(
                               Icons.photo_library,
                               color: Colors.green,
@@ -405,7 +395,7 @@ class _FeedState extends State<Feed> {
                           ),
                           FlatButton.icon(
                             onPressed: () {
-                              _postModal(context);
+                              //  _postModal(context);
                             },
                             icon: const Icon(
                               Icons.video_collection_sharp,
@@ -1029,9 +1019,6 @@ class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
 
-  /// Is the animation currently playing?
-  bool _isPlaying = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -1360,7 +1347,7 @@ class _WPostState extends State<WPost> {
             IconButton(
               icon: const Icon(Icons.share, color: Colors.grey, size: 25),
               onPressed: () {
-                _onShowMenu();
+                showSheet(context);
               },
             ),
           ],
@@ -1368,4 +1355,381 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
+}
+
+void showSheet(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          height: 780,
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+          child: new Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Container(
+                    height: 10,
+                  ),
+                  new Text(
+                    "Send to",
+                    style: TextStyle(
+                      color: mPrimaryColor,
+                      fontFamily: "font1",
+                      fontSize: 24,
+                    ),
+                  )
+                ],
+              )),
+              new Container(
+                height: 20,
+              ),
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.account_box,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("user1",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.account_box,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("user2",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.account_box,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("user3",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.search,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("Search",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                ],
+              ),
+              new Container(
+                height: 20,
+              ),
+              new Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 18,
+                  ),
+                ],
+              ),
+              new Container(
+                height: 10,
+              ),
+              new Divider(indent: 18, endIndent: 18, color: Colors.grey),
+              new Text(
+                "Share to",
+                style: TextStyle(
+                  color: mPrimaryColor,
+                  fontFamily: "font1",
+                  fontSize: 24,
+                ),
+              ),
+              Container(
+                height: 10,
+              ),
+              new Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.copy,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("copy link",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.whatsapp,
+                        color: Colors.green,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("whatsapp",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.facebook,
+                        color: Colors.blue,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("More Apps",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.instagram,
+                        color: Colors.redAccent,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("Instagram",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                ],
+              ),
+              new Container(
+                height: 20,
+              ),
+              new Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.telegram,
+                        color: Colors.blue,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("Telegram",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 21,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.twitter,
+                        color: Colors.blue,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("twitter",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 26,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.google_plus,
+                        color: Colors.red,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("google_plus",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 32,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.twitch,
+                        color: Colors.redAccent,
+                      ),
+                      new Container(
+                        height: 10,
+                      ),
+                      new Text("twitch",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                ],
+              ),
+              new Container(
+                height: 10,
+              ),
+              new Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 25,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.youtube,
+                        color: Colors.red,
+                      ),
+                      new Container(
+                        height: 8,
+                      ),
+                      new Text("youtube",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 18,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        FontAwesome.google,
+                        color: Colors.redAccent,
+                      ),
+                      new Container(
+                        height: 2,
+                      ),
+                      new Text("google",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                  Container(
+                    width: 26,
+                  ),
+                  Container(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Icon(
+                        Icons.more_horiz_sharp,
+                        color: mPrimaryColor,
+                      ),
+                      new Container(
+                        height: 6,
+                      ),
+                      new Text("More App",
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ))
+                    ],
+                  )),
+                ],
+              ),
+            ],
+          ),
+        );
+      });
 }

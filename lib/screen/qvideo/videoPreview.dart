@@ -1,8 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:qstar/screen/qvideo/setting_post_page.dart';
-import 'dart:io';
+
 import 'package:video_player/video_player.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
@@ -15,17 +17,10 @@ class PreviewImageScreengallery extends StatefulWidget {
 }
 
 class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
-  int _counter = 0;
   late String dirPath;
   bool loading = false;
 
   // ignore: non_constant_identifier_names
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -312,7 +307,7 @@ Widget buildCard(String title) {
           leading: const Icon(Icons.airline_seat_flat_angled),
           title: Text(title),
         ),
-        // TODO(jackson): Remove when deprecation is on stable branch
+
         // ignore: deprecated_member_use
       ],
     ),

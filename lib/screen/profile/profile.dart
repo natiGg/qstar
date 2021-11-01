@@ -7,10 +7,8 @@ import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
 import 'package:qstar/widget/utils.dart';
 
-import 'package:qstar/screen/profile/widgets/insta_app_bar.dart';
 import 'package:qstar/screen/profile/editprofile.dart';
 
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -46,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
-    var _primaryColor = Colors.transparent;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -94,7 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    profileStats(screen: _screen, color: mPrimaryColor,context: context),
+                    profileStats(
+                        screen: _screen,
+                        color: mPrimaryColor,
+                        context: context),
                     SizedBox(
                       height: 15,
                     ),

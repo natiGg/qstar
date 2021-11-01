@@ -1,13 +1,8 @@
-import 'dart:io';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
-import 'auth_bloc.dart';
 
-import 'dart:developer' as developer;
-import 'package:flutter_svg/svg.dart';
 import 'comment_widget.dart';
 import 'package:qstar/screen/feed/feed.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CommentPage extends StatefulWidget {
   static const ROUTE_NAME = 'CommentPage';
@@ -17,14 +12,13 @@ class CommentPage extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentPage> {
-  static const TAG = 'CommentPage';
   @override
   Widget build(BuildContext context) {
     // ignore: unnecessary_new
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => UsersFeed()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => UsersFeed()));
         return true;
       },
       child: Scaffold(

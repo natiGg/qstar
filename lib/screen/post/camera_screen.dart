@@ -1,3 +1,7 @@
+// ignore: import_of_legacy_library_into_null_safe
+// ignore_for_file: deprecated_member_use
+
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -85,7 +89,8 @@ class _CameraScreenState extends State {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => MyApp(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        PostPage(),
                     transitionDuration: Duration.zero,
                   ),
                 );
@@ -169,7 +174,7 @@ class _CameraScreenState extends State {
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
   Widget _cameraTogglesRowWidget() {
-    if (cameras == null || cameras.isEmpty) {
+    if (cameras.isEmpty) {
       return Spacer();
     }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/Chat/home_screen.dart';
 
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/Video_Picker.dart';
@@ -37,8 +36,7 @@ class _ProfileScreenState extends State<Useraudeio> {
   @override
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
-    var _primaryColor = Colors.transparent;
-    var _primaryColorDark = Theme.of(context).primaryColorDark;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

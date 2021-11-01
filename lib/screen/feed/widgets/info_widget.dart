@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
-import 'dart:developer' as developer;
 
 class InfoWidget extends StatelessWidget {
   @override

@@ -1,10 +1,8 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:qstar/constant.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
-import 'package:qstar/screen/profile/followers.dart';
-import 'package:qstar/screen/profile/following.dart';
 
 import 'package:qstar/widget/utils.dart';
 

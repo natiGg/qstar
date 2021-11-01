@@ -1,15 +1,15 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/photofilters.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:qstar/screen/post/camera_screen.dart';
+
 import 'package:qstar/screen/post/setting_post_page.dart';
-import 'package:path/path.dart';
+
 import 'package:image/image.dart' as imageLib;
 import 'package:uri_to_file/uri_to_file.dart';
 
@@ -55,7 +55,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
         ),
       ),
     );
-    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+    if (imagefile.containsKey('image_filtered')) {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });

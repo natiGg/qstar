@@ -5,7 +5,6 @@ import 'package:qstar/screen/preferences/widget/header.dart';
 import 'package:qstar/screen/preferences/widget/name_and_number.dart';
 import 'package:qstar/screen/preferences/widget/total_price.dart';
 import 'package:qstar/widget/round_button.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class PreferencesScreen extends StatelessWidget {
   final int index;

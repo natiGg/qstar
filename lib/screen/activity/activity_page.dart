@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'dart:developer' as developer;
 
 import 'activity_item_widget.dart';
 
@@ -11,7 +10,6 @@ class ActivityPage extends StatefulWidget {
 }
 
 class _ActivityPageState extends State<ActivityPage> {
-  static const TAG = 'ActivityPage';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,12 +1,15 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/qvideo/bottomsheet/app_context.dart';
-import 'package:qstar/screen/qvideo/category.dart';
+
 import 'package:qstar/screen/qvideo/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/useraudio.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
@@ -17,22 +20,13 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:qstar/screen/qvideo/bottomsheet/bottom_sheet_action.dart';
 import 'package:qstar/screen/qvideo/Video_Picker.dart';
 
-class Qvideoscreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Qvideo(),
-    );
-  }
-}
-
-class Qvideo extends StatefulWidget {
+class Qvideoscreen extends StatefulWidget {
   @override
   _QvideoState2 createState() => _QvideoState2();
 }
 
-class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
+class _QvideoState2 extends State<Qvideoscreen>
+    with SingleTickerProviderStateMixin {
   bool abo = false;
   bool foryou = true;
   bool play = true;
@@ -43,10 +37,8 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.8);
-  ScrollController _scrollController = ScrollController(initialScrollOffset: 0);
   PageController foryouController = new PageController();
   late VoidCallback _onShowMenu;
-  late VoidCallback _onShowshare;
   @override
   void initState() {
     super.initState();
@@ -67,13 +59,6 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         BottomSheetAction(iconData: Icons.flag, title: 'Report', id: 1),
       ]);
     };
-    _onShowshare = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.share, title: 'Share to', id: 2),
-        BottomSheetAction(iconData: Icons.account_box, title: 'User 1', id: 3),
-        BottomSheetAction(iconData: Icons.account_box, title: 'User 2', id: 4),
-      ]);
-    };
   }
 
   @override
@@ -84,8 +69,9 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
 
     _controller.dispose();
     _controller.pause();
-    super.dispose();
+
     animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,28 +84,11 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
         leading: new IconButton(
             icon: new Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      CategoryVid(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text(
-            "video",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
-            ),
-          ),
-        ]),
-        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.switch_video_outlined),
+            icon: Icon(Icons.add),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
@@ -132,6 +101,14 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                 ),
               );
             },
+          ),
+        ]),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.switch_video_outlined),
+            iconSize: 30.0,
+            color: mPrimaryColor,
+            onPressed: () {},
           ),
         ],
       ),
@@ -489,7 +466,7 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  _onShowshare();
+                                  showSheet(context);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(bottom: 20),
@@ -550,6 +527,383 @@ class _QvideoState2 extends State<Qvideo> with SingleTickerProviderStateMixin {
                       ))
                 ],
               ),
+            ),
+          );
+        });
+  }
+
+  void showSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            height: 780,
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(
+                      height: 5,
+                    ),
+                    new Text(
+                      "Send to",
+                      style: TextStyle(
+                        color: mPrimaryColor,
+                        fontFamily: "font1",
+                        fontSize: 24,
+                      ),
+                    )
+                  ],
+                )),
+                new Container(
+                  height: 10,
+                ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("user1",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("user2",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.account_box,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("user3",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.search,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("Search",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                new Container(
+                  height: 10,
+                ),
+                new Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                  ],
+                ),
+                new Container(
+                  height: 10,
+                ),
+                new Divider(indent: 18, endIndent: 18, color: Colors.grey),
+                new Text(
+                  "Share to",
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                    fontFamily: "font1",
+                    fontSize: 24,
+                  ),
+                ),
+                Container(
+                  height: 5,
+                ),
+                new Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.copy,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("copy link",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.whatsapp,
+                          color: Colors.green,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("whatsapp",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.facebook,
+                          color: Colors.blue,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("More Apps",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.instagram,
+                          color: Colors.redAccent,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("Instagram",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                new Container(
+                  height: 10,
+                ),
+                new Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.telegram,
+                          color: Colors.blue,
+                        ),
+                        new Container(
+                          height: 10,
+                        ),
+                        new Text("Telegram",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 21,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.twitter,
+                          color: Colors.blue,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("twitter",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 26,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.google_plus,
+                          color: Colors.red,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("google_plus",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 32,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.twitch,
+                          color: Colors.redAccent,
+                        ),
+                        new Container(
+                          height: 5,
+                        ),
+                        new Text("twitch",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+                new Container(
+                  height: 5,
+                ),
+                new Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 25,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.youtube,
+                          color: Colors.red,
+                        ),
+                        new Container(
+                          height: 8,
+                        ),
+                        new Text("youtube",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 18,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          FontAwesome.google,
+                          color: Colors.redAccent,
+                        ),
+                        new Container(
+                          height: 2,
+                        ),
+                        new Text("google",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                    Container(
+                      width: 26,
+                    ),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.more_horiz_sharp,
+                          color: mPrimaryColor,
+                        ),
+                        new Container(
+                          height: 2,
+                        ),
+                        new Text("More App",
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+              ],
             ),
           );
         });

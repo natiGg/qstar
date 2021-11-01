@@ -1,4 +1,4 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use, duplicate_ignore
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,34 +13,35 @@ import 'forgotpassword.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-     Future<bool> _onBackPressed() async {
- // This dialog will exit your app on saying yes
-    return (await showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Are you sure?'),
-            content: new Text('Do you want to exit an App'),
-            actions: <Widget>[
-              new FlatButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No'),
-              ),
-              new FlatButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: new Text('Yes'),
-              ),
-            ],
-          ),
-        )) ??
-        false;
-  }
+    Future<bool> _onBackPressed() async {
+      // This dialog will exit your app on saying yes
+      return (await showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+              title: new Text('Are you sure?'),
+              content: new Text('Do you want to exit an App'),
+              actions: <Widget>[
+                // ignore: deprecated_member_use
+                new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: new Text('No'),
+                ),
+                new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: new Text('Yes'),
+                ),
+              ],
+            ),
+          )) ??
+          false;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: WillPopScope(
-        onWillPop:_onBackPressed ,
+        onWillPop: _onBackPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

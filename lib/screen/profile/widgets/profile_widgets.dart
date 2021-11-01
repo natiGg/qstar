@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+
 import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
 
 import 'package:qstar/widget/utils.dart';
 
-Widget profileStats({required Size screen, required Color color,required BuildContext context}) {
+Widget profileStats(
+    {required Size screen,
+    required Color color,
+    required BuildContext context}) {
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
     child: Column(
@@ -63,31 +66,29 @@ Widget profileStats({required Size screen, required Color color,required BuildCo
             children: <Widget>[
               statsBox(count: '57', title: 'Posts'),
               GestureDetector(
-                onTap: (){
-                      Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followers(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '185', title: 'Followers')),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            Followers(),
+                        transitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: statsBox(count: '185', title: 'Followers')),
               GestureDetector(
-                onTap: (){
-                      Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followed(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '241', title: 'Following')),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            Followed(),
+                        transitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                  child: statsBox(count: '241', title: 'Following')),
             ],
           ),
         ),
@@ -150,6 +151,7 @@ Widget editProfile(
     ),
   );
 }
+
 Widget Following() {
   return Container(
     color: Colors.transparent,
@@ -158,12 +160,9 @@ Widget Following() {
       height: 30,
       width: 100,
       margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
       child: Center(
           child: Text(
         'remove',
@@ -175,6 +174,7 @@ Widget Following() {
     ),
   );
 }
+
 Widget Unfollow() {
   return Container(
     color: Colors.transparent,
@@ -183,12 +183,9 @@ Widget Unfollow() {
       height: 30,
       width: 100,
       margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
       child: Center(
           child: Text(
         'Following',
@@ -200,6 +197,7 @@ Widget Unfollow() {
     ),
   );
 }
+
 Widget storyHighlight({@required primaryColor}) {
   return Container(
     color: Colors.white,

@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 class IconsApp {
   static const TAG = 'Icons';
 

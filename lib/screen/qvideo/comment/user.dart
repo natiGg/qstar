@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 class User {
   static const TAG = 'User';
 
@@ -9,5 +7,4 @@ class User {
   String fullName;
 
   User(this.email, this.username, this.avatar, this.fullName);
-
 }

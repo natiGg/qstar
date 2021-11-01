@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:async';
 import 'dart:io';
 
@@ -11,7 +13,6 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoRecorderExample extends StatefulWidget {
   @override
@@ -25,12 +26,8 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   late String videoPath;
   late String imagePath;
 
-  late File _video;
-  late File _cameraVideo;
   late List<CameraDescription> cameras;
   late int selectedCameraIdx;
-  VideoPlayerController? _videoPlayerController;
-  VideoPlayerController? _cameraVideoPlayerController;
 
   final ImagePicker _picker = ImagePicker();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -61,7 +58,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
         source: ImageSource.gallery, maxDuration: const Duration(seconds: 10));
 
     //_video = File(file.path);
-      await _playVideo(file);
+    await _playVideo(file);
     // _videoPlayerController = VideoPlayerController.file(_video)
     //   ..initialize().then((_) {
     //     setState(() {});
@@ -70,30 +67,31 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   }
 
   // This funcion will helps you to pick a Video File from Camera
-Future<void> _playVideo(XFile? file) async {
-   
-            Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PreviewImageScreengallery(imagePath: file!.path),
-        ),
-      );
-    
+  Future<void> _playVideo(XFile? file) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PreviewImageScreengallery(imagePath: file!.path),
+      ),
+    );
   }
-   VideoPlayerController? _controller;
+
+  VideoPlayerController? _controller;
   VideoPlayerController? _toBeDisposed;
-    void dispose() {
+  void dispose() {
     _disposeVideoController();
-  
+
     super.dispose();
   }
-    Future<void> _disposeVideoController() async {
+
+  Future<void> _disposeVideoController() async {
     if (_toBeDisposed != null) {
       await _toBeDisposed!.dispose();
     }
     _toBeDisposed = _controller;
     _controller = null;
   }
+
   @override
   Widget build(BuildContext context) {
     if (controller == null) {
@@ -198,6 +196,7 @@ Future<void> _playVideo(XFile? file) async {
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
   Widget _cameraTogglesRowWidget() {
+    // ignore: unnecessary_null_comparison
     if (cameras == null) {
       return Row();
     }
@@ -208,6 +207,7 @@ Future<void> _playVideo(XFile? file) async {
     return Expanded(
       child: Align(
         alignment: Alignment.centerLeft,
+        // ignore: deprecated_member_use
         child: FlatButton.icon(
             onPressed: _onSwitchCamera,
             icon: Icon(
@@ -304,6 +304,7 @@ Future<void> _playVideo(XFile? file) async {
 
   void _onRecordButtonPressed() {
     _startVideoRecording().then((String filePath) {
+      // ignore: unnecessary_null_comparison
       if (filePath != null) {
         Fluttertoast.showToast(
             msg: 'Recording video started',
@@ -352,7 +353,6 @@ Future<void> _playVideo(XFile? file) async {
     // Do nothing if a recording is on progress
     if (controller!.value.isRecordingVideo) {
       return "Unable to load categories";
-      ;
     }
 
     final Directory appDirectory = await getApplicationDocumentsDirectory();
@@ -367,7 +367,6 @@ Future<void> _playVideo(XFile? file) async {
     } on CameraException catch (e) {
       _showCameraException(e);
       return "Unable to load categories";
-      ;
     }
 
     return filePath;
@@ -416,6 +415,7 @@ class VideoRecorderApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: VideoRecorderExample(),
     );
   }

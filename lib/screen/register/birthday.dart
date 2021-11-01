@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, deprecated_member_use
+
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,14 +7,6 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/username.dart';
 
 import 'dart:ui';
-
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-
-import 'package:qstar/screen/register/username.dart';
 
 class BirthDay extends StatefulWidget {
   @override
@@ -47,24 +41,6 @@ class _DateTimePickerState extends State<BirthDay> {
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMd().format(selectedDate);
-      });
-  }
-
-  Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (picked != null)
-      setState(() {
-        selectedTime = picked;
-        _hour = selectedTime.hour.toString();
-        _minute = selectedTime.minute.toString();
-        _time = _hour + ' : ' + _minute;
-        _timeController.text = _time;
-        _timeController.text = formatDate(
-            DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
       });
   }
 

@@ -1,10 +1,7 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/login/widget/login_button.dart';
-import 'package:qstar/screen/login/widget/login_form.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
 
 class Forgotpassword extends StatelessWidget {

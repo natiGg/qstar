@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/home/widget/login_and_register.dart';
-import 'package:qstar/screen/home/widget/login_with_facebook.dart';
-import 'package:qstar/screen/home/widget/slider_dot.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

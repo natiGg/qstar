@@ -1,23 +1,11 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
+
 import 'package:qstar/screen/register/password.dart';
-import 'package:email_validator/email_validator.dart';
-import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:qstar/screen/register/verification.dart';
 
 import 'email.dart';
 
@@ -31,7 +19,6 @@ class Phonevarification extends StatelessWidget {
     const textStyle = const TextStyle(
       color: Colors.white,
     );
-    String initialCountry = 'ET';
     PhoneNumber number = PhoneNumber(isoCode: 'ET');
     return Scaffold(
       resizeToAvoidBottomInset: false,

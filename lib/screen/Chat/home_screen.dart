@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
 import 'category_selector.dart';
-import 'favorite_contacts.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
@@ -49,15 +48,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-
-
   Widget build(BuildContext context) {
-     Future<bool> _onBackPressed() async {
- // This dialog will exit your app on saying yes
-   Navigator.of(context).pop(true);
-   return Future.value(false);
-           
-  }
+    Future<bool> _onBackPressed() async {
+      // This dialog will exit your app on saying yes
+      Navigator.of(context).pop(true);
+      return Future.value(false);
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -100,26 +97,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search ",
-                        hintStyle: TextStyle(
-                          color: Colors.black.withAlpha(120),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      onChanged: (String keyword) {},
-                    ),
-                  ),
-                  Icon(
-                    Icons.search,
-                    color: Colors.black.withAlpha(120),
-                  )
-                ],
               ),
             ),
             CategorySelector(tabController: tabController!),
@@ -187,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           icon: const Icon(Icons.clear),
           color: mPrimaryColor,
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);
@@ -235,10 +213,5 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       _searchQueryController.clear();
       updateSearchQuery("");
     });
-  }
-
-  _buildTitle() {
-    title:
-    Row(mainAxisSize: MainAxisSize.min, children: <Widget>[]);
   }
 }

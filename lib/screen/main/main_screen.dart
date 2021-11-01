@@ -6,8 +6,8 @@ import 'package:qstar/screen/profile/profile.dart';
 
 import 'package:qstar/screen/main/widget/icons_app.dart';
 import 'package:qstar/screen/qvideo/category.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:tuple/tuple.dart';
-import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/search/search.dart';
 import 'package:qstar/screen/activity/activity_page.dart';
 import 'package:qstar/screen/main/widget/bottom_navigation_item.dart';

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:developer' as developer;
 import 'package:qstar/constant.dart';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:tuple/tuple.dart';
 
 class BottomNavigationItem extends StatefulWidget {

@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
@@ -164,11 +166,13 @@ class _MD2Painter extends BoxPainter {
   final MD2Indicator decoration;
 
   _MD2Painter(this.decoration, VoidCallback onChanged)
+      // ignore: unnecessary_null_comparison
       : assert(decoration != null),
         super(onChanged);
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    // ignore: unnecessary_null_comparison
     assert(configuration != null);
     assert(configuration.size != null);
 

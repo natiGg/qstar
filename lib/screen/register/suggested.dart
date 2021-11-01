@@ -1,17 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:core';
 
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/login/login_screen.dart';
+
 import 'package:qstar/screen/main/main_screen.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+
 import 'package:qstar/screen/register/verification.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -135,7 +132,6 @@ class SuggestedUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     const textStyle = const TextStyle(
       color: Colors.white,
     );

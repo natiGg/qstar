@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qstar/screen/register/suggested.dart';
@@ -8,6 +10,7 @@ class Hobbieselector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Multi Select',
       theme: ThemeData(
         primarySwatch: Colors.purple,
@@ -61,14 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
       .toList();
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedAnimals2 = [];
-  List<Animal> _selectedAnimals3 = [];
   //List<Animal> _selectedAnimals4 = [];
-  List<Animal> _selectedAnimals5 = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
-    _selectedAnimals5 = _animals;
     super.initState();
   }
 
@@ -187,6 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 40),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
+                // ignore: deprecated_member_use
                 child: FlatButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(36),
