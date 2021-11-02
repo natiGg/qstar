@@ -65,17 +65,17 @@ class Searchlocation extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              title: Text('Mexico,Addis ababa'),
+              title: const Text('Mexico,Addis ababa'),
               dense: true,
               onTap: () {},
             ),
             ListTile(
-              title: Text('Ledeta'),
+              title: const Text('Ledeta'),
               dense: true,
               onTap: () {},
             ),
             ListTile(
-              title: Text('Adama'),
+              title: const Text('Adama'),
               dense: true,
               onTap: () {},
             ),
