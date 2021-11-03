@@ -249,7 +249,8 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => MyHomePage(),
         ),
       );
-    } else if (body["message"] == "Invalid login credentials!") {
+    } else if (body["message"] == "Invalid login credentials!") 
+    {
       showDialog(
             context: context,
             builder: (context) => new AlertDialog(

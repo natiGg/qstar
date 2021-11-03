@@ -97,14 +97,14 @@ class Phonevarification extends StatelessWidget {
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return Email();
-                    },
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) {
+                //       return Email();
+                //     },
+                //   ),
+                // );
               },
               child: Text(
                 "Sign up with Email instead",
@@ -124,14 +124,14 @@ class Phonevarification extends StatelessWidget {
               ),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return Password();
-                    },
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) {
+                //       return Password();
+                //     },
+                //   ),
+                // );
               },
               child: Container(
                 width: double.infinity,

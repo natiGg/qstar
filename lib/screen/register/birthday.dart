@@ -9,6 +9,12 @@ import 'package:qstar/screen/register/username.dart';
 import 'dart:ui';
 
 class BirthDay extends StatefulWidget {
+final String fname;
+final String lname;
+const BirthDay({
+    Key? key,required this.fname,required this.lname
+  }) : super(key: key);
+
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
 }
@@ -47,6 +53,7 @@ class _DateTimePickerState extends State<BirthDay> {
 
   @override
   void initState() {
+    print(widget.fname);
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
     _timeController.text = formatDate(
@@ -85,7 +92,7 @@ class _DateTimePickerState extends State<BirthDay> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  InkWell(
+                  InkWell(  
                     onTap: () {
                       _selectDate(context);
                     },
@@ -135,7 +142,7 @@ class _DateTimePickerState extends State<BirthDay> {
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) {
-                          return Username();
+                          return Username(fname: widget.fname, lname: widget.lname, date: selectedDate.toString());
                         },
                       ),
                     );

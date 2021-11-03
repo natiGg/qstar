@@ -73,6 +73,7 @@ dependencies:
   multi_select_flutter: ^4.0.0
   progress_indicators: ^1.0.0
 
+
   flutter_lints: ^1.0.4
 
 dev_dependencies:

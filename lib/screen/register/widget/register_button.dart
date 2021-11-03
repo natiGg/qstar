@@ -6,6 +6,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/birthday.dart';
 
 class RegisterButton extends StatelessWidget {
+  
   const RegisterButton({
     Key? key,
   }) : super(key: key);
@@ -23,14 +24,14 @@ class RegisterButton extends StatelessWidget {
         ),
         color: mPrimaryColor,
         onPressed: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) {
-                return BirthDay();
-              },
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation1, animation2) {
+          //       return BirthDay();
+          //     },
+          //   ),
+          // );
         },
         child: Container(
           width: double.infinity,

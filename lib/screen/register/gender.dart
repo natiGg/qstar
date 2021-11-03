@@ -80,14 +80,15 @@ class GenderClass extends StatelessWidget {
               ),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return BirthDay();
-                    },
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) {
+                //       return BirthDay();
+                //     },
+                //   ),
+                // );
+                print("objfect");
               },
               child: Container(
                 width: double.infinity,

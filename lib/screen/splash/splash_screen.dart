@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/home/home_screen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
     const SplashScreen({
@@ -12,6 +13,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+    bool isAuth = false;
+
   @override
   void initState() {
     var d = const Duration(seconds: 3);
@@ -21,15 +24,28 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) {
-            return HomeScreen();
-          },
+          builder: (context)=>Scaffold(
+            body: isAuth?Feed():HomeScreen(),
+
+          ) ,
         ),
         (route) => false,
       );
     });
+    _checkIfLoggedIn();
 
     super.initState();
+  }
+  
+  void _checkIfLoggedIn() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    print(token);
+    if(token != null){
+      setState(() {
+        isAuth = true;
+      });
+    }
   }
 
   @override
@@ -50,3 +66,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
