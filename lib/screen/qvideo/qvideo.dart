@@ -7,7 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
+import 'package:qstar/screen/qvideo/category.dart';
 
 import 'package:qstar/screen/qvideo/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/useraudio.dart';
@@ -41,8 +43,8 @@ class _QvideoState2 extends State<Qvideoscreen>
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(
-        vsync: this, duration: Duration(seconds: 5));
+    animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 5));
     animationController.repeat();
     _controller = VideoPlayerController.asset('assets/vod.mp4')
       ..initialize().then((value) {
@@ -50,6 +52,13 @@ class _QvideoState2 extends State<Qvideoscreen>
         _controller.setLooping(true);
         setState(() {});
       });
+
+    _onShowMenu = () {
+      context.showBottomSheet([
+        BottomSheetAction(iconData: Icons.report, title: 'Report', id: 0),
+        BottomSheetAction(iconData: Icons.remove, title: 'Block', id: 1),
+      ]);
+    };
   }
 
   @override
@@ -75,7 +84,10 @@ class _QvideoState2 extends State<Qvideoscreen>
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
-              Navigator.of(context).pop(true);
+              int count = 0;
+              Navigator.popUntil(context, (route) {
+                return count++ == 1;
+              });
             }),
         title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
@@ -96,7 +108,7 @@ class _QvideoState2 extends State<Qvideoscreen>
         ]),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.switch_video_outlined),
+            icon: const Icon(Icons.videocam),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {},
@@ -348,7 +360,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                         transform: Matrix4.rotationY(math.pi),
                                         // ignore: prefer_const_constructors
                                         child: Icon(
-                                          Icons.arrow_forward_outlined,
+                                          Icons.arrow_back_outlined,
                                           size: 20,
                                           color: Colors.white,
                                         ),

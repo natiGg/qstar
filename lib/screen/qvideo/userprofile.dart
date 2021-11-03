@@ -45,14 +45,7 @@ class _ProfileScreenState extends State<UserProfile> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      Qvideoscreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.of(context).pop(true);
             }),
         // ignore: prefer_const_constructors
         title: Text(

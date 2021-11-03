@@ -106,14 +106,10 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        Qvideoscreen(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                  return count++ == 1;
+                });
               }),
           // ignore: prefer_const_constructors
           title: Text(
@@ -191,7 +187,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
 
     return AspectRatio(
       aspectRatio: controller!.value.aspectRatio,
-      child: CameraPreview(controller),
+      child: CameraPreview(controller!),
     );
   }
 
@@ -215,8 +211,9 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
               _getCameraLensIcon(lensDirection),
               color: mPrimaryColor,
             ),
-            label: Text(
-                lensDirection.toString().substring(lensDirection.toString().indexOf('.') + 1))),
+            label: Text(lensDirection
+                .toString()
+                .substring(lensDirection.toString().indexOf('.') + 1))),
       ),
     );
   }
@@ -363,7 +360,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     final String filePath = '$videoDirectory/$currentTime.mp4';
 
     try {
-      await controller!.startVideoRecording(filePath);
+      await controller!.startVideoRecording();
       videoPath = filePath;
     } on CameraException catch (e) {
       _showCameraException(e);
