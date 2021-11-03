@@ -211,14 +211,14 @@ class _SetPState extends State<Verification> {
               ),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return Hobbieselector();
-                    },
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) {
+                //       return Hobbieselector();
+                //     },
+                //   ),
+                // );
               },
               child: Container(
                 width: double.infinity,

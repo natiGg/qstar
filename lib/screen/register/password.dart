@@ -3,18 +3,25 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/screen/register/hobbieselector.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/screen/register/phone.dart';
 
 class Password extends StatefulWidget {
-    final String fname;
+  final String fname;
   final String lname;
   final String date;
   final String email;
   final String uname;
-  const Password({ Key? key,required this.fname,required this.lname,required this.date,required this.email,required this.uname}) : super(key: key);
-
+  const Password(
+      {Key? key,
+      required this.fname,
+      required this.lname,
+      required this.date,
+      required this.email,
+      required this.uname})
+      : super(key: key);
 
   @override
   _SetPState createState() => _SetPState();
@@ -22,10 +29,8 @@ class Password extends StatefulWidget {
 
 class _SetPState extends State<Password> {
   bool _isObscure = true;
-    bool _isLoading = true;
-      final _formKey = GlobalKey<FormState>();
-
-
+  bool _isLoading = true;
+  final _formKey = GlobalKey<FormState>();
   var password;
 
   @override
@@ -76,7 +81,8 @@ class _SetPState extends State<Password> {
                       hintText: 'Password',
                       fillColor: Colors.white,
                       filled: true,
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide:
@@ -90,13 +96,13 @@ class _SetPState extends State<Password> {
                               _isObscure = !_isObscure;
                             });
                           })),
-                          validator: (passwordval) {
-                            if (passwordval!.isEmpty) {
-                              return "Please put your email";
-                            }
-                            password = passwordval.toString();
-                            return null;
-                          },
+                  validator: (passwordval) {
+                    if (passwordval!.isEmpty) {
+                      return "Please put your email";
+                    }
+                    password = passwordval.toString();
+                    return null;
+                  },
                 ),
               ),
             ),
@@ -108,10 +114,25 @@ class _SetPState extends State<Password> {
                 ),
                 color: mPrimaryColor,
                 onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
+                  if (_formKey.currentState!.validate()) 
+                  {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) {
+    
+                          return Hobbieselector(
+                              fname: widget.fname,
+                              lname: widget.lname,
+                              date: widget.date,
+                              email: widget.email,
+                              uname: widget.uname,
+                              password: password,);
+                        },
+                      ),
+                    );
 
-               _register();
-                                      }
+                  }
                 },
                 child: Container(
                   width: double.infinity,
@@ -129,32 +150,30 @@ class _SetPState extends State<Password> {
       ),
     );
   }
-   void _register()async{
+
+  void _register() async {
     setState(() {
       _isLoading = true;
     });
     var data = {
-      'name' : widget.fname,
+      'name': widget.fname,
       'email': widget.email,
       'username': widget.uname,
       'password': password,
       'password_confirmation': password,
-      'hobbies':"playing games"
+      'hobbies': "playing games"
     };
 
     var res = await Network().authData(data, 'register/email');
     var body = json.decode(res.body);
     print(body);
-    if(res.statusCode == 200)
-    {
+    if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
       Navigator.push(
         context,
-        new MaterialPageRoute(
-            builder: (context) => Suggested()
-        ),
+        new MaterialPageRoute(builder: (context) => Suggested()),
       );
     }
 
@@ -163,6 +182,3 @@ class _SetPState extends State<Password> {
     });
   }
 }
-  
-
-

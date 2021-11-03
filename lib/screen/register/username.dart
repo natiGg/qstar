@@ -4,40 +4,61 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/register/email.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 
 class Username extends StatefulWidget {
   final String fname;
   final String lname;
   final String date;
-  
-  const Username({  Key? key,required this.fname,required this.lname,required this.date}) : super(key: key);
 
+  const Username(
+      {Key? key, required this.fname, required this.lname, required this.date})
+      : super(key: key);
 
   @override
   State<Username> createState() => _UsernameState();
 }
+class CityData {
+ static final List<String> _kOptions = <String>[
+      'aardvark',
+      'bobcat',
+      'chameleon',
+    ];
+
+
+  static List<String> getSuggestions(String query) =>
+      List.of(_kOptions).where((city) {
+        final cityLower = city.toLowerCase();
+        final queryLower = query.toLowerCase();
+
+        return cityLower.contains(queryLower);
+      }).toList();
+}
 
 class _UsernameState extends State<Username> {
-  
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
       color: Colors.white,
     );
     var username;
-      final _formKey = GlobalKey<FormState>();
-
+    final _formKey = GlobalKey<FormState>();
 
     List<String> _kOptions = <String>[
       'aardvark',
       'bobcat',
       'chameleon',
     ];
+      String? selectedCity;
+
+      final controllerCity = TextEditingController();
+
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        key:_formKey ,
+        key: _formKey,
         child: Column(
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
@@ -84,7 +105,7 @@ class _UsernameState extends State<Username> {
             //               borderSide:
             //                   BorderSide(color: Colors.white, width: 3.0))),
             //     ),
-      
+
             //   ),
             // ),
             Container(
@@ -105,31 +126,29 @@ class _UsernameState extends State<Username> {
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: Colors.white, width: 3.0)),
+                        borderSide:
+                            BorderSide(color: Colors.white, width: 3.0)),
                     hintText: "Search..",
                   ),
-                  child: Autocomplete(
-                    optionsBuilder: (TextEditingValue textEditingValue) {
-                      if (textEditingValue.text == '') {
-                        return const Iterable<String>.empty();
-                      }
-                      return _kOptions.where((String option) {
-                                                username=textEditingValue.text;
-
-                        return option
-                            .contains(textEditingValue.text.toLowerCase());
-                      });
-                    },
+                  child: TypeAheadFormField<String?>(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: controllerCity,
                     
-                    //   onSelected: (User selection) {
-                    //   //   print(
-                    //   //       'You just selected ${_displayStringForOption(selection)}');
-                    //   // },
-                    // ),
-                  ),
+                      ),
+                      suggestionsCallback: CityData.getSuggestions,
+                      itemBuilder: (context, String? suggestion) => ListTile(
+                        title: Text(suggestion!),
+                      ),
+                      onSuggestionSelected: (String? suggestion) =>
+                controllerCity.text = suggestion!,
+                      validator: (value) =>
+                value != null && value.isEmpty ? 'Please put username' : null,
+                      onSaved: (value) => selectedCity = value,
+                    )
                 ),
               ),
             ),
+          
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 45,
@@ -137,7 +156,7 @@ class _UsernameState extends State<Username> {
               ),
               alignment: Alignment.center,
             ),
-      
+
             SizedBox(
               height: 30,
             ),
@@ -152,14 +171,21 @@ class _UsernameState extends State<Username> {
                 ),
                 color: mPrimaryColor,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) {
-                        return Email(fname: widget.fname, lname: widget.lname, date: widget.date,uname:username);
-                      },
-                    ),
-                  );
+                  if (_formKey.currentState!.validate()) 
+                  {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) {
+                          return Email(
+                              fname: widget.fname,
+                              lname: widget.lname,
+                              date: widget.date,
+                              uname: controllerCity.text);
+                        },
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   width: double.infinity,

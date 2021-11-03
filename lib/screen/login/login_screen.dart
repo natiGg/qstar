@@ -260,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 new FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
-                    setState(() {
+                    setState(() { 
                       _isLoading=false;
                     });
                   } ,

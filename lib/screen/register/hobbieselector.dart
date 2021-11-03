@@ -1,25 +1,14 @@
 // ignore_for_file: unnecessary_null_comparison
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qstar/screen/register/suggested.dart';
-
+import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:qstar/screen/register/suggested.dart';
 import '../../constant.dart';
 
-class Hobbieselector extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Multi Select',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
+
 
 class Animal {
   final int id;
@@ -31,12 +20,28 @@ class Animal {
   });
 }
 
-class MyHomePage extends StatefulWidget {
+class Hobbieselector extends StatefulWidget {
+  final String fname;
+  final String lname;
+  final String date;
+  final String email;
+  final String uname;
+  final String password;
+  const Hobbieselector(
+      {Key? key,
+      required this.fname,
+      required this.lname,
+      required this.date,
+      required this.email,
+      required this.uname,
+      required this.password
+      })
+      : super(key: key);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HobbieselectorState createState() => _HobbieselectorState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HobbieselectorState extends State<Hobbieselector> {
   static final List<Animal> _animals = [
     Animal(id: 1, name: "Book clubs"),
     Animal(id: 2, name: "Running clubs"),
@@ -63,9 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
   //List<Animal> _selectedAnimals = [];
-  final List<Animal> _selectedAnimals2 = [];
-  //List<Animal> _selectedAnimals4 = [];
+ List<Animal> _selectedItems2 = [];
+ List<String> _tobeSent= [];
+    List<Animal> _selectedItems3 = [];
 
+    String Preligion = "test";
+  final _multiSelectKey = GlobalKey<FormFieldState>();
+
+  //List<Animal> _selectedAnimals4 = [];
+  bool _isLoading=false;
   @override
   void initState() {
     super.initState();
@@ -153,33 +164,83 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    MultiSelectBottomSheetField(
-                      initialChildSize: 0.4,
-                      listType: MultiSelectListType.CHIP,
-                      searchable: true,
-                      buttonText: Text("Hobbies"),
-                      title: Text("Select Hobbies "),
-                      items: _items,
-                      onConfirm: (values) {
-                        _selectedAnimals2 != values;
-                      },
-                      chipDisplay: MultiSelectChipDisplay(
-                        onTap: (value) {
-                          setState(() {
-                            _selectedAnimals2.remove(value);
-                          });
-                        },
-                      ),
-                    ),
-                    _selectedAnimals2 == null || _selectedAnimals2.isEmpty
-                        ? Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "None selected",
-                              style: TextStyle(color: Colors.black54),
-                            ))
-                        : Container(),
+   MultiSelectBottomSheetField<Animal>(
+              initialChildSize: 0.7,
+              maxChildSize: 0.95,
+              listType: MultiSelectListType.CHIP,
+              checkColor: Colors.pink,
+              selectedColor: mPrimaryColor,
+              selectedItemsTextStyle: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+              ),
+              unselectedColor: mPrimaryColor.withOpacity(.08),
+              buttonIcon: Icon(
+                Icons.add,
+                color: Colors.pinkAccent,
+              ),
+              searchHintStyle: TextStyle(
+                fontSize: 20,
+              ),
+              searchable: true,
+              buttonText: Text(
+                '$Preligion', //"????",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 5,
+              ),
+              title: Text(
+                "Hobbies",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.pink,
+                ),
+              ),
+              items: _items,
+              onConfirm: (values) {
+                setState(() {
+                  _selectedItems2 = values;
+                });
+                print('selected : ${_selectedItems2}');
+
+            
+                /*senduserdata(
+                    'partnerreligion', '${_selectedItems2.toString()}');*/
+              },
+              chipDisplay: MultiSelectChipDisplay(
+                textStyle: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+                onTap: (value) {
+                  setState(() {
+                    _selectedItems2.remove(value);
+                    _tobeSent.remove(value.toString());
+
+                  });
+
+                  print('removed: ${_selectedItems2.toString()}');
+                       _selectedItems2
+                    .forEach((item) => _tobeSent.add("${item.name.toString()}"));
+                },
+              ),
+            ),
+            _selectedItems2 == null || _selectedItems2.isEmpty
+                ? MultiSelectChipDisplay(
+                    onTap: (item) {
+                      setState(() {
+                        _selectedItems3.remove(item);
+                        print('removed below: ${_selectedItems3.toString()}');
+                        
+                        
+                      });
+                      _multiSelectKey.currentState!.validate();
+                    },
+                  )
+                : MultiSelectChipDisplay(),
                   ],
                 ),
               ),
@@ -193,6 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   color: mPrimaryColor,
                   onPressed: () {
+                    _register();
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -229,5 +291,35 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+   void _register() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var data = {
+      'name': widget.fname,
+      'email': widget.email,
+      'username': widget.uname,
+      'password': widget.password,
+      'password_confirmation': widget.password,
+      'hobbies': _tobeSent.join(",").toString()
+    };
+
+    var res = await Network().authData(data, 'register/email');
+    var body = json.decode(res.body);
+    print(body);
+    if (res.statusCode == 200) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', json.encode(body['token']));
+      localStorage.setString('user', json.encode(body['user']));
+      Navigator.push(
+        context,
+        new MaterialPageRoute(builder: (context) => Suggested()),
+      );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
