@@ -1,30 +1,33 @@
-// ignore: import_of_legacy_library_into_null_safe
-// ignore_for_file: deprecated_member_use, avoid_print, duplicate_ignore
-
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:camera/camera.dart';
+import 'dart:io';
+import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:qstar/screen/post/preview_screen.dart';
-import 'package:qstar/screen/post/main.dart';
-import 'package:qstar/constant.dart';
 
-class CameraScreen extends StatefulWidget {
-  const CameraScreen({Key? key}) : super(key: key);
-
+class CameraScreen extends StatelessWidget {
   @override
-  _CameraScreenState createState() {
-    return _CameraScreenState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Camera Camera 2.0',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Camera Camera 2.0'),
+    );
   }
 }
 
-class _CameraScreenState extends State {
-  CameraController? controller;
-  late List cameras;
-  late int selectedCameraIdx;
-  late String imagePath;
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  late List cameras;
   @override
   void initState() {
     super.initState();
@@ -33,10 +36,8 @@ class _CameraScreenState extends State {
 
       if (cameras.isNotEmpty) {
         setState(() {
-          selectedCameraIdx = 0;
+          openCamera();
         });
-
-        _initCameraController(cameras[selectedCameraIdx]).then((void v) {});
       } else {
         print("No camera available");
       }
@@ -45,209 +46,42 @@ class _CameraScreenState extends State {
     });
   }
 
-  Future _initCameraController(CameraDescription cameraDescription) async {
-    if (controller != null) {
-      await controller!.dispose();
-    }
+  final photos = <File>[];
 
-    controller = CameraController(cameraDescription, ResolutionPreset.high);
+  void openCamera() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => CameraCamera(
+                  onFile: (file) {
+                    _onCapturePressed(file);
 
-    // If the controller is updated then update the UI.
-    controller!.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
-
-      if (controller!.value.hasError) {
-        // ignore: avoid_print
-        print('Camera error ${controller!.value.errorDescription}');
-      }
-    });
-
-    try {
-      await controller!.initialize();
-    } on CameraException catch (e) {
-      _showCameraException(e);
-    }
-
-    if (mounted) {
-      setState(() {});
-    }
+                    setState(() {});
+                  },
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (controller == null) {
-      return const Scaffold();
-    } else {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: mPrimaryColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const PostPage(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
-              }),
-          // ignore: prefer_const_constructors
-          title: Text(
-            "camera",
-            style: const TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
-            ),
-          ),
-        ),
-        // ignore: avoid_unnecessary_containers
-        body: Container(
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: _cameraPreviewWidget(),
-                ),
-                const SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _cameraTogglesRowWidget(),
-                    _captureControlRowWidget(context),
-                    const Spacer()
-                  ],
-                ),
-                const SizedBox(height: 20.0)
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-  /// Display Camera preview.
-  Widget _cameraPreviewWidget() {
-    if (controller == null || !controller!.value.isInitialized) {
-      return const Text(
-        'Loading',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontWeight: FontWeight.w900,
-        ),
-      );
-    }
-
-    return AspectRatio(
-      aspectRatio: controller!.value.aspectRatio,
-      child: CameraPreview(controller),
-    );
-  }
-
-  /// Display the control bar with buttons to take pictures
-  Widget _captureControlRowWidget(context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            FloatingActionButton(
-                child: const Icon(Icons.camera),
-                backgroundColor: mPrimaryColor,
-                onPressed: () {
-                  _onCapturePressed(context);
-                })
-          ],
-        ),
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: Colors.black,
+      floatingActionButton: FloatingActionButton(
+        onPressed: openCamera,
+        child: Icon(Icons.camera_alt),
       ),
     );
   }
 
-  /// Display a row of toggle to select the camera (or a message if no camera is available).
-  Widget _cameraTogglesRowWidget() {
-    if (cameras.isEmpty) {
-      return const Spacer();
-    }
+  void _onCapturePressed(File file) {
+    String path;
+    path = file.path;
 
-    CameraDescription selectedCamera = cameras[selectedCameraIdx];
-    CameraLensDirection lensDirection = selectedCamera.lensDirection;
-
-    return Expanded(
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: FlatButton.icon(
-            onPressed: _onSwitchCamera,
-            icon: Icon(_getCameraLensIcon(lensDirection)),
-            label: Text(lensDirection
-                .toString()
-                .substring(lensDirection.toString().indexOf('.') + 1))),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PreviewImageScreen(imagePath: path),
       ),
     );
-  }
-
-  IconData _getCameraLensIcon(CameraLensDirection direction) {
-    switch (direction) {
-      case CameraLensDirection.back:
-        return Icons.camera_rear;
-      case CameraLensDirection.front:
-        return Icons.camera_front;
-      case CameraLensDirection.external:
-        return Icons.camera;
-      default:
-        return Icons.device_unknown;
-    }
-  }
-
-  void _onSwitchCamera() {
-    selectedCameraIdx =
-        selectedCameraIdx < cameras.length - 1 ? selectedCameraIdx + 1 : 0;
-    CameraDescription selectedCamera = cameras[selectedCameraIdx];
-    _initCameraController(selectedCamera);
-  }
-
-  void _onCapturePressed(context) async {
-    // Take the Picture in a try / catch block. If anything goes wrong,
-    // catch the error.
-    try {
-      // Attempt to take a picture and log where it's been saved
-      final path = join(
-        // In this example, store the picture in the temp directory. Find
-        // the temp directory using the `path_provider` plugin.
-        (await getTemporaryDirectory()).path,
-        '${DateTime.now()}.png',
-      );
-      print(path);
-      await controller!.takePicture(path);
-
-      // If the picture was taken, display it on a new screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PreviewImageScreen(imagePath: path),
-        ),
-      );
-    } catch (e) {
-      // If an error occurs, log the error to the console.
-      print(e);
-    }
-  }
-
-  void _showCameraException(CameraException e) {
-    String errorText = 'Error: ${e.code}\nError Message: ${e.description}';
-    print(errorText);
-
-    print('Error: ${e.code}\n${e.description}');
   }
 }

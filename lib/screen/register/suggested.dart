@@ -38,9 +38,6 @@ class Suggested extends StatelessWidget {
           Container(
             child: Column(
               children: [
-                SizedBox(
-                  height: 35,
-                ),
                 Text(
                   "Quick follow",
                   style: TextStyle(
@@ -78,7 +75,7 @@ class Suggested extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: SizedBox(
-                    height: 400,
+                    height: 300,
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: [

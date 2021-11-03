@@ -50,7 +50,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
           image: image!,
           filters: presetFiltersList,
           filename: fileName,
-          loader: Center(child: CircularProgressIndicator()),
+          loader: const Center(child: CircularProgressIndicator()),
           fit: BoxFit.contain,
         ),
       ),

@@ -59,8 +59,6 @@ class _CommentPageState extends State<CommentPage> {
             CommentWidget(),
             CommentWidget(),
             CommentWidget(),
-            CommentWidget(),
-            CommentWidget(),
           ],
         ),
         bottomNavigationBar: Material(

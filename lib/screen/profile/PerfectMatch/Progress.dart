@@ -83,16 +83,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       pages: [
         PageViewModel(
           title: "Find your Perfect Match",
-          body:
-              "one step to find your Perfect Match,find someone you can talk to openly, have fun with, and share your interests and activities with",
+          body: "To find your perfectmatch fill the next form",
           image: _buildImage('img1.jpg'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Fill the Next Form",
-          body:
-              "fill the remaining  Form about your General , Personal information and your Match Perference for your perfect match ",
-          image: _buildImage('img3.jpg'),
           decoration: pageDecoration,
         ),
       ],

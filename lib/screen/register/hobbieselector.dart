@@ -9,7 +9,6 @@ import 'package:qstar/screen/register/suggested.dart';
 import '../../constant.dart';
 
 
-
 class Animal {
   final int id;
   final String name;
@@ -104,7 +103,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
               // This MultiSelectBottomSheetField has no decoration, but is instead wrapped in a Container that has
               // decoration applied. This allows the ChipDisplay to render inside the same Container.
               //################################################################################################
-              Text(
+              const Text(
                 "Help us to understand you more",
                 style: TextStyle(
                   // we use the [TextStyle] widget to customize text
@@ -113,8 +112,8 @@ class _HobbieselectorState extends State<Hobbieselector> {
                   fontFamily: 'font1', // and the font size
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 "What do you need in your life ",
                 style: TextStyle(
                   // we use the [TextStyle] widget to customize text
@@ -143,8 +142,8 @@ class _HobbieselectorState extends State<Hobbieselector> {
                               BorderSide(color: Colors.white, width: 3.0))),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 "What's your Hobbies",
                 style: TextStyle(
                   // we use the [TextStyle] widget to customize text
@@ -156,9 +155,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
               SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(.4),
+                  color: Colors.white38,
                   border: Border.all(
-                    color: Theme.of(context).primaryColor,
+                    color: mPrimaryColor,
                     width: 2,
                   ),
                 ),

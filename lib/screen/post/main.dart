@@ -12,6 +12,9 @@ import "package:storage_path/storage_path.dart" show StoragePath;
 
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/post/camera_screen.dart';
+import 'package:camera_camera/camera_camera.dart';
+import 'package:flutter/material.dart';
+import 'package:qstar/screen/post/preview_screen.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class PostPage extends StatefulWidget {
@@ -37,6 +40,7 @@ class _MyHomePageState extends State<PostPage> {
     _getImagesPath();
   }
 
+  final photos = <File>[];
   _getImagesPath() async {
     var imagePath = await StoragePath.imagesPath;
 
@@ -137,10 +141,10 @@ class _MyHomePageState extends State<PostPage> {
               ),
               const Divider(),
               Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   child: image != null
                       ? Image.file(File(image!),
-                          height: MediaQuery.of(context).size.height * 0.25,
+                          height: MediaQuery.of(context).size.height * 0.35,
                           width: MediaQuery.of(context).size.width)
                       : Container()),
               Positioned(
@@ -148,15 +152,6 @@ class _MyHomePageState extends State<PostPage> {
                   padding: EdgeInsets.all(6),
                   child: Row(
                     children: [
-                      Container(
-                          child: IconButton(
-                              icon: const Icon(
-                                Icons.zoom_out_map,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {}),
-                          decoration: decoration),
                       Expanded(child: Container()),
                       Container(
                           child: IconButton(
@@ -164,14 +159,15 @@ class _MyHomePageState extends State<PostPage> {
                                   size: 16, color: Colors.white),
                               onPressed: () {
                                 Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            const CameraScreen(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => CameraCamera(
+                                              onFile: (file) {
+                                                _onCapturePressed(file);
+
+                                                setState(() {});
+                                              },
+                                            )));
                               }),
                           decoration: decoration),
                       const SizedBox(
@@ -252,6 +248,18 @@ class _MyHomePageState extends State<PostPage> {
                     imagePath: image!,
                   )));
     });
+  }
+
+  void _onCapturePressed(File file) {
+    String path;
+    path = file.path;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PreviewImageScreen(imagePath: path),
+      ),
+    );
   }
 
   // ignore: non_constant_identifier_names

@@ -37,7 +37,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
                   icon: Icon(Icons.arrow_back),
                   color: mPrimaryColor,
                   onPressed: () {
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.of(context).pop(true);
                   }),
               title: Text(
                 "New Post",

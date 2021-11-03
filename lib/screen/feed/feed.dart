@@ -20,6 +20,7 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
+import 'package:qstar/screen/qvideo/userprofile.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -42,6 +43,27 @@ List<Post> _posts = [
   Post(userid: 3, id: 3, title: 'mike check'),
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
+];
+
+List _usersd = [
+  const Item(
+      'Public',
+      Icon(
+        Icons.public,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Friends',
+      Icon(
+        Icons.supervised_user_circle_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Starts',
+      Icon(
+        Icons.star,
+        color: mPrimaryColor,
+      )),
 ];
 List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
@@ -87,6 +109,12 @@ class _UsersFeedState extends State<UsersFeed> {
   }
 }
 
+class Item {
+  const Item(this.name, this.icon);
+  final String name;
+  final Icon icon;
+}
+
 class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
 
@@ -95,7 +123,36 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  final List<String> _animals = ["Friends", "public", "only me(stars)"];
+  final List<String> _animals = ["Friends", "public", "stars)"];
+
+  TextEditingController nameController = TextEditingController();
+
+  List users = [
+    const Item(
+        'Android',
+        Icon(
+          Icons.android,
+          color: const Color(0xFF167F67),
+        )),
+    const Item(
+        'Flutter',
+        Icon(
+          Icons.flag,
+          color: const Color(0xFF167F67),
+        )),
+    const Item(
+        'ReactNative',
+        Icon(
+          Icons.format_indent_decrease,
+          color: const Color(0xFF167F67),
+        )),
+    const Item(
+        'iOS',
+        Icon(
+          Icons.mobile_screen_share,
+          color: const Color(0xFF167F67),
+        )),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -376,7 +433,7 @@ class _FeedState extends State<Feed> {
                               Icons.videocam,
                               color: Colors.red,
                             ),
-                            label: const Text('go Live'),
+                            label: const Text('Live'),
                           ),
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
@@ -433,7 +490,7 @@ class _FeedState extends State<Feed> {
                   ),
                 ),
                 const SizedBox(
-                  width: 160,
+                  width: 150,
                 ),
                 const Expanded(
                   child: Padding(
@@ -561,90 +618,53 @@ class _FeedState extends State<Feed> {
                               Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: Column(
-                                        children: [
-                                          DropdownButton<String>(
-                                            onChanged: (value) {
-                                              setState(() {});
-                                            },
-
-                                            // Hide the default underline
-                                            underline: Container(),
-                                            hint: const Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Public',
-                                                  style: TextStyle(
-                                                      color: mPrimaryColor,
-                                                      fontSize: 10),
-                                                )),
-                                            icon: const Align(
-                                              alignment: Alignment.topCenter,
-                                              child: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: mPrimaryColor,
-                                              ),
-                                            ),
-                                            isExpanded: true,
-
-                                            // The list of options
-                                            items: _animals
-                                                .map((e) => DropdownMenuItem(
-                                                      child: Container(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Text(
-                                                          e,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 12),
-                                                        ),
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      children: [
+                                        DropdownButton(
+                                          items: _usersd
+                                              .map(
+                                                (user) => DropdownMenuItem(
+                                                  value: user,
+                                                  child: Row(
+                                                    children: [
+                                                      user.icon,
+                                                      SizedBox(
+                                                        width: 5,
                                                       ),
-                                                      value: e,
-                                                    ))
-                                                .toList(),
-
-                                            // Customize the selected item
-                                            selectedItemBuilder:
-                                                (BuildContext context) =>
-                                                    _animals
-                                                        .map((e) => Center(
-                                                              child: Text(
-                                                                e,
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    color: Colors
-                                                                        .amber,
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .italic,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ))
-                                                        .toList(),
+                                                      Text(
+                                                        user.name,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              value;
+                                            });
+                                          },
+                                          hint: Container(
+                                            child: Text("public"),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                               Container(
-                                padding:
-                                    const EdgeInsets.only(left: 80, right: 10),
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                ),
                                 child: Expanded(
                                   child: Container(
                                     height: 40,
-                                    width: 80,
+                                    width: 64,
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     decoration: BoxDecoration(
@@ -1052,10 +1072,23 @@ class _WPostState extends State<WPost> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(1.0),
-                            child: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage(
-                                    'assets/images/profile${widget.post.userid}.jpg')),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return UserProfile();
+                                    },
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage(
+                                      'assets/images/profile${widget.post.userid}.jpg')),
+                            ),
                           ),
                         ),
                       ),

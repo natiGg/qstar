@@ -31,7 +31,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             icon: Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.of(context).pop(true);
             }),
         title: Text(
           "Preview video",
@@ -118,7 +118,7 @@ class _VideoPlayPauseState extends State<VideoPlayPause> {
       GestureDetector(
         child: VideoPlayer(controller),
         onTap: () {
-          if (!controller.value.isInitialized) {
+          if (!controller.value.isPlaying) {
             return;
           }
           if (controller.value.isPlaying) {
@@ -225,7 +225,8 @@ abstract class PlayerLifeCycle extends StatefulWidget {
 /// A widget connecting its life cycle to a [VideoPlayerController] using
 /// a data source from the network.
 class NetworkPlayerLifeCycle extends PlayerLifeCycle {
-  const NetworkPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
+  const NetworkPlayerLifeCycle(
+      String dataSource, VideoWidgetBuilder childBuilder)
       : super(dataSource, childBuilder);
 
   @override
@@ -336,8 +337,8 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
       if (!mounted) {
         return;
       }
-      if (initialized != controller.value.isInitialized) {
-        initialized = controller.value.isInitialized;
+      if (initialized != controller.value.isPlaying) {
+        initialized = controller.value.isPlaying;
         setState(() {});
       }
     };

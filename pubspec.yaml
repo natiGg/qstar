@@ -69,13 +69,19 @@ dependencies:
   http: ^0.13.4
   shared_preferences: ^2.0.8
   permission_handler: ^6.0.0
-  camera: ^0.5.6+3
+  
   multi_select_flutter: ^4.0.0
   progress_indicators: ^1.0.0
-  
-
-
+  camera: ^0.8.0
   flutter_lints: ^1.0.4
+  camera_camera: ^2.0.2
+
+
+
+
+
+dependency_overrides:
+  quiver: ^3.0.0
 
 dev_dependencies:
   flutter_test:

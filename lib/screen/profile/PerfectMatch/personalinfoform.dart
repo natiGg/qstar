@@ -8,6 +8,7 @@ import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:language_picker/language_picker.dart';
+import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 
 class PersonalInfo extends StatefulWidget {
   @override
@@ -20,10 +21,12 @@ class _MyHomePageState extends State<PersonalInfo> {
   String? list2 = "Counrty";
   String? lan = "Language";
   RangeValues _currentRangeValues = const RangeValues(18, 65);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -66,15 +69,16 @@ class _MyHomePageState extends State<PersonalInfo> {
                     child: (isLastStep)
                         ? GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                          UsersFeed(),
-                                  transitionDuration: Duration.zero,
+                              _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                                duration: Duration(seconds: 4),
+                                content: Row(
+                                  children: const <Widget>[
+                                    CircularProgressIndicator(),
+                                    Text("    Loading...")
+                                  ],
                                 ),
-                              );
+                              ));
+                              _ondelay();
                             },
                             child: const Text('Submit'))
                         : const Text(
@@ -453,5 +457,18 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
     ];
+  }
+
+  _ondelay() {
+    int count = 0;
+    Future.delayed(Duration(seconds: 3), () {
+      // Navigator.popUntil(context, (route) {
+      //   return count++ == 2;
+      // });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfileImageAppbarRoute()),
+      );
+    });
   }
 }
