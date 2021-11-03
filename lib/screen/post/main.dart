@@ -15,6 +15,8 @@ import 'package:qstar/screen/post/camera_screen.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class PostPage extends StatefulWidget {
+  const PostPage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -40,6 +42,7 @@ class _MyHomePageState extends State<PostPage> {
 
     var images = jsonDecode(imagePath) as List;
     files = images.map<FileModel>((e) => FileModel.fromJson(e)).toList();
+    // ignore: avoid_print
     print(files.toString());
     if (files != null && files!.isNotEmpty) {
       setState(() {
@@ -51,7 +54,7 @@ class _MyHomePageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-    final decoration = BoxDecoration(
+    final decoration = const BoxDecoration(
       shape: BoxShape.circle,
       color: Colors.black54,
     );
@@ -147,7 +150,7 @@ class _MyHomePageState extends State<PostPage> {
                     children: [
                       Container(
                           child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.zoom_out_map,
                                 size: 16,
                                 color: Colors.white,
@@ -157,7 +160,7 @@ class _MyHomePageState extends State<PostPage> {
                       Expanded(child: Container()),
                       Container(
                           child: IconButton(
-                              icon: Icon(Icons.camera,
+                              icon: const Icon(Icons.camera,
                                   size: 16, color: Colors.white),
                               onPressed: () {
                                 Navigator.push(
@@ -165,18 +168,18 @@ class _MyHomePageState extends State<PostPage> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) =>
-                                            CameraScreen(),
+                                            const CameraScreen(),
                                     transitionDuration: Duration.zero,
                                   ),
                                 );
                               }),
                           decoration: decoration),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Container(
                         child: IconButton(
-                          icon: Icon(Icons.content_copy,
+                          icon: const Icon(Icons.content_copy,
                               size: 16, color: Colors.white),
                           onPressed: () {},
                           tooltip: "Select multiple",

@@ -386,7 +386,7 @@ class _FeedState extends State<Feed> {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                          PostPage(),
+                                          const PostPage(),
                                   transitionDuration: Duration.zero,
                                 ),
                               );
