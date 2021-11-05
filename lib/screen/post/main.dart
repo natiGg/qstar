@@ -11,9 +11,7 @@ import 'file.dart';
 import "package:storage_path/storage_path.dart" show StoragePath;
 
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
-import 'package:qstar/screen/post/camera_screen.dart';
 import 'package:camera_camera/camera_camera.dart';
-import 'package:flutter/material.dart';
 import 'package:qstar/screen/post/preview_screen.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -58,12 +56,12 @@ class _MyHomePageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-    final decoration = const BoxDecoration(
+    const decoration = BoxDecoration(
       shape: BoxShape.circle,
       color: Colors.black54,
     );
     if (files == null) {
-      return Scaffold();
+      return const Scaffold();
     } else {
       return Scaffold(
         key: _scaffoldKey,
@@ -94,7 +92,7 @@ class _MyHomePageState extends State<PostPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       DropdownButtonHideUnderline(
                           child: DropdownButton<FileModel>(
                         items: getIO(),
@@ -115,8 +113,9 @@ class _MyHomePageState extends State<PostPage> {
                     // ignore: unnecessary_new
                     child: new GestureDetector(
                       onTap: () {
+                        // ignore: deprecated_member_use
                         _scaffoldKey.currentState!.showSnackBar(SnackBar(
-                          duration: Duration(seconds: 4),
+                          duration: const Duration(seconds: 4),
                           content: Row(
                             children: const <Widget>[
                               CircularProgressIndicator(),
@@ -131,7 +130,7 @@ class _MyHomePageState extends State<PostPage> {
                                       imagePath: image!,
                                     ))));
                       },
-                      child: Text(
+                      child: const Text(
                         'Next',
                         style: TextStyle(color: mPrimaryColor),
                       ),
@@ -149,7 +148,7 @@ class _MyHomePageState extends State<PostPage> {
                       : Container()),
               Positioned(
                 child: Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child: Row(
                     children: [
                       Expanded(child: Container()),
@@ -240,7 +239,7 @@ class _MyHomePageState extends State<PostPage> {
   }
 
   _ondelay() {
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
           context,
           MaterialPageRoute(

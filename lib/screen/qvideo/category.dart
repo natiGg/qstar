@@ -44,12 +44,9 @@ class _CategoryVideo2 extends State<CategoryVid>
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
               Expanded(
                   child: GridView.count(
                 crossAxisCount: 2,

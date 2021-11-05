@@ -10,12 +10,14 @@ import 'package:path/path.dart';
 
 import 'package:qstar/screen/post/setting_post_page.dart';
 
+// ignore: library_prefixes
 import 'package:image/image.dart' as imageLib;
 import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
 
+  // ignore: use_key_in_widget_constructors
   const PreviewImageScreengallery({required this.imagePath});
 
   @override
@@ -46,7 +48,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       context,
       MaterialPageRoute(
         builder: (context) => PhotoFilterSelector(
-          title: Text("Photo Filter "),
+          title: const Text("Photo Filter "),
           image: image!,
           filters: presetFiltersList,
           filename: fileName,
@@ -59,6 +61,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });
+      // ignore: avoid_print
       print(imageFile!.path);
     }
   }
@@ -78,7 +81,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             onPressed: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             }),
-        title: Text(
+        title: const Text(
           "Preview",
           style: TextStyle(
             color: mPrimaryColor,
@@ -89,7 +92,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_forward),
+            icon: const Icon(Icons.arrow_forward),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {

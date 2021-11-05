@@ -19,7 +19,7 @@ import 'dart:math' as math;
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 
-import 'package:qstar/screen/qvideo/Video_Picker.dart';
+import 'package:qstar/screen/qvideo/VideoPicker.dart';
 
 class Qvideoscreen extends StatefulWidget {
   @override
@@ -95,6 +95,7 @@ class _QvideoState2 extends State<Qvideoscreen>
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
+              _controller.pause();
               Navigator.push(
                 context,
                 PageRouteBuilder(
@@ -110,7 +111,7 @@ class _QvideoState2 extends State<Qvideoscreen>
           IconButton(
             icon: const Icon(Icons.videocam),
             iconSize: 30.0,
-            color: mPrimaryColor,
+            color: Colors.red,
             onPressed: () {},
           ),
         ],
