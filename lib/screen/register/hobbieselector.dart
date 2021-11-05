@@ -204,7 +204,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
                   _selectedItems2 = values;
                 });
                 print('selected : ${_selectedItems2}');
-
+                         _selectedItems2
+                    .forEach((item) => _tobeSent.add("${item.name.toString()}"));
+                
             
                 /*senduserdata(
                     'partnerreligion', '${_selectedItems2.toString()}');*/
@@ -232,9 +234,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     onTap: (item) {
                       setState(() {
                         _selectedItems3.remove(item);
-                        print('removed below: ${_selectedItems3.toString()}');
-                        
-                        
+                        print('removed below: ${_selectedItems3.toString()}');                                       
                       });
                       _multiSelectKey.currentState!.validate();
                     },
@@ -254,26 +254,38 @@ class _HobbieselectorState extends State<Hobbieselector> {
                   color: mPrimaryColor,
                   onPressed: () {
                     _register();
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) {
-                          return Suggested();
-                        },
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   PageRouteBuilder(
+                    //     pageBuilder: (context, animation1, animation2) {
+                    //       return Suggested();
+                    //     },
+                    //   ),
+                    // );
                   },
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     alignment: Alignment.center,
-                    child: Text(
-                      'Next',
-                      style: textStyle,
-                    ),
+                    child:_isLoading==false? Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ):
+                  Container(
+                    height: 20,
+                    width: 20,
+                    child: Center(
+                    
+          child:  CircularProgressIndicator(
+            color: Colors.white,
+          ),
+          ),
                   ),
                 ),
               ),
+              )
               //################################################################################################
               // MultiSelectBottomSheetField with validators
               //################################################################################################
@@ -294,6 +306,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
    void _register() async {
     setState(() {
       _isLoading = true;
+      
     });
     var data = {
       'name': widget.fname,
@@ -307,6 +320,8 @@ class _HobbieselectorState extends State<Hobbieselector> {
     var res = await Network().authData(data, 'register/email');
     var body = json.decode(res.body);
     print(body);
+    print(res.statusCode);
+    print(_tobeSent.join(",").toString());
     if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
@@ -316,7 +331,28 @@ class _HobbieselectorState extends State<Hobbieselector> {
         new MaterialPageRoute(builder: (context) => Suggested()),
       );
     }
-
+    else if (res.statusCode == 422)
+    {
+         showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+              title: new Text('Error'),
+              content: new Text(body["errors"].toString()),
+              actions: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                    setState(() { 
+                      _isLoading=false;
+                    });
+                  } ,
+                  child: new Text('ok'),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+    }
     setState(() {
       _isLoading = false;
     });

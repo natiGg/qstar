@@ -57,7 +57,7 @@ class _SetPState extends State<Password> {
             ),
             SizedBox(height: 20),
             Text(
-              "Your password should at least contain 8 characters",
+              "password must be  8 characters containing at least one upper case,None lower case,  one Special character and one digit ",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
                 color: mPrimaryColor, // set the color
@@ -98,7 +98,12 @@ class _SetPState extends State<Password> {
                           })),
                   validator: (passwordval) {
                     if (passwordval!.isEmpty) {
-                      return "Please put your email";
+                      return "Please put your password";
+                    }
+                    else if(validateStructure(passwordval)==false)
+                    {
+                      return "password must be  8 characters containing at least one upper case,one lower case, one Special character and one digit ";
+
                     }
                     password = passwordval.toString();
                     return null;
@@ -150,35 +155,10 @@ class _SetPState extends State<Password> {
       ),
     );
   }
-
-  void _register() async {
-    setState(() {
-      _isLoading = true;
-    });
-    var data = {
-      'name': widget.fname,
-      'email': widget.email,
-      'username': widget.uname,
-      'password': password,
-      'password_confirmation': password,
-      'hobbies': "playing games"
-    };
-
-    var res = await Network().authData(data, 'register/email');
-    var body = json.decode(res.body);
-    print(body);
-    if (res.statusCode == 200) {
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', json.encode(body['token']));
-      localStorage.setString('user', json.encode(body['user']));
-      Navigator.push(
-        context,
-        new MaterialPageRoute(builder: (context) => Suggested()),
-      );
-    }
-
-    setState(() {
-      _isLoading = false;
-    });
+   bool validateStructure(String value)
+   {
+        String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+        RegExp regExp = new RegExp(pattern);
+        return regExp.hasMatch(value);
   }
 }
