@@ -2,10 +2,16 @@
 
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/post/location.dart';
+import 'package:qstar/screen/post/setting.dart';
+import 'package:qstar/screen/post/tag.dart';
+import 'package:qstar/screen/qvideo/post_create_view_model.dart';
 
 import 'package:qstar/screen/qvideo/setting_post_page.dart';
 
 import 'package:video_player/video_player.dart';
+import 'location_selector_widget.dart';
+import 'write_caption_widget.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
@@ -17,10 +23,32 @@ class PreviewImageScreengallery extends StatefulWidget {
 }
 
 class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
-  late String dirPath;
-  bool loading = false;
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
-  // ignore: non_constant_identifier_names
+  @override
+  void initState() {
+    // Create and store the VideoPlayerController. The VideoPlayerController
+    // offers several different constructors to play videos from assets, files,
+    // or the internet.
+    _controller = VideoPlayerController.network(widget.imagePath);
+
+    // Initialize the controller and store the Future for later use.
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    // Use the controller to loop the video.
+    _controller.setLooping(true);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Ensure disposing of the VideoPlayerController to free up resources.
+    _controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +61,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             onPressed: () {
               Navigator.of(context).pop(true);
             }),
-        title: Text(
+        title: const Text(
           "Preview video",
           style: TextStyle(
             color: mPrimaryColor,
@@ -44,318 +72,75 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_forward),
+            icon: Icon(Icons.check),
             iconSize: 30.0,
             color: mPrimaryColor,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingPostPage()));
-            },
+            onPressed: () {},
           ),
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          if (widget.imagePath != null)
-            SizedBox(
-              height: 600,
-              child: NetworkPlayerLifeCycle(
-                widget.imagePath,
-                (BuildContext context, VideoPlayerController controller) =>
-                    AspectRatioVideo(controller),
-              ),
-            ),
-        ],
+      // Use a FutureBuilder to display a loading spinner while waiting for the
+      // VideoPlayerController to finish initializing.
+      body: SingleChildScrollView(
+        child: Column(children: [
+          FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the VideoPlayerController has finished initialization, use
+                // the data it provides to limit the aspect ratio of the video.
+                return AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  // Use the VideoPlayer widget to display the video.
+                  child: VideoPlayer(_controller),
+                );
+              } else {
+                // If the VideoPlayerController is still initializing, show a
+                // loading spinner.
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+          WriteCaptionWidget(),
+          Divider(
+            height: 1,
+          ),
+          ListTile(
+            title: Text('Tag People'),
+            dense: true,
+            onTap: () {},
+          ),
+          Divider(
+            height: 1,
+          ),
+          ListTile(
+            title: Text('Setting'),
+            dense: true,
+            onTap: () {},
+          ),
+        ]),
       ),
-    );
-  }
-}
-
-// ignore: non_constant_identifier_names
-
-class VideoPlayPause extends StatefulWidget {
-  const VideoPlayPause(this.controller);
-
-  final VideoPlayerController controller;
-
-  @override
-  State createState() {
-    return _VideoPlayPauseState();
-  }
-}
-
-class _VideoPlayPauseState extends State<VideoPlayPause> {
-  _VideoPlayPauseState() {
-    listener = () {
-      setState(() {});
-    };
-  }
-
-  FadeAnimation imageFadeAnim =
-      FadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
-  late VoidCallback listener;
-
-  VideoPlayerController get controller => widget.controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller.addListener(listener);
-    controller.setVolume(1.0);
-    controller.play();
-  }
-
-  @override
-  void deactivate() {
-    controller.setVolume(0.0);
-    controller.removeListener(listener);
-    super.deactivate();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Widget> children = <Widget>[
-      GestureDetector(
-        child: VideoPlayer(controller),
-        onTap: () {
-          if (!controller.value.isPlaying) {
-            return;
-          }
-          if (controller.value.isPlaying) {
-            imageFadeAnim =
-                FadeAnimation(child: const Icon(Icons.pause, size: 100.0));
-            controller.pause();
-          } else {
-            imageFadeAnim =
-                FadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
-            controller.play();
-          }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Wrap the play or pause in a call to `setState`. This ensures the
+          // correct icon is shown.
+          setState(() {
+            // If the video is playing, pause it.
+            if (_controller.value.isPlaying) {
+              _controller.pause();
+            } else {
+              // If the video is paused, play it.
+              _controller.play();
+            }
+          });
         },
-      ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: VideoProgressIndicator(
-          controller,
-          allowScrubbing: true,
+        // Display the correct icon depending on the state of the player.
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
-      Center(child: imageFadeAnim),
-      Center(
-          child: controller.value.isBuffering
-              ? const CircularProgressIndicator()
-              : null),
-    ];
-
-    return Stack(
-      fit: StackFit.passthrough,
-      children: children,
     );
-  }
-}
-
-class FadeAnimation extends StatefulWidget {
-  const FadeAnimation(
-      {required this.child, this.duration = const Duration(milliseconds: 500)});
-
-  final Widget child;
-  final Duration duration;
-
-  @override
-  _FadeAnimationState createState() => _FadeAnimationState();
-}
-
-class _FadeAnimationState extends State<FadeAnimation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController =
-        AnimationController(duration: widget.duration, vsync: this);
-    animationController.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    animationController.forward(from: 0.0);
-  }
-
-  @override
-  void deactivate() {
-    animationController.stop();
-    super.deactivate();
-  }
-
-  @override
-  void didUpdateWidget(FadeAnimation oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.child != widget.child) {
-      animationController.forward(from: 0.0);
-    }
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return animationController.isAnimating
-        ? Opacity(
-            opacity: 1.0 - animationController.value,
-            child: widget.child,
-          )
-        : Container();
-  }
-}
-
-typedef VideoWidgetBuilder = Widget Function(
-    BuildContext context, VideoPlayerController controller);
-
-abstract class PlayerLifeCycle extends StatefulWidget {
-  const PlayerLifeCycle(this.dataSource, this.childBuilder);
-
-  final VideoWidgetBuilder childBuilder;
-  final String dataSource;
-}
-
-/// A widget connecting its life cycle to a [VideoPlayerController] using
-/// a data source from the network.
-class NetworkPlayerLifeCycle extends PlayerLifeCycle {
-  const NetworkPlayerLifeCycle(
-      String dataSource, VideoWidgetBuilder childBuilder)
-      : super(dataSource, childBuilder);
-
-  @override
-  _NetworkPlayerLifeCycleState createState() => _NetworkPlayerLifeCycleState();
-}
-
-/// A widget connecting its life cycle to a [VideoPlayerController] using
-/// an asset as data source
-class AssetPlayerLifeCycle extends PlayerLifeCycle {
-  const AssetPlayerLifeCycle(String dataSource, VideoWidgetBuilder childBuilder)
-      : super(dataSource, childBuilder);
-
-  @override
-  _AssetPlayerLifeCycleState createState() => _AssetPlayerLifeCycleState();
-}
-
-abstract class _PlayerLifeCycleState extends State<PlayerLifeCycle> {
-  late VideoPlayerController controller;
-
-  @override
-
-  /// Subclasses should implement [createVideoPlayerController], which is used
-  /// by this method.
-  void initState() {
-    super.initState();
-    controller = createVideoPlayerController();
-    controller.addListener(() {
-      if (controller.value.hasError) {
-        // ignore: avoid_print
-        print(controller.value.errorDescription);
-      }
-    });
-    controller.initialize();
-    controller.setLooping(true);
-
-    controller.play();
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.childBuilder(context, controller);
-  }
-
-  VideoPlayerController createVideoPlayerController();
-}
-
-class _NetworkPlayerLifeCycleState extends _PlayerLifeCycleState {
-  @override
-  VideoPlayerController createVideoPlayerController() {
-    return VideoPlayerController.network(widget.dataSource);
-  }
-}
-
-class _AssetPlayerLifeCycleState extends _PlayerLifeCycleState {
-  @override
-  VideoPlayerController createVideoPlayerController() {
-    return VideoPlayerController.asset(widget.dataSource);
-  }
-}
-
-/// A filler card to show the video in a list of scrolling contents.
-Widget buildCard(String title) {
-  return Card(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          leading: const Icon(Icons.airline_seat_flat_angled),
-          title: Text(title),
-        ),
-
-        // ignore: deprecated_member_use
-      ],
-    ),
-  );
-}
-
-class AspectRatioVideo extends StatefulWidget {
-  const AspectRatioVideo(this.controller);
-
-  final VideoPlayerController controller;
-
-  @override
-  AspectRatioVideoState createState() => AspectRatioVideoState();
-}
-
-class AspectRatioVideoState extends State<AspectRatioVideo> {
-  VideoPlayerController get controller => widget.controller;
-  bool initialized = false;
-
-  late VoidCallback listener;
-
-  @override
-  void initState() {
-    super.initState();
-    listener = () {
-      if (!mounted) {
-        return;
-      }
-      if (initialized != controller.value.isPlaying) {
-        initialized = controller.value.isPlaying;
-        setState(() {});
-      }
-    };
-    controller.addListener(listener);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (initialized) {
-      return Center(
-        child: AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: VideoPlayPause(controller),
-        ),
-      );
-    } else {
-      return Container();
-    }
   }
 }

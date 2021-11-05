@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/qvideo/Video_Picker.dart';
+import 'package:qstar/screen/qvideo/VideoPicker.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 import 'widgets/profile_tab_bar_au.dart';

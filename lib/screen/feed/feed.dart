@@ -21,6 +21,7 @@ import 'package:qstar/screen/comment/comment_page.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
+import 'package:qstar/screen/search/search.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -123,8 +124,6 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  final List<String> _animals = ["Friends", "public", "stars)"];
-
   TextEditingController nameController = TextEditingController();
 
   List users = [
@@ -132,25 +131,25 @@ class _FeedState extends State<Feed> {
         'Android',
         Icon(
           Icons.android,
-          color: const Color(0xFF167F67),
+          color: Color(0xFF167F67),
         )),
     const Item(
         'Flutter',
         Icon(
           Icons.flag,
-          color: const Color(0xFF167F67),
+          color: Color(0xFF167F67),
         )),
     const Item(
         'ReactNative',
         Icon(
           Icons.format_indent_decrease,
-          color: const Color(0xFF167F67),
+          color: Color(0xFF167F67),
         )),
     const Item(
         'iOS',
         Icon(
           Icons.mobile_screen_share,
-          color: const Color(0xFF167F67),
+          color: Color(0xFF167F67),
         )),
   ];
 
@@ -506,7 +505,7 @@ class _FeedState extends State<Feed> {
             Padding(
               padding: const EdgeInsets.all(25),
               child: Container(
-                height: 260,
+                height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -629,12 +628,12 @@ class _FeedState extends State<Feed> {
                                                   child: Row(
                                                     children: [
                                                       user.icon,
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 5,
                                                       ),
                                                       Text(
                                                         user.name,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 12),
                                                       ),
@@ -649,7 +648,7 @@ class _FeedState extends State<Feed> {
                                             });
                                           },
                                           hint: Container(
-                                            child: Text("public"),
+                                            child: const Text("public"),
                                           ),
                                         ),
                                       ],
@@ -814,74 +813,138 @@ class _UserStoriesState extends State<UserStories> {
                 children: <Widget>[
                   Container(
                     width: 110,
-                    height: 200,
+                    height: 150,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1.0, left: 9),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(children: const <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            size: 10,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 1,
+                          ),
+                          Text(
+                            'Addis Ababa',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ]),
+                        Row(children: const <Widget>[
+                          Icon(
+                            Icons.manage_accounts_sharp,
+                            size: 9,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 1,
+                          ),
+                          Text(
+                            'betty',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 9,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' 20',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ]),
+                        Row(children: const <Widget>[]),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 1.0, left: 9),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(children: const <Widget>[
-                Icon(
-                  Icons.manage_accounts_sharp,
-                  size: 9,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  '@betty',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ]),
-              Row(children: const <Widget>[
-                Icon(
-                  Icons.calendar_today,
-                  size: 9,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  '20',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ]),
-              Row(children: const <Widget>[
-                Icon(
-                  Icons.location_on,
-                  size: 10,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  'Addis Ababa',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ])
-            ],
-          ),
-        )
       ],
     );
+  }
+}
+
+class UserAvater2 extends StatefulWidget {
+  final User user;
+  const UserAvater2(this.user);
+
+  @override
+  State<UserAvater2> createState() => _UserAvatarState2();
+}
+
+class _UserAvatarState2 extends State<UserAvater2> {
+  bool isFollowed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(
+          children: List.generate(1, (index) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                            colors: [mPrimaryColor, mPrimaryColor],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                          height: 70,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/profile${widget.user.id}.jpg'),
+                                fit: BoxFit.cover),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Center(
+                  child: Text(
+                widget.user.userName,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: mPrimaryColor),
+              )),
+            ],
+          ),
+        );
+      }))
+    ]);
   }
 }
 
@@ -1405,7 +1468,6 @@ void showSheet(context) {
       context: context,
       builder: (BuildContext bc) {
         return Container(
-          height: 780,
           color: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
           child: Column(
@@ -1418,106 +1480,63 @@ void showSheet(context) {
                   Container(
                     height: 10,
                   ),
-                  const Text(
-                    "Send to",
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                      fontFamily: "font1",
-                      fontSize: 24,
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Spacer(),
+                    const Text(
+                      "Send to",
+                      style: TextStyle(
+                        color: mPrimaryColor,
+                        fontFamily: "font1",
+                        fontSize: 24,
+                      ),
                     ),
-                  )
-                ],
-              )),
-              Container(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.account_box,
-                        color: mPrimaryColor,
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                      Text("user1",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.account_box,
-                        color: mPrimaryColor,
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                      Text("user2",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.account_box,
-                        color: mPrimaryColor,
-                      ),
-                      Container(
-                        height: 10,
-                      ),
-                      Text("user3",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                Search(),
+                            transitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                      child: const Icon(
                         Icons.search,
                         color: mPrimaryColor,
+                        size: 15,
                       ),
-                      Container(
-                        height: 10,
-                      ),
-                      Text("Search",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
+                    ),
+                  ])
                 ],
-              ),
-              Container(
-                height: 20,
-              ),
-              Row(
-//                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 18,
+              )),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Expanded(
+                  child: Container(
+                    height: 150,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                  children: _users
+                                      .map((e) => UserAvater2(e))
+                                      .toList()),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-              Container(
-                height: 10,
-              ),
+                ),
+              ]),
               const Divider(indent: 18, endIndent: 18, color: Colors.grey),
               const Text(
                 "Share to",
@@ -1530,246 +1549,233 @@ void showSheet(context) {
               Container(
                 height: 10,
               ),
-              Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.copy,
-                        color: mPrimaryColor,
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 18,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("copy link",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.whatsapp,
-                        color: Colors.green,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.copy,
+                            color: mPrimaryColor,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("copy link",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("whatsapp",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.facebook,
-                        color: Colors.blue,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.whatsapp,
+                            color: Colors.green,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("whatsapp",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("More Apps",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.instagram,
-                        color: Colors.redAccent,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.facebook,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("More Apps",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("Instagram",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                ],
-              ),
-              Container(
-                height: 20,
-              ),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.telegram,
-                        color: Colors.blue,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.instagram,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("Instagram",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.telegram,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("Telegram",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 21,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("Telegram",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 21,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.twitter,
-                        color: Colors.blue,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.twitter,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("twitter",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 26,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("twitter",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 26,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.google_plus,
-                        color: Colors.red,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.google_plus,
+                            color: Colors.red,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("google_plus",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 32,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("google_plus",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 32,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.twitch,
-                        color: Colors.redAccent,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.twitch,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("twitch",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 25,
                       ),
                       Container(
-                        height: 10,
-                      ),
-                      Text("twitch",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                ],
-              ),
-              Container(
-                height: 10,
-              ),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 25,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.youtube,
-                        color: Colors.red,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.youtube,
+                            color: Colors.red,
+                          ),
+                          Container(
+                            height: 8,
+                          ),
+                          Text("youtube",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
                       ),
                       Container(
-                        height: 8,
-                      ),
-                      Text("youtube",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                  Container(
-                    width: 18,
-                  ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        FontAwesome.google,
-                        color: Colors.redAccent,
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.google,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 2,
+                          ),
+                          Text("google",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 26,
                       ),
                       Container(
-                        height: 2,
-                      ),
-                      Text("google",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.more_horiz_sharp,
+                            color: mPrimaryColor,
+                          ),
+                          Container(
+                            height: 6,
+                          ),
+                          Text("More App",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
                     ],
-                  )),
-                  Container(
-                    width: 26,
                   ),
-                  Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.more_horiz_sharp,
-                        color: mPrimaryColor,
-                      ),
-                      Container(
-                        height: 6,
-                      ),
-                      Text("More App",
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                          ))
-                    ],
-                  )),
-                ],
+                ),
               ),
             ],
           ),

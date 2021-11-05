@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:qstar/screen/post/preview_screen.dart';
 
 class CameraScreen extends StatelessWidget {
+  const CameraScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,13 +14,13 @@ class CameraScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Camera Camera 2.0'),
+      home: const MyHomePage(title: 'Camera Camera 2.0'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -39,9 +41,11 @@ class _MyHomePageState extends State<MyHomePage> {
           openCamera();
         });
       } else {
+        // ignore: avoid_print
         print("No camera available");
       }
     }).catchError((err) {
+      // ignore: avoid_print
       print('Error: $err.code\nError Message: $err.message');
     });
   }
@@ -63,12 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       floatingActionButton: FloatingActionButton(
         onPressed: openCamera,
-        child: Icon(Icons.camera_alt),
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }
