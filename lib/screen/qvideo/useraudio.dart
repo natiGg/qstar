@@ -14,6 +14,8 @@ import 'package:qstar/widget/utils.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Useraudeio extends StatefulWidget {
+  const Useraudeio({Key? key}) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -49,7 +51,7 @@ class _ProfileScreenState extends State<Useraudeio> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      Qvideoscreen(),
+                      const Qvideoscreen(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -69,7 +71,7 @@ class _ProfileScreenState extends State<Useraudeio> {
               onPressed: () {
                 _onShowMenu!();
               },
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               color: mPrimaryColor),
         ],
       ),
@@ -79,7 +81,7 @@ class _ProfileScreenState extends State<Useraudeio> {
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10)),
                 boxShadow: [
@@ -87,7 +89,7 @@ class _ProfileScreenState extends State<Useraudeio> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
@@ -95,19 +97,19 @@ class _ProfileScreenState extends State<Useraudeio> {
                 children: [
                   profileStats(
                       screen: _screen, color: mPrimaryColor, context: context),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Divider(
                     height: 2,
                     color: Colors.grey[500],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   RichText(
-                    text: TextSpan(
-                      children: const [
+                    text: const TextSpan(
+                      children: [
                         TextSpan(
                           text: 'Videos using this Sound',
                           style: TextStyle(
@@ -117,7 +119,7 @@ class _ProfileScreenState extends State<Useraudeio> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                 ],
@@ -137,15 +139,16 @@ class _ProfileScreenState extends State<Useraudeio> {
               },
             ),
             StaggeredGridView.countBuilder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: _pageIndex != 1 ? 3 : 2,
               itemCount: Utils.listOfImageUrl.length,
               itemBuilder: (contex, index) {
                 return Align(
                   child: Container(
-                    padding:
-                        _pageIndex == 1 ? EdgeInsets.all(5) : EdgeInsets.all(0),
+                    padding: _pageIndex == 1
+                        ? const EdgeInsets.all(5)
+                        : const EdgeInsets.all(0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -176,7 +179,7 @@ class _ProfileScreenState extends State<Useraudeio> {
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation1, animation2) =>
-                  VideoRecorderExample(),
+                  const VideoRecorderExample(),
               transitionDuration: Duration.zero,
             ),
           );
@@ -196,12 +199,12 @@ class _ProfileScreenState extends State<Useraudeio> {
       child: Container(
         height: 30,
         width: 70,
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: mPrimaryColor,
         ),
-        child: Center(
+        child: const Center(
             child: Text(
           'Message',
           style: TextStyle(

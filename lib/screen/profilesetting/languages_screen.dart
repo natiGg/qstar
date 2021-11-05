@@ -3,6 +3,8 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:qstar/constant.dart';
 
 class LanguagesScreen extends StatefulWidget {
+  const LanguagesScreen({Key? key}) : super(key: key);
+
   @override
   _LanguagesScreenState createState() => _LanguagesScreenState();
 }
@@ -15,7 +17,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Language",
           style: TextStyle(
             color: mPrimaryColor,
@@ -65,8 +67,8 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
 
   Widget trailingWidget(int index) {
     return (languageIndex == index)
-        ? Icon(Icons.check, color: mPrimaryColor)
-        : Icon(null);
+        ? const Icon(Icons.check, color: mPrimaryColor)
+        : const Icon(null);
   }
 
   void changeLanguage(int index) {

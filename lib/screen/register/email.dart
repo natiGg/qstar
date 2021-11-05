@@ -21,7 +21,7 @@ class Email extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Text(
+          const Text(
             "What's your email address",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -30,7 +30,7 @@ class Email extends StatelessWidget {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -50,11 +50,12 @@ class Email extends StatelessWidget {
                     hintText: 'Email',
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide:
-                            BorderSide(color: Colors.white, width: 3.0))),
+                            const BorderSide(color: Colors.white, width: 3.0))),
               ),
             ),
           ),
@@ -70,12 +71,12 @@ class Email extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Phonevarification();
+                      return const Phonevarification();
                     },
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "Sign up with phone instead",
                 style: TextStyle(
                   // we use the [TextStyle] widget to customize text
@@ -97,7 +98,7 @@ class Email extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Password();
+                      return const Password();
                     },
                   ),
                 );
@@ -106,7 +107,7 @@ class Email extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Next',
                   style: textStyle,
                 ),

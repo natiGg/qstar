@@ -42,27 +42,21 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         children: [
           Text(
             widget.label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
           TextField(
             controller: controller,
             decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                
-               borderSide: const BorderSide(color: mPrimaryColor, width: 2.0),
-
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: mPrimaryColor, width: 2.0),
                 borderRadius: BorderRadius.circular(12),
               ),
               border: OutlineInputBorder(
-                
-                
-              borderSide: const BorderSide(color: Colors.white, width: 2.0),
-
+                borderSide: const BorderSide(color: Colors.white, width: 2.0),
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            
             maxLines: widget.maxLines,
           ),
         ],

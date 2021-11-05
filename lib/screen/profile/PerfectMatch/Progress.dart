@@ -32,12 +32,14 @@ class MyPages extends StatelessWidget {
           ),
         ),
       ),
-      body: OnBoardingPage(),
+      body: const OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
+
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }
@@ -49,7 +51,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => PersonalInfo(),
+        pageBuilder: (context, animation1, animation2) => const PersonalInfo(),
         transitionDuration: Duration.zero,
       ),
     );

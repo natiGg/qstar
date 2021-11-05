@@ -27,7 +27,7 @@ class RegisterButton extends StatelessWidget {
             context,
             PageRouteBuilder(
               pageBuilder: (context, animation1, animation2) {
-                return BirthDay();
+                return const BirthDay();
               },
             ),
           );
@@ -36,7 +36,7 @@ class RegisterButton extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Next',
             style: textStyle,
           ),

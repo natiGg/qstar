@@ -5,7 +5,10 @@ import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'comment_widget.dart';
 
 class CommentPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = 'CommentPage';
+
+  const CommentPage({Key? key}) : super(key: key);
 
   @override
   _CommentPageState createState() => _CommentPageState();
@@ -17,8 +20,8 @@ class _CommentPageState extends State<CommentPage> {
     // ignore: unnecessary_new
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Qvideoscreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const Qvideoscreen()));
         return true;
       },
       child: Scaffold(
@@ -26,19 +29,19 @@ class _CommentPageState extends State<CommentPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                        Qvideoscreen(),
+                        const Qvideoscreen(),
                     transitionDuration: Duration.zero,
                   ),
                 );
               }),
-          title: Text(
+          title: const Text(
             "Comments",
             style: TextStyle(
               color: mPrimaryColor,
@@ -49,7 +52,7 @@ class _CommentPageState extends State<CommentPage> {
           elevation: 0.0,
         ),
         body: Column(
-          children: <Widget>[
+          children: const <Widget>[
             CommentWidget(),
             CommentWidget(),
             CommentWidget(),
@@ -63,19 +66,19 @@ class _CommentPageState extends State<CommentPage> {
               height: kToolbarHeight,
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              padding: EdgeInsets.only(left: 16, right: 8),
+              padding: const EdgeInsets.only(left: 16, right: 8),
               child: Row(
                 children: [
                   // ignore: prefer_const_constructors
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/1.jpg'),
+                    backgroundImage: const AssetImage('assets/images/1.jpg'),
                     radius: 18,
                   ),
                   // ignore: prefer_const_constructors
                   Expanded(
                     // ignore: prefer_const_constructors
                     child: Padding(
-                      padding: EdgeInsets.only(left: 16, right: 8),
+                      padding: const EdgeInsets.only(left: 16, right: 8),
                       // ignore: prefer_const_constructors
                       child: TextField(
                         // ignore: prefer_const_constructors

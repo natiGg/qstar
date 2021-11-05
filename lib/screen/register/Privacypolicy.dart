@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
 class Privacypolicy extends StatelessWidget {
+  const Privacypolicy({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +26,14 @@ class Privacypolicy extends StatelessWidget {
           ),
         ),
       ),
-      body: OnBoardingPage(),
+      body: const OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
+
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }

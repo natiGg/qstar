@@ -7,6 +7,8 @@ import 'package:qstar/screen/register/suggested.dart';
 import '../../constant.dart';
 
 class Hobbieselector extends StatelessWidget {
+  const Hobbieselector({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +18,7 @@ class Hobbieselector extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -32,6 +34,8 @@ class Animal {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -81,10 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               //################################################################################################
               // Rounded blue MultiSelectDialogField
               //################################################################################################
@@ -112,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontFamily: 'font1', // and the font size
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Material(
                 elevation: 20.0,
                 shadowColor: Colors.white,
@@ -125,11 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 3.0))),
+                          borderSide: const BorderSide(
+                              color: Colors.white, width: 3.0))),
                 ),
               ),
               const SizedBox(height: 20),
@@ -142,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontFamily: 'font1', // and the font size
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white38,
@@ -157,8 +161,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       initialChildSize: 0.4,
                       listType: MultiSelectListType.CHIP,
                       searchable: true,
-                      buttonText: Text("Hobbies"),
-                      title: Text("Select Hobbies "),
+                      buttonText: const Text("Hobbies"),
+                      title: const Text("Select Hobbies "),
                       items: _items,
                       onConfirm: (values) {
                         _selectedAnimals2 != values;
@@ -173,9 +177,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     _selectedAnimals2 == null || _selectedAnimals2.isEmpty
                         ? Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             alignment: Alignment.centerLeft,
-                            child: Text(
+                            child: const Text(
                               "None selected",
                               style: TextStyle(color: Colors.black54),
                             ))
@@ -183,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 // ignore: deprecated_member_use
@@ -197,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) {
-                          return Suggested();
+                          return const Suggested();
                         },
                       ),
                     );
@@ -206,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       'Next',
                       style: textStyle,
                     ),

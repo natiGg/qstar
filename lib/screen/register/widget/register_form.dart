@@ -25,10 +25,12 @@ class RegisterForm extends StatelessWidget {
                   hintText: 'First Name',
                   fillColor: Colors.white,
                   filled: true,
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  contentPadding:
+                      const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white, width: 3.0))),
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 3.0))),
             ),
           ),
           const SizedBox(
@@ -45,10 +47,12 @@ class RegisterForm extends StatelessWidget {
                   hintText: 'Last Name',
                   fillColor: Colors.white,
                   filled: true,
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  contentPadding:
+                      const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white, width: 3.0))),
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 3.0))),
             ),
           ),
         ],

@@ -6,6 +6,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/phone.dart';
 
 class Password extends StatefulWidget {
+  const Password({Key? key}) : super(key: key);
+
   @override
   _SetPState createState() => _SetPState();
 }
@@ -24,7 +26,7 @@ class _SetPState extends State<Password> {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Text(
+          const Text(
             "Set password",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -33,8 +35,8 @@ class _SetPState extends State<Password> {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             "Your password should at least contain 8 characters",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -59,11 +61,12 @@ class _SetPState extends State<Password> {
                     hintText: 'Password',
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide:
-                            BorderSide(color: Colors.white, width: 3.0)),
+                            const BorderSide(color: Colors.white, width: 3.0)),
                     suffixIcon: IconButton(
                         icon: Icon(_isObscure
                             ? Icons.visibility
@@ -88,7 +91,7 @@ class _SetPState extends State<Password> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return Phone();
+                      return const Phone();
                     },
                   ),
                 );
@@ -97,7 +100,7 @@ class _SetPState extends State<Password> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Next',
                   style: textStyle,
                 ),

@@ -17,7 +17,7 @@ class RegisterScreen extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Text(
+          const Text(
             "Sign Up",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -26,8 +26,8 @@ class RegisterScreen extends StatelessWidget {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 20),
-          RegisterForm(),
+          const SizedBox(height: 20),
+          const RegisterForm(),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 45,
@@ -35,49 +35,51 @@ class RegisterScreen extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                TextSpan(
-                    text:
-                        'By tapping Next  & accept you acknowledge that you have read the'),
-                TextSpan(
-                  text: ' Privacy policy',
-                  style: TextStyle(
-                    color: mPrimaryColor,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) {
-                            return Privacypolicy();
-                          },
-                        ),
-                      );
-                    },
-                ),
-                TextSpan(text: ' and agree to the'),
-                TextSpan(
-                  text: ' Term of Service',
-                  style: TextStyle(
-                    color: mPrimaryColor,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) {
-                            return TermofService();
-                          },
-                        ),
-                      );
-                    },
-                ),
-              ]),
+              text: TextSpan(
+                  style: const TextStyle(color: Colors.grey),
+                  children: [
+                    const TextSpan(
+                        text:
+                            'By tapping Next  & accept you acknowledge that you have read the'),
+                    TextSpan(
+                      text: ' Privacy policy',
+                      style: const TextStyle(
+                        color: mPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) {
+                                return Privacypolicy();
+                              },
+                            ),
+                          );
+                        },
+                    ),
+                    const TextSpan(text: ' and agree to the'),
+                    TextSpan(
+                      text: ' Term of Service',
+                      style: const TextStyle(
+                        color: mPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) {
+                                return const TermofService();
+                              },
+                            ),
+                          );
+                        },
+                    ),
+                  ]),
             ),
           ),
-          RegisterButton(),
+          const RegisterButton(),
         ],
       ),
     );

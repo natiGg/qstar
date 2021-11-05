@@ -15,10 +15,9 @@ class Header extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 183,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/header.png'),
-            fit: BoxFit.cover),
+            image: AssetImage('assets/images/header.png'), fit: BoxFit.cover),
       ),
       child: UnconstrainedBox(
         child: SvgPicture.asset(

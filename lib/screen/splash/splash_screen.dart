@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/home/home_screen.dart';
 
-
 class SplashScreen extends StatefulWidget {
-    const SplashScreen({
-    Key? key
-  }) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -22,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return const HomeScreen();
           },
         ),
         (route) => false,
@@ -36,14 +33,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:const BoxDecoration(
-      
-        ),
+        decoration: const BoxDecoration(),
         child: Center(
-          child:Image.asset(
+          child: Image.asset(
             'assets/images/q.png',
-              height: 160,
-              width: 160,
+            height: 160,
+            width: 160,
           ),
         ),
       ),

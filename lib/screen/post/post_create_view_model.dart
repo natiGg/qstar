@@ -1,7 +1,11 @@
+// ignore: duplicate_ignore
+// ignore: duplicate_ignore
+// ignore: duplicate_ignore
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/foundation.dart';
 
+// ignore: duplicate_ignore, duplicate_ignore, duplicate_ignore
 class PostCreateViewModel extends ChangeNotifier {
   // ignore: constant_identifier_names
   static const TAG = 'PostCreateViewModel';

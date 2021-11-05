@@ -21,9 +21,12 @@ List<User> _users = [
   User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
 ];
 late int ratings = 3;
+// ignore: non_constant_identifier_names
 late double rating_d = 3;
 
 class Suggested extends StatelessWidget {
+  const Suggested({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -35,60 +38,58 @@ class Suggested extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Container(
-            child: Column(
-              children: [
-                Text(
-                  "Quick follow",
-                  style: TextStyle(
+          Column(
+            children: [
+              const Text(
+                "Quick follow",
+                style: TextStyle(
+                  // we use the [TextStyle] widget to customize text
+                  color: mPrimaryColor, // set the color
+                  fontSize: 25.0,
+                  fontFamily: 'font1', // and the font size
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Connect with your best friend on Qstar",
+                style: TextStyle(
                     // we use the [TextStyle] widget to customize text
-                    color: mPrimaryColor, // set the color
-                    fontSize: 25.0,
-                    fontFamily: 'font1', // and the font size
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Connect with your best friend on Qstar",
+                    color: Colors.black, // set the color
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.normal,
+                    fontStyle: FontStyle.italic
+                    // and the font size
+                    ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 5, left: 30.0, right: 30),
+                child: Text(
+                  "Reward your 1st star to your profile by following suggested friends on Qstar.",
                   style: TextStyle(
-                      // we use the [TextStyle] widget to customize text
-                      color: Colors.black, // set the color
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.normal,
-                      fontStyle: FontStyle.italic
-                      // and the font size
-                      ),
+                    color: mPrimaryColor,
+                    decorationStyle: TextDecorationStyle.wavy,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 30.0, right: 30),
-                  child: Text(
-                    "Reward your 1st star to your profile by following suggested friends on Qstar.",
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                      decorationStyle: TextDecorationStyle.wavy,
-                    ),
-                    textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: SizedBox(
+                  height: 300,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 4),
+                      Column(
+                          children:
+                              _users.map((e) => SuggestedUsers(e)).toList())
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        SizedBox(height: 4),
-                        Column(
-                            children:
-                                _users.map((e) => SuggestedUsers(e)).toList())
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -101,7 +102,7 @@ class Suggested extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage(),
+                    builder: (context) => const MyHomePage(),
                   ),
                 );
               },
@@ -109,7 +110,7 @@ class Suggested extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Get Started ',
                   style: textStyle,
                 ),
@@ -125,6 +126,7 @@ class Suggested extends StatelessWidget {
 class SuggestedUsers extends StatelessWidget {
   final User user;
 
+  // ignore: use_key_in_widget_constructors
   const SuggestedUsers(this.user);
 
   @override
@@ -156,8 +158,8 @@ class SuggestedUsers extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
                     child: Text(
                       "@Egele",
                       style: TextStyle(
@@ -166,8 +168,8 @@ class SuggestedUsers extends StatelessWidget {
                           color: mPrimaryColor),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 26),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8, left: 26),
                     child: Text(
                       "Full name",
                       style: TextStyle(
@@ -180,7 +182,7 @@ class SuggestedUsers extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: RatingBarIndicator(
                       rating: rating_d,
-                      itemBuilder: (context, index) => Icon(
+                      itemBuilder: (context, index) => const Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
@@ -189,16 +191,14 @@ class SuggestedUsers extends StatelessWidget {
                       direction: Axis.horizontal,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
-                    child: Container(
-                      child: Text(
-                        "127K",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: mPrimaryColor),
-                      ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      "127K",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: mPrimaryColor),
                     ),
                   ),
                   Padding(
@@ -216,7 +216,7 @@ class SuggestedUsers extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return Verification();
+                                return const Verification();
                               },
                             ),
                           );
@@ -225,7 +225,7 @@ class SuggestedUsers extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             'Follow',
                             style: textStyle,
                           ),

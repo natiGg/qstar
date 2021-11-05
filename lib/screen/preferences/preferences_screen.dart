@@ -9,6 +9,7 @@ import 'package:qstar/widget/round_button.dart';
 class PreferencesScreen extends StatelessWidget {
   final int index;
 
+  // ignore: use_key_in_widget_constructors
   const PreferencesScreen(this.index);
 
   @override
@@ -23,9 +24,9 @@ class PreferencesScreen extends StatelessWidget {
           Divider(
             color: mPrimaryTextColor.withOpacity(0.5),
           ),
-          Attribute(
+          const Attribute(
             title: 'Size',
-            iconNames: const [
+            iconNames: [
               'size1',
               'size2',
               'size3',
@@ -36,23 +37,23 @@ class PreferencesScreen extends StatelessWidget {
           Divider(
             color: mPrimaryTextColor.withOpacity(0.5),
           ),
-          Attribute(
+          const Attribute(
             title: 'Sugar',
-            iconNames: const ['sugar1', 'sugar2', 'sugar3', 'sugar4'],
+            iconNames: ['sugar1', 'sugar2', 'sugar3', 'sugar4'],
             check: 2,
           ),
           Divider(
             color: mPrimaryTextColor.withOpacity(0.5),
           ),
-          Attribute(
+          const Attribute(
             title: 'Additions',
-            iconNames: const ['additions1', 'additions2'],
+            iconNames: ['additions1', 'additions2'],
             check: 2,
           ),
           Divider(
             color: mPrimaryTextColor.withOpacity(0.5),
           ),
-          TotalPrice(),
+          const TotalPrice(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
             child: RoundButton(

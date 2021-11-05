@@ -2,20 +2,14 @@
 
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/post/location.dart';
-import 'package:qstar/screen/post/setting.dart';
-import 'package:qstar/screen/post/tag.dart';
-import 'package:qstar/screen/qvideo/post_create_view_model.dart';
-
-import 'package:qstar/screen/qvideo/setting_post_page.dart';
 
 import 'package:video_player/video_player.dart';
-import 'location_selector_widget.dart';
 import 'write_caption_widget.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
 
+  // ignore: use_key_in_widget_constructors
   const PreviewImageScreengallery({required this.imagePath});
 
   @override
@@ -56,7 +50,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.of(context).pop(true);
@@ -72,7 +66,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {},
@@ -103,20 +97,20 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               }
             },
           ),
-          WriteCaptionWidget(),
-          Divider(
+          const WriteCaptionWidget(),
+          const Divider(
             height: 1,
           ),
           ListTile(
-            title: Text('Tag People'),
+            title: const Text('Tag People'),
             dense: true,
             onTap: () {},
           ),
-          Divider(
+          const Divider(
             height: 1,
           ),
           ListTile(
-            title: Text('Setting'),
+            title: const Text('Setting'),
             dense: true,
             onTap: () {},
           ),

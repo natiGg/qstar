@@ -18,7 +18,7 @@ class Searchlocation extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      SettingPostPage(),
+                      const SettingPostPage(),
                   transitionDuration: Duration.zero,
                 ),
               );

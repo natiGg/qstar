@@ -26,7 +26,7 @@ class Phonevarification extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Text(
+          const Text(
             "Enter Your Phone Number",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -35,7 +35,7 @@ class Phonevarification extends StatelessWidget {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -50,18 +50,20 @@ class Phonevarification extends StatelessWidget {
                 inputDecoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide:
-                            BorderSide(color: Colors.white, width: 3.0))),
+                            const BorderSide(color: Colors.white, width: 3.0))),
                 onInputChanged: (PhoneNumber number) {
+                  // ignore: avoid_print
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
                   print(value);
                 },
-                selectorConfig: SelectorConfig(
+                selectorConfig: const SelectorConfig(
                   selectorType: PhoneInputSelectorType.DROPDOWN,
                 ),
                 ignoreBlank: false,
@@ -69,9 +71,10 @@ class Phonevarification extends StatelessWidget {
                 initialValue: number,
                 textFieldController: controller,
                 formatInput: false,
-                keyboardType: TextInputType.numberWithOptions(
+                keyboardType: const TextInputType.numberWithOptions(
                     signed: true, decimal: true),
                 onSaved: (PhoneNumber number) {
+                  // ignore: avoid_print
                   print('On Saved: $number');
                 },
               ),
@@ -84,9 +87,11 @@ class Phonevarification extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: RichText(
-              text: TextSpan(style: TextStyle(color: Colors.grey), children: const [
-                TextSpan(text: "We'll send you an SMS & verification code"),
-              ]),
+              text: const TextSpan(
+                  style: TextStyle(color: Colors.grey),
+                  children: [
+                    TextSpan(text: "We'll send you an SMS & verification code"),
+                  ]),
             ),
           ),
           Container(
@@ -101,12 +106,12 @@ class Phonevarification extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Email();
+                      return const Email();
                     },
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "Sign up with Email instead",
                 style: TextStyle(
                   // we use the [TextStyle] widget to customize text
@@ -128,7 +133,7 @@ class Phonevarification extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Password();
+                      return const Password();
                     },
                   ),
                 );
@@ -137,7 +142,7 @@ class Phonevarification extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Next',
                   style: textStyle,
                 ),

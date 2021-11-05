@@ -30,7 +30,7 @@ class NameAndNumber extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               Text(
@@ -52,15 +52,15 @@ class NameAndNumber extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 6,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 2, horizontal: 14),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
                 decoration: BoxDecoration(
                   border: Border.all(color: mTitleTextColor),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(36),
                     bottomLeft: Radius.circular(36),
                   ),
@@ -73,15 +73,15 @@ class NameAndNumber extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 6,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 2, horizontal: 14),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 2, horizontal: 14),
                 decoration: BoxDecoration(
                   border: Border.all(color: mTitleTextColor),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(36),
                     bottomRight: Radius.circular(36),
                   ),

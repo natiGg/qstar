@@ -12,6 +12,8 @@ import 'package:qstar/screen/profile/editprofile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -51,9 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leadingWidth: 100,
         backgroundColor: Colors.white,
         leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
+          padding: const EdgeInsets.only(left: 20, top: 15),
           width: 100,
-          child: Text(
+          child: const Text(
             "User Name",
             style: TextStyle(
               color: mPrimaryColor,
@@ -67,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () {
                 _onShowMenu();
               },
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               color: mPrimaryColor)
         ],
       ),
@@ -77,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
@@ -85,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
@@ -95,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         screen: _screen,
                         color: mPrimaryColor,
                         context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -112,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) =>
-                                            EditProfilePage(),
+                                            const EditProfilePage(),
                                     transitionDuration: Duration.zero,
                                   ),
                                 );
@@ -129,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 )),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Divider(
@@ -146,14 +148,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
             StaggeredGridView.countBuilder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: _pageIndex != 1 ? 3 : 2,
               itemCount: Utils.listOfImageUrl.length,
               itemBuilder: (contex, index) {
                 return Container(
-                  padding:
-                      _pageIndex == 1 ? EdgeInsets.all(5) : EdgeInsets.all(0),
+                  padding: _pageIndex == 1
+                      ? const EdgeInsets.all(5)
+                      : const EdgeInsets.all(0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),

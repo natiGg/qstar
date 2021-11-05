@@ -10,12 +10,14 @@ import 'package:path/path.dart';
 
 import 'package:qstar/screen/post/setting_post_page.dart';
 
+// ignore: library_prefixes
 import 'package:image/image.dart' as imageLib;
 import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreen extends StatefulWidget {
   final String imagePath;
 
+  // ignore: use_key_in_widget_constructors
   const PreviewImageScreen({required this.imagePath});
 
   @override
@@ -46,11 +48,11 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => PhotoFilterSelector(
-          title: Text("Photo Filter "),
+          title: const Text("Photo Filter "),
           image: image!,
           filters: presetFiltersList,
           filename: fileName,
-          loader: Center(child: CircularProgressIndicator()),
+          loader: const Center(child: CircularProgressIndicator()),
           fit: BoxFit.contain,
         ),
       ),
@@ -59,6 +61,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });
+      // ignore: avoid_print
       print(imageFile!.path);
     }
   }
@@ -73,12 +76,12 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             }),
-        title: Text(
+        title: const Text(
           "Preview",
           style: TextStyle(
             color: mPrimaryColor,
@@ -89,12 +92,14 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_forward),
+            icon: const Icon(Icons.arrow_forward),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingPostPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingPostPage()));
             },
           ),
         ],
@@ -102,15 +107,13 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
       body: Center(
         child: Container(
           child: imageFile == null
-              ? Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 2, child: Image.file(File(widget.imagePath))),
-                      SizedBox(height: 5.0),
-                    ],
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 2, child: Image.file(File(widget.imagePath))),
+                    const SizedBox(height: 5.0),
+                  ],
                 )
               : Image.file(imageFile!),
         ),
@@ -118,7 +121,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => getImage(context),
         tooltip: 'refreshe',
-        child: Icon(Icons.edit),
+        child: const Icon(Icons.edit),
       ),
     );
   }

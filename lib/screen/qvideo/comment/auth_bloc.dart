@@ -5,6 +5,7 @@ import 'user.dart';
 const Duration _defaultDelayResponse = Duration(seconds: 2);
 
 class AuthBloc extends ChangeNotifier {
+  // ignore: constant_identifier_names
   static const TAG = 'AuthBloc';
 
   Result<User?>? user;

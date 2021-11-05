@@ -4,6 +4,8 @@ import 'package:qstar/constant.dart';
 import 'languages_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -16,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Setting",
             style: TextStyle(
               color: mPrimaryColor,
@@ -28,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           backgroundColor: Colors.white,
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           child: buildSettingsList(),
         ));
   }
@@ -137,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           tiles: [
             SettingsTile(
               title: 'Language',
-              leading: Icon(
+              leading: const Icon(
                 Icons.language,
                 color: mPrimaryColor,
               ),
@@ -146,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                        LanguagesScreen(),
+                        const LanguagesScreen(),
                     transitionDuration: Duration.zero,
                   ),
                 );
@@ -154,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingsTile(
               title: 'Help',
-              leading: Icon(
+              leading: const Icon(
                 Icons.help,
                 color: mPrimaryColor,
               ),
@@ -162,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SettingsTile(
               title: 'about',
-              leading: Icon(
+              leading: const Icon(
                 Icons.info,
                 color: mPrimaryColor,
               ),
