@@ -4,6 +4,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 
 class CategoryVid extends StatefulWidget {
+  const CategoryVid({Key? key}) : super(key: key);
+
   @override
   _CategoryVideo2 createState() => _CategoryVideo2();
 }
@@ -30,9 +32,9 @@ class _CategoryVideo2 extends State<CategoryVid>
         leadingWidth: 100,
         backgroundColor: Colors.white,
         leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
+          padding: const EdgeInsets.only(left: 20, top: 15),
           width: 100,
-          child: Text(
+          child: const Text(
             "Q video",
             style: TextStyle(
               color: mPrimaryColor,
@@ -44,7 +46,7 @@ class _CategoryVideo2 extends State<CategoryVid>
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -58,7 +60,7 @@ class _CategoryVideo2 extends State<CategoryVid>
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation1, animation2) =>
-                                        Qvideoscreen(),
+                                        const Qvideoscreen(),
                                 transitionDuration: Duration.zero,
                               ),
                             );
@@ -81,42 +83,40 @@ class _CategoryVideo2 extends State<CategoryVid>
                                           Colors.black.withOpacity(.9),
                                           Colors.black.withOpacity(.1),
                                         ])),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child: IconButton(
-                                                  icon: Icon(
-                                                    Icons.play_arrow_rounded,
-                                                    color: Colors.white,
-                                                    size: 40.0,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (context,
-                                                                animation1,
-                                                                animation2) =>
-                                                            Qvideoscreen(),
-                                                        transitionDuration:
-                                                            Duration.zero,
-                                                      ),
-                                                    );
-                                                  },
-                                                )),
-                                          ],
-                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40.0,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) =>
+                                                          const Qvideoscreen(),
+                                                      transitionDuration:
+                                                          Duration.zero,
+                                                    ),
+                                                  );
+                                                },
+                                              )),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: Text(
@@ -144,7 +144,8 @@ class _CategoryVideo2 extends State<CategoryVid>
           Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => Qvideoscreen(),
+              pageBuilder: (context, animation1, animation2) =>
+                  const Qvideoscreen(),
               transitionDuration: Duration.zero,
             ),
           );

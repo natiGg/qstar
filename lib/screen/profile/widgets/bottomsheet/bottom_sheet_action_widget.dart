@@ -8,6 +8,7 @@ import 'package:qstar/screen/profilesetting/setting.dart';
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
 
+  // ignore: use_key_in_widget_constructors
   const BottomSheetActionWidget(this.action);
 
   @override
@@ -16,14 +17,14 @@ class BottomSheetActionWidget extends StatelessWidget {
       highlightColor: Colors.blue.withOpacity(0.1),
       splashColor: Colors.blue.withOpacity(0.3),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [
             Icon(
               action.iconData,
               color: mPrimaryColor,
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Text(
@@ -43,7 +44,7 @@ class BottomSheetActionWidget extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      SettingsScreen(),
+                      const SettingsScreen(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -65,6 +66,7 @@ class BottomSheetActionWidget extends StatelessWidget {
 
           default:
             {
+              // ignore: avoid_print
               print("Invalid Date");
             }
             break;

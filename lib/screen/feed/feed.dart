@@ -1072,7 +1072,7 @@ class _WPostState extends State<WPost> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) {
-                                      return UserProfile();
+                                      return const UserProfile();
                                     },
                                   ),
                                 );
@@ -1427,7 +1427,7 @@ void showSheet(context) {
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) =>
-                                Search(),
+                                const Search(),
                             transitionDuration: Duration.zero,
                           ),
                         );

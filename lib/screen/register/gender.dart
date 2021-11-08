@@ -24,7 +24,7 @@ class GenderClass extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Text(
+          const Text(
             "Select gender",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -33,20 +33,21 @@ class GenderClass extends StatelessWidget {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GenderPickerWithImage(
             showOtherGender: true,
             verticalAlignedText: false,
             selectedGender: Gender.Male,
-            selectedGenderTextStyle: TextStyle(
+            selectedGenderTextStyle: const TextStyle(
                 color: Color(0xFF8b32a8), fontWeight: FontWeight.bold),
-            unSelectedGenderTextStyle:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+            unSelectedGenderTextStyle: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.normal),
             onChanged: (Gender? gender) {
+              // ignore: avoid_print
               print(gender);
             },
             equallyAligned: true,
-            animationDuration: Duration(milliseconds: 300),
+            animationDuration: const Duration(milliseconds: 300),
             isCircular: true,
             // default : true,
             opacityOfGradient: 0.4,
@@ -65,7 +66,7 @@ class GenderClass extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) {
-                      return Phonevarification();
+                      return const Phonevarification();
                     },
                   ),
                 );
@@ -94,7 +95,7 @@ class GenderClass extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Next',
                   style: textStyle,
                 ),

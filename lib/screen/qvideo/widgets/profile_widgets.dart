@@ -32,7 +32,7 @@ Widget profileStats(
           padding: const EdgeInsets.only(top: 5.0),
           child: RatingBarIndicator(
             rating: 2.75,
-            itemBuilder: (context, index) => Icon(
+            itemBuilder: (context, index) => const Icon(
               Icons.star,
               color: Colors.amber,
             ),
@@ -41,12 +41,12 @@ Widget profileStats(
             direction: Axis.horizontal,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Center(
+        const Center(
           child: Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: EdgeInsets.all(2.0),
             child: Text(
               "@Betty",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -54,7 +54,7 @@ Widget profileStats(
           ),
         ),
         bio(primaryColor: mPrimaryColor),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         SizedBox(
@@ -70,7 +70,7 @@ Widget profileStats(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            Followers(),
+                            const Followers(),
                         transitionDuration: Duration.zero,
                       ),
                     );
@@ -82,7 +82,7 @@ Widget profileStats(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            Followed(),
+                            const Followed(),
                         transitionDuration: Duration.zero,
                       ),
                     );
@@ -109,8 +109,8 @@ Widget bio({required Color primaryColor}) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           RichText(
-            text: TextSpan(
-              children: const [
+            text: const TextSpan(
+              children: [
                 TextSpan(
                   text: 'It is what it is...',
                   style: TextStyle(
@@ -134,12 +134,12 @@ Widget editProfile(
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: mPrimaryColor,
       ),
-      child: Center(
+      child: const Center(
           child: Text(
         'Edit Profile',
         style: TextStyle(
@@ -151,6 +151,7 @@ Widget editProfile(
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget Following() {
   return Container(
     color: Colors.transparent,
@@ -158,11 +159,11 @@ Widget Following() {
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: mPrimaryColor)),
-      child: Center(
+      child: const Center(
           child: Text(
         'remove',
         style: TextStyle(
@@ -174,6 +175,7 @@ Widget Following() {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget Unfollow() {
   return Container(
     color: Colors.transparent,
@@ -181,11 +183,11 @@ Widget Unfollow() {
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: mPrimaryColor)),
-      child: Center(
+      child: const Center(
           child: Text(
         'Following',
         style: TextStyle(
@@ -220,6 +222,7 @@ Widget storyHighlight({@required primaryColor}) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget SocialMedia() {
   return Row(
     children: [
@@ -230,7 +233,7 @@ Widget SocialMedia() {
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
+          child: const Image(
             image: AssetImage("assets/images/yt.png"),
             width: 20,
             height: 20,
@@ -239,7 +242,7 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
       SizedBox(
@@ -249,7 +252,7 @@ Widget SocialMedia() {
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
+          child: const Image(
             image: AssetImage("assets/images/fb.png"),
             width: 20,
             height: 20,
@@ -258,7 +261,7 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
       SizedBox(
@@ -268,7 +271,7 @@ Widget SocialMedia() {
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
+          child: const Image(
             image: AssetImage("assets/images/tiktok.png"),
             width: 20,
             height: 20,
@@ -277,7 +280,7 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
       SizedBox(
@@ -287,7 +290,7 @@ Widget SocialMedia() {
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
+          child: const Image(
             image: AssetImage("assets/images/inst.png"),
             width: 20,
             height: 20,
@@ -314,7 +317,7 @@ Widget statsBox({
       children: <Widget>[
         Text(
           count,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Text(
@@ -354,7 +357,7 @@ Widget profileAvatar({
             child: Container(
               height: height - 10, //140,
               width: width - 10, //140,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
                 shape: BoxShape.circle,
               ),

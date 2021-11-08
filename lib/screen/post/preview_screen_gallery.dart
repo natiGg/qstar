@@ -76,7 +76,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.popUntil(context, (route) => route.isFirst);
@@ -96,8 +96,10 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingPostPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingPostPage()));
             },
           ),
         ],
@@ -105,15 +107,13 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       body: Center(
         child: Container(
           child: imageFile == null
-              ? Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 2, child: Image.file(File(widget.imagePath))),
-                      SizedBox(height: 5.0),
-                    ],
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 2, child: Image.file(File(widget.imagePath))),
+                    const SizedBox(height: 5.0),
+                  ],
                 )
               : Image.file(imageFile!),
         ),
@@ -121,7 +121,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => getImage(context),
         tooltip: 'refreshe',
-        child: Icon(Icons.edit),
+        child: const Icon(Icons.edit),
       ),
     );
   }

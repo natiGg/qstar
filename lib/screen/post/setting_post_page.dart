@@ -10,7 +10,10 @@ import 'package:qstar/screen/post/location.dart';
 import 'package:qstar/screen/post/setting.dart';
 
 class SettingPostPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = 'SettingPostPage';
+
+  const SettingPostPage({Key? key}) : super(key: key);
   @override
   _SettingPostPageState createState() => _SettingPostPageState();
 }
@@ -19,6 +22,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // ignore: unused_local_variable
     for (var element in ModalRoute.of(context)!.overlayEntries) {}
   }
 
@@ -34,12 +38,12 @@ class _SettingPostPageState extends State<SettingPostPage> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   color: mPrimaryColor,
                   onPressed: () {
                     Navigator.popUntil(context, (route) => route.isFirst);
                   }),
-              title: Text(
+              title: const Text(
                 "New Post",
                 style: TextStyle(
                   color: mPrimaryColor,
@@ -50,7 +54,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
               elevation: 0.0,
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.check),
+                  icon: const Icon(Icons.check),
                   iconSize: 30.0,
                   color: mPrimaryColor,
                   onPressed: () {},
@@ -60,38 +64,38 @@ class _SettingPostPageState extends State<SettingPostPage> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  WriteCaptionWidget(),
-                  Divider(
+                  const WriteCaptionWidget(),
+                  const Divider(
                     height: 1,
                   ),
                   ListTile(
-                    title: Text('Tag People'),
+                    title: const Text('Tag People'),
                     dense: true,
                     onTap: () {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Search(),
+                              const Search(),
                           transitionDuration: Duration.zero,
                         ),
                       );
                     },
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   if (context.watch<PostCreateViewModel>().currentLocation ==
                       null)
                     ListTile(
-                      title: Text('Add Location'),
+                      title: const Text('Add Location'),
                       dense: true,
                       onTap: () {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation1, animation2) =>
-                                Searchlocation(),
+                                const Searchlocation(),
                             transitionDuration: Duration.zero,
                           ),
                         );
@@ -106,9 +110,9 @@ class _SettingPostPageState extends State<SettingPostPage> {
                       child: ListTile(
                         title: Text(
                             '${context.watch<PostCreateViewModel>().currentLocation}'),
-                        leading: Icon(Icons.pin_drop),
+                        leading: const Icon(Icons.pin_drop),
                         trailing: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () {
                               context
                                   .read<PostCreateViewModel>()
@@ -117,29 +121,29 @@ class _SettingPostPageState extends State<SettingPostPage> {
                         dense: true,
                       ),
                     ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   if (context.watch<PostCreateViewModel>().currentLocation ==
                       null)
-                    LocationSelectorWidget(),
+                    const LocationSelectorWidget(),
                   if (context.watch<PostCreateViewModel>().currentLocation ==
                       null)
-                    Divider(
+                    const Divider(
                       height: 1,
                     ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
                   ListTile(
-                    title: Text('Setting'),
+                    title: const Text('Setting'),
                     dense: true,
                     onTap: () {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              SettingsScreen(),
+                              const SettingsScreen(),
                           transitionDuration: Duration.zero,
                         ),
                       );

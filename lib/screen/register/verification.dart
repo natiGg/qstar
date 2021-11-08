@@ -47,7 +47,7 @@ class _SetPState extends State<Verification> {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message!),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -65,9 +65,9 @@ class _SetPState extends State<Verification> {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+          const SizedBox(height: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               "Phone Number Verification",
               style: TextStyle(
@@ -78,8 +78,8 @@ class _SetPState extends State<Verification> {
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             "Enter the code sent to: the phone number you enterd",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -87,7 +87,7 @@ class _SetPState extends State<Verification> {
               fontSize: 10.0, // and the font size
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Form(
@@ -97,7 +97,7 @@ class _SetPState extends State<Verification> {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
                 child: PinCodeTextField(
                   appContext: context,
-                  pastedTextStyle: TextStyle(
+                  pastedTextStyle: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
@@ -126,7 +126,7 @@ class _SetPState extends State<Verification> {
                       selectedFillColor: Colors.white,
                       selectedColor: mPrimaryColor),
                   cursorColor: Colors.black,
-                  animationDuration: Duration(milliseconds: 300),
+                  animationDuration: const Duration(milliseconds: 300),
                   enableActiveFill: true,
                   errorAnimationController: errorController,
                   controller: textEditingController,
@@ -139,18 +139,21 @@ class _SetPState extends State<Verification> {
                     )
                   ],
                   onCompleted: (v) {
+                    // ignore: avoid_print
                     print("Completed");
                   },
                   // onTap: () {
                   //   print("Pressed");
                   // },
                   onChanged: (value) {
+                    // ignore: avoid_print
                     print(value);
                     setState(() {
                       currentText = value;
                     });
                   },
                   beforeTextPaste: (text) {
+                    // ignore: avoid_print
                     print("Allowing to paste $text");
                     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                     //but you can show anything you want here, like your pop up saying wrong paste format or etc
@@ -162,7 +165,7 @@ class _SetPState extends State<Verification> {
             padding: const EdgeInsets.only(left: 350.0),
             child: Flexible(
                 child: TextButton(
-              child: Text(
+              child: const Text(
                 "Clear",
                 style: TextStyle(color: mPrimaryColor),
               ),
@@ -175,7 +178,7 @@ class _SetPState extends State<Verification> {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Text(
               hasError ? "*Please fill up all the cells properly" : "",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.w400),
@@ -185,13 +188,13 @@ class _SetPState extends State<Verification> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Didn't receive the code? ",
                 style: TextStyle(color: Colors.black54, fontSize: 15),
               ),
               TextButton(
                   onPressed: () => snackBar("OTP resend!!"),
-                  child: Text(
+                  child: const Text(
                     "RESEND",
                     style: TextStyle(
                         color: mPrimaryColor,
@@ -200,7 +203,7 @@ class _SetPState extends State<Verification> {
                   ))
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 14,
           ),
           Container(
@@ -224,7 +227,7 @@ class _SetPState extends State<Verification> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Next',
                   style: textStyle,
                 ),
@@ -278,7 +281,7 @@ class _SetPState extends State<Verification> {
           //             blurRadius: 5)
           //       ]),
           // ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
         ],

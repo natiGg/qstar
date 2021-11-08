@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/languages.g.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:language_picker/language_picker.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 
 class PersonalInfo extends StatefulWidget {
+  const PersonalInfo({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -48,77 +49,86 @@ class _MyHomePageState extends State<PersonalInfo> {
       ),
       body: Theme(
         data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
           primary: mPrimaryColor,
         )),
-        child: Stepper(
-          steps: getSteps(),
-          controlsBuilder: (BuildContext context,
-              {VoidCallback? onStepContinue,
-              VoidCallback? onStepCancel,
-              VoidCallback? onStpeFinish}) {
-            final isLastStep = currentStep == getSteps().length - 1;
-            return Row(
-              children: <Widget>[
-                OutlinedButton(
-                    onPressed: onStepContinue,
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0))),
-                    ),
-                    child: (isLastStep)
-                        ? GestureDetector(
-                            onTap: () {
-                              _scaffoldKey.currentState!.showSnackBar(SnackBar(
-                                duration: Duration(seconds: 4),
-                                content: Row(
-                                  children: const <Widget>[
-                                    CircularProgressIndicator(),
-                                    Text("    Loading...")
-                                  ],
+        child: Expanded(
+          child: SingleChildScrollView(
+            child: Stepper(
+              steps: getSteps(),
+              controlsBuilder: (BuildContext context,
+                  {VoidCallback? onStepContinue,
+                  VoidCallback? onStepCancel,
+                  VoidCallback? onStpeFinish}) {
+                final isLastStep = currentStep == getSteps().length - 1;
+                return Row(
+                  children: <Widget>[
+                    OutlinedButton(
+                        onPressed: onStepContinue,
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        ),
+                        child: (isLastStep)
+                            ? GestureDetector(
+                                onTap: () {
+                                  // ignore: deprecated_member_use
+                                  _scaffoldKey.currentState!
+                                      // ignore: deprecated_member_use
+                                      .showSnackBar(SnackBar(
+                                    duration: const Duration(seconds: 4),
+                                    content: Row(
+                                      children: const <Widget>[
+                                        CircularProgressIndicator(),
+                                        Text("    Loading...")
+                                      ],
+                                    ),
+                                  ));
+                                  _ondelay();
+                                },
+                                child: const Text('Submit'))
+                            : const Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: mPrimaryColor,
                                 ),
-                              ));
-                              _ondelay();
-                            },
-                            child: const Text('Submit'))
-                        : const Text(
-                            'Next',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: mPrimaryColor,
-                            ),
-                          )),
-                SizedBox(
-                  width: 15,
-                ),
-                OutlinedButton(
-                    onPressed: onStepCancel,
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0))),
+                              )),
+                    const SizedBox(
+                      width: 15,
                     ),
-                    child: const Text(
-                      'Go back',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: mPrimaryColor,
-                      ),
-                    )),
-              ],
-            );
-          },
-          currentStep: currentStep,
-          onStepTapped: (int step) {
-            setState(() {
-              currentStep = step;
-            });
-          },
-          onStepCancel: () {
-            currentStep > 0 ? setState(() => currentStep -= 1) : null;
-          },
-          onStepContinue: () {
-            currentStep < 3 ? setState(() => currentStep += 1) : null;
-          },
+                    OutlinedButton(
+                        onPressed: onStepCancel,
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
+                        ),
+                        child: const Text(
+                          'Go back',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: mPrimaryColor,
+                          ),
+                        )),
+                  ],
+                );
+              },
+              currentStep: currentStep,
+              onStepTapped: (int step) {
+                setState(() {
+                  currentStep = step;
+                });
+              },
+              onStepCancel: () {
+                currentStep > 0 ? setState(() => currentStep -= 1) : null;
+              },
+              onStepContinue: () {
+                currentStep < 3 ? setState(() => currentStep += 1) : null;
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -127,19 +137,19 @@ class _MyHomePageState extends State<PersonalInfo> {
   List<Step> getSteps() {
     return [
       Step(
-        title: Text('Genral Info'),
+        title: const Text('Genral Info'),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Full name'),
+              decoration: const InputDecoration(labelText: 'Full name'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
               value: _gender,
               isExpanded: true,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               items: <String>[
                 'Male',
                 'Female',
@@ -149,7 +159,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(value),
                 );
               }).toList(),
-              hint: Text(
+              hint: const Text(
                 "Gender",
                 style: TextStyle(
                     color: Colors.black,
@@ -162,7 +172,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             GestureDetector(
@@ -172,9 +182,10 @@ class _MyHomePageState extends State<PersonalInfo> {
                   countryListTheme: CountryListThemeData(
                     flagSize: 25,
                     backgroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                    textStyle:
+                        const TextStyle(fontSize: 16, color: Colors.blueGrey),
                     //Optional. Sets the border radius for the bottomsheet.
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0),
                     ),
@@ -204,17 +215,17 @@ class _MyHomePageState extends State<PersonalInfo> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'City'),
+              decoration: const InputDecoration(labelText: 'City'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Phone Number'),
+              decoration: const InputDecoration(labelText: 'Phone Number'),
               keyboardType: TextInputType.number,
             ),
           ],
@@ -223,20 +234,20 @@ class _MyHomePageState extends State<PersonalInfo> {
         state: currentStep == 0 ? StepState.editing : StepState.complete,
       ),
       Step(
-        title: Text('Personal Details'),
+        title: const Text('Personal Details'),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Religion'),
+              decoration: const InputDecoration(labelText: 'Religion'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'height'),
+              decoration: const InputDecoration(labelText: 'height'),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             LanguagePickerDropdown(
@@ -244,13 +255,13 @@ class _MyHomePageState extends State<PersonalInfo> {
                 onValuePicked: (Language language) {
                   lan = language.name;
                 }),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
               value: _hob,
               isExpanded: true,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               items: <String>[
                 'Music',
                 'Sport',
@@ -272,7 +283,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(hob),
                 );
               }).toList(),
-              hint: Text(
+              hint: const Text(
                 "Hobbies",
                 style: TextStyle(
                     color: Colors.black,
@@ -295,13 +306,13 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: Text("BackGround Info"),
+        title: const Text("BackGround Info"),
         content: Column(
           children: <Widget>[
             DropdownButton<String>(
               value: _edu,
               isExpanded: true,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               items: <String>[
                 'Preschool',
                 'Primary School',
@@ -318,7 +329,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(edu),
                 );
               }).toList(),
-              hint: Text(
+              hint: const Text(
                 "Educaition",
                 style: TextStyle(
                     color: Colors.black,
@@ -331,13 +342,14 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
               value: _emp,
               isExpanded: true,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               items: <String>[
                 'Employed',
                 'Self-employed',
@@ -352,7 +364,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(emp),
                 );
               }).toList(),
-              hint: Text(
+              hint: const Text(
                 "Employment",
                 style: TextStyle(
                     color: Colors.black,
@@ -365,11 +377,11 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Occupation'),
+              decoration: const InputDecoration(labelText: 'Occupation'),
             ),
           ],
         ),
@@ -381,25 +393,27 @@ class _MyHomePageState extends State<PersonalInfo> {
                 : StepState.complete,
       ),
       Step(
-        title: Text("Match Perference"),
+        title: const Text("Match Perference"),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Location preference'),
+              decoration:
+                  const InputDecoration(labelText: 'Location preference'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Natinality preference'),
+              decoration:
+                  const InputDecoration(labelText: 'Natinality preference'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
               value: _gender,
               isExpanded: true,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               items: <String>[
                 'Male',
                 'Female',
@@ -409,7 +423,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(value),
                 );
               }).toList(),
-              hint: Text(
+              hint: const Text(
                 "Gender preference",
                 style: TextStyle(
                     color: Colors.black,
@@ -422,14 +436,14 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 208.0),
-              child: const Text('Age preference'),
+            const Padding(
+              padding: EdgeInsets.only(right: 208.0),
+              child: Text('Age preference'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             RangeSlider(
@@ -460,14 +474,14 @@ class _MyHomePageState extends State<PersonalInfo> {
   }
 
   _ondelay() {
-    int count = 0;
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       // Navigator.popUntil(context, (route) {
       //   return count++ == 2;
       // });
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ProfileImageAppbarRoute()),
+        MaterialPageRoute(
+            builder: (context) => const ProfileImageAppbarRoute()),
       );
     });
   }

@@ -3,6 +3,8 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:qstar/constant.dart';
 
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -18,12 +20,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
                 Navigator.popUntil(context, (route) => route.isFirst);
               }),
-          title: Text(
+          title: const Text(
             "Setting",
             style: TextStyle(
               color: mPrimaryColor,
@@ -34,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           elevation: 0.0,
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           child: buildSettingsList(),
         ));
   }
@@ -46,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           tiles: [
             SettingsTile.switchTile(
               title: 'Turn of commenting',
-              leading: Icon(Icons.tv_off),
+              leading: const Icon(Icons.tv_off),
               onToggle: (bool value) {},
               switchValue: false,
             ),

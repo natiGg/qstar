@@ -1,8 +1,13 @@
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 import 'package:qstar/constant.dart';
 
 class TermofService extends StatelessWidget {
+  const TermofService({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +29,14 @@ class TermofService extends StatelessWidget {
           ),
         ),
       ),
-      body: OnBoardingPage(),
+      body: const OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
+
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }

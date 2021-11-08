@@ -1,3 +1,7 @@
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
+// ignore: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +26,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         leadingWidth: 100,
         backgroundColor: Colors.white,
         leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
+          padding: const EdgeInsets.only(left: 20, top: 15),
           width: 100,
-          child: Text(
+          child: const Text(
             "User Name",
             style: TextStyle(
               color: mPrimaryColor,
@@ -35,18 +39,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
+              onPressed: () {},
+              icon: const Icon(Icons.menu),
+              color: mPrimaryColor)
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Center(
@@ -64,10 +70,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image: DecorationImage(
+                          image: const DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
                                 "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
@@ -87,7 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             color: mPrimaryColor,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.edit,
                             color: Colors.white,
                           ),
@@ -95,16 +101,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
               ),
-              Center(
+              const Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Text(
                     "Betty",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
               const SizedBox(height: 24),
@@ -117,25 +123,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
                 child: RichText(
-                  text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
-                    TextSpan(
-                        text:
-                            "Help people disocver your account by using the name you're known by: either your full name,nickname or business name"),
-                  ]),
+                  text: const TextSpan(
+                      style: TextStyle(color: Colors.grey),
+                      children: [
+                        TextSpan(
+                            text:
+                                "Help people disocver your account by using the name you're known by: either your full name,nickname or business name"),
+                      ]),
                 ),
               ),
               const SizedBox(height: 2),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 alignment: Alignment.centerLeft,
                 child: RichText(
-                  text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
-                    TextSpan(
-                        text:
-                            "you can only change your name twice within 14 days"),
-                  ]),
+                  text: const TextSpan(
+                      style: TextStyle(color: Colors.grey),
+                      children: [
+                        TextSpan(
+                            text:
+                                "you can only change your name twice within 14 days"),
+                      ]),
                 ),
               ),
               const SizedBox(height: 24),
@@ -148,22 +156,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
                 child: RichText(
-                  text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: [
-                    TextSpan(
-                        text:
-                            "In most cases,you'll be able to change your username back to natig for another 14 days."),
-                    TextSpan(
-                      text: 'Findout more',
-                      style: TextStyle(
-                        color: mPrimaryColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pop(context);
-                        },
-                    ),
-                  ]),
+                  text: TextSpan(
+                      style: const TextStyle(color: Colors.grey),
+                      children: [
+                        const TextSpan(
+                            text:
+                                "In most cases,you'll be able to change your username back to natig for another 14 days."),
+                        TextSpan(
+                          text: 'Findout more',
+                          style: const TextStyle(
+                            color: mPrimaryColor,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pop(context);
+                            },
+                        ),
+                      ]),
                 ),
               ),
               const SizedBox(height: 24),
@@ -182,33 +191,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
                 child: RichText(
-                  text:
-                      TextSpan(style: TextStyle(color: Colors.grey), children: const [
-                    TextSpan(
-                        text:
-                            "In most cases,you'll be able to change your username back to natig for another 14 days."),
-                  ]),
+                  text: const TextSpan(
+                      style: TextStyle(color: Colors.grey),
+                      children: [
+                        TextSpan(
+                            text:
+                                "In most cases,you'll be able to change your username back to natig for another 14 days."),
+                      ]),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                   // ignore: deprecated_member_use
                   RaisedButton.icon(
                     onPressed: () {},
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    label: Text(
+                    label: const Text(
                       'Update Profile',
                       style: TextStyle(color: Colors.white),
                     ),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.update,
                       color: Colors.white,
                     ),
@@ -219,13 +229,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // ignore: deprecated_member_use
                   RaisedButton.icon(
                     onPressed: () {},
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    label: Text(
+                    label: const Text(
                       'Cancel  ',
                       style: TextStyle(color: mPrimaryColor),
                     ),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.cancel,
                       color: mPrimaryColor,
                     ),
@@ -233,7 +243,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     splashColor: mPrimaryColor,
                     color: Colors.white,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                 ],

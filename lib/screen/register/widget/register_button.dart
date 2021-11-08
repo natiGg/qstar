@@ -37,7 +37,7 @@ class RegisterButton extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Next',
             style: textStyle,
           ),

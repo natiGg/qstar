@@ -8,6 +8,7 @@ class ProfileTabBar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   final ValueChanged<int> onTap;
 
+  // ignore: use_key_in_widget_constructors
   const ProfileTabBar({
     required this.height,
     required this.onTap,
@@ -59,7 +60,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                               color: mPrimaryColor,
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -92,7 +93,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                             color: mPrimaryColor,
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),
@@ -126,7 +127,7 @@ class _ProfileTabBarState extends State<ProfileTabBar> {
                             color: mPrimaryColor,
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ),

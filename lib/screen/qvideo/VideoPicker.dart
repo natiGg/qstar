@@ -5,9 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoRecorderExample extends StatefulWidget {
+  const VideoRecorderExample({Key? key}) : super(key: key);
+
   @override
   _VideoRecorderExampleState createState() {
     return _VideoRecorderExampleState();
@@ -15,18 +16,13 @@ class VideoRecorderExample extends StatefulWidget {
 }
 
 class _VideoRecorderExampleState extends State<VideoRecorderExample> {
-  File? _image;
-  File? _cameraImage;
-  File? _video;
   File? _cameraVideo;
 
   ImagePicker picker = ImagePicker();
 
-  VideoPlayerController? _videoPlayerController;
-  VideoPlayerController? _cameraVideoPlayerController;
-
   // This funcion will helps you to pick a Video File from Camera
   _pickVideoFromCamera() async {
+    // ignore: deprecated_member_use
     PickedFile? pickedFile = await picker.getVideo(source: ImageSource.camera);
 
     _cameraVideo = File(pickedFile!.path);
@@ -53,7 +49,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      Qvideoscreen(),
+                      const Qvideoscreen(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -128,6 +124,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
   _pickVideo() async {
     ImagePicker picker = ImagePicker();
     File? _video;
+    // ignore: deprecated_member_use
     PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
 
     // _video = File(pickedFile!.path);

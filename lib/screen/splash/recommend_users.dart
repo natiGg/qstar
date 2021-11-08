@@ -19,7 +19,7 @@ class Recommend extends StatelessWidget {
         scaffoldBackgroundColor: mBackgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: RecommendUser(),
+      home: const RecommendUser(),
     );
   }
 }
@@ -32,7 +32,7 @@ class RecommendUser extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 170,
         ),
         child: Column(
@@ -43,9 +43,9 @@ class RecommendUser extends StatelessWidget {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   left: 20.0,
                   top: 10.0,
                 ),
@@ -60,7 +60,7 @@ class RecommendUser extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyHomePage(),
+                            builder: (context) => const MyHomePage(),
                           ),
                         );
                       },
@@ -74,7 +74,7 @@ class RecommendUser extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyHomePage(),
+                            builder: (context) => const MyHomePage(),
                           ),
                         );
                       },
@@ -88,7 +88,7 @@ class RecommendUser extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyHomePage(),
+                            builder: (context) => const MyHomePage(),
                           ),
                         );
                       },
@@ -102,7 +102,7 @@ class RecommendUser extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyHomePage(),
+                            builder: (context) => const MyHomePage(),
                           ),
                         );
                       },
@@ -143,12 +143,12 @@ class RecomendPlantCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MyHomePage(),
+            builder: (context) => const MyHomePage(),
           ),
         );
       },
       child: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           left: 20.0,
           top: 5.0 / 2,
           bottom: 20.0 * 2.5,
@@ -161,18 +161,18 @@ class RecomendPlantCard extends StatelessWidget {
                 child: Image.asset(image,
                     width: double.infinity, fit: BoxFit.fill)),
             Container(
-              padding: EdgeInsets.all(20.0 / 2),
+              padding: const EdgeInsets.all(20.0 / 2),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                     blurRadius: 50,
-                    color: Color(0xFF58269f).withOpacity(0.23),
+                    color: const Color(0xFF58269f).withOpacity(0.23),
                   ),
                 ],
               ),
@@ -187,13 +187,13 @@ class RecomendPlantCard extends StatelessWidget {
                         TextSpan(
                           text: country.toUpperCase(),
                           style: TextStyle(
-                            color: Color(0xFF58269f).withOpacity(0.5),
+                            color: const Color(0xFF58269f).withOpacity(0.5),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     '$price\ffollowers',
                     style: Theme.of(context).textTheme.button,
@@ -202,7 +202,7 @@ class RecomendPlantCard extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
@@ -214,7 +214,7 @@ class RecomendPlantCard extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Follow',
                     style: textStyle,
                   ),

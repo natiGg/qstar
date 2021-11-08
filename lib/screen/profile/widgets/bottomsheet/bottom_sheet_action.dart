@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class BottomSheetAction {
+  // ignore: constant_identifier_names
   static const TAG = 'BottomSheetAction';
 
   IconData iconData;

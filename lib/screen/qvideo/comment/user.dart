@@ -1,4 +1,5 @@
 class User {
+  // ignore: constant_identifier_names
   static const TAG = 'User';
 
   String email;

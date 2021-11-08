@@ -77,6 +77,8 @@ dependencies:
   camera_camera: ^2.0.2
   video_player: ^2.2.6
   image_picker: ^0.8.4+2
+  
+  
 
 
 

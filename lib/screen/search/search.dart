@@ -5,9 +5,11 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:qstar/constant.dart';
 
 class Search extends StatelessWidget {
+  const Search({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -15,6 +17,8 @@ class Search extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -99,10 +103,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         transition: CircularFloatingSearchBarTransition(),
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         title: Text(
           selectedTerm,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: "font1", color: mPrimaryColor, fontSize: 25),
         ),
         hint: 'Search here...',
@@ -226,38 +230,36 @@ class SearchResultsListView extends StatelessWidget {
       padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
       children: List.generate(
         1,
-        (index) => Container(
-          child: ListTile(
-              title: Text(
-                "Top Searched",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
+        (index) => ListTile(
+            title: const Text(
+              "Top Searched",
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
 
-              // subtitle: "$searchTerm" == "Search"
-              //     ? Text('')
-              //     : Text('$searchTerm'),
-              subtitle: Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Row(
-                    children: [
-                      searchTerm == "Search"
-                          ? Icon(
-                              Icons.search_sharp,
-                              size: 0,
-                            )
-                          : Icon(
-                              Icons.search_sharp,
-                              size: 15,
-                            ),
-                      Padding(
-                        child: searchTerm == "Search"
-                            ? Text('')
-                            : Text(searchTerm),
-                        padding: EdgeInsets.only(left: 10),
-                      ),
-                    ],
-                  ))),
-        ),
+            // subtitle: "$searchTerm" == "Search"
+            //     ? Text('')
+            //     : Text('$searchTerm'),
+            subtitle: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  children: [
+                    searchTerm == "Search"
+                        ? const Icon(
+                            Icons.search_sharp,
+                            size: 0,
+                          )
+                        : const Icon(
+                            Icons.search_sharp,
+                            size: 15,
+                          ),
+                    Padding(
+                      child: searchTerm == "Search"
+                          ? const Text('')
+                          : Text(searchTerm),
+                      padding: const EdgeInsets.only(left: 10),
+                    ),
+                  ],
+                ))),
       ),
     );
   }

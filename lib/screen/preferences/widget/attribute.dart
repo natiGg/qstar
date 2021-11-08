@@ -41,7 +41,7 @@ class Attribute extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => Container(
                 alignment: alignment,
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SvgPicture.asset(
                   'assets/icons/${iconNames[index]}.svg',
                   color: check == index ? mTitleTextColor : mPrimaryTextColor,
