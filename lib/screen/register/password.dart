@@ -57,7 +57,7 @@ class _SetPState extends State<Password> {
             ),
             SizedBox(height: 20),
             Text(
-              "password must be  8 characters containing at least one upper case,None lower case,  one Special character and one digit ",
+              "password must be  8 characters containing at least one upper case, \n one lower case,  one Special character and one digit ",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
                 color: mPrimaryColor, // set the color

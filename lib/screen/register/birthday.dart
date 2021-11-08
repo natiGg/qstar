@@ -22,7 +22,7 @@ const BirthDay({
 class _DateTimePickerState extends State<BirthDay> {
   late double _height;
   late double _width;
-
+    final _formKey = GlobalKey<FormState>();
   late String _setTime, _setDate;
 
   late String _hour, _minute, _time;
@@ -77,88 +77,101 @@ class _DateTimePickerState extends State<BirthDay> {
         child: SizedBox(
           width: _width,
           height: _height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    "When's Your Birthday?",
-                    style: TextStyle(
-                      // we use the [TextStyle] widget to customize text
-                      color: mPrimaryColor, // set the color
-                      fontSize: 32.0,
-                      fontFamily: 'font1', // and the font size
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Text(
+                      "When's Your Birthday?",
+                      style: TextStyle(
+                        // we use the [TextStyle] widget to customize text
+                        color: mPrimaryColor, // set the color
+                        fontSize: 32.0,
+                        fontFamily: 'font1', // and the font size
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  InkWell(  
-                    onTap: () {
-                      _selectDate(context);
+                    SizedBox(height: 20),
+                    InkWell(  
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: Container(
+                        width: _width / 1.7,
+                        height: _height / 9,
+                        margin: EdgeInsets.only(top: 30),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: mPrimaryColor, width: 0.0),
+                          borderRadius:
+                              BorderRadius.all(Radius.elliptical(20, 20)),
+                        ),
+                        child: TextFormField(
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'font1',
+                          ),
+                          textAlign: TextAlign.center,
+                          enabled: false,
+                          keyboardType: TextInputType.text,
+                          controller: _dateController,
+                          onSaved: (val) async {
+                            _setDate = val!;
+                          },
+                          decoration: InputDecoration(
+                              disabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              // labelText: 'Time',
+                              contentPadding: EdgeInsets.only(top: 0.0)),
+                          validator: (dateval){
+                             if (dateval!.isEmpty) {
+                      return "Please put your birth date";
+                    }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(36),
+                    ),
+                    color: mPrimaryColor,
+                    onPressed: () {
+                      if(_formKey.currentState!.validate())
+                      {
+                          Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            print(selectedDate.toString());
+                            return Username(fname: widget.fname, lname: widget.lname, date: selectedDate.toString());
+                          },
+                        ),
+                      );
+                      }
+                    
                     },
                     child: Container(
-                      width: _width / 1.7,
-                      height: _height / 9,
-                      margin: EdgeInsets.only(top: 30),
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: mPrimaryColor, width: 0.0),
-                        borderRadius:
-                            BorderRadius.all(Radius.elliptical(20, 20)),
+                      child: Text(
+                        'Next',
+                        style: textStyle,
                       ),
-                      child: TextFormField(
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'font1',
-                        ),
-                        textAlign: TextAlign.center,
-                        enabled: false,
-                        keyboardType: TextInputType.text,
-                        controller: _dateController,
-                        onSaved: (val) async {
-                          _setDate = val!;
-                        },
-                        decoration: InputDecoration(
-                            disabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none),
-                            // labelText: 'Time',
-                            contentPadding: EdgeInsets.only(top: 0.0)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(36),
-                  ),
-                  color: mPrimaryColor,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) {
-                          return Username(fname: widget.fname, lname: widget.lname, date: selectedDate.toString());
-                        },
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Next',
-                      style: textStyle,
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

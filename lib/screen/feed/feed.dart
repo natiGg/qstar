@@ -1,6 +1,10 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
 import 'dart:async';
+import 'dart:convert';
+import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,17 +29,73 @@ import 'package:qstar/screen/search/search.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "")
+  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""
+),
+  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:""),
+  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
+
+  phone_number:"" , gender:"", enable_suggestion:"", status:"",
+
+  date_of_birth:"", current_location:"",account_type:"",online_status:"",
+  joined_date:"",hobbies:"",total_followers:"")
 ];
 
 List<Post> _posts = [
@@ -152,7 +212,10 @@ class _FeedState extends State<Feed> {
           color: Color(0xFF167F67),
         )),
   ];
-
+  @override
+  void initState() {
+    // TODO: implement initState
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,157 +328,9 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                         ),
-                        // Container(
-                        //   height: 120.0,
-                        //   padding: EdgeInsets.all(10),
-                        //   // decoration: BoxDecoration(
-                        //   //     color: Colors.white,
-                        //   //     borderRadius: BorderRadius.only(
-                        //   //         topLeft: Radius.circular(5),
-                        //   //         bottomLeft: Radius.circular(5),
-                        //   //         bottomRight: Radius.circular(5),
-                        //   //         topRight: Radius.circular(5)),
-                        //   //     boxShadow: [
-                        //   //       BoxShadow(
-                        //   //           color: Colors.grey.withOpacity(0.5),
-                        //   //           spreadRadius: 5,
-                        //   //           blurRadius: 7,
-                        //   //           offset: Offset(0, 3))
-                        //   //     ]),
-                        //   // child: Column(
-                        //   //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   //   children: [
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Live'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.public,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Public'),
-                        //   //       ),
-                        //   //     ),
-                        //   //     const SizedBox(height: 8.0),
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Photo'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.account_circle,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Friends'),
-                        //   //       ),
-                        //   //     ),
-                        //   //     const SizedBox(height: 8.0),
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Room'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.star,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Star'),
-                        //   //       ),
-                        //   //     ),
-                        //   //   ],
-                        //   // ),
-                        // ),
-                        // Container(
-                        //   height: 100.0,
-                        //   child: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       const VerticalDivider(width: 8.0),
-                        //       FlatButton.icon(
-                        //         onPressed: () => print('Photo'),
-                        //         icon: const Icon(
-                        //           Icons.photo_library,
-                        //           color: Colors.green,
-                        //         ),
-                        //         label: Text('Photo'),
-                        //       ),
-                        //       FlatButton.icon(
-                        //         onPressed: () => print('Live'),
-                        //         icon: const Icon(
-                        //           Icons.videocam,
-                        //           color: Colors.red,
-                        //         ),
-                        //         label: Text('Live'),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                     const Divider(height: 5.0, thickness: 0.5),
-
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Live'),
-                    //         icon: const Icon(
-                    //           Icons.public,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Public'),
-                    //       ),
-                    //     ),
-                    //     const SizedBox(height: 8.0),
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Photo'),
-                    //         icon: const Icon(
-                    //           Icons.account_circle,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Friends'),
-                    //       ),
-                    //     ),
-                    //     const SizedBox(height: 8.0),
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Room'),
-                    //         icon: const Icon(
-                    //           Icons.star,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Star'),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -437,15 +352,16 @@ class _FeedState extends State<Feed> {
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                          const PostPage(),
-                                  transitionDuration: Duration.zero,
-                                ),
-                              );
+                              _fetchSuggested();
+                              // Navigator.push(
+                              //   context,
+                              //   PageRouteBuilder(
+                              //     pageBuilder:
+                              //         (context, animation1, animation2) =>
+                              //             const PostPage(),
+                              //     transitionDuration: Duration.zero,
+                              //   ),
+                              // );
                             },
                             icon: const Icon(
                               Icons.photo_library,
@@ -575,6 +491,20 @@ class _FeedState extends State<Feed> {
         ),
       ),
     );
+    
+  }
+    void _fetchSuggested() async {
+         SharedPreferences localStorage = await SharedPreferences.getInstance();
+             localStorage.remove('token');
+              Navigator.of(context).pop(true);
+
+    //       print("waoaoaoossa");
+    // var res = await Network().getData("friendSuggestion");
+    // var body = json.decode(res.body);
+    // print("waoaoaooa");
+    // print(body.toString());
+    // print(res.statusCode);
+
   }
 
   void _postModal(context) {
@@ -1781,4 +1711,5 @@ void showSheet(context) {
           ),
         );
       });
+
 }

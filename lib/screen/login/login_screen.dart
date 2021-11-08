@@ -238,7 +238,8 @@ class _LoginScreenState extends State<LoginScreen> {
     var body = json.decode(res.body);
     print(body.toString());
 
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200) 
+    {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
@@ -249,12 +250,12 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => MyHomePage(),
         ),
       );
-    } else if (body["message"] == "Invalid login credentials!") 
+    } else if (res.statusCode == 401) 
     {
       showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-              title: new Text('Are you sure?'),
+              title: new Text('info'),
               content: new Text(body["message"]),
               actions: <Widget>[
                 new FlatButton(
@@ -272,4 +273,5 @@ class _LoginScreenState extends State<LoginScreen> {
           false;
     }
   }
+  
 }

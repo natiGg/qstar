@@ -12,18 +12,28 @@ import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/register/verification.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'dart:convert';
+import 'package:qstar/screen/register/suggested.dart';
+import 'package:qstar/screen/api/network_utils/api.dart';
 
-List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-];
+
 late int ratings = 3;
 late double rating_d = 3;
 
-class Suggested extends StatelessWidget {
+class Suggested extends StatefulWidget {
+  @override
+  State<Suggested> createState() => _SuggestedState();
+}
+
+class _SuggestedState extends State<Suggested> {
+    late List<User> suggestObjs=[];
+      var body,res;
+      
+  @override
+  void initState() {
+    // TODO: implement initState
+     _fetchSuggested();
+  }
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -72,21 +82,23 @@ class Suggested extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        SizedBox(height: 4),
-                        Column(
-                            children:
-                                _users.map((e) => SuggestedUsers(e)).toList())
-                      ],
-                    ),
+
+          Padding(
+                padding: const EdgeInsets.all(20),
+                child: SizedBox(
+                  height: 300,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 4),
+                      Column(
+                          children:
+                              suggestObjs.map((e) => SuggestedUsers(e)).toList())
+                    ],
                   ),
                 ),
+              ),
+    
               ],
             ),
           ),
@@ -119,14 +131,32 @@ class Suggested extends StatelessWidget {
         ],
       ),
     );
+  } 
+  
+  _fetchSuggested() async {
+    print("about to fetch suggested");
+    res = await Network().getData("friendSuggestion");
+    body = json.decode(res.body);
+    print("received response");
+    print(body["data"].toString());
+
+    suggestObjs=body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+      print(suggestObjs.toString());
+    return suggestObjs;
   }
 }
 
-class SuggestedUsers extends StatelessWidget {
+class SuggestedUsers extends StatefulWidget {
   final User user;
 
   const SuggestedUsers(this.user);
 
+  @override
+  State<SuggestedUsers> createState() => _SuggestedUsersState();
+}
+
+class _SuggestedUsersState extends State<SuggestedUsers> {
+  var body,res;
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -145,7 +175,7 @@ class SuggestedUsers extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/images/profile${user.id}.jpg',
+                    'assets/images/profile${widget.user.status}.jpg',
                   ),
                 ),
               ),
@@ -159,7 +189,7 @@ class SuggestedUsers extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: Text(
-                      "@Egele",
+                      widget.user.userName,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -169,7 +199,7 @@ class SuggestedUsers extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 26),
                     child: Text(
-                      "Full name",
+                      widget.user.name,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -193,7 +223,7 @@ class SuggestedUsers extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: Container(
                       child: Text(
-                        "127K",
+                        "${widget.user.online_status} Followers",
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -212,14 +242,7 @@ class SuggestedUsers extends StatelessWidget {
                         ),
                         color: mPrimaryColor,
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return Verification();
-                              },
-                            ),
-                          );
+                         
                         },
                         child: Container(
                           width: double.infinity,
@@ -241,4 +264,6 @@ class SuggestedUsers extends StatelessWidget {
       ),
     ]);
   }
+
+ 
 }
