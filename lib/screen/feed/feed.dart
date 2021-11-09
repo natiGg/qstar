@@ -2,9 +2,9 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:qstar/screen/api/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,76 +26,241 @@ import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/search/search.dart';
+
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""
-),
-  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"")
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: ""),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "")
 ];
 
 List<Post> _posts = [
@@ -282,11 +447,11 @@ class _FeedState extends State<Feed> {
             // ),
 
             Card(
-              margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
               elevation: 2,
               shape: null,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
+                padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
                 color: Colors.white,
                 child: Column(
                   children: [
@@ -352,16 +517,16 @@ class _FeedState extends State<Feed> {
                           const VerticalDivider(width: 8.0),
                           FlatButton.icon(
                             onPressed: () {
-                              _fetchSuggested();
-                              // Navigator.push(
-                              //   context,
-                              //   PageRouteBuilder(
-                              //     pageBuilder:
-                              //         (context, animation1, animation2) =>
-                              //             const PostPage(),
-                              //     transitionDuration: Duration.zero,
-                              //   ),
-                              // );
+                              //  _fetchSuggested();
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          const PostPage(),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
                             },
                             icon: const Icon(
                               Icons.photo_library,
@@ -397,7 +562,7 @@ class _FeedState extends State<Feed> {
                 const Padding(
                   padding: EdgeInsets.only(left: 25.0),
                   child: Text(
-                    'Perfect match for you',
+                    'Your Perfect match',
                     style: TextStyle(
                         color: mPrimaryColor,
                         fontSize: 15,
@@ -491,20 +656,6 @@ class _FeedState extends State<Feed> {
         ),
       ),
     );
-    
-  }
-    void _fetchSuggested() async {
-         SharedPreferences localStorage = await SharedPreferences.getInstance();
-             localStorage.remove('token');
-              Navigator.of(context).pop(true);
-
-    //       print("waoaoaoossa");
-    // var res = await Network().getData("friendSuggestion");
-    // var body = json.decode(res.body);
-    // print("waoaoaooa");
-    // print(body.toString());
-    // print(res.statusCode);
-
   }
 
   void _postModal(context) {
@@ -536,7 +687,7 @@ class _FeedState extends State<Feed> {
                                   child: Padding(
                                     padding: EdgeInsets.all(2.0),
                                     child: Text(
-                                      "@Betty",
+                                      "Betty",
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
@@ -547,7 +698,7 @@ class _FeedState extends State<Feed> {
                               Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.only(left: 20.0),
                                     child: Column(
                                       children: [
                                         DropdownButton(
@@ -588,7 +739,7 @@ class _FeedState extends State<Feed> {
                               ),
                               Container(
                                 padding: const EdgeInsets.only(
-                                  left: 20,
+                                  left: 50,
                                 ),
                                 child: Expanded(
                                   child: Container(
@@ -631,12 +782,22 @@ class _FeedState extends State<Feed> {
                       height: 300,
                       child: Column(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: TextField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(200),
+                              ],
                               decoration: InputDecoration.collapsed(
                                 hintText: 'What\'s on your mind?',
                               ),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
                             ),
+                          ),
+                          Divider(
+                            thickness: 1,
                           ),
                           SizedBox(
                             height: 200,
@@ -1711,5 +1872,4 @@ void showSheet(context) {
           ),
         );
       });
-
 }

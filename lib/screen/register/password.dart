@@ -6,7 +6,6 @@ import 'package:qstar/screen/api/network_utils/api.dart';
 import 'package:qstar/screen/register/hobbieselector.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:qstar/screen/register/phone.dart';
 
 class Password extends StatefulWidget {
   final String fname;
@@ -29,7 +28,6 @@ class Password extends StatefulWidget {
 
 class _SetPState extends State<Password> {
   bool _isObscure = true;
-  bool _isLoading = true;
   final _formKey = GlobalKey<FormState>();
   var password;
 
@@ -46,7 +44,7 @@ class _SetPState extends State<Password> {
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
           children: <Widget>[
-            Text(
+            const Text(
               "Set password",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
@@ -55,8 +53,8 @@ class _SetPState extends State<Password> {
                 fontFamily: 'font1', // and the font size
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "password must be  8 characters containing at least one upper case, \n one lower case,  one Special character and one digit ",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
@@ -82,11 +80,11 @@ class _SetPState extends State<Password> {
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 3.0)),
+                          borderSide: const BorderSide(
+                              color: Colors.white, width: 3.0)),
                       suffixIcon: IconButton(
                           icon: Icon(_isObscure
                               ? Icons.visibility
@@ -99,11 +97,8 @@ class _SetPState extends State<Password> {
                   validator: (passwordval) {
                     if (passwordval!.isEmpty) {
                       return "Please put your password";
-                    }
-                    else if(validateStructure(passwordval)==false)
-                    {
+                    } else if (validateStructure(passwordval) == false) {
                       return "password must be  8 characters containing at least one upper case,one lower case, one Special character and one digit ";
-
                     }
                     password = passwordval.toString();
                     return null;
@@ -119,31 +114,29 @@ class _SetPState extends State<Password> {
                 ),
                 color: mPrimaryColor,
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) 
-                  {
+                  if (_formKey.currentState!.validate()) {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) {
-    
                           return Hobbieselector(
-                              fname: widget.fname,
-                              lname: widget.lname,
-                              date: widget.date,
-                              email: widget.email,
-                              uname: widget.uname,
-                              password: password,);
+                            fname: widget.fname,
+                            lname: widget.lname,
+                            date: widget.date,
+                            email: widget.email,
+                            uname: widget.uname,
+                            password: password,
+                          );
                         },
                       ),
                     );
-
                   }
                 },
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Next',
                     style: textStyle,
                   ),
@@ -155,10 +148,11 @@ class _SetPState extends State<Password> {
       ),
     );
   }
-   bool validateStructure(String value)
-   {
-        String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-        RegExp regExp = new RegExp(pattern);
-        return regExp.hasMatch(value);
+
+  bool validateStructure(String value) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(value);
   }
 }

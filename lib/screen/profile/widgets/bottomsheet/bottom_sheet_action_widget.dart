@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/login/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'app_context.dart';
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +37,7 @@ class BottomSheetActionWidget extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {
+      onTap: () async {
         // Navigator.pop(context, action);
 
         switch (action.id.toString()) {
@@ -62,8 +65,34 @@ class BottomSheetActionWidget extends StatelessWidget {
                   textColor: Colors.white,
                   fontSize: 16.0);
             }
+
             break;
 
+          case "7":
+            {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content: const Text('Do you want to Logout'),
+                  actions: <Widget>[
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('No'),
+                    ),
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                      onPressed: () {
+                        _logout(context);
+                      },
+                      child: const Text('Yes'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            break;
           default:
             {
               // ignore: avoid_print
@@ -72,6 +101,19 @@ class BottomSheetActionWidget extends StatelessWidget {
             break;
         }
       },
+    );
+  }
+
+  void _logout(BuildContext context) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('token');
+
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => const LoginScreen(),
+        transitionDuration: Duration.zero,
+      ),
     );
   }
 }

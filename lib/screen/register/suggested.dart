@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_typing_uninitialized_variables
 
 import 'dart:core';
 
@@ -13,28 +13,29 @@ import 'package:qstar/screen/register/verification.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:convert';
-import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/screen/api/network_utils/api.dart';
-
 
 late int ratings = 3;
 // ignore: non_constant_identifier_names
 late double rating_d = 3;
 
 class Suggested extends StatefulWidget {
+  const Suggested({Key? key}) : super(key: key);
+
   @override
   State<Suggested> createState() => _SuggestedState();
 }
 
 class _SuggestedState extends State<Suggested> {
-    late List<User> suggestObjs=[];
-      var body,res;
-      
+  late List<User> suggestObjs = [];
+  var body, res;
+
   @override
   void initState() {
     // TODO: implement initState
-     _fetchSuggested();
+    _fetchSuggested();
   }
+
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -91,8 +92,9 @@ class _SuggestedState extends State<Suggested> {
                     children: [
                       const SizedBox(height: 4),
                       Column(
-                          children:
-                              suggestObjs.map((e) => SuggestedUsers(e)).toList())
+                          children: suggestObjs
+                              .map((e) => SuggestedUsers(e))
+                              .toList())
                     ],
                   ),
                 ),
@@ -128,8 +130,8 @@ class _SuggestedState extends State<Suggested> {
         ],
       ),
     );
-  } 
-  
+  }
+
   _fetchSuggested() async {
     print("about to fetch suggested");
     res = await Network().getData("friendSuggestion");
@@ -137,8 +139,10 @@ class _SuggestedState extends State<Suggested> {
     print("received response");
     print(body["data"].toString());
 
-    suggestObjs=body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
-      print(suggestObjs.toString());
+    suggestObjs =
+        body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+    // ignore: avoid_print
+    print(suggestObjs.toString());
     return suggestObjs;
   }
 }
@@ -154,7 +158,7 @@ class SuggestedUsers extends StatefulWidget {
 }
 
 class _SuggestedUsersState extends State<SuggestedUsers> {
-  var body,res;
+  var body, res;
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
@@ -184,21 +188,21 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                   Padding(
-                    padding: EdgeInsets.only(top: 10, left: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 20),
                     child: Text(
                       widget.user.userName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
                     ),
                   ),
-                   Padding(
-                    padding: EdgeInsets.only(top: 8, left: 26),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 26),
                     child: Text(
                       widget.user.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
@@ -267,6 +271,4 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
       ),
     ]);
   }
-
- 
 }

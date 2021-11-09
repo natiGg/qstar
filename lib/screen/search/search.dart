@@ -231,14 +231,23 @@ class SearchResultsListView extends StatelessWidget {
       children: List.generate(
         1,
         (index) => ListTile(
-            title: const Text(
-              "Top Searched",
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            title: Container(
+              height: 30,
+              margin: EdgeInsets.only(top: 13, bottom: 5),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  _tagItem("User"),
+                  _tagItem("people"),
+                  _tagItem("Video"),
+                  _tagItem("Posts"),
+                  _tagItem("Page"),
+                  _tagItem("Hastag"),
+                  _tagItem("Sound"),
+                  _tagItem("Place"),
+                ],
+              ),
             ),
-
-            // subtitle: "$searchTerm" == "Search"
-            //     ? Text('')
-            //     : Text('$searchTerm'),
             subtitle: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Row(
@@ -260,6 +269,22 @@ class SearchResultsListView extends StatelessWidget {
                     ),
                   ],
                 ))),
+      ),
+    );
+  }
+
+  Widget _tagItem(String title) {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
+      child: Container(
+        child: Text(title),
+        margin: EdgeInsets.all(5),
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey),
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
       ),
     );
   }

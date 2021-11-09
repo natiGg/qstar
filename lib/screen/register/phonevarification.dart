@@ -3,11 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
-import 'package:qstar/screen/register/password.dart';
-
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
-import 'email.dart';
 
 final TextEditingController controller = TextEditingController();
 
@@ -61,6 +57,7 @@ class Phonevarification extends StatelessWidget {
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
+                  // ignore: avoid_print
                   print(value);
                 },
                 selectorConfig: const SelectorConfig(

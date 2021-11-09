@@ -81,6 +81,7 @@ class _SetPhoneState extends State<SetPhone> {
                     print(number.phoneNumber);
                   },
                   onInputValidated: (bool value) {
+                    // ignore: avoid_print
                     print(value);
                   },
                   selectorConfig: const SelectorConfig(

@@ -34,14 +34,7 @@ class _CommentPageState extends State<CommentPage> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const UsersFeed(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+                Navigator.of(context).pop(true);
               }),
           title: const Text(
             "Comments",
