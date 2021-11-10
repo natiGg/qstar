@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 class User {
   int id;
   String userName;
@@ -21,6 +23,7 @@ class User {
   String joined_date;
   String hobbies;
   String total_followers;
+  RxBool followed;
 
   User(
       {required this.id,
@@ -42,7 +45,9 @@ class User {
       required this.online_status,
       required this.joined_date,
       required this.hobbies,
-      required this.total_followers});
+      required this.total_followers,
+      required this.followed
+      });
 
   factory User.fromJson(Map<String, dynamic> json) {
     print("olla");
@@ -68,7 +73,8 @@ class User {
         online_status: json['online_status'].toString(),
         joined_date: json['joined_date'].toString(),
         hobbies: json['hobbies'].toString(),
-        total_followers: json['total_followers'].toString());
+        total_followers: json['total_followers'].toString(),
+        followed: false.obs);
   }
 }
 

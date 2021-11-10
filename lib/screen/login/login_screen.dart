@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
 import 'package:qstar/screen/register/register_screen.dart';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 import 'forgotpassword.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/screen/main/main_screen.dart';

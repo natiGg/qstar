@@ -20,6 +20,7 @@ import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
+import 'package:get/get.dart';
 
 import 'package:qstar/screen/qvideo/VideoPicker.dart';
 import 'package:qstar/screen/feed/model/user.dart';
@@ -45,7 +46,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 2,
       userName: "natig",
@@ -66,7 +68,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 3,
       userName: "bini",
@@ -87,7 +90,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 4,
       userName: "yosi",
@@ -108,7 +112,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "",
+      followed:false.obs ),
   User(
       id: 5,
       userName: "abrsh",
@@ -129,7 +134,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 1,
       userName: "gelila",
@@ -150,7 +155,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 2,
       userName: "natig",
@@ -171,7 +176,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 3,
       userName: "bini",
@@ -192,7 +197,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 4,
       userName: "yosi",
@@ -213,7 +218,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 5,
       userName: "abrsh",
@@ -234,7 +239,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: ""),
+      total_followers: "", followed:false.obs ),
   User(
       id: 5,
       userName: "abrsh",
@@ -255,7 +260,7 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "")
+      total_followers: "", followed:false.obs )
 ];
 
 List<Post> _posts = [

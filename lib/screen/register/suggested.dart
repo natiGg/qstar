@@ -5,7 +5,10 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/suggesteduserscontroller.dart';
 
 import 'package:qstar/screen/main/main_screen.dart';
 
@@ -13,32 +16,20 @@ import 'package:qstar/screen/register/verification.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:convert';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/screen/register/suggested.dart';
+import 'package:qstar/network_utils/api.dart';
 
 late int ratings = 3;
 // ignore: non_constant_identifier_names
 late double rating_d = 3;
 
-class Suggested extends StatefulWidget {
-  const Suggested({Key? key}) : super(key: key);
 
-  @override
-  State<Suggested> createState() => _SuggestedState();
-}
-
-class _SuggestedState extends State<Suggested> {
-  late List<User> suggestObjs = [];
-  var body, res;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _fetchSuggested();
-  }
+class Suggested extends StatelessWidget {
+    final  SuggestedUserController suggestedUserController = Get.put(SuggestedUserController());
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
+      const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -85,20 +76,24 @@ class _SuggestedState extends State<Suggested> {
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: SizedBox(
+                
+                child: Obx(() {
+                  if (suggestedUserController.isLoading.value)
+                  {
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                  else {
+                      return SizedBox(
                   height: 300,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      const SizedBox(height: 4),
-                      Column(
-                          children: suggestObjs
-                              .map((e) => SuggestedUsers(e))
-                              .toList())
-                    ],
-                  ),
-                ),
+                  child: ListView.builder(itemCount: suggestedUserController.suggestObjs.length, itemBuilder: (context,index){
+            
+                    return SuggestedUsers(user:suggestedUserController.suggestObjs[index]);
+                  })
+                );
+                  }
+                }),
               ),
+            
             ],
           ),
           Container(
@@ -131,40 +126,17 @@ class _SuggestedState extends State<Suggested> {
       ),
     );
   }
-
-  _fetchSuggested() async {
-    print("about to fetch suggested");
-    res = await Network().getData("friendSuggestion");
-    body = json.decode(res.body);
-    print("received response");
-    print(body["data"].toString());
-
-    suggestObjs =
-        body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
-    // ignore: avoid_print
-    print(suggestObjs.toString());
-    return suggestObjs;
-  }
 }
 
-class SuggestedUsers extends StatefulWidget {
+class SuggestedUsers extends StatelessWidget {
   final User user;
+  const SuggestedUsers({ Key? key ,required this.user}) : super(key: key);
 
-  // ignore: use_key_in_widget_constructors
-  const SuggestedUsers(this.user);
-
-  @override
-  State<SuggestedUsers> createState() => _SuggestedUsersState();
-}
-
-class _SuggestedUsersState extends State<SuggestedUsers> {
-  var body, res;
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      color: Colors.white,
-    );
-    return Column(children: <Widget>[
+      final SuggestedUserController suggestedUserController = Get.find();
+
+      return Column(children: <Widget>[
       Container(
         padding: const EdgeInsets.only(top: 10),
         child: Row(
@@ -177,7 +149,7 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/images/profile${widget.user.status}.jpg',
+                    'assets/images/profile${user.status}.jpg',
                   ),
                 ),
               ),
@@ -189,20 +161,20 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
+                    padding: EdgeInsets.only(top: 10, left: 20),
                     child: Text(
-                      widget.user.userName,
-                      style: const TextStyle(
+                      user.userName,
+                      style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 26),
+                    padding: EdgeInsets.only(top: 8, left: 26),
                     child: Text(
-                      widget.user.name,
-                      style: const TextStyle(
+                      user.name,
+                      style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
@@ -231,38 +203,71 @@ class _SuggestedUsersState extends State<SuggestedUsers> {
                           color: mPrimaryColor),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
-                    child: SizedBox(
-                      width: 100,
-                      height: 30,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(36),
-                        ),
-                        color: mPrimaryColor,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const Verification();
-                              },
-                            ),
-                          );
-                        },
+                  Obx(()=> (
+                   Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: SizedBox(
+                        width: 100,
+                        height: 30,
                         child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Follow',
-                            style: textStyle,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(36),
+                              border: Border.all(
+                                  color: 
+                                      user.followed == true? mPrimaryColor
+                                      : Colors.transparent)),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(36),
+                            ),
+                            color:
+                                user.followed== false ? mPrimaryColor : Colors.white,
+                            onPressed: () {          
+                              suggestedUserController.updateId(user.id);
+                              if (user.followed == false){
+                                     suggestedUserController.follow();
+                              }
+                              else {
+                               suggestedUserController.unfollow();
+
+                              }
+                    
+                          
+                  
+                                
+                            },
+                            child: suggestedUserController.btnLoading == false
+                                ? Container(
+                                    width: double.infinity,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    alignment: Alignment.center,
+                                    child: user.followed == false
+                                        ? const Text('Follow',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ))
+                                        : const Text(
+                                            'Following',
+                                            style: TextStyle(
+                                              color: mPrimaryColor,
+                                            ),
+                                          ),
+                                  )
+                                : Container(
+                                    height: 15,
+                                    width: 15,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    )),
+                  )
                 ],
               ),
             ),

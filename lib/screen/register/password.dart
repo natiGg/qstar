@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 import 'package:qstar/screen/register/hobbieselector.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
