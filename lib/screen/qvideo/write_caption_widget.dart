@@ -16,10 +16,6 @@ class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/post1.jpg"),
-            // backgroundImage: AssetImage(context.watch<AuthBloc>().user!.asValue!.value!.avatar),
-          ),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

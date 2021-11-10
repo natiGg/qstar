@@ -5,9 +5,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/screen/api/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:qstar/screen/register/suggested.dart';
 import '../../constant.dart';
-
 
 class Animal {
   final int id;
@@ -33,8 +31,7 @@ class Hobbieselector extends StatefulWidget {
       required this.date,
       required this.email,
       required this.uname,
-      required this.password
-      })
+      required this.password})
       : super(key: key);
   @override
   _HobbieselectorState createState() => _HobbieselectorState();
@@ -67,16 +64,16 @@ class _HobbieselectorState extends State<Hobbieselector> {
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
   //List<Animal> _selectedAnimals = [];
- List<Animal> _selectedItems2 = [];
- List<String> _tobeSent= [];
-    List<Animal> _selectedItems3 = [];
+  List<Animal> _selectedItems2 = [];
+  List<String> _tobeSent = [];
+  List<Animal> _selectedItems3 = [];
 
-    String Preligion = "test";
+  String Preligion = "test";
   final _multiSelectKey = GlobalKey<FormState>();
   var hobbiesfield;
 
   //List<Animal> _selectedAnimals4 = [];
-  bool _isLoading=false;
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -101,7 +98,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                 //################################################################################################
                 // Rounded blue MultiSelectDialogField
                 //################################################################################################
-          
+
                 //################################################################################################
                 // This MultiSelectBottomSheetField has no decoration, but is instead wrapped in a Container that has
                 // decoration applied. This allows the ChipDisplay to render inside the same Container.
@@ -143,13 +140,13 @@ class _HobbieselectorState extends State<Hobbieselector> {
                             borderRadius: BorderRadius.circular(25.0),
                             borderSide:
                                 BorderSide(color: Colors.white, width: 3.0))),
-                                  validator: (hobbie) {
-                          if (hobbie!.isEmpty) {
-                            return "Please put your needs";
-                          }
-                          hobbiesfield = hobbie.toString();
-                          return null;
-                        },
+                    validator: (hobbie) {
+                      if (hobbie!.isEmpty) {
+                        return "Please put your needs";
+                      }
+                      hobbiesfield = hobbie.toString();
+                      return null;
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -173,83 +170,82 @@ class _HobbieselectorState extends State<Hobbieselector> {
                   ),
                   child: Column(
                     children: <Widget>[
-             MultiSelectBottomSheetField<Animal>(
-                initialChildSize: 0.7,
-                maxChildSize: 0.95,
-                listType: MultiSelectListType.CHIP,
-                checkColor: Colors.pink,
-                selectedColor: mPrimaryColor,
-                selectedItemsTextStyle: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
-                unselectedColor: mPrimaryColor.withOpacity(.08),
-                buttonIcon: Icon(
-                  Icons.add,
-                  color: Colors.pinkAccent,
-                ),
-                searchHintStyle: TextStyle(
-                  fontSize: 20,
-                ),
-                searchable: true,
-                buttonText: Text(
-                  '$Preligion', //"????",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
-                ),
-                title: Text(
-                  "Hobbies",
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.pink,
-                  ),
-                ),
-                items: _items,
-                onConfirm: (values) {
-                  setState(() {
-                    _selectedItems2 = values;
-                  });
-                  print('selected : ${_selectedItems2}');
-                           _selectedItems2
-                      .forEach((item) => _tobeSent.add("${item.name.toString()}"));
-                  
-              
-                  /*senduserdata(
+                      MultiSelectBottomSheetField<Animal>(
+                        initialChildSize: 0.7,
+                        maxChildSize: 0.95,
+                        listType: MultiSelectListType.CHIP,
+                        checkColor: Colors.pink,
+                        selectedColor: mPrimaryColor,
+                        selectedItemsTextStyle: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                        ),
+                        unselectedColor: mPrimaryColor.withOpacity(.08),
+                        buttonIcon: Icon(
+                          Icons.add,
+                          color: Colors.pinkAccent,
+                        ),
+                        searchHintStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        searchable: true,
+                        buttonText: Text(
+                          '$Preligion', //"????",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 5,
+                        ),
+                        title: Text(
+                          "Hobbies",
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.pink,
+                          ),
+                        ),
+                        items: _items,
+                        onConfirm: (values) {
+                          setState(() {
+                            _selectedItems2 = values;
+                          });
+                          print('selected : ${_selectedItems2}');
+                          _selectedItems2.forEach((item) =>
+                              _tobeSent.add("${item.name.toString()}"));
+
+                          /*senduserdata(
                       'partnerreligion', '${_selectedItems2.toString()}');*/
-                },
-                chipDisplay: MultiSelectChipDisplay(
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  onTap: (value) {
-                    setState(() {
-                      _selectedItems2.remove(value);
-                      _tobeSent.remove(value.toString());
-          
-                    });
-          
-                    print('removed: ${_selectedItems2.toString()}');
-                         _selectedItems2
-                      .forEach((item) => _tobeSent.add("${item.name.toString()}"));
-                  },
-                ),
-              ),
-              _selectedItems2 == null || _selectedItems2.isEmpty
-                  ? MultiSelectChipDisplay(
-                      onTap: (item) {
-                        setState(() {
-                          _selectedItems3.remove(item);
-                          print('removed below: ${_selectedItems3.toString()}');                                       
-                        });
-                        _multiSelectKey.currentState!.validate();
-                      },
-                    )
-                  : MultiSelectChipDisplay(),
+                        },
+                        chipDisplay: MultiSelectChipDisplay(
+                          textStyle: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                          onTap: (value) {
+                            setState(() {
+                              _selectedItems2.remove(value);
+                              _tobeSent.remove(value.toString());
+                            });
+
+                            print('removed: ${_selectedItems2.toString()}');
+                            _selectedItems2.forEach((item) =>
+                                _tobeSent.add("${item.name.toString()}"));
+                          },
+                        ),
+                      ),
+                      _selectedItems2 == null || _selectedItems2.isEmpty
+                          ? MultiSelectChipDisplay(
+                              onTap: (item) {
+                                setState(() {
+                                  _selectedItems3.remove(item);
+                                  print(
+                                      'removed below: ${_selectedItems3.toString()}');
+                                });
+                                _multiSelectKey.currentState!.validate();
+                              },
+                            )
+                          : MultiSelectChipDisplay(),
                     ],
                   ),
                 ),
@@ -263,11 +259,10 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     ),
                     color: mPrimaryColor,
                     onPressed: () {
-                      if (_multiSelectKey.currentState!.validate())
-                      {
-                           _register();
+                      if (_multiSelectKey.currentState!.validate()) {
+                        _register();
                       }
-                   
+
                       // Navigator.push(
                       //   context,
                       //   PageRouteBuilder(
@@ -281,33 +276,33 @@ class _HobbieselectorState extends State<Hobbieselector> {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
-                      child:_isLoading==false? Text(
-                        'Register',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ):
-                    Container(
-                      height: 20,
-                      width: 20,
-                      child: Center(
-                      
-            child:  CircularProgressIndicator(
-              color: Colors.white,
-            ),
-            ),
+                      child: _isLoading == false
+                          ? Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(
+                              height: 20,
+                              width: 20,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                     ),
                   ),
-                ),
                 )
                 //################################################################################################
                 // MultiSelectBottomSheetField with validators
                 //################################################################################################
-          
+
                 //################################################################################################
                 // MultiSelectChipField
                 //################################################################################################
-          
+
                 //################################################################################################
                 // MultiSelectDialogField with initial values
                 //################################################################################################
@@ -318,10 +313,10 @@ class _HobbieselectorState extends State<Hobbieselector> {
       ),
     );
   }
-   void _register() async {
+
+  void _register() async {
     setState(() {
       _isLoading = true;
-      
     });
     var data = {
       'name': widget.fname,
@@ -329,7 +324,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
       'username': widget.uname,
       'password': widget.password,
       'password_confirmation': widget.password,
-      'life_needs':hobbiesfield,
+      'life_needs': hobbiesfield,
       'hobbies': _tobeSent.join(",").toString()
     };
 
@@ -342,15 +337,13 @@ class _HobbieselectorState extends State<Hobbieselector> {
 
     if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString("token",body["token"].toString());
+      localStorage.setString("token", body["token"].toString());
       Navigator.push(
         context,
         new MaterialPageRoute(builder: (context) => Suggested()),
       );
-    }
-    else if (res.statusCode == 422)
-    {
-         showDialog(
+    } else if (res.statusCode == 422) {
+      showDialog(
             context: context,
             builder: (context) => new AlertDialog(
               title: new Text('Error'),
@@ -359,10 +352,10 @@ class _HobbieselectorState extends State<Hobbieselector> {
                 new FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
-                    setState(() { 
-                      _isLoading=false;
+                    setState(() {
+                      _isLoading = false;
                     });
-                  } ,
+                  },
                   child: new Text('ok'),
                 ),
               ],
