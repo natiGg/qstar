@@ -27,7 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
     return Scaffold(
       resizeToAvoidBottomInset: false,
-<<<<<<< HEAD
       body: Form(
                   key: _formKey,
 
@@ -154,72 +153,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ]),
               ),
-=======
-      body: Column(
-        mainAxisAlignment:
-            MainAxisAlignment.center, //Center Column contents vertically,
-        children: <Widget>[
-          const Text(
-            "Sign Up",
-            style: TextStyle(
-              // we use the [TextStyle] widget to customize text
-              color: mPrimaryColor, // set the color
-              fontSize: 32.0,
-              fontFamily: 'font1', // and the font size
-            ),
-          ),
-          const SizedBox(height: 20),
-          const RegisterForm(),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 45,
-              vertical: 16,
-            ),
-            alignment: Alignment.center,
-            child: RichText(
-              text: TextSpan(
-                  style: const TextStyle(color: Colors.grey),
-                  children: [
-                    const TextSpan(
-                        text:
-                            'By tapping Next  & accept you acknowledge that you have read the'),
-                    TextSpan(
-                      text: ' Privacy policy',
-                      style: const TextStyle(
-                        color: mPrimaryColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) {
-                                return Privacypolicy();
-                              },
-                            ),
-                          );
-                        },
-                    ),
-                    const TextSpan(text: ' and agree to the'),
-                    TextSpan(
-                      text: ' Term of Service',
-                      style: const TextStyle(
-                        color: mPrimaryColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) {
-                                return const TermofService();
-                              },
-                            ),
-                          );
-                        },
-                    ),
-                  ]),
->>>>>>> 57e38ff90290600f0e436d80119d372eef9f6169
             ),
             Container(
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -254,13 +187,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
           ),
-<<<<<<< HEAD
           ],
         ),
-=======
-          const RegisterButton(),
-        ],
->>>>>>> 57e38ff90290600f0e436d80119d372eef9f6169
       ),
     );
   }

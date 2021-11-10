@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:qstar/screen/register/email.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 
 
 class Username extends StatefulWidget {

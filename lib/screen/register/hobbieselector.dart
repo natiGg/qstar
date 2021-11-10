@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qstar/screen/register/suggested.dart';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import '../../constant.dart';

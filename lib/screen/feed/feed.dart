@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -22,6 +22,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:qstar/screen/comment/comment_page.dart';
+import 'package:get/get.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
@@ -34,68 +35,68 @@ List<User> _users = [
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs
 ),
   User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:""),
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
   User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
 
   phone_number:"" , gender:"", enable_suggestion:"", status:"",
 
   date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"")
+  joined_date:"",hobbies:"",total_followers:"",followed:false.obs)
 ];
 
 List<Post> _posts = [

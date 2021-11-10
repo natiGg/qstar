@@ -5,7 +5,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'dart:ui';
 import 'dart:convert';
-import 'package:qstar/screen/api/network_utils/api.dart';
+import 'package:qstar/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/screen/register/password.dart';
 import 'package:email_validator/email_validator.dart';
