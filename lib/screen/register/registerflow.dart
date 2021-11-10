@@ -33,9 +33,8 @@ class MyApps extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-    final String title;
-    MyHomePage({Key ?key, required this.title}) : super(key: key);
-
+  final String title;
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -114,19 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
   void _saveForm() {
     print("saved");
     // implement your logic here
-  // Future <builder> showDialog(
-  //     context: context,
-  //     child: SimpleDialog(
-  //       contentPadding: EdgeInsets.all(8),
-  //       children: <Widget>[
-  //         Text('You succesfully saved your form.'),
-  //         RaisedButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: Text('Cool, thanks.'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
+    // Future <builder> showDialog(
+    //     context: context,
+    //     child: SimpleDialog(
+    //       contentPadding: EdgeInsets.all(8),
+    //       children: <Widget>[
+    //         Text('You succesfully saved your form.'),
+    //         RaisedButton(
+    //           onPressed: () => Navigator.pop(context),
+    //           child: Text('Cool, thanks.'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
   }
 
   // Step 1 - Set Up The UI
@@ -218,7 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               _switchInputField(_formIndex - 1);
                             },
-                            child: Text('Back'),
+                            child: const Text('Back'),
                           ),
 
                     // Step 5 - Save The Form
@@ -230,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _saveForm();
                               }
                             },
-                            child: Text('Submit'),
+                            child: const Text('Submit'),
                           )
                         : FlatButton(
                             onPressed: () {
@@ -240,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 _switchInputField(_formIndex + 1);
                               }
                             },
-                            child: Text('Next'),
+                            child: const Text('Next'),
                           ),
                   ],
                 ),

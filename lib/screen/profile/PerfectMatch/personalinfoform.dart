@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/languages.g.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:language_picker/language_picker.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 
 class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({Key? key}) : super(key: key);
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -27,8 +26,8 @@ class _MyHomePageState extends State<PersonalInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -49,86 +48,79 @@ class _MyHomePageState extends State<PersonalInfo> {
       ),
       body: Theme(
         data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
+            colorScheme: ColorScheme.light(
           primary: mPrimaryColor,
         )),
-        child: Expanded(
-          child: SingleChildScrollView(
-            child: Stepper(
-              steps: getSteps(),
-              controlsBuilder: (BuildContext context,
-                  {VoidCallback? onStepContinue,
-                  VoidCallback? onStepCancel,
-                  VoidCallback? onStpeFinish}) {
-                final isLastStep = currentStep == getSteps().length - 1;
-                return Row(
-                  children: <Widget>[
-                    OutlinedButton(
-                        onPressed: onStepContinue,
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0))),
-                        ),
-                        child: (isLastStep)
-                            ? GestureDetector(
-                                onTap: () {
-                                  // ignore: deprecated_member_use
-                                  _scaffoldKey.currentState!
-                                      // ignore: deprecated_member_use
-                                      .showSnackBar(SnackBar(
-                                    duration: const Duration(seconds: 4),
-                                    content: Row(
-                                      children: const <Widget>[
-                                        CircularProgressIndicator(),
-                                        Text("    Loading...")
-                                      ],
-                                    ),
-                                  ));
-                                  _ondelay();
-                                },
-                                child: const Text('Submit'))
-                            : const Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: mPrimaryColor,
-                                ),
-                              )),
-                    const SizedBox(
-                      width: 15,
+        child: Stepper(
+          steps: getSteps(),
+          controlsBuilder: (BuildContext context,
+              {VoidCallback? onStepContinue,
+              VoidCallback? onStepCancel,
+              VoidCallback? onStpeFinish}) {
+            final isLastStep = currentStep == getSteps().length - 1;
+            return Row(
+              children: <Widget>[
+                OutlinedButton(
+                    onPressed: onStepContinue,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
                     ),
-                    OutlinedButton(
-                        onPressed: onStepCancel,
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0))),
-                        ),
-                        child: const Text(
-                          'Go back',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mPrimaryColor,
-                          ),
-                        )),
-                  ],
-                );
-              },
-              currentStep: currentStep,
-              onStepTapped: (int step) {
-                setState(() {
-                  currentStep = step;
-                });
-              },
-              onStepCancel: () {
-                currentStep > 0 ? setState(() => currentStep -= 1) : null;
-              },
-              onStepContinue: () {
-                currentStep < 3 ? setState(() => currentStep += 1) : null;
-              },
-            ),
-          ),
+                    child: (isLastStep)
+                        ? GestureDetector(
+                            onTap: () {
+                              _scaffoldKey.currentState!
+                                  // ignore: deprecated_member_use
+                                  .showSnackBar(SnackBar(
+                                duration: const Duration(seconds: 4),
+                                content: Row(
+                                  children: const <Widget>[
+                                    CircularProgressIndicator(),
+                                    Text("    Loading...")
+                                  ],
+                                ),
+                              ));
+                              _ondelay();
+                            },
+                            child: const Text('Submit'))
+                        : const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: mPrimaryColor,
+                            ),
+                          )),
+                SizedBox(
+                  width: 15,
+                ),
+                OutlinedButton(
+                    onPressed: onStepCancel,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0))),
+                    ),
+                    child: const Text(
+                      'Go back',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: mPrimaryColor,
+                      ),
+                    )),
+              ],
+            );
+          },
+          currentStep: currentStep,
+          onStepTapped: (int step) {
+            setState(() {
+              currentStep = step;
+            });
+          },
+          onStepCancel: () {
+            currentStep > 0 ? setState(() => currentStep -= 1) : null;
+          },
+          onStepContinue: () {
+            currentStep < 3 ? setState(() => currentStep += 1) : null;
+          },
         ),
       ),
     );
@@ -137,19 +129,19 @@ class _MyHomePageState extends State<PersonalInfo> {
   List<Step> getSteps() {
     return [
       Step(
-        title: const Text('Genral Info'),
+        title: new Text('Genral Info'),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(labelText: 'Full name'),
+              decoration: InputDecoration(labelText: 'Full name'),
             ),
-            const SizedBox(
+            SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
               value: _gender,
               isExpanded: true,
-              style: const TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black),
               items: <String>[
                 'Male',
                 'Female',
@@ -159,7 +151,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(value),
                 );
               }).toList(),
-              hint: const Text(
+              hint: Text(
                 "Gender",
                 style: TextStyle(
                     color: Colors.black,
@@ -172,7 +164,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            const SizedBox(
+            SizedBox(
               height: 15,
             ),
             GestureDetector(
@@ -182,10 +174,9 @@ class _MyHomePageState extends State<PersonalInfo> {
                   countryListTheme: CountryListThemeData(
                     flagSize: 25,
                     backgroundColor: Colors.white,
-                    textStyle:
-                        const TextStyle(fontSize: 16, color: Colors.blueGrey),
+                    textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
                     //Optional. Sets the border radius for the bottomsheet.
-                    borderRadius: const BorderRadius.only(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0),
                     ),
@@ -202,7 +193,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                     ),
                   ),
                   onSelect: (Country country) => setState(() {
-                    list2 = country.displayName;
+                    list2 = "${country.displayName}";
                   }),
                 );
               },
@@ -219,7 +210,7 @@ class _MyHomePageState extends State<PersonalInfo> {
               height: 15,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: 'City'),
+              decoration: InputDecoration(labelText: 'City'),
             ),
             const SizedBox(
               height: 15,
@@ -261,7 +252,7 @@ class _MyHomePageState extends State<PersonalInfo> {
             DropdownButton<String>(
               value: _hob,
               isExpanded: true,
-              style: const TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black),
               items: <String>[
                 'Music',
                 'Sport',
@@ -342,8 +333,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            // ignore: prefer_const_constructors
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             DropdownButton<String>(
@@ -423,7 +413,7 @@ class _MyHomePageState extends State<PersonalInfo> {
                   child: Text(value),
                 );
               }).toList(),
-              hint: const Text(
+              hint: Text(
                 "Gender preference",
                 style: TextStyle(
                     color: Colors.black,
@@ -436,14 +426,14 @@ class _MyHomePageState extends State<PersonalInfo> {
                 });
               },
             ),
-            const SizedBox(
+            SizedBox(
               height: 15,
             ),
-            const Padding(
-              padding: EdgeInsets.only(right: 208.0),
-              child: Text('Age preference'),
+            Padding(
+              padding: const EdgeInsets.only(right: 208.0),
+              child: const Text('Age preference'),
             ),
-            const SizedBox(
+            SizedBox(
               height: 5,
             ),
             RangeSlider(

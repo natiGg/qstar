@@ -1,23 +1,15 @@
-import 'dart:ui';
 import 'dart:convert';
 // ignore_for_file: deprecated_member_use, duplicate_ignore
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/login/widget/login_button.dart';
-import 'package:qstar/screen/login/widget/login_form.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
 import 'package:qstar/screen/register/register_screen.dart';
 import 'package:qstar/network_utils/api.dart';
 import 'forgotpassword.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
-import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/main_screen.dart';
-import 'package:qstar/screen/splash/recommend_users.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -39,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             builder: (context) => new AlertDialog(
               title: new Text('Are you sure?'),
-              content: new Text('Do you want to exit an App'),
+              content: const Text('Do you want to exit an App'),
               actions: <Widget>[
                 new FlatButton(
                   onPressed: () => Navigator.of(context).pop(false),
@@ -47,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 new FlatButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Yes'),
+                  child: const Text('Yes'),
                 ),
               ],
             ),
@@ -171,22 +163,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     alignment: Alignment.center,
-                    child:_isLoading==false? Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ):
-                  Container(
-                    height: 20,
-                    width: 20,
-                    child: Center(
-                    
-          child:  CircularProgressIndicator(
-            color: Colors.white,
-          ),
-          ),
-                  ),
+                    child: _isLoading == false
+                        ? Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          )
+                        : Container(
+                            height: 20,
+                            width: 20,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -220,7 +212,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ]),
                 ),
               ),
-              
             ],
           ),
         ),
@@ -238,8 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var body = json.decode(res.body);
     print(body.toString());
 
-    if (res.statusCode == 200) 
-    {
+    if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
@@ -250,28 +240,25 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => MyHomePage(),
         ),
       );
-    } else if (res.statusCode == 401) 
-    {
+    } else if (res.statusCode == 401) {
       showDialog(
-            context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text('info'),
-              content: new Text(body["message"]),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                    setState(() { 
-                      _isLoading=false;
-                    });
-                  } ,
-                  child: new Text('ok'),
-                ),
-              ],
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: const Text('info'),
+          content: new Text(body["message"]),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+              child: new Text('ok'),
             ),
-          ) ??
-          false;
+          ],
+        ),
+      );
     }
   }
-  
 }

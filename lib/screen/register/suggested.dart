@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_typing_uninitialized_variables
 
 import 'dart:core';
 
@@ -18,7 +18,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:convert';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/network_utils/api.dart';
-
 
 late int ratings = 3;
 // ignore: non_constant_identifier_names

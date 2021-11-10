@@ -30,7 +30,7 @@ class Email extends StatefulWidget {
 class _EmailState extends State<Email> {
   var email;
   bool _isLoading = false;
-    bool _isTaken=false;
+  bool _isTaken = false;
 
   @override
   Widget build(BuildContext context) {
@@ -133,18 +133,19 @@ class _EmailState extends State<Email> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
-                  child:_isLoading==false? Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ):
-                  Text(
-                      'Checking...',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                  child: _isLoading == false
+                      ? Text(
+                          'Next',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          'Checking...',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -163,8 +164,7 @@ class _EmailState extends State<Email> {
     var body = json.decode(res.body);
     print(body.toString());
     print(res.statusCode);
-    if (res.statusCode == 200) 
-    {
+    if (res.statusCode == 200) {
       Navigator.push(
         context,
         PageRouteBuilder(
@@ -178,32 +178,29 @@ class _EmailState extends State<Email> {
           },
         ),
       );
-    } 
-    else if (res.statusCode == 422) 
-    {
+    } else if (res.statusCode == 422) {
       Map<String, dynamic> map = body["errors"];
       List<dynamic> data = map["email"];
       print(data[0].toString());
-    
+
       showDialog(
-            context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text('info'),
-              content: new Text(data[0].toString()),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  },
-                  child: new Text('ok'),
-                ),
-              ],
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text('info'),
+          content: new Text(data[0].toString()),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+              child: new Text('ok'),
             ),
-          ) ??
-          false;
+          ],
+        ),
+      );
     }
   }
 }

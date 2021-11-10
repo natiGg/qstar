@@ -3,10 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
-import 'package:qstar/screen/register/birthday.dart';
-
 class RegisterButton extends StatelessWidget {
-  
   const RegisterButton({
     Key? key,
   }) : super(key: key);

@@ -5,7 +5,6 @@ import 'package:qstar/screen/register/Privacypolicy.dart';
 import 'package:qstar/screen/register/TermofService.dart';
 import 'package:qstar/screen/register/birthday.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -15,21 +14,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-    bool _isLoading = false;
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   var fname;
   var lname;
   @override
   Widget build(BuildContext context) {
-
-     const textStyle = TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-                  key: _formKey,
-
+        key: _formKey,
         child: Column(
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
@@ -44,68 +41,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             SizedBox(height: 20),
-      Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 30,
-        ),
-        child: Column(
-          children: <Widget>[
-            Material(
-              elevation: 20.0,
-              shadowColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0)),
-              child: TextFormField(
-                autofocus: false,
-                decoration: InputDecoration(
-                    hintText: 'First Name',
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: Colors.white, width: 3.0))),
-                          validator: (fnameval) {
-                            if (fnameval!.isEmpty) {
-                              return "Please put your firstname";
-                            }
-                            fname = fnameval.toString();
-                            return null;
-                          },
-                        
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 30,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Material(
+                    elevation: 20.0,
+                    shadowColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0)),
+                    child: TextFormField(
+                      autofocus: false,
+                      decoration: InputDecoration(
+                          hintText: 'First Name',
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 3.0))),
+                      validator: (fnameval) {
+                        if (fnameval!.isEmpty) {
+                          return "Please put your firstname";
+                        }
+                        fname = fnameval.toString();
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Material(
+                    elevation: 20.0,
+                    shadowColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0)),
+                    child: TextFormField(
+                      autofocus: false,
+                      decoration: InputDecoration(
+                          hintText: 'Last Name',
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 3.0))),
+                      validator: (lnameval) {
+                        if (lnameval!.isEmpty) {
+                          return "Please put your lastname";
+                        }
+                        lname = lnameval.toString();
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Material(
-              elevation: 20.0,
-              shadowColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0)),
-              child: TextFormField(
-                autofocus: false,
-                decoration: InputDecoration(
-                    hintText: 'Last Name',
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: Colors.white, width: 3.0))),
-                                  validator: (lnameval) {
-                            if (lnameval!.isEmpty) {
-                              return "Please put your lastname";
-                            }
-                            lname = lnameval.toString();
-                            return null;
-                          },
-              ),
-            ),
-          ],
-        ),
-          ),          Container(
+            Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 45,
                 vertical: 16,
@@ -155,38 +156,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(36),
-          ),
-          color: mPrimaryColor,
-          onPressed: () {
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                color: mPrimaryColor,
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                      print(fname+lname);
+                    print(fname + lname);
                     Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) {
-                  return BirthDay(fname: fname, lname: lname);
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) {
+                          return BirthDay(fname: fname, lname: lname);
+                        },
+                      ),
+                    );
+                  }
                 },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Next',
+                    style: textStyle,
+                  ),
+                ),
               ),
-            );
-                    }
-          
-          
-          },
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            alignment: Alignment.center,
-            child: Text(
-              'Next',
-              style: textStyle,
             ),
-          ),
-        ),
-          ),
           ],
         ),
       ),

@@ -38,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             iconData: Icons.bookmark_border, title: 'Saved', id: 5),
         BottomSheetAction(
             iconData: Icons.group_add, title: 'Discover People', id: 6),
+        BottomSheetAction(iconData: Icons.logout, title: 'Logout', id: 7),
       ]);
     };
   }
