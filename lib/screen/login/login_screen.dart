@@ -233,7 +233,6 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['token']));
       localStorage.setString('user', json.encode(body['user']));
-
       Navigator.push(
         context,
         MaterialPageRoute(

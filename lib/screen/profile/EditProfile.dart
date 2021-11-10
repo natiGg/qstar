@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-
+import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
-
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/gestures.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
+import 'dart:convert';
 import 'dart:ui';
+
+import 'package:qstar/screen/register/phonevarification.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Animal {
   final int id;
@@ -49,6 +53,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Animal(id: 19, name: "Gambling"),
     Animal(id: 20, name: "Yoga"),
   ];
+  final EditprofileController editprofileController =
+      Get.put(EditprofileController());
   final _items = _animals
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
@@ -74,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-
+  var user;
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -98,7 +104,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _timeController.text = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
         [hh, ':', nn, " ", am]).toString();
+    _fetchUser();
     super.initState();
+  }
+
+  void _fetchUser() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('user');
+
+    print(token);
+    if (token != null) {
+      print(token.toString());
+      var body = json.decode(token);
+
+      print(body["id"]);
+      editprofileController.fetchProfile(body["id"]);
+    }
   }
 
   @override
@@ -132,291 +153,290 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Container(
           padding: EdgeInsets.only(left: 16, top: 25, right: 16),
           child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: ListView(
-              children: [
-                Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
-                            ],
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                  "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
-                                ))),
-                      ),
-                      Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: ListView(
+                children: [
+                  Center(
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 130,
+                          height: 130,
+                          decoration: BoxDecoration(
                               border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
+                                  width: 4,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: Offset(0, 10))
+                              ],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
+                                  ))),
+                        ),
+                        Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 4,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                ),
+                                color: mPrimaryColor,
                               ),
-                              color: mPrimaryColor,
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(height: 24),
+                  TextFieldWidget(
+                    label: 'Name',
+                    text: "nati",
+                    onChanged: (name) {},
+                  ),
+                  SizedBox(height: 24),
+                  TextFieldWidget(
+                    label: 'Last Name',
+                    text: "natiG",
+                    onChanged: (email) {},
+                  ),
+                  SizedBox(height: 24),
+                  TextFieldWidget(
+                    label: 'Username',
+                    text: "@natiG",
+                    onChanged: (email) {},
+                  ),
+                  Column(
+                    children: <Widget>[
+                      SizedBox(height: 24),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Birthday",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _selectDate(context);
+                        },
+                        child: Container(
+                          width: _width! / 1.7,
+                          height: _height! / 9,
+                          margin: EdgeInsets.only(top: 30),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            border: Border.all(color: Colors.black, width: 0.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.elliptical(20, 20)),
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'font1',
                             ),
-                            child: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                          )),
+                            textAlign: TextAlign.center,
+                            enabled: false,
+                            keyboardType: TextInputType.text,
+                            controller: _dateController,
+                            onSaved: (val) async {
+                              _setDate = val!;
+                            },
+                            decoration: InputDecoration(
+                                disabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                // labelText: 'Time',
+                                contentPadding: EdgeInsets.only(top: 0.0)),
+                            validator: (dateval) {
+                              if (dateval!.isEmpty) {
+                                return "Please put your birth date";
+                              }
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Name',
-                  text: "nati",
-                  onChanged: (name) {},
-                ),
-                SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Last Name',
-                  text: "natiG",
-                  onChanged: (email) {},
-                ),
-                SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Username',
-                  text: "@natiG",
-                  onChanged: (email) {},
-                ),
-                Column(
-                  children: <Widget>[
-                    SizedBox(height: 24),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Birthday",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                      child: Container(
-                        width: _width! / 1.7,
-                        height: _height! / 9,
-                        margin: EdgeInsets.only(top: 30),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          border: Border.all(color: Colors.black, width: 0.0),
-                          borderRadius:
-                              BorderRadius.all(Radius.elliptical(20, 20)),
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'font1',
-                          ),
-                          textAlign: TextAlign.center,
-                          enabled: false,
-                          keyboardType: TextInputType.text,
-                          controller: _dateController,
-                          onSaved: (val) async {
-                            _setDate = val!;
-                          },
-                          decoration: InputDecoration(
-                              disabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              // labelText: 'Time',
-                              contentPadding: EdgeInsets.only(top: 0.0)),
-                          validator: (dateval) {
-                            if (dateval!.isEmpty) {
-                              return "Please put your birth date";
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Email',
-                  text: "bini@gmail.com",
-                  onChanged: (email) {},
-                ),
-                SizedBox(height: 30),
-                TextFieldWidget(
-                  label: 'Password',
-                  text: "*******",
-                  onChanged: (email) {},
-                ),
-                SizedBox(height: 30),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white38,
-                    border: Border.all(
-                      color: mPrimaryColor,
-                      width: 2,
-                    ),
+                  SizedBox(height: 24),
+                  TextFieldWidget(
+                    label: 'Email',
+                    text: "bini@gmail.com",
+                    onChanged: (email) {},
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      MultiSelectBottomSheetField<Animal>(
-                        initialChildSize: 0.7,
-                        maxChildSize: 0.95,
-                        listType: MultiSelectListType.CHIP,
-                        checkColor: Colors.pink,
-                        selectedColor: mPrimaryColor,
-                        selectedItemsTextStyle: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
-                        unselectedColor: mPrimaryColor.withOpacity(.08),
-                        buttonIcon: Icon(
-                          Icons.add,
-                          color: Colors.pinkAccent,
-                        ),
-                        searchHintStyle: TextStyle(
-                          fontSize: 20,
-                        ),
-                        searchable: true,
-                        buttonText: Text(
-                          '$Preligion', //"????",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 5,
-                        ),
-                        title: Text(
-                          "Hobbies",
-                          style: TextStyle(
+                  SizedBox(height: 30),
+                  TextFieldWidget(
+                    label: 'Password',
+                    text: "*******",
+                    onChanged: (email) {},
+                  ),
+                  SizedBox(height: 30),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white38,
+                      border: Border.all(
+                        color: mPrimaryColor,
+                        width: 2,
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        MultiSelectBottomSheetField<Animal>(
+                          initialChildSize: 0.7,
+                          maxChildSize: 0.95,
+                          listType: MultiSelectListType.CHIP,
+                          checkColor: Colors.pink,
+                          selectedColor: mPrimaryColor,
+                          selectedItemsTextStyle: TextStyle(
                             fontSize: 25,
-                            color: Colors.pink,
+                            color: Colors.white,
                           ),
-                        ),
-                        items: _items,
-                        onConfirm: (values) {
-                          setState(() {
-                            _selectedItems2 = values;
-                          });
-                          print('selected : ${_selectedItems2}');
-                          _selectedItems2.forEach((item) =>
-                              _tobeSent.add("${item.name.toString()}"));
-
-                          /*senduserdata(
-                        'partnerreligion', '${_selectedItems2.toString()}');*/
-                        },
-                        chipDisplay: MultiSelectChipDisplay(
-                          textStyle: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
+                          unselectedColor: mPrimaryColor.withOpacity(.08),
+                          buttonIcon: Icon(
+                            Icons.add,
+                            color: Colors.pinkAccent,
                           ),
-                          onTap: (value) {
+                          searchHintStyle: TextStyle(
+                            fontSize: 20,
+                          ),
+                          searchable: true,
+                          buttonText: Text(
+                            '$Preligion', //"????",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 5,
+                          ),
+                          title: Text(
+                            "Hobbies",
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.pink,
+                            ),
+                          ),
+                          items: _items,
+                          onConfirm: (values) {
                             setState(() {
-                              _selectedItems2.remove(value);
-                              _tobeSent.remove(value.toString());
+                              _selectedItems2 = values;
                             });
-
-                            print('removed: ${_selectedItems2.toString()}');
+                            print('selected : ${_selectedItems2}');
                             _selectedItems2.forEach((item) =>
                                 _tobeSent.add("${item.name.toString()}"));
+
+                            /*senduserdata(
+                        'partnerreligion', '${_selectedItems2.toString()}');*/
                           },
+                          chipDisplay: MultiSelectChipDisplay(
+                            textStyle: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                            onTap: (value) {
+                              setState(() {
+                                _selectedItems2.remove(value);
+                                _tobeSent.remove(value.toString());
+                              });
+
+                              print('removed: ${_selectedItems2.toString()}');
+                              _selectedItems2.forEach((item) =>
+                                  _tobeSent.add("${item.name.toString()}"));
+                            },
+                          ),
                         ),
-                      ),
-                      _selectedItems2 == null || _selectedItems2.isEmpty
-                          ? MultiSelectChipDisplay(
-                              onTap: (item) {
-                                setState(() {
-                                  _selectedItems3.remove(item);
-                                  print(
-                                      'removed below: ${_selectedItems3.toString()}');
-                                });
-                                _multiSelectKey.currentState!.validate();
-                              },
-                            )
-                          : MultiSelectChipDisplay(),
-                    ],
+                        _selectedItems2 == null || _selectedItems2.isEmpty
+                            ? MultiSelectChipDisplay(
+                                onTap: (item) {
+                                  setState(() {
+                                    _selectedItems3.remove(item);
+                                    print(
+                                        'removed below: ${_selectedItems3.toString()}');
+                                  });
+                                  _multiSelectKey.currentState!.validate();
+                                },
+                              )
+                            : MultiSelectChipDisplay(),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 35,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 35,
-                    ),
-                    // ignore: deprecated_member_use
-                    RaisedButton.icon(
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      label: Text(
-                        'Update Profile',
-                        style: TextStyle(color: Colors.white),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 35,
                       ),
-                      icon: Icon(
-                        Icons.update,
-                        color: Colors.white,
-                      ),
-                      textColor: mPrimaryColor,
-                      splashColor: Colors.white,
-                      color: mPrimaryColor,
-                    ),
-                    // ignore: deprecated_member_use
-                    RaisedButton.icon(
-                      onPressed: () {},
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      label: Text(
-                        'Cancel  ',
-                        style: TextStyle(color: mPrimaryColor),
-                      ),
-                      icon: Icon(
-                        Icons.cancel,
+                      // ignore: deprecated_member_use
+                      RaisedButton.icon(
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        label: Text(
+                          'Update Profile',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        icon: Icon(
+                          Icons.update,
+                          color: Colors.white,
+                        ),
+                        textColor: mPrimaryColor,
+                        splashColor: Colors.white,
                         color: mPrimaryColor,
                       ),
-                      textColor: mPrimaryColor,
-                      splashColor: mPrimaryColor,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                      // ignore: deprecated_member_use
+                      RaisedButton.icon(
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        label: Text(
+                          'Cancel  ',
+                          style: TextStyle(color: mPrimaryColor),
+                        ),
+                        icon: Icon(
+                          Icons.cancel,
+                          color: mPrimaryColor,
+                        ),
+                        textColor: mPrimaryColor,
+                        splashColor: mPrimaryColor,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                    ],
+                  ),
+                ],
+              )),
         ),
       ),
     );

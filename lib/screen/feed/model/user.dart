@@ -46,13 +46,9 @@ class User {
       required this.joined_date,
       required this.hobbies,
       required this.total_followers,
-      required this.followed
-      });
+      required this.followed});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print("olla");
-    print(json);
-
     return User(
         id: json['id'] as int,
         userName: json['username'].toString(),

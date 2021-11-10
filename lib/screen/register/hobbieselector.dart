@@ -122,7 +122,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     fontFamily: 'font1', // and the font size
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Material(
                   elevation: 20.0,
                   shadowColor: Colors.white,
