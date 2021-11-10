@@ -259,7 +259,7 @@ class SuggestedUsers extends StatelessWidget {
                                     width: 15,
                                     child: Center(
                                       child: CircularProgressIndicator(
-                                        color: Colors.white,
+                                        color: user.followed==true ? mPrimaryColor:Colors.white,
                                       ),
                                     ),
                                   ),
