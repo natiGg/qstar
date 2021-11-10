@@ -2,7 +2,9 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:qstar/network_utils/api.dart';
+import 'package:qstar/screen/comment/comment_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -30,73 +32,248 @@ import 'package:qstar/screen/search/search.dart';
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs
-),
-  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 1, userName: "gelila", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 2, userName: "natig", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 3, userName: "bini", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "",name:"",website:"",bio:"",email:"",country_code:"",
-
-  phone_number:"" , gender:"", enable_suggestion:"", status:"",
-
-  date_of_birth:"", current_location:"",account_type:"",online_status:"",
-  joined_date:"",hobbies:"",total_followers:"",followed:false.obs)
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs)
 ];
 
 List<Post> _posts = [
@@ -1267,14 +1444,15 @@ class _WPostState extends State<WPost> {
                     child: activedisLikeButton(isdisActive)),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              CommentPage(),
-                          transitionDuration: Duration.zero,
-                        ),
-                      );
+                      showSheetcomment(context);
+                      // Navigator.push(
+                      //   context,
+                      //   PageRouteBuilder(
+                      //     pageBuilder: (context, animation1, animation2) =>
+                      //         CommentPage(),
+                      //     transitionDuration: Duration.zero,
+                      //   ),
+                      // );
                     },
                     child: Comment()),
                 Share(),
@@ -1708,4 +1886,82 @@ void showSheet(context) {
           ),
         );
       });
+}
+
+void showSheetcomment(context) {
+  showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+      backgroundColor: Colors.white,
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    CommentWidget(),
+                    CommentWidget(),
+                    CommentWidget(),
+                    CommentWidget(),
+                  ],
+                ),
+                Expanded(
+                  child: Material(
+                    type: MaterialType.canvas,
+                    child: SafeArea(
+                      child: Container(
+                        height: kToolbarHeight,
+                        margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        child: Row(
+                          children: [
+                            // ignore: prefer_const_constructors
+                            CircleAvatar(
+                              backgroundImage:
+                                  const AssetImage('assets/images/1.jpg'),
+                              radius: 18,
+                            ),
+                            // ignore: prefer_const_constructors
+                            Expanded(
+                              // ignore: prefer_const_constructors
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 16, right: 8),
+                                // ignore: prefer_const_constructors
+                                child: TextField(
+                                  // ignore: prefer_const_constructors
+                                  decoration: InputDecoration(
+                                      hintText: 'Comment here',
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 8),
+                                child: Text(
+                                  'Post',
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText2
+                                      ?.copyWith(color: Colors.blue),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ));
 }

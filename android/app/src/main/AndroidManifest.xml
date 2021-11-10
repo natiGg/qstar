@@ -21,6 +21,8 @@
       android:allowBackup="true"
       android:largeHeap="true"
         android:label="qstar"
+         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity

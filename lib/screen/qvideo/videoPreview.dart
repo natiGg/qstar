@@ -1,10 +1,101 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
-
+import 'package:qstar/screen/feed/feed.dart';
 import 'package:video_player/video_player.dart';
 import 'write_caption_widget.dart';
+
+List _usersd = [
+  const Item(
+      'Film & Animation',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Autos & Vehicles',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Music',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Pets & Animals',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Sports',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Travel & Events',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Gaming',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      '	People & Blogs',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'News & Politics',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Comedy',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Entertainment',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Style',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Education',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Science & Technology',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+  const Item(
+      'Nonprofits & Activism',
+      Icon(
+        Icons.video_collection_sharp,
+        color: mPrimaryColor,
+      )),
+];
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
@@ -97,25 +188,85 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               }
             },
           ),
+          const Divider(
+            height: 1,
+          ),
           const WriteCaptionWidget(),
           const Divider(
             height: 1,
           ),
-          ListTile(
-            title: const Text('Tag People'),
-            dense: true,
-            onTap: () {},
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: ListTile(
+              title: const Text('Tag People'),
+              dense: true,
+              onTap: () {},
+            ),
           ),
           const Divider(
             height: 1,
           ),
-          ListTile(
-            title: const Text('Setting'),
-            dense: true,
-            onTap: () {},
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Column(
+                    children: [
+                      DropdownButton(
+                        items: _usersd
+                            .map(
+                              (user) => DropdownMenuItem(
+                                value: user,
+                                child: Row(
+                                  children: [
+                                    user.icon,
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      user.name,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            value;
+                          });
+                        },
+                        hint: Container(
+                          child: const Text("Select Categories "),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            height: 1,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: ListTile(
+              title: const Text('Setting'),
+              dense: true,
+              onTap: () {},
+            ),
+          ),
+          const Divider(
+            height: 1,
           ),
         ]),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Wrap the play or pause in a call to `setState`. This ensures the

@@ -115,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) =>
-                                            const EditProfilePage(),
+                                            EditProfilePage(),
                                     transitionDuration: Duration.zero,
                                   ),
                                 );

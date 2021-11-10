@@ -17,7 +17,7 @@ class BottomSheetScrollable extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 100),
+          padding: const EdgeInsets.only(top: 50),
           child: Container(
             width: 64,
             height: 4,
