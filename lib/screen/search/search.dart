@@ -233,7 +233,7 @@ class SearchResultsListView extends StatelessWidget {
         (index) => ListTile(
             title: Container(
               height: 30,
-              margin: EdgeInsets.only(top: 13, bottom: 5),
+              margin: const EdgeInsets.only(top: 13, bottom: 5),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -275,14 +275,14 @@ class SearchResultsListView extends StatelessWidget {
 
   Widget _tagItem(String title) {
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10),
       child: Container(
         child: Text(title),
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
       ),
       decoration: BoxDecoration(
         border: Border.all(width: 1, color: Colors.grey),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(5),
         ),
       ),

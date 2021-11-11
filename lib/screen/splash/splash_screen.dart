@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/feed/feed.dart';
+
 import 'package:qstar/screen/home/home_screen.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => Scaffold(
-            body: isAuth ? MyHomePage() : HomeScreen(),
+            body: isAuth ? const MyHomePage() : const HomeScreen(),
           ),
         ),
         (route) => false,
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _checkIfLoggedIn() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('token');
-    print(token);
+
     if (token != null) {
       setState(() {
         isAuth = true;

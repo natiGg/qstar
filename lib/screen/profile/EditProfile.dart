@@ -1,8 +1,10 @@
+// ignore: file_names
+// ignore_for_file: unused_field, avoid_print
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
-import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +14,6 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Animal {
@@ -26,6 +27,8 @@ class Animal {
 }
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -60,14 +63,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
       .toList();
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedItems2 = [];
-  List<String> _tobeSent = [];
-  List<Animal> _selectedItems3 = [];
+  final List<String> _tobeSent = [];
+  final List<Animal> _selectedItems3 = [];
 
+  // ignore: non_constant_identifier_names
   String Preligion = "Hobbies";
 
   double? _height;
   double? _width;
-  final _formKey = GlobalKey<FormState>();
   late String _setTime, _setDate;
 
   late String _hour, _minute, _time;
@@ -76,10 +79,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   DateTime selectedDate = DateTime.now();
 
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
 
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+  // ignore: prefer_typing_uninitialized_variables
   var user;
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -132,9 +136,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         leadingWidth: 100,
         backgroundColor: Colors.white,
         leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
+          padding: const EdgeInsets.only(left: 20, top: 15),
           width: 100,
-          child: Text(
+          child: const Text(
             "User Name",
             style: TextStyle(
               color: mPrimaryColor,
@@ -145,13 +149,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
+              onPressed: () {},
+              icon: const Icon(Icons.menu),
+              color: mPrimaryColor)
         ],
       ),
       body: Form(
         key: _multiSelectKey,
         child: Container(
-          padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+          padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
           child: GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
@@ -174,10 +180,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     spreadRadius: 2,
                                     blurRadius: 10,
                                     color: Colors.black.withOpacity(0.1),
-                                    offset: Offset(0, 10))
+                                    offset: const Offset(0, 10))
                               ],
                               shape: BoxShape.circle,
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
                                     "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
@@ -198,7 +204,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                                 color: mPrimaryColor,
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.edit,
                                 color: Colors.white,
                               ),
@@ -206,22 +212,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Name',
                     text: "nati",
                     onChanged: (name) {},
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Last Name',
                     text: "natiG",
                     onChanged: (email) {},
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Username',
                     text: "@natiG",
@@ -229,8 +235,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   Column(
                     children: <Widget>[
-                      SizedBox(height: 24),
-                      Align(
+                      const SizedBox(height: 24),
+                      const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           "Birthday",
@@ -248,16 +254,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Container(
                           width: _width! / 1.7,
                           height: _height! / 9,
-                          margin: EdgeInsets.only(top: 30),
+                          margin: const EdgeInsets.only(top: 30),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             border: Border.all(color: Colors.black, width: 0.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.elliptical(20, 20)),
+                            borderRadius: const BorderRadius.all(
+                                Radius.elliptical(20, 20)),
                           ),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontFamily: 'font1',
                             ),
@@ -268,7 +274,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             onSaved: (val) async {
                               _setDate = val!;
                             },
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 disabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide.none),
                                 // labelText: 'Time',
@@ -283,19 +289,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Email',
                     text: "bini@gmail.com",
                     onChanged: (email) {},
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFieldWidget(
                     label: 'Password',
                     text: "*******",
                     onChanged: (email) {},
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white38,
@@ -312,29 +318,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           listType: MultiSelectListType.CHIP,
                           checkColor: Colors.pink,
                           selectedColor: mPrimaryColor,
-                          selectedItemsTextStyle: TextStyle(
+                          selectedItemsTextStyle: const TextStyle(
                             fontSize: 25,
                             color: Colors.white,
                           ),
                           unselectedColor: mPrimaryColor.withOpacity(.08),
-                          buttonIcon: Icon(
+                          buttonIcon: const Icon(
                             Icons.add,
                             color: Colors.pinkAccent,
                           ),
-                          searchHintStyle: TextStyle(
+                          searchHintStyle: const TextStyle(
                             fontSize: 20,
                           ),
                           searchable: true,
                           buttonText: Text(
-                            '$Preligion', //"????",
-                            style: TextStyle(
+                            Preligion, //"????",
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.grey,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
                           ),
-                          title: Text(
+                          title: const Text(
                             "Hobbies",
                             style: TextStyle(
                               fontSize: 25,
@@ -346,15 +352,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             setState(() {
                               _selectedItems2 = values;
                             });
-                            print('selected : ${_selectedItems2}');
-                            _selectedItems2.forEach((item) =>
-                                _tobeSent.add("${item.name.toString()}"));
+                            print('selected : $_selectedItems2');
+                            for (var item in _selectedItems2) {
+                              _tobeSent.add(item.name.toString());
+                            }
 
                             /*senduserdata(
                         'partnerreligion', '${_selectedItems2.toString()}');*/
                           },
                           chipDisplay: MultiSelectChipDisplay(
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                             ),
@@ -365,12 +372,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               });
 
                               print('removed: ${_selectedItems2.toString()}');
-                              _selectedItems2.forEach((item) =>
-                                  _tobeSent.add("${item.name.toString()}"));
+                              for (var item in _selectedItems2) {
+                                _tobeSent.add(item.name.toString());
+                              }
                             },
                           ),
                         ),
-                        _selectedItems2 == null || _selectedItems2.isEmpty
+                        _selectedItems2.isEmpty
                             ? MultiSelectChipDisplay(
                                 onTap: (item) {
                                   setState(() {
@@ -385,26 +393,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 35,
                       ),
                       // ignore: deprecated_member_use
                       RaisedButton.icon(
                         onPressed: () {},
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
-                        label: Text(
+                        label: const Text(
                           'Update Profile',
                           style: TextStyle(color: Colors.white),
                         ),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.update,
                           color: Colors.white,
                         ),
@@ -415,14 +423,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       // ignore: deprecated_member_use
                       RaisedButton.icon(
                         onPressed: () {},
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
-                        label: Text(
+                        label: const Text(
                           'Cancel  ',
                           style: TextStyle(color: mPrimaryColor),
                         ),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.cancel,
                           color: mPrimaryColor,
                         ),
@@ -430,7 +438,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         splashColor: mPrimaryColor,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 35,
                       ),
                     ],

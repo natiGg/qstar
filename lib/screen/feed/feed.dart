@@ -346,7 +346,6 @@ class _FeedState extends State<Feed> {
         )),
   ];
 
-  @override
   bool connection = true;
   @override
   void initState() {
@@ -367,7 +366,8 @@ class _FeedState extends State<Feed> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => MyPages(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        const MyPages(),
                     transitionDuration: Duration.zero,
                   ),
                 );
@@ -744,16 +744,16 @@ class _FeedState extends State<Feed> {
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(200),
                               ],
-                              decoration: InputDecoration.collapsed(
+                              decoration: const InputDecoration.collapsed(
                                 hintText: 'What\'s on your mind?',
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 1,
                           ),
                           SizedBox(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 
 class InfoWidget extends StatelessWidget {

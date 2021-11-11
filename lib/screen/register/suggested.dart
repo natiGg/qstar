@@ -6,30 +6,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/suggesteduserscontroller.dart';
 
 import 'package:qstar/screen/main/main_screen.dart';
 
-import 'package:qstar/screen/register/verification.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'dart:convert';
-import 'package:qstar/screen/register/suggested.dart';
-import 'package:qstar/network_utils/api.dart';
 
 late int ratings = 3;
 // ignore: non_constant_identifier_names
 late double rating_d = 3;
 
-
 class Suggested extends StatelessWidget {
-    final  SuggestedUserController suggestedUserController = Get.put(SuggestedUserController());
+  final SuggestedUserController suggestedUserController =
+      Get.put(SuggestedUserController());
 
   @override
   Widget build(BuildContext context) {
-      const textStyle = TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -76,24 +72,25 @@ class Suggested extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                
                 child: Obx(() {
-                  if (suggestedUserController.isLoading.value)
-                  {
-                    return Center(child: CircularProgressIndicator(),);
-                  }
-                  else {
-                      return SizedBox(
-                  height: 300,
-                  child: ListView.builder(itemCount: suggestedUserController.suggestObjs.length, itemBuilder: (context,index){
-            
-                    return SuggestedUsers(user:suggestedUserController.suggestObjs[index]);
-                  })
-                );
+                  if (suggestedUserController.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return SizedBox(
+                        height: 300,
+                        child: ListView.builder(
+                            itemCount:
+                                suggestedUserController.suggestObjs.length,
+                            itemBuilder: (context, index) {
+                              return SuggestedUsers(
+                                  user: suggestedUserController
+                                      .suggestObjs[index]);
+                            }));
                   }
                 }),
               ),
-            
             ],
           ),
           Container(
@@ -130,13 +127,13 @@ class Suggested extends StatelessWidget {
 
 class SuggestedUsers extends StatelessWidget {
   final User user;
-  const SuggestedUsers({ Key? key ,required this.user}) : super(key: key);
+  const SuggestedUsers({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      final SuggestedUserController suggestedUserController = Get.find();
+    final SuggestedUserController suggestedUserController = Get.find();
 
-      return Column(children: <Widget>[
+    return Column(children: <Widget>[
       Container(
         padding: const EdgeInsets.only(top: 10),
         child: Row(
@@ -161,20 +158,20 @@ class SuggestedUsers extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 10, left: 20),
+                    padding: const EdgeInsets.only(top: 10, left: 20),
                     child: Text(
                       user.userName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8, left: 26),
+                    padding: const EdgeInsets.only(top: 8, left: 26),
                     child: Text(
                       user.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
@@ -203,8 +200,8 @@ class SuggestedUsers extends StatelessWidget {
                           color: mPrimaryColor),
                     ),
                   ),
-                  Obx(()=> (
-                   Padding(
+                  Obx(
+                    () => (Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: SizedBox(
                         width: 100,
@@ -213,35 +210,37 @@ class SuggestedUsers extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(36),
                               border: Border.all(
-                                  color: 
-                                      user.followed == true? mPrimaryColor
-                                      : Colors.transparent)),
+                                  color:
+                                      // ignore: unrelated_type_equality_checks
+                                      user.followed == true
+                                          ? mPrimaryColor
+                                          : Colors.transparent)),
                           child: FlatButton(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(36),
                             ),
                             color:
-                                user.followed== false ? mPrimaryColor : Colors.white,
-                            onPressed: () {          
+                                // ignore: unrelated_type_equality_checks
+                                user.followed == false
+                                    ? mPrimaryColor
+                                    : Colors.white,
+                            onPressed: () {
                               suggestedUserController.updateId(user.id);
-                              if (user.followed == false){
-                                     suggestedUserController.follow();
+                              // ignore: unrelated_type_equality_checks
+                              if (user.followed == false) {
+                                suggestedUserController.follow();
+                              } else {
+                                suggestedUserController.unfollow();
                               }
-                              else {
-                               suggestedUserController.unfollow();
-
-                              }
-                    
-                          
-                  
-                                
                             },
+                            // ignore: unrelated_type_equality_checks
                             child: suggestedUserController.btnLoading == false
                                 ? Container(
                                     width: double.infinity,
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 5),
                                     alignment: Alignment.center,
+                                    // ignore: unrelated_type_equality_checks
                                     child: user.followed == false
                                         ? const Text('Follow',
                                             style: TextStyle(
@@ -254,12 +253,15 @@ class SuggestedUsers extends StatelessWidget {
                                             ),
                                           ),
                                   )
-                                : Container(
+                                : SizedBox(
                                     height: 15,
                                     width: 15,
                                     child: Center(
                                       child: CircularProgressIndicator(
-                                        color: user.followed==true ? mPrimaryColor:Colors.white,
+                                        // ignore: unrelated_type_equality_checks
+                                        color: user.followed == true
+                                            ? mPrimaryColor
+                                            : Colors.white,
                                       ),
                                     ),
                                   ),

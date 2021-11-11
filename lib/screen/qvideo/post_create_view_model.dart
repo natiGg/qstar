@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, duplicate_ignore
 
 import 'package:flutter/foundation.dart';
 

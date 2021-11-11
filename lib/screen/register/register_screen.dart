@@ -2,9 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/Privacypolicy.dart';
-import 'package:qstar/screen/register/TermofService.dart';
+import 'package:qstar/screen/register/termsofservice.dart';
 import 'package:qstar/screen/register/birthday.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,9 +13,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
+  // ignore: prefer_typing_uninitialized_variables
   var fname;
+  // ignore: prefer_typing_uninitialized_variables
   var lname;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
           children: <Widget>[
-            Text(
+            const Text(
               "Sign Up",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontFamily: 'font1', // and the font size
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
@@ -60,11 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fillColor: Colors.white,
                           filled: true,
                           contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 3.0))),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 3.0))),
                       validator: (fnameval) {
                         if (fnameval!.isEmpty) {
                           return "Please put your firstname";
@@ -89,11 +89,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fillColor: Colors.white,
                           filled: true,
                           contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
-                              borderSide:
-                                  BorderSide(color: Colors.white, width: 3.0))),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 3.0))),
                       validator: (lnameval) {
                         if (lnameval!.isEmpty) {
                           return "Please put your lastname";
@@ -113,50 +113,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               alignment: Alignment.center,
               child: RichText(
-                text: TextSpan(style: TextStyle(color: Colors.grey), children: [
-                  TextSpan(
-                      text:
-                          'By tapping Next  & accept you acknowledge that you have read the'),
-                  TextSpan(
-                    text: ' Privacy policy',
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) {
-                              return Privacypolicy();
-                            },
-                          ),
-                        );
-                      },
-                  ),
-                  TextSpan(text: ' and agree to the'),
-                  TextSpan(
-                    text: ' Term of Service',
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) {
-                              return TermofService();
-                            },
-                          ),
-                        );
-                      },
-                  ),
-                ]),
+                text: TextSpan(
+                    style: const TextStyle(color: Colors.grey),
+                    children: [
+                      const TextSpan(
+                          text:
+                              'By tapping Next  & accept you acknowledge that you have read the'),
+                      TextSpan(
+                        text: ' Privacy policy',
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation1, animation2) {
+                                  return const Privacypolicy();
+                                },
+                              ),
+                            );
+                          },
+                      ),
+                      const TextSpan(text: ' and agree to the'),
+                      TextSpan(
+                        text: ' Term of Service',
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation1, animation2) {
+                                  return const TermofService();
+                                },
+                              ),
+                            );
+                          },
+                      ),
+                    ]),
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
+              // ignore: deprecated_member_use
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(36),
@@ -164,7 +167,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 color: mPrimaryColor,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    print(fname + lname);
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -179,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Next',
                     style: textStyle,
                   ),

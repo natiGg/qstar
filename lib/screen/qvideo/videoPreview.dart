@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';
@@ -240,9 +241,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
                             value;
                           });
                         },
-                        hint: Container(
-                          child: const Text("Select Categories "),
-                        ),
+                        hint: const Text("Select Categories "),
                       ),
                     ],
                   ),

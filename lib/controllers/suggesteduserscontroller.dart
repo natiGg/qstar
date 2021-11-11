@@ -11,8 +11,6 @@ class SuggestedUserController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    print("controller initialized");
     fetchSuggeted();
     super.onInit();
   }
@@ -25,11 +23,11 @@ class SuggestedUserController extends GetxController {
     try {
       isLoading(true);
       var suggested = await RemoteServices.fetchSuggested();
+      // ignore: prefer_is_empty
       if (suggested.length >= 1) {
         suggestObjs.value = suggested;
       }
     } finally {
-      // TODO
       isLoading(false);
     }
   }
@@ -40,16 +38,14 @@ class SuggestedUserController extends GetxController {
 
       var uFollowed = await RemoteServices.follow(uid.value.toString());
       if (uFollowed) {
-        print(uid.toString());
+        // ignore: invalid_use_of_protected_member
         final int index = suggestObjs.value
             .indexWhere((element) => element.id.toInt() == uid.toInt());
-        print(index);
-        print(suggestObjs.value[index].followed);
+
+        // ignore: invalid_use_of_protected_member
         suggestObjs.value[index].followed.value = true;
-        print("user clicked followed");
       }
     } finally {
-      // TODO
       btnLoading(false);
     }
   }
@@ -60,16 +56,14 @@ class SuggestedUserController extends GetxController {
 
       var unFollowed = await RemoteServices.follow(uid.value.toString());
       if (unFollowed) {
-        print(uid.toString());
+        // ignore: invalid_use_of_protected_member
         final int index = suggestObjs.value
             .indexWhere((element) => element.id.toInt() == uid.toInt());
-        print(index);
-        print(suggestObjs.value[index].followed);
+
+        // ignore: invalid_use_of_protected_member
         suggestObjs.value[index].followed.value = false;
-        print("user clicked unfollowed");
       }
     } finally {
-      // TODO
       btnLoading(false);
     }
   }

@@ -1,11 +1,9 @@
 // ignore_for_file: deprecated_member_use
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/network_utils/api.dart';
+
 import 'package:qstar/screen/register/hobbieselector.dart';
-import 'package:qstar/screen/register/suggested.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Password extends StatefulWidget {
   final String fname;
@@ -29,6 +27,7 @@ class Password extends StatefulWidget {
 class _SetPState extends State<Password> {
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
+  // ignore: prefer_typing_uninitialized_variables
   var password;
 
   @override

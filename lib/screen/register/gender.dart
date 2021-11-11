@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/register/birthday.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 
 import 'package:gender_picker/source/enums.dart';
@@ -80,17 +79,7 @@ class GenderClass extends StatelessWidget {
                 borderRadius: BorderRadius.circular(36),
               ),
               color: mPrimaryColor,
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   PageRouteBuilder(
-                //     pageBuilder: (context, animation1, animation2) {
-                //       return BirthDay();
-                //     },
-                //   ),
-                // );
-                print("objfect");
-              },
+              onPressed: () {},
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),

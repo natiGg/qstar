@@ -11,7 +11,9 @@ class EditprofileController extends GetxController {
 
   @override
   void onInit() {
+    // ignore: todo
     // TODO: implement onInit
+    // ignore: avoid_print
     print("controller initialized");
     super.onInit();
   }
@@ -19,14 +21,7 @@ class EditprofileController extends GetxController {
   void fetchProfile(var id) async {
     try {
       isLoading(true);
-      var suggested = await RemoteServices.fetchProfile(id);
-      print("bryhhh");
-      print(suggested.toString());
-      if (suggested.id != null) {
-        print("user fetched");
-      }
     } finally {
-      // TODO
       isLoading(false);
     }
   }
@@ -37,16 +32,14 @@ class EditprofileController extends GetxController {
 
       var uFollowed = await RemoteServices.follow(uid.value.toString());
       if (uFollowed) {
-        print(uid.toString());
+        // ignore: invalid_use_of_protected_member
         final int index = suggestObjs.value
             .indexWhere((element) => element.id.toInt() == uid.toInt());
-        print(index);
-        print(suggestObjs.value[index].followed);
+
+        // ignore: invalid_use_of_protected_member
         suggestObjs.value[index].followed.value = true;
-        print("user clicked followed");
       }
     } finally {
-      // TODO
       btnLoading(false);
     }
   }

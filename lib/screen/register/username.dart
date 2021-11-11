@@ -1,11 +1,10 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_const_constructors, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'dart:convert';
 import 'package:qstar/screen/register/email.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/network_utils/api.dart';
 
 class Username extends StatefulWidget {
@@ -39,25 +38,18 @@ class CityData {
 class _UsernameState extends State<Username> {
   bool _isLoading = false;
   bool _isSuggested = false;
+  // ignore: prefer_typing_uninitialized_variables
   var username;
+  // ignore: prefer_typing_uninitialized_variables
   var suggested;
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      color: Colors.white,
-    );
-
     final _formKey = GlobalKey<FormState>();
 
-    List<String> _kOptions = <String>[
-      'aardvark',
-      'bobcat',
-      'chameleon',
-    ];
     String? selectedCity;
 
     final controllerCity = TextEditingController();
-    var uname;
+    // ignore: prefer_typing_uninitialized_variables
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -67,7 +59,7 @@ class _UsernameState extends State<Username> {
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
           children: <Widget>[
-            Text(
+            const Text(
               "Your username",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
@@ -76,9 +68,9 @@ class _UsernameState extends State<Username> {
                 fontFamily: 'font1', // and the font size
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _isSuggested == false
-                ? Text(
+                ? const Text(
                     "Your username is how friends find you on Q star",
                     style: TextStyle(
                       // we use the [TextStyle] widget to customize text
@@ -88,7 +80,7 @@ class _UsernameState extends State<Username> {
                   )
                 : Text(
                     "try $suggested",
-                    style: TextStyle(
+                    style: const TextStyle(
                       // we use the [TextStyle] widget to customize text
                       color: mPrimaryColor, // set the color
                       fontSize: 15.0, // and the font size
@@ -111,11 +103,11 @@ class _UsernameState extends State<Username> {
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 3.0)),
+                          borderSide: const BorderSide(
+                              color: Colors.white, width: 3.0)),
                       hintText: "Search..",
                     ),
                     child: TypeAheadFormField<String?>(
@@ -144,7 +136,7 @@ class _UsernameState extends State<Username> {
               alignment: Alignment.center,
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             // Text(_selectedAnimal != null
@@ -180,13 +172,13 @@ class _UsernameState extends State<Username> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
                   child: _isLoading == false
-                      ? Text(
+                      ? const Text(
                           'Next',
                           style: TextStyle(
                             color: Colors.white,
                           ),
                         )
-                      : Text(
+                      : const Text(
                           'Checking...',
                           style: TextStyle(
                             color: Colors.white,
@@ -208,7 +200,9 @@ class _UsernameState extends State<Username> {
     var data = {'username': username};
     var res = await Network().authData(data, "validateUsername");
     var body = json.decode(res.body);
+    // ignore: avoid_print
     print(body.toString());
+    // ignore: avoid_print
     print(res.statusCode);
     if (res.statusCode == 200) {
       Navigator.push(
@@ -226,7 +220,9 @@ class _UsernameState extends State<Username> {
     } else if (res.statusCode == 422) {
       Map<String, dynamic> map = body["errors"];
       List<dynamic> data = map["username"];
+      // ignore: avoid_print
       print(data[0]["message"].toString());
+      // ignore: avoid_print
       print(data[0]["suggestion"].toString());
 
       // var errors=json.decode(body["errors"]);

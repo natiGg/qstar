@@ -5,11 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Network {
   final String _url = 'https://qstar.mindethiopia.com/api/';
   //if you are using android studio emulator, change localhost to 10.0.2.2
+  // ignore: prefer_typing_uninitialized_variables
   var token;
 
   _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print(localStorage.getString('token'));
+
     token = localStorage.getString('token');
   }
 
@@ -22,7 +23,6 @@ class Network {
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     var uri = Uri.parse(fullUrl);
-    print(uri);
 
     await _getToken();
 

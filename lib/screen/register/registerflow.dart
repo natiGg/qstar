@@ -18,23 +18,25 @@ import 'package:flutter/material.dart';
 // Step 5 - Save The Form
 
 // Step 1 - Set Up The UI
-void main() => runApp(MyApps());
+void main() => runApp(const MyApps());
 
 class MyApps extends StatelessWidget {
+  const MyApps({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Multi Page Form'),
+      home: const MyHomePage(title: 'Multi Page Form'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -111,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Step 5 - Save The Form
   void _saveForm() {
+    // ignore: avoid_print
     print("saved");
     // implement your logic here
     // Future <builder> showDialog(
@@ -149,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   index: _formIndex,
                   children: <Widget>[
                     TextField(
-                      decoration: InputDecoration(labelText: 'eMail'),
+                      decoration: const InputDecoration(labelText: 'eMail'),
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
 
@@ -174,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       focusNode: _emailFocusNode,
                     ),
                     TextField(
-                      decoration: InputDecoration(labelText: 'Password'),
+                      decoration: const InputDecoration(labelText: 'Password'),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
                       textInputAction: TextInputAction.done,
@@ -213,6 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
                     _formIndex == 0
                         ? Container()
+                        // ignore: deprecated_member_use
                         : FlatButton(
                             onPressed: () {
                               _switchInputField(_formIndex - 1);
@@ -222,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     // Step 5 - Save The Form
                     _formIndex == 1
+                        // ignore: deprecated_member_use
                         ? FlatButton(
                             onPressed: () {
                               _validatePassword();
@@ -231,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             },
                             child: const Text('Submit'),
                           )
+                        // ignore: deprecated_member_use
                         : FlatButton(
                             onPressed: () {
                               _validateEmail();

@@ -65,11 +65,13 @@ class _HobbieselectorState extends State<Hobbieselector> {
       .toList();
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedItems2 = [];
-  List<String> _tobeSent = [];
-  List<Animal> _selectedItems3 = [];
+  final List<String> _tobeSent = [];
+  final List<Animal> _selectedItems3 = [];
 
+  // ignore: non_constant_identifier_names
   String Preligion = "test";
   final _multiSelectKey = GlobalKey<FormState>();
+  // ignore: prefer_typing_uninitialized_variables
   var hobbiesfield;
 
   //List<Animal> _selectedAnimals4 = [];
@@ -81,28 +83,18 @@ class _HobbieselectorState extends State<Hobbieselector> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(
-      color: Colors.white,
-    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Form(
             key: _multiSelectKey,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 40),
-                //################################################################################################
-                // Rounded blue MultiSelectDialogField
-                //################################################################################################
+                const SizedBox(height: 40),
 
-                //################################################################################################
-                // This MultiSelectBottomSheetField has no decoration, but is instead wrapped in a Container that has
-                // decoration applied. This allows the ChipDisplay to render inside the same Container.
-                //################################################################################################
                 const Text(
                   "Help us to understand you more",
                   style: TextStyle(
@@ -135,11 +127,11 @@ class _HobbieselectorState extends State<Hobbieselector> {
                         fillColor: Colors.white,
                         filled: true,
                         contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            borderSide:
-                                BorderSide(color: Colors.white, width: 3.0))),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 3.0))),
                     validator: (hobbie) {
                       if (hobbie!.isEmpty) {
                         return "Please put your needs";
@@ -159,7 +151,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     fontFamily: 'font1', // and the font size
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white38,
@@ -176,29 +168,29 @@ class _HobbieselectorState extends State<Hobbieselector> {
                         listType: MultiSelectListType.CHIP,
                         checkColor: Colors.pink,
                         selectedColor: mPrimaryColor,
-                        selectedItemsTextStyle: TextStyle(
+                        selectedItemsTextStyle: const TextStyle(
                           fontSize: 25,
                           color: Colors.white,
                         ),
                         unselectedColor: mPrimaryColor.withOpacity(.08),
-                        buttonIcon: Icon(
+                        buttonIcon: const Icon(
                           Icons.add,
                           color: Colors.pinkAccent,
                         ),
-                        searchHintStyle: TextStyle(
+                        searchHintStyle: const TextStyle(
                           fontSize: 20,
                         ),
                         searchable: true,
                         buttonText: Text(
-                          '$Preligion', //"????",
-                          style: TextStyle(
+                          Preligion, //"????",
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.grey,
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 5,
                         ),
-                        title: Text(
+                        title: const Text(
                           "Hobbies",
                           style: TextStyle(
                             fontSize: 25,
@@ -210,15 +202,17 @@ class _HobbieselectorState extends State<Hobbieselector> {
                           setState(() {
                             _selectedItems2 = values;
                           });
-                          print('selected : ${_selectedItems2}');
-                          _selectedItems2.forEach((item) =>
-                              _tobeSent.add("${item.name.toString()}"));
+
+                          for (var item in _selectedItems2) {
+                            // ignore: unnecessary_string_interpolations
+                            _tobeSent.add("${item.name.toString()}");
+                          }
 
                           /*senduserdata(
                       'partnerreligion', '${_selectedItems2.toString()}');*/
                         },
                         chipDisplay: MultiSelectChipDisplay(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                           ),
@@ -228,9 +222,11 @@ class _HobbieselectorState extends State<Hobbieselector> {
                               _tobeSent.remove(value.toString());
                             });
 
-                            print('removed: ${_selectedItems2.toString()}');
-                            _selectedItems2.forEach((item) =>
-                                _tobeSent.add("${item.name.toString()}"));
+                            // ignore: avoid_print
+
+                            for (var item in _selectedItems2) {
+                              _tobeSent.add("${item.name.toString()}");
+                            }
                           },
                         ),
                       ),
@@ -239,8 +235,6 @@ class _HobbieselectorState extends State<Hobbieselector> {
                               onTap: (item) {
                                 setState(() {
                                   _selectedItems3.remove(item);
-                                  print(
-                                      'removed below: ${_selectedItems3.toString()}');
                                 });
                                 _multiSelectKey.currentState!.validate();
                               },
@@ -249,7 +243,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   // ignore: deprecated_member_use
@@ -277,13 +271,13 @@ class _HobbieselectorState extends State<Hobbieselector> {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
                       child: _isLoading == false
-                          ? Text(
+                          ? const Text(
                               'Register',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
                             )
-                          : Container(
+                          : const SizedBox(
                               height: 20,
                               width: 20,
                               child: Center(
@@ -330,25 +324,22 @@ class _HobbieselectorState extends State<Hobbieselector> {
 
     var res = await Network().authData(data, 'register/email');
     var body = json.decode(res.body);
-    print(body);
-    print(res.statusCode);
-    print(_tobeSent.join(",").toString());
-    print(body["token"].toString());
 
     if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString("token", body["token"].toString());
       Navigator.push(
         context,
-        new MaterialPageRoute(builder: (context) => Suggested()),
+        MaterialPageRoute(builder: (context) => Suggested()),
       );
     } else if (res.statusCode == 422) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error'),
+          title: const Text('Error'),
           content: Text(body["errors"].toString()),
           actions: <Widget>[
+            // ignore: deprecated_member_use
             FlatButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
@@ -356,7 +347,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                   _isLoading = false;
                 });
               },
-              child: Text('ok'),
+              child: const Text('ok'),
             ),
           ],
         ),

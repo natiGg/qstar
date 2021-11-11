@@ -3,10 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
-import 'dart:ui';
 import 'dart:convert';
 import 'package:qstar/network_utils/api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:qstar/screen/register/password.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -28,16 +26,13 @@ class Email extends StatefulWidget {
 }
 
 class _EmailState extends State<Email> {
+  // ignore: prefer_typing_uninitialized_variables
   var email;
   bool _isLoading = false;
-  bool _isTaken = false;
 
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    const textStyle = TextStyle(
-      color: Colors.white,
-    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -46,7 +41,7 @@ class _EmailState extends State<Email> {
           mainAxisAlignment:
               MainAxisAlignment.center, //Center Column contents vertically,
           children: <Widget>[
-            Text(
+            const Text(
               "What's your email address",
               style: TextStyle(
                 // we use the [TextStyle] widget to customize text
@@ -55,7 +50,7 @@ class _EmailState extends State<Email> {
                 fontFamily: 'font1', // and the font size
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
@@ -73,11 +68,11 @@ class _EmailState extends State<Email> {
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 3.0))),
+                          borderSide: const BorderSide(
+                              color: Colors.white, width: 3.0))),
                   validator: (emailval) {
                     if (emailval!.isEmpty) {
                       return "Please put your email";
@@ -102,12 +97,12 @@ class _EmailState extends State<Email> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) {
-                        return Phonevarification();
+                        return const Phonevarification();
                       },
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   "Sign up with phone instead",
                   style: TextStyle(
                     // we use the [TextStyle] widget to customize text
@@ -134,13 +129,13 @@ class _EmailState extends State<Email> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
                   child: _isLoading == false
-                      ? Text(
+                      ? const Text(
                           'Next',
                           style: TextStyle(
                             color: Colors.white,
                           ),
                         )
-                      : Text(
+                      : const Text(
                           'Checking...',
                           style: TextStyle(
                             color: Colors.white,
@@ -162,8 +157,8 @@ class _EmailState extends State<Email> {
     var data = {'email': email};
     var res = await Network().authData(data, "validateEmail");
     var body = json.decode(res.body);
-    print(body.toString());
-    print(res.statusCode);
+    // ignore: avoid_print
+
     if (res.statusCode == 200) {
       Navigator.push(
         context,
@@ -181,22 +176,21 @@ class _EmailState extends State<Email> {
     } else if (res.statusCode == 422) {
       Map<String, dynamic> map = body["errors"];
       List<dynamic> data = map["email"];
-      print(data[0].toString());
 
       showDialog(
         context: context,
-        builder: (context) => new AlertDialog(
-          title: new Text('info'),
-          content: new Text(data[0].toString()),
+        builder: (context) => AlertDialog(
+          title: const Text('info'),
+          content: Text(data[0].toString()),
           actions: <Widget>[
-            new FlatButton(
+            FlatButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
                 setState(() {
                   _isLoading = false;
                 });
               },
-              child: new Text('ok'),
+              child: const Text('ok'),
             ),
           ],
         ),

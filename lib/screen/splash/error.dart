@@ -3,6 +3,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/main.dart';
 
 class ConnectionFaildScreen extends StatefulWidget {
+  const ConnectionFaildScreen({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -26,12 +28,13 @@ class _MyHomePageState extends State<ConnectionFaildScreen> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 13),
+                    offset: const Offset(0, 13),
                     blurRadius: 25,
-                    color: Color(0xFF5666C2).withOpacity(0.17),
+                    color: const Color(0xFF5666C2).withOpacity(0.17),
                   ),
                 ],
               ),
+              // ignore: deprecated_member_use
               child: FlatButton(
                 color: mPrimaryColor,
                 shape: RoundedRectangleBorder(
@@ -42,7 +45,7 @@ class _MyHomePageState extends State<ConnectionFaildScreen> {
                       context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation1, animation2) =>
-                            MyApp(),
+                            const MyApp(),
                         transitionDuration: Duration.zero,
                       ),
                     );
@@ -50,7 +53,7 @@ class _MyHomePageState extends State<ConnectionFaildScreen> {
                 },
                 child: Text(
                   "retry".toUpperCase(),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),

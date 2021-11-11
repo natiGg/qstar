@@ -11,7 +11,6 @@ import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 
-import 'package:qstar/screen/qvideo/comment/comment_page.dart';
 import 'package:qstar/screen/qvideo/comment/comment_widget.dart';
 import 'package:qstar/screen/qvideo/useraudio.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
@@ -22,7 +21,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 
-import 'package:qstar/screen/qvideo/VideoPicker.dart';
+import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
 List<User> _users = [
@@ -113,7 +112,7 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed:false.obs ),
+      followed: false.obs),
   User(
       id: 5,
       userName: "abrsh",
@@ -134,7 +133,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 1,
       userName: "gelila",
@@ -155,7 +155,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 2,
       userName: "natig",
@@ -176,7 +177,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 3,
       userName: "bini",
@@ -197,7 +199,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 4,
       userName: "yosi",
@@ -218,7 +221,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 5,
       userName: "abrsh",
@@ -239,7 +243,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs ),
+      total_followers: "",
+      followed: false.obs),
   User(
       id: 5,
       userName: "abrsh",
@@ -260,15 +265,8 @@ List<User> _users = [
       online_status: "",
       joined_date: "",
       hobbies: "",
-      total_followers: "", followed:false.obs )
-];
-
-List<Post> _posts = [
-  Post(userid: 1, id: 1, title: 'mike check'),
-  Post(userid: 2, id: 2, title: 'mike check'),
-  Post(userid: 3, id: 3, title: 'mike check'),
-  Post(userid: 4, id: 4, title: 'mike check'),
-  Post(userid: 5, id: 5, title: 'mike check'),
+      total_followers: "",
+      followed: false.obs)
 ];
 
 class Qvideoscreen extends StatefulWidget {

@@ -1,20 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/splash/error.dart';
 import 'package:qstar/screen/splash/splash_screen.dart';
 import 'package:qstar/constant.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -39,24 +41,24 @@ class _MyHomePageState extends State<MyApp> {
     switch (_source.keys.toList()[0]) {
       case ConnectivityResult.none:
         setState(() {
-          string = "Offline";
           isconected = false;
         });
 
+        // ignore: avoid_print
         print("Offline");
         break;
       case ConnectivityResult.mobile:
         setState(() {
-          string = "Online";
           isconected = true;
         });
+        // ignore: avoid_print
         print("Online");
         break;
       case ConnectivityResult.wifi:
         setState(() {
-          string = "Online";
           isconected = true;
         });
+        // ignore: avoid_print
         print("Online");
     }
     return isconected
@@ -100,7 +102,7 @@ class _MyHomePageState extends State<MyApp> {
         scaffoldBackgroundColor: mBackgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ConnectionFaildScreen(),
+      home: const ConnectionFaildScreen(),
     );
   }
 }
@@ -132,8 +134,9 @@ class MyConnectivity {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isOnline = true;
-      } else
+      } else {
         isOnline = false;
+      }
     } on SocketException catch (_) {
       isOnline = false;
     }

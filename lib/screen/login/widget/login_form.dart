@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class LoginForm extends StatelessWidget {
   final String email;
- final  String  password;
+  final String password;
 
-  const LoginForm({
-    Key? key,required this.email,required this.password
- }) : super(key: key);
+  const LoginForm({Key? key, required this.email, required this.password})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +31,15 @@ class LoginForm extends StatelessWidget {
                       const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white, width: 3.0))),
-                  validator: (emailval){
-                    if (emailval!.isEmpty){
-                      return "Please put your email";
-                    }
-                    email!=emailval;
-                    return null;
-                  },
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 3.0))),
+              validator: (emailval) {
+                if (emailval!.isEmpty) {
+                  return "Please put your email";
+                }
+                email != emailval;
+                return null;
+              },
             ),
           ),
           const SizedBox(
@@ -61,18 +61,16 @@ class LoginForm extends StatelessWidget {
                     const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: Colors.white, width: 3.0)),
-                    
-                    
-                    
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 3.0)),
               ),
-              validator: (passwordval){
-                    if (passwordval!.isEmpty){
-                      return "Please put your email";
-                    }
-                    password!=passwordval;
-                    return null;
-                  },
+              validator: (passwordval) {
+                if (passwordval!.isEmpty) {
+                  return "Please put your email";
+                }
+                password != passwordval;
+                return null;
+              },
             ),
           ),
         ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

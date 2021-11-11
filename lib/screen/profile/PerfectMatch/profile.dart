@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/profile/PerfectMatch/data/img.dart';
 import 'package:qstar/screen/profile/PerfectMatch/data/my_strings.dart';
@@ -66,7 +65,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditPersonalInfo()),
+                              builder: (context) => const EditPersonalInfo()),
                         );
                       },
                     );
@@ -91,7 +90,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                       title: const Text('Setting'),
                       children: <Widget>[
                         optionOne,
-                        Divider(),
+                        const Divider(),
                         optionTwo,
                       ],
                     );

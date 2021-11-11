@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_new
+
 import 'dart:convert';
 // ignore_for_file: deprecated_member_use, duplicate_ignore
 
@@ -21,7 +23,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
+  // ignore: prefer_typing_uninitialized_variables
   var email;
+  // ignore: prefer_typing_uninitialized_variables
   var password;
   @override
   Widget build(BuildContext context) {
@@ -170,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white,
                             ),
                           )
-                        : Container(
+                        : SizedBox(
                             height: 20,
                             width: 20,
                             child: Center(
@@ -220,6 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
+    // ignore: avoid_print
     print(password);
     setState(() {
       _isLoading = true;
@@ -227,6 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var data = {'username': email, 'password': password};
     var res = await Network().authData(data, "login");
     var body = json.decode(res.body);
+    // ignore: avoid_print
     print(body.toString());
 
     if (res.statusCode == 200) {

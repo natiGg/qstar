@@ -9,11 +9,10 @@ import 'package:qstar/screen/register/username.dart';
 import 'dart:ui';
 
 class BirthDay extends StatefulWidget {
-final String fname;
-final String lname;
-const BirthDay({
-    Key? key,required this.fname,required this.lname
-  }) : super(key: key);
+  final String fname;
+  final String lname;
+  const BirthDay({Key? key, required this.fname, required this.lname})
+      : super(key: key);
 
   @override
   _DateTimePickerState createState() => _DateTimePickerState();
@@ -22,7 +21,7 @@ const BirthDay({
 class _DateTimePickerState extends State<BirthDay> {
   late double _height;
   late double _width;
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   late String _setTime, _setDate;
 
   late String _hour, _minute, _time;
@@ -53,7 +52,6 @@ class _DateTimePickerState extends State<BirthDay> {
 
   @override
   void initState() {
-    print(widget.fname);
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
     _timeController.text = formatDate(
@@ -84,7 +82,7 @@ class _DateTimePickerState extends State<BirthDay> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "When's Your Birthday?",
                       style: TextStyle(
                         // we use the [TextStyle] widget to customize text
@@ -93,24 +91,24 @@ class _DateTimePickerState extends State<BirthDay> {
                         fontFamily: 'font1', // and the font size
                       ),
                     ),
-                    SizedBox(height: 20),
-                    InkWell(  
+                    const SizedBox(height: 20),
+                    InkWell(
                       onTap: () {
                         _selectDate(context);
                       },
                       child: Container(
                         width: _width / 1.7,
                         height: _height / 9,
-                        margin: EdgeInsets.only(top: 30),
+                        margin: const EdgeInsets.only(top: 30),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           border: Border.all(color: mPrimaryColor, width: 0.0),
                           borderRadius:
-                              BorderRadius.all(Radius.elliptical(20, 20)),
+                              const BorderRadius.all(Radius.elliptical(20, 20)),
                         ),
                         child: TextFormField(
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'font1',
                           ),
@@ -121,22 +119,22 @@ class _DateTimePickerState extends State<BirthDay> {
                           onSaved: (val) async {
                             _setDate = val!;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               disabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide.none),
                               // labelText: 'Time',
                               contentPadding: EdgeInsets.only(top: 0.0)),
-                          validator: (dateval){
-                             if (dateval!.isEmpty) {
-                      return "Please put your birth date";
-                    }
+                          validator: (dateval) {
+                            if (dateval!.isEmpty) {
+                              return "Please put your birth date";
+                            }
                           },
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: FlatButton(
@@ -145,25 +143,25 @@ class _DateTimePickerState extends State<BirthDay> {
                     ),
                     color: mPrimaryColor,
                     onPressed: () {
-                      if(_formKey.currentState!.validate())
-                      {
-                          Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) {
-                            print(selectedDate.toString());
-                            return Username(fname: widget.fname, lname: widget.lname, date: selectedDate.toString());
-                          },
-                        ),
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) {
+                              return Username(
+                                  fname: widget.fname,
+                                  lname: widget.lname,
+                                  date: selectedDate.toString());
+                            },
+                          ),
+                        );
                       }
-                    
                     },
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       alignment: Alignment.center,
-                      child: Text(
+                      child: const Text(
                         'Next',
                         style: textStyle,
                       ),

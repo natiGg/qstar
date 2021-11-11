@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
-import 'package:qstar/screen/qvideo/videoPreview.dart';
+import 'package:qstar/screen/qvideo/videopreview.dart';
 
 class VideoRecorderExample extends StatefulWidget {
   const VideoRecorderExample({Key? key}) : super(key: key);
@@ -123,7 +123,6 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
 
   _pickVideo() async {
     ImagePicker picker = ImagePicker();
-    File? _video;
     // ignore: deprecated_member_use
     PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
 

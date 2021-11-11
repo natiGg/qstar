@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 
 class User {
@@ -11,17 +9,26 @@ class User {
   String website;
   String bio;
   String email;
+  // ignore: non_constant_identifier_names
   String country_code;
+  // ignore: non_constant_identifier_names
   String phone_number;
   String gender;
+  // ignore: non_constant_identifier_names
   String enable_suggestion;
   String status;
+  // ignore: non_constant_identifier_names
   String date_of_birth;
+  // ignore: non_constant_identifier_names
   String current_location;
+  // ignore: non_constant_identifier_names
   String account_type;
+  // ignore: non_constant_identifier_names
   String online_status;
+  // ignore: non_constant_identifier_names
   String joined_date;
   String hobbies;
+  // ignore: non_constant_identifier_names
   String total_followers;
   RxBool followed;
 
@@ -34,17 +41,26 @@ class User {
       required this.website,
       required this.bio,
       required this.email,
+      // ignore: non_constant_identifier_names
       required this.country_code,
+      // ignore: non_constant_identifier_names
       required this.phone_number,
       required this.gender,
+      // ignore: non_constant_identifier_names
       required this.enable_suggestion,
       required this.status,
+      // ignore: non_constant_identifier_names
       required this.date_of_birth,
+      // ignore: non_constant_identifier_names
       required this.current_location,
+      // ignore: non_constant_identifier_names
       required this.account_type,
+      // ignore: non_constant_identifier_names
       required this.online_status,
+      // ignore: non_constant_identifier_names
       required this.joined_date,
       required this.hobbies,
+      // ignore: non_constant_identifier_names
       required this.total_followers,
       required this.followed});
 
