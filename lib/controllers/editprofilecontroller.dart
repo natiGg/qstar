@@ -6,8 +6,8 @@ class EditprofileController extends GetxController {
   var isLoading = true.obs;
   RxBool btnLoading = false.obs;
   var uid = 0.obs;
-
-  var suggestObjs = <User>[].obs;
+var suggested;
+  var suggestObjs =<User>[].obs;
 
   @override
   void onInit() {
@@ -17,18 +17,18 @@ class EditprofileController extends GetxController {
   }
 
   void fetchProfile(var id) async {
-    try {
-      isLoading(true);
-      var suggested = await RemoteServices.fetchProfile(id);
-      print("bryhhh");
-      print(suggested.toString());
-      if (suggested.id != null) {
-        print("user fetched");
+      try {
+        isLoading(true);
+        suggested = await RemoteServices.fetchProfile(id);
+        print("bryhhh");
+        print(suggested.toString());
+        if (suggested.id != null) {
+          print("user fetched"+suggested.toString());
+        }
+      } finally {
+        // TODO
+        isLoading(false);
       }
-    } finally {
-      // TODO
-      isLoading(false);
-    }
   }
 
   void editProf() async {
@@ -45,7 +45,8 @@ class EditprofileController extends GetxController {
         suggestObjs.value[index].followed.value = true;
         print("user clicked followed");
       }
-    } finally {
+    } 
+    finally {
       // TODO
       btnLoading(false);
     }

@@ -9,7 +9,7 @@ class Network {
 
   _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print(localStorage.getString('token'));
+ 
     token = localStorage.getString('token');
   }
 
@@ -25,7 +25,9 @@ class Network {
     print(uri);
 
     await _getToken();
-
+    print("inside gett datatatat");
+    print(token);
+    print(_setHeaders().toString());
     return await http.get(uri, headers: _setHeaders());
   }
 
@@ -34,7 +36,6 @@ class Network {
     var uri = Uri.parse(fullUrl);
 
     await _getToken();
-
     return await http.post(uri, body: jsonEncode(data), headers: _setHeaders());
   }
 

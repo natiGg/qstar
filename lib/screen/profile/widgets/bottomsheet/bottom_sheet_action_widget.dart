@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_context.dart';
@@ -32,7 +34,7 @@ class BottomSheetActionWidget extends StatelessWidget {
             ),
             Text(
               action.title,
-              style: context.textTheme.subtitle1,
+             
             )
           ],
         ),
@@ -107,6 +109,7 @@ class BottomSheetActionWidget extends StatelessWidget {
   void _logout(BuildContext context) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     localStorage.remove('token');
+    Get.delete<EditprofileController>();
 
     Navigator.push(
       context,
@@ -116,4 +119,5 @@ class BottomSheetActionWidget extends StatelessWidget {
       ),
     );
   }
+  
 }
