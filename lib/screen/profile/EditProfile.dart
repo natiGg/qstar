@@ -1,6 +1,3 @@
-// ignore: file_names
-// ignore_for_file: unused_field, avoid_print
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
