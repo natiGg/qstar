@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/feed/feed.dart';
+import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/profile/PerfectMatch/data/img.dart';
 import 'package:qstar/screen/profile/PerfectMatch/data/my_strings.dart';
+import 'package:qstar/screen/profile/PerfectMatch/editpersonalinfoform.dart';
 
 import '../../../constant.dart';
 
@@ -12,6 +15,8 @@ class ProfileImageAppbarRoute extends StatefulWidget {
   ProfileImageAppbarRouteState createState() => ProfileImageAppbarRouteState();
 }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
   @override
   Widget build(BuildContext context) {
@@ -19,6 +24,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
       color: Colors.white,
     );
     return Scaffold(
+      key: _scaffoldKey,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -53,7 +59,49 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   color: mPrimaryColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    Widget optionOne = SimpleDialogOption(
+                      child: const Text('Edit  Match Preferences Profile'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditPersonalInfo()),
+                        );
+                      },
+                    );
+                    Widget optionTwo = SimpleDialogOption(
+                      child: const Text('Turn Off Match Preferences'),
+                      onPressed: () {
+                        _scaffoldKey.currentState!
+                            // ignore: deprecated_member_use
+                            .showSnackBar(SnackBar(
+                          duration: const Duration(seconds: 4),
+                          content: Row(
+                            children: const <Widget>[
+                              CircularProgressIndicator(),
+                              Text("    Turning Off...")
+                            ],
+                          ),
+                        ));
+                        _ondelay();
+                      },
+                    );
+                    SimpleDialog dialog = SimpleDialog(
+                      title: const Text('Setting'),
+                      children: <Widget>[
+                        optionOne,
+                        Divider(),
+                        optionTwo,
+                      ],
+                    );
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return dialog;
+                      },
+                    );
+                  },
                 ),
               ],
             ),
@@ -181,5 +229,20 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
         ),
       ),
     );
+  }
+
+  _ondelay() {
+    Future.delayed(const Duration(seconds: 3), () {
+      // Navigator.popUntil(context, (route) {
+      //   return count++ == 2;
+      // });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MyHomePage(),
+        ),
+      );
+    });
   }
 }

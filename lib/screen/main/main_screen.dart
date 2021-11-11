@@ -57,7 +57,7 @@ class _BottomNavPageState extends State<MyHomePage> {
           }
         },
         children: const <Widget>[
-          UsersFeed(),
+          Feed(),
           Search(),
           CategoryVid(),
           ActivityPage(),

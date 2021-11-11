@@ -7,6 +7,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 class MyPages extends StatelessWidget {
+  const MyPages({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -84,7 +86,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         PageViewModel(
           title: "Find your Perfect Match",
           body: "To find your perfectmatch fill the next form",
-          image: _buildImage('img1.jpg'),
+          image: _buildImage('pm.jpg'),
           decoration: pageDecoration,
         ),
       ],

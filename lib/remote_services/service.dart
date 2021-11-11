@@ -50,7 +50,6 @@ class RemoteServices {
     print(json.decode(res.body).toString());
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      print(json.decode(res.body.toString()).toString());
       return User.fromJson(jsonDecode(body["data"].toString()));
     } else {
       throw Exception('Failed to load User' + res.statusCode.toString());
