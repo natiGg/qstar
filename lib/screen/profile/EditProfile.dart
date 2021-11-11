@@ -104,10 +104,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _timeController.text = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
         [hh, ':', nn, " ", am]).toString();
-        setState(() {
-                isLoading=true;
-        });
-
+ 
     _fetchUser();
     super.initState();
   }
@@ -122,9 +119,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       var body = json.decode(token);
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
-      setState(() {
-        isLoading = false;
-      });
+
 
     }
   }
@@ -155,7 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
         ],
       ),
-      body:  isLoading==false?Form(
+      body: Obx(() =>  editprofileController.isLoading==false?Form(
         key: _multiSelectKey,
         child: Container(
           padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -449,6 +444,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: 
  CircularProgressIndicator(),
       ),
-    );
+    ));
   }
 }

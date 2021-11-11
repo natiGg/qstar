@@ -3,7 +3,7 @@ import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 
 class EditprofileController extends GetxController {
-  var isLoading = true.obs;
+  RxBool isLoading = true.obs;
   RxBool btnLoading = false.obs;
   var uid = 0.obs;
 var suggested;
@@ -18,12 +18,12 @@ var suggested;
 
   void fetchProfile(var id) async {
       try {
-        isLoading(true);
+
         suggested = await RemoteServices.fetchProfile(id);
-        print("bryhhh");
-        print(suggested.toString());
+     
         if (suggested.id != null) {
-          print("user fetched"+suggested.toString());
+             isLoading(false);
+
         }
       } finally {
         // TODO

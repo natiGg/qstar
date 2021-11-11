@@ -2,8 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/Privacypolicy.dart';
-import 'package:qstar/screen/register/TermofService.dart';
+import 'package:qstar/screen/register/termsofservice.dart';
 import 'package:qstar/screen/register/birthday.dart';
+import 'package:qstar/screen/register/termsofservice.dart';
 import 'package:qstar/screen/register/widget/register_button.dart';
 
 class RegisterScreen extends StatefulWidget {
