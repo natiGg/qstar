@@ -4,6 +4,8 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/register/Privacypolicy.dart';
 import 'package:qstar/screen/register/termsofservice.dart';
 import 'package:qstar/screen/register/birthday.dart';
+import 'package:qstar/screen/register/termsofservice.dart';
+import 'package:qstar/screen/register/widget/register_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

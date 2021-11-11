@@ -3,10 +3,10 @@ import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 
 class EditprofileController extends GetxController {
-  var isLoading = true.obs;
+  RxBool isLoading = true.obs;
   RxBool btnLoading = false.obs;
   var uid = 0.obs;
-
+  var suggested;
   var suggestObjs = <User>[].obs;
 
   @override
@@ -20,8 +20,13 @@ class EditprofileController extends GetxController {
 
   void fetchProfile(var id) async {
     try {
-      isLoading(true);
+      suggested = await RemoteServices.fetchProfile(id);
+
+      if (suggested.id != null) {
+        isLoading(false);
+      }
     } finally {
+      // TODO
       isLoading(false);
     }
   }
@@ -40,6 +45,7 @@ class EditprofileController extends GetxController {
         suggestObjs.value[index].followed.value = true;
       }
     } finally {
+      // TODO
       btnLoading(false);
     }
   }

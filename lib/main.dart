@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    String string;
     switch (_source.keys.toList()[0]) {
       case ConnectivityResult.none:
         setState(() {

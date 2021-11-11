@@ -69,7 +69,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   double? _height;
   double? _width;
   late String _setTime, _setDate;
-
+  bool isLoading = false;
   late String _hour, _minute, _time;
 
   late String dateTime;
@@ -105,6 +105,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _timeController.text = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
         [hh, ':', nn, " ", am]).toString();
+ 
     _fetchUser();
     super.initState();
   }
@@ -117,9 +118,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (token != null) {
       print(token.toString());
       var body = json.decode(token);
-
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
+
+
     }
   }
 
@@ -151,7 +153,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               color: mPrimaryColor)
         ],
       ),
-      body: Form(
+      body: Obx(() =>  editprofileController.isLoading==false?Form(
         key: _multiSelectKey,
         child: Container(
           padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -215,19 +217,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Name',
-                    text: "nati",
+                    text: editprofileController.suggested.name,
                     onChanged: (name) {},
                   ),
                   const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Last Name',
-                    text: "natiG",
+                    text: editprofileController.suggested.name,
                     onChanged: (email) {},
                   ),
                   const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Username',
-                    text: "@natiG",
+                    text: editprofileController.suggested.userName,
                     onChanged: (email) {},
                   ),
                   Column(
@@ -289,7 +291,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 24),
                   TextFieldWidget(
                     label: 'Email',
-                    text: "bini@gmail.com",
+                    text:  editprofileController.suggested.email,
                     onChanged: (email) {},
                   ),
                   const SizedBox(height: 30),
@@ -443,7 +445,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               )),
         ),
+      ):Center(
+        child: 
+ CircularProgressIndicator(),
       ),
-    );
+    ));
   }
 }

@@ -44,9 +44,11 @@ class RemoteServices {
     res = await Network().getData("profile/${id.toString()}");
 
     var body = json.decode(res.body);
-    if (res.statusCode == 200) {
-      return User.fromJson(jsonDecode(body["data"].toString()));
+    if (res.statusCode == 200) { 
+   
+      return User.fromJson(body["data"]);
     } else {
+         print(res.headers.toString());
       throw Exception('Failed to load User' + res.statusCode.toString());
     }
   }
