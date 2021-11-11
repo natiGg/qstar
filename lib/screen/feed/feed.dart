@@ -1,12 +1,7 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:qstar/network_utils/api.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +18,12 @@ import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
-import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/search/search.dart';
-import 'package:connectivity/connectivity.dart';
+// ignore: import_of_legacy_library_into_null_safe
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -308,46 +302,6 @@ List _usersd = [
 List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
 late double rating_d = 3;
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-late String string;
-
-class MyConnectivity {
-  MyConnectivity._internal();
-
-  static final MyConnectivity _instance = MyConnectivity._internal();
-
-  static MyConnectivity get instance => _instance;
-
-  Connectivity connectivity = Connectivity();
-
-  StreamController controller = StreamController.broadcast();
-
-  Stream get myStream => controller.stream;
-
-  void initialise() async {
-    ConnectivityResult result = await connectivity.checkConnectivity();
-    _checkStatus(result);
-    connectivity.onConnectivityChanged.listen((result) {
-      _checkStatus(result);
-    });
-  }
-
-  void _checkStatus(ConnectivityResult result) async {
-    bool isOnline = false;
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isOnline = true;
-      } else
-        isOnline = false;
-    } on SocketException catch (_) {
-      isOnline = false;
-    }
-    controller.sink.add({result: isOnline});
-  }
-
-  void disposeStream() => controller.close();
-}
 
 class Item {
   const Item(this.name, this.icon);
@@ -392,41 +346,15 @@ class _FeedState extends State<Feed> {
         )),
   ];
 
-  Map _source = {ConnectivityResult.none: false};
-  MyConnectivity _connectivity = MyConnectivity.instance;
   @override
   bool connection = true;
   @override
   void initState() {
     super.initState();
-    _connectivity.initialise();
-    _connectivity.myStream.listen((source) {
-      setState(() => _source = source);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    switch (_source.keys.toList()[0]) {
-      case ConnectivityResult.none:
-        setState(() {
-          string = "Offline";
-        });
-
-        print("Offline");
-        break;
-      case ConnectivityResult.mobile:
-        setState(() {
-          string = "Online";
-        });
-        print("Online");
-        break;
-      case ConnectivityResult.wifi:
-        setState(() {
-          string = "Online";
-        });
-        print("Online");
-    }
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
@@ -892,13 +820,6 @@ class _FeedState extends State<Feed> {
                 ],
               ),
             ));
-  }
-
-  void cheak() {
-    _connectivity.initialise();
-    _connectivity.myStream.listen((source) {
-      setState(() => _source = source);
-    });
   }
 }
 
