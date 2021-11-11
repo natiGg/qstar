@@ -344,24 +344,23 @@ class _HobbieselectorState extends State<Hobbieselector> {
       );
     } else if (res.statusCode == 422) {
       showDialog(
-            context: context,
-            builder: (context) => new AlertDialog(
-              title: new Text('Error'),
-              content: new Text(body["errors"].toString()),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  },
-                  child: new Text('ok'),
-                ),
-              ],
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error'),
+          content: Text(body["errors"].toString()),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+              child: Text('ok'),
             ),
-          ) ??
-          false;
+          ],
+        ),
+      );
     }
     setState(() {
       _isLoading = false;

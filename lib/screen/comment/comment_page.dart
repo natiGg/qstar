@@ -23,7 +23,7 @@ class _CommentPageState extends State<CommentPage> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const UsersFeed()));
+            .push(MaterialPageRoute(builder: (context) => const Feed()));
         return true;
       },
       child: Scaffold(

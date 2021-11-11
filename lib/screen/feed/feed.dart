@@ -1,11 +1,7 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:qstar/network_utils/api.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +18,12 @@ import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
-import 'package:qstar/screen/comment/comment_page.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/search/search.dart';
-
+// ignore: import_of_legacy_library_into_null_safe
 // import 'package:rive/rive.dart';
 
 List<User> _users = [
@@ -308,46 +303,6 @@ List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
 late double rating_d = 3;
 
-void main() {
-  runApp(const UsersFeed());
-}
-
-class UsersFeed extends StatefulWidget {
-  const UsersFeed({Key? key}) : super(key: key);
-
-  @override
-  State<UsersFeed> createState() => _UsersFeedState();
-}
-
-class _UsersFeedState extends State<UsersFeed> {
-  @override
-  late BuildContext context;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: RefreshIndicator(
-        child: const Feed(),
-        onRefresh: onPullRefresh,
-      ),
-    );
-  }
-
-  Future<void> onPullRefresh() async {
-    //People item = Dummy.getPeopleData()[0];
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      //   adapter.addItem(item);
-    });
-  }
-}
-
 class Item {
   const Item(this.name, this.icon);
   final String name;
@@ -390,285 +345,274 @@ class _FeedState extends State<Feed> {
           color: Color(0xFF167F67),
         )),
   ];
+
+  @override
+  bool connection = true;
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        leading: IconButton(
-            icon: const Icon(FontAwesome.heartbeat),
-            color: mPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => MyPages(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            }),
-        actions: [
-          IconButton(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          leading: IconButton(
+              icon: const Icon(FontAwesome.heartbeat),
+              color: mPrimaryColor,
               onPressed: () {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const HomeScreen(),
+                    pageBuilder: (context, animation1, animation2) => MyPages(),
                     transitionDuration: Duration.zero,
                   ),
                 );
+              }),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const HomeScreen(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
 
-                // Navigator.push(
-                //   context,
-                //   PageRouteBuilder(
-                //     pageBuilder: (context, animation1, animation2) =>
-                //         HomeScreen(),
-                //     transitionDuration: Duration.zero,
-                //   ),
-                // );
-              },
-              icon: const Icon(Icons.send_outlined),
-              color: mPrimaryColor),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            // Padding(
-            //   padding: EdgeInsets.all(20),
-            //   child: Container(
-            //     height: 110,
-            //     child: ListView(
-            //       scrollDirection: Axis.horizontal,
-            //       children: [
-            //         SizedBox(height: 5),
-            //         Row(children: _users.map((e) => UserStories(e)).toList())
-            //       ],
-            //     ),
-            //   ),
-            // ),
+                  // Navigator.push(
+                  //   context,
+                  //   PageRouteBuilder(
+                  //     pageBuilder: (context, animation1, animation2) =>
+                  //         HomeScreen(),
+                  //     transitionDuration: Duration.zero,
+                  //   ),
+                  // );
+                },
+                icon: const Icon(Icons.send_outlined),
+                color: mPrimaryColor),
+          ],
+        ),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+                elevation: 2,
+                shape: null,
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          // ignore: prefer_const_constructors
+                          CircleAvatar(
+                              backgroundImage: const AssetImage(
+                                  'assets/images/profile1.jpg')),
+                          const SizedBox(width: 8.0),
 
-            Card(
-              margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
-              elevation: 2,
-              shape: null,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        // ignore: prefer_const_constructors
-                        CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/images/profile1.jpg')),
-                        const SizedBox(width: 8.0),
-
-                        Expanded(
-                          // ignore: duplicate_ignore, duplicate_ignore
-                          child: Container(
-                            height: 40,
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                    color: Colors.grey.withOpacity(0.9))),
-                            // ignore: deprecated_member_use
-                            child: FlatButton(
-                              onPressed: () {
-                                _postModal(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'Share us your thought',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.withOpacity(0.9),
-                                      ),
-                                    )),
+                          Expanded(
+                            // ignore: duplicate_ignore, duplicate_ignore
+                            child: Container(
+                              height: 40,
+                              width: 300,
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: Colors.grey.withOpacity(0.9))),
+                              // ignore: deprecated_member_use
+                              child: FlatButton(
+                                onPressed: () {
+                                  _postModal(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Share us your thought',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey.withOpacity(0.9),
+                                        ),
+                                      )),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const Divider(height: 5.0, thickness: 0.5),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          FlatButton.icon(
-                            onPressed: () {
-                              //    _postModal(context);
-                            },
-                            icon: const Icon(
-                              Icons.videocam,
-                              color: Colors.red,
-                            ),
-                            label: const Text('Live'),
-                          ),
-                          const VerticalDivider(width: 8.0),
-                          FlatButton.icon(
-                            onPressed: () {
-                              //  _fetchSuggested();
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                          const PostPage(),
-                                  transitionDuration: Duration.zero,
-                                ),
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.photo_library,
-                              color: Colors.green,
-                            ),
-                            label: const Text(' Post'),
-                          ),
-                          FlatButton.icon(
-                            onPressed: () {
-                              //  _postModal(context);
-                            },
-                            icon: const Icon(
-                              Icons.video_collection_sharp,
-                              color: Colors.blue,
-                            ),
-                            label: const Text(' Video'),
-                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 25.0),
-                  child: Text(
-                    'Your Perfect match',
-                    style: TextStyle(
-                        color: mPrimaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  width: 150,
-                ),
-                const Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      FontAwesome.refresh,
-                      color: mPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(25),
-              child: Container(
-                height: 200,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Row(children: _users.map((e) => UserStories(e)).toList()),
-                  ],
-                ),
-              ),
-            ),
-
-            const Divider(
-              thickness: 1.0,
-            ),
-            ..._posts.map((item) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: WPost(
-                  post: item,
-                ),
-              );
-            }).toList(),
-            Container(
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Suggested Friends",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 250,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: SizedBox(height: 5),
+                      const Divider(height: 5.0, thickness: 0.5),
+                      const SizedBox(
+                        height: 5,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      Container(
+                        height: 40.0,
                         child: Row(
-                            children:
-                                _users.map((e) => UserAvatar(e)).toList()),
-                      )
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            FlatButton.icon(
+                              onPressed: () {
+                                //    _postModal(context);
+                              },
+                              icon: const Icon(
+                                Icons.videocam,
+                                color: Colors.red,
+                              ),
+                              label: const Text('Live'),
+                            ),
+                            const VerticalDivider(width: 8.0),
+                            FlatButton.icon(
+                              onPressed: () {
+                                //  _fetchSuggested();
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            const PostPage(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.photo_library,
+                                color: Colors.green,
+                              ),
+                              label: const Text(' Post'),
+                            ),
+                            FlatButton.icon(
+                              onPressed: () {
+                                //  _postModal(context);
+                              },
+                              icon: const Icon(
+                                Icons.video_collection_sharp,
+                                color: Colors.blue,
+                              ),
+                              label: const Text(' Video'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      'Your Perfect match',
+                      style: TextStyle(
+                          color: mPrimaryColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 150,
+                  ),
+                  const Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        FontAwesome.refresh,
+                        color: mPrimaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            ..._posts.map((item) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: WPost(
-                  post: item,
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Container(
+                  height: 200,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Row(children: _users.map((e) => UserStories(e)).toList()),
+                    ],
+                  ),
                 ),
-              );
-            }).toList(),
-          ],
-        ),
-      ),
-    );
+              ),
+              const Divider(
+                thickness: 1.0,
+              ),
+              ..._posts.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: WPost(
+                    post: item,
+                  ),
+                );
+              }).toList(),
+              Container(
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Suggested Friends",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: mPrimaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 250,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: SizedBox(height: 5),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              children:
+                                  _users.map((e) => UserAvatar(e)).toList()),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              ..._posts.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: WPost(
+                    post: item,
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        ));
   }
 
   void _postModal(context) {
@@ -1909,54 +1853,52 @@ void showSheetcomment(context) {
                     CommentWidget(),
                   ],
                 ),
-                Expanded(
-                  child: Material(
-                    type: MaterialType.canvas,
-                    child: SafeArea(
-                      child: Container(
-                        height: kToolbarHeight,
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        padding: const EdgeInsets.only(left: 16, right: 8),
-                        child: Row(
-                          children: [
+                Material(
+                  type: MaterialType.canvas,
+                  child: SafeArea(
+                    child: Container(
+                      height: kToolbarHeight,
+                      margin: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      padding: const EdgeInsets.only(left: 16, right: 8),
+                      child: Row(
+                        children: [
+                          // ignore: prefer_const_constructors
+                          CircleAvatar(
+                            backgroundImage:
+                                const AssetImage('assets/images/1.jpg'),
+                            radius: 18,
+                          ),
+                          // ignore: prefer_const_constructors
+                          Expanded(
                             // ignore: prefer_const_constructors
-                            CircleAvatar(
-                              backgroundImage:
-                                  const AssetImage('assets/images/1.jpg'),
-                              radius: 18,
-                            ),
-                            // ignore: prefer_const_constructors
-                            Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
                               // ignore: prefer_const_constructors
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 16, right: 8),
+                              child: TextField(
                                 // ignore: prefer_const_constructors
-                                child: TextField(
-                                  // ignore: prefer_const_constructors
-                                  decoration: InputDecoration(
-                                      hintText: 'Comment here',
-                                      border: InputBorder.none),
-                                ),
+                                decoration: InputDecoration(
+                                    hintText: 'Comment here',
+                                    border: InputBorder.none),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 8),
-                                child: Text(
-                                  'Post',
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText2
-                                      ?.copyWith(color: Colors.blue),
-                                ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              child: Text(
+                                'Post',
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText2
+                                    ?.copyWith(color: Colors.blue),
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
