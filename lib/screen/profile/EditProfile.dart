@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
@@ -31,6 +34,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  List<XFile>? _imageFileList;
+
+  set _imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
+  dynamic _pickImageError;
   static final List<Animal> _animals = [
     Animal(id: 1, name: "Book clubs"),
     Animal(id: 2, name: "Running clubs"),
@@ -129,13 +139,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          leadingWidth: 100,
+          leadingWidth: 40,
           backgroundColor: Colors.white,
-          leading: Container(
-            padding: EdgeInsets.only(left: 20, top: 15),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              icon: const Icon(Icons.arrow_back),
+              color: mPrimaryColor),
+          title: Container(
             width: 100,
-            child: Text(
-              "User Name",
+            child: const Text(
+              "Edit Profile",
               style: TextStyle(
                 color: mPrimaryColor,
                 fontSize: 23,
@@ -143,10 +158,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-                onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
-          ],
         ),
         body: editprofileController.obx(
             (editForm) => Form(
@@ -159,53 +170,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         },
                         child: ListView(
                           children: [
-                            Center(
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 130,
-                                    height: 130,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 4,
-                                            color: Theme.of(context)
-                                                .scaffoldBackgroundColor),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              color:
-                                                  Colors.black.withOpacity(0.1),
-                                              offset: Offset(0, 10))
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                              "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
-                                            ))),
-                                  ),
-                                  Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
+                            GestureDetector(
+                              onTap: () {
+                                _showPicker(context);
+                              },
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundColor: mPrimaryColor,
+                                child: _imageFileList != null
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(40),
+                                        child: Image.file(
+                                            File(_imageFileList![0].path),
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover),
+                                      )
+                                    : Container(
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            width: 4,
-                                            color: Theme.of(context)
-                                                .scaffoldBackgroundColor,
-                                          ),
-                                          color: mPrimaryColor,
-                                        ),
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        width: 100,
+                                        height: 100,
                                         child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
+                                          Icons.camera_alt,
+                                          color: Colors.grey[800],
                                         ),
-                                      )),
-                                ],
+                                      ),
                               ),
                             ),
                             SizedBox(
@@ -456,5 +448,67 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             onEmpty: Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
+  }
+
+  final ImagePicker _picker = ImagePicker();
+  ImagePicker picker = ImagePicker();
+  _imgFromCamera() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.camera,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  _imgFromGallery() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
