@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
@@ -31,6 +34,14 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  List<XFile>? _imageFileList;
+
+  set _imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
+  dynamic _pickImageError;
+
   static final List<Animal> _animals = [
     Animal(id: 1, name: "Book clubs"),
     Animal(id: 2, name: "Running clubs"),
@@ -105,7 +116,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _timeController.text = formatDate(
         DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
         [hh, ':', nn, " ", am]).toString();
- 
+
     _fetchUser();
     super.initState();
   }
@@ -120,8 +131,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       var body = json.decode(token);
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
-
-
     }
   }
 
@@ -130,325 +139,360 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leadingWidth: 100,
-        backgroundColor: Colors.white,
-        leading: Container(
-          padding: const EdgeInsets.only(left: 20, top: 15),
-          width: 100,
-          child: const Text(
-            "User Name",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 23,
-              fontFamily: 'font1',
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          leadingWidth: 40,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              icon: const Icon(Icons.arrow_back),
+              color: mPrimaryColor),
+          title: Container(
+            width: 100,
+            child: const Text(
+              "Edit Profile",
+              style: TextStyle(
+                color: mPrimaryColor,
+                fontSize: 23,
+                fontFamily: 'font1',
+              ),
             ),
           ),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu),
-              color: mPrimaryColor)
-        ],
-      ),
-      body: Obx(() =>  editprofileController.isLoading==false?Form(
-        key: _multiSelectKey,
-        child: Container(
-          padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
-          child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: ListView(
-                children: [
-                  Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 130,
-                          height: 130,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(0, 10))
-                              ],
-                              shape: BoxShape.circle,
-                              image: const DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
-                                  ))),
-                        ),
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 4,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                ),
-                                color: mPrimaryColor,
-                              ),
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SizedBox(height: 24),
-                  TextFieldWidget(
-                    label: 'Name',
-                    text: editprofileController.suggested.name,
-                    onChanged: (name) {},
-                  ),
-                  const SizedBox(height: 24),
-                  TextFieldWidget(
-                    label: 'Last Name',
-                    text: editprofileController.suggested.name,
-                    onChanged: (email) {},
-                  ),
-                  const SizedBox(height: 24),
-                  TextFieldWidget(
-                    label: 'Username',
-                    text: editprofileController.suggested.userName,
-                    onChanged: (email) {},
-                  ),
-                  Column(
-                    children: <Widget>[
-                      const SizedBox(height: 24),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Birthday",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                      InkWell(
+        body: Obx(
+          () => editprofileController.isLoading == false
+              ? Form(
+                  key: _multiSelectKey,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 25, right: 16),
+                    child: GestureDetector(
                         onTap: () {
-                          _selectDate(context);
+                          FocusScope.of(context).unfocus();
                         },
-                        child: Container(
-                          width: _width! / 1.7,
-                          height: _height! / 9,
-                          margin: const EdgeInsets.only(top: 30),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            border: Border.all(color: Colors.black, width: 0.0),
-                            borderRadius: const BorderRadius.all(
-                                Radius.elliptical(20, 20)),
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'font1',
+                        child: ListView(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _showPicker(context);
+                              },
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundColor: mPrimaryColor,
+                                child: _imageFileList != null
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(40),
+                                        child: Image.file(
+                                            File(_imageFileList![0].path),
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        width: 100,
+                                        height: 100,
+                                        child: Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                            enabled: false,
-                            keyboardType: TextInputType.text,
-                            controller: _dateController,
-                            onSaved: (val) async {
-                              _setDate = val!;
-                            },
-                            decoration: const InputDecoration(
-                                disabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide.none),
-                                // labelText: 'Time',
-                                contentPadding: EdgeInsets.only(top: 0.0)),
-                            validator: (dateval) {
-                              if (dateval!.isEmpty) {
-                                return "Please put your birth date";
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  TextFieldWidget(
-                    label: 'Email',
-                    text:  editprofileController.suggested.email,
-                    onChanged: (email) {},
-                  ),
-                  const SizedBox(height: 30),
-                  TextFieldWidget(
-                    label: 'Password',
-                    text: "*******",
-                    onChanged: (email) {},
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white38,
-                      border: Border.all(
-                        color: mPrimaryColor,
-                        width: 2,
-                      ),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        MultiSelectBottomSheetField<Animal>(
-                          initialChildSize: 0.7,
-                          maxChildSize: 0.95,
-                          listType: MultiSelectListType.CHIP,
-                          checkColor: Colors.pink,
-                          selectedColor: mPrimaryColor,
-                          selectedItemsTextStyle: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                          ),
-                          unselectedColor: mPrimaryColor.withOpacity(.08),
-                          buttonIcon: const Icon(
-                            Icons.add,
-                            color: Colors.pinkAccent,
-                          ),
-                          searchHintStyle: const TextStyle(
-                            fontSize: 20,
-                          ),
-                          searchable: true,
-                          buttonText: Text(
-                            Preligion, //"????",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.grey,
+                            const SizedBox(
+                              height: 10,
                             ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                          ),
-                          title: const Text(
-                            "Hobbies",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.pink,
+                            const SizedBox(height: 24),
+                            TextFieldWidget(
+                              label: 'Name',
+                              text: editprofileController.suggested.name,
+                              onChanged: (name) {},
                             ),
-                          ),
-                          items: _items,
-                          onConfirm: (values) {
-                            setState(() {
-                              _selectedItems2 = values;
-                            });
-                            print('selected : $_selectedItems2');
-                            for (var item in _selectedItems2) {
-                              _tobeSent.add(item.name.toString());
-                            }
+                            const SizedBox(height: 24),
+                            TextFieldWidget(
+                              label: 'Last Name',
+                              text: editprofileController.suggested.name,
+                              onChanged: (email) {},
+                            ),
+                            const SizedBox(height: 24),
+                            TextFieldWidget(
+                              label: 'Username',
+                              text: editprofileController.suggested.userName,
+                              onChanged: (email) {},
+                            ),
+                            Column(
+                              children: <Widget>[
+                                const SizedBox(height: 24),
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Birthday",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _selectDate(context);
+                                  },
+                                  child: Container(
+                                    width: _width! / 1.7,
+                                    height: _height! / 9,
+                                    margin: const EdgeInsets.only(top: 30),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      border: Border.all(
+                                          color: Colors.black, width: 0.0),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.elliptical(20, 20)),
+                                    ),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'font1',
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      enabled: false,
+                                      keyboardType: TextInputType.text,
+                                      controller: _dateController,
+                                      onSaved: (val) async {
+                                        _setDate = val!;
+                                      },
+                                      decoration: const InputDecoration(
+                                          disabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                          // labelText: 'Time',
+                                          contentPadding:
+                                              EdgeInsets.only(top: 0.0)),
+                                      validator: (dateval) {
+                                        if (dateval!.isEmpty) {
+                                          return "Please put your birth date";
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+                            TextFieldWidget(
+                              label: 'Email',
+                              text: editprofileController.suggested.email,
+                              onChanged: (email) {},
+                            ),
+                            const SizedBox(height: 30),
+                            TextFieldWidget(
+                              label: 'Password',
+                              text: "*******",
+                              onChanged: (email) {},
+                            ),
+                            const SizedBox(height: 30),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white38,
+                                border: Border.all(
+                                  color: mPrimaryColor,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  MultiSelectBottomSheetField<Animal>(
+                                    initialChildSize: 0.7,
+                                    maxChildSize: 0.95,
+                                    listType: MultiSelectListType.CHIP,
+                                    checkColor: Colors.pink,
+                                    selectedColor: mPrimaryColor,
+                                    selectedItemsTextStyle: const TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                    ),
+                                    unselectedColor:
+                                        mPrimaryColor.withOpacity(.08),
+                                    buttonIcon: const Icon(
+                                      Icons.add,
+                                      color: Colors.pinkAccent,
+                                    ),
+                                    searchHintStyle: const TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                    searchable: true,
+                                    buttonText: Text(
+                                      Preligion, //"????",
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 5,
+                                    ),
+                                    title: const Text(
+                                      "Hobbies",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.pink,
+                                      ),
+                                    ),
+                                    items: _items,
+                                    onConfirm: (values) {
+                                      setState(() {
+                                        _selectedItems2 = values;
+                                      });
+                                      print('selected : $_selectedItems2');
+                                      for (var item in _selectedItems2) {
+                                        _tobeSent.add(item.name.toString());
+                                      }
 
-                            /*senduserdata(
+                                      /*senduserdata(
                         'partnerreligion', '${_selectedItems2.toString()}');*/
-                          },
-                          chipDisplay: MultiSelectChipDisplay(
-                            textStyle: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                            onTap: (value) {
-                              setState(() {
-                                _selectedItems2.remove(value);
-                                _tobeSent.remove(value.toString());
-                              });
+                                    },
+                                    chipDisplay: MultiSelectChipDisplay(
+                                      textStyle: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                      ),
+                                      onTap: (value) {
+                                        setState(() {
+                                          _selectedItems2.remove(value);
+                                          _tobeSent.remove(value.toString());
+                                        });
 
-                              print('removed: ${_selectedItems2.toString()}');
-                              for (var item in _selectedItems2) {
-                                _tobeSent.add(item.name.toString());
-                              }
-                            },
-                          ),
-                        ),
-                        _selectedItems2.isEmpty
-                            ? MultiSelectChipDisplay(
-                                onTap: (item) {
-                                  setState(() {
-                                    _selectedItems3.remove(item);
-                                    print(
-                                        'removed below: ${_selectedItems3.toString()}');
-                                  });
-                                  _multiSelectKey.currentState!.validate();
-                                },
-                              )
-                            : MultiSelectChipDisplay(),
-                      ],
-                    ),
+                                        print(
+                                            'removed: ${_selectedItems2.toString()}');
+                                        for (var item in _selectedItems2) {
+                                          _tobeSent.add(item.name.toString());
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  _selectedItems2.isEmpty
+                                      ? MultiSelectChipDisplay(
+                                          onTap: (item) {
+                                            setState(() {
+                                              _selectedItems3.remove(item);
+                                              print(
+                                                  'removed below: ${_selectedItems3.toString()}');
+                                            });
+                                            _multiSelectKey.currentState!
+                                                .validate();
+                                          },
+                                        )
+                                      : MultiSelectChipDisplay(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 35,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(
+                                  height: 35,
+                                ),
+                                // ignore: deprecated_member_use
+                                RaisedButton.icon(
+                                  onPressed: () {},
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  label: const Text(
+                                    'Update Profile',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.update,
+                                    color: Colors.white,
+                                  ),
+                                  textColor: mPrimaryColor,
+                                  splashColor: Colors.white,
+                                  color: mPrimaryColor,
+                                ),
+                                // ignore: deprecated_member_use
+
+                                const SizedBox(
+                                  height: 35,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                   ),
-                  const SizedBox(
-                    height: 35,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      // ignore: deprecated_member_use
-                      RaisedButton.icon(
-                        onPressed: () {},
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        label: const Text(
-                          'Update Profile',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        icon: const Icon(
-                          Icons.update,
-                          color: Colors.white,
-                        ),
-                        textColor: mPrimaryColor,
-                        splashColor: Colors.white,
-                        color: mPrimaryColor,
-                      ),
-                      // ignore: deprecated_member_use
-                      RaisedButton.icon(
-                        onPressed: () {},
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        label: const Text(
-                          'Cancel  ',
-                          style: TextStyle(color: mPrimaryColor),
-                        ),
-                        icon: const Icon(
-                          Icons.cancel,
-                          color: mPrimaryColor,
-                        ),
-                        textColor: mPrimaryColor,
-                        splashColor: mPrimaryColor,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                    ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
+        ));
+  }
+
+  final ImagePicker _picker = ImagePicker();
+  ImagePicker picker = ImagePicker();
+  _imgFromCamera() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.camera,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  _imgFromGallery() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
-              )),
-        ),
-      ):Center(
-        child: 
- CircularProgressIndicator(),
-      ),
-    ));
+              ),
+            ),
+          );
+        });
   }
 }

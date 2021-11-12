@@ -6,6 +6,7 @@ class EditprofileController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool btnLoading = false.obs;
   var uid = 0.obs;
+  // ignore: prefer_typing_uninitialized_variables
   var suggested;
   var suggestObjs = <User>[].obs;
 
