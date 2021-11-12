@@ -4,8 +4,10 @@ import 'dart:io';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:qstar/screen/main/main_screen.dart';
+import 'package:qstar/screen/profilesetting/localstring.dart';
 import 'package:qstar/screen/splash/error.dart';
 import 'package:qstar/screen/splash/splash_screen.dart';
 import 'package:qstar/constant.dart';
@@ -63,7 +65,9 @@ class _MyHomePageState extends State<MyApp> {
         print("Online");
     }
     return isconected
-        ? MaterialApp(
+        ? GetMaterialApp(
+            translations: LocaleString(),
+            locale: Locale('en', 'US'),
             title: 'Coffee',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -96,7 +100,9 @@ class _MyHomePageState extends State<MyApp> {
   // }
 
   buildUnAuthScreen() {
-    return MaterialApp(
+    return GetMaterialApp(
+      translations: LocaleString(),
+      locale: Locale('en', 'US'),
       title: 'Coffee',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

@@ -212,7 +212,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             SizedBox(height: 24),
                             TextFieldWidget(
                               label: 'Last Name',
-                              text: editprofileController.suggested.name,
+                              text: editprofileController.suggested.hobbies,
                               onChanged: (email) {},
                             ),
                             SizedBox(height: 24),
