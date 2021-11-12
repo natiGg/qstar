@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:qstar/constant.dart';
-import 'languages_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -63,21 +62,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         SettingsSection(
           tiles: [
             SettingsTile(
-                title: "Personalinformaion".tr.toString(),
-                leading: Icon(
+                title: "Personalinformaion".tr,
+                leading: const Icon(
                   Icons.person,
                   color: mPrimaryColor,
                 )),
             SettingsTile(
-              title: 'Saved',
-              leading: Icon(
-                Icons.save,
-                color: mPrimaryColor,
-              ),
-            ),
-            SettingsTile(
-                title: 'Swicth to professional account',
-                leading: Icon(
+                title: 'Swicth'.tr,
+                leading: const Icon(
                   Icons.account_balance,
                   color: mPrimaryColor,
                 )),
@@ -86,21 +78,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         SettingsSection(
           tiles: const [
             SettingsTile(
-                title: 'Password',
-                leading: Icon(
-                  Icons.password,
-                  color: mPrimaryColor,
-                )),
-            SettingsTile(
                 title: 'Login Activity',
                 leading: Icon(
                   Icons.login,
-                  color: mPrimaryColor,
-                )),
-            SettingsTile(
-                title: 'Sign out',
-                leading: Icon(
-                  Icons.exit_to_app,
                   color: mPrimaryColor,
                 )),
           ],
