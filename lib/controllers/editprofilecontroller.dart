@@ -2,9 +2,10 @@ import 'package:get/state_manager.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 
-class EditprofileController extends GetxController {
+class EditprofileController extends GetxController with StateMixin {
   RxBool isLoading = true.obs;
   RxBool btnLoading = false.obs;
+
   var uid = 0.obs;
   // ignore: prefer_typing_uninitialized_variables
   var suggested;
@@ -25,10 +26,12 @@ class EditprofileController extends GetxController {
 
       if (suggested.id != null) {
         isLoading(false);
+        change(suggested, status: RxStatus.success());
+      } else {
+        change(null, status: RxStatus.empty());
       }
-    } finally {
-      // TODO
-      isLoading(false);
+    } on Exception catch (e) {
+      change(null, status: RxStatus.error("Something went wrong"));
     }
   }
 
@@ -49,5 +52,11 @@ class EditprofileController extends GetxController {
       // TODO
       btnLoading(false);
     }
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
   }
 }
