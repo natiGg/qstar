@@ -150,7 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onPressed: () {}, icon: Icon(Icons.menu), color: mPrimaryColor)
         ],
       ),
-      body: Obx(() =>  editprofileController.isLoading==false?Form(
+      body:editprofileController.obx((editForm) => Form(
         key: _multiSelectKey,
         child: Container(
           padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -290,6 +290,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     label: 'Email',
                     text:  editprofileController.suggested.email,
                     onChanged: (email) {},
+                  
                   ),
                   SizedBox(height: 30),
                   TextFieldWidget(
@@ -398,7 +399,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                       // ignore: deprecated_member_use
                       RaisedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                            editprofileController.editProf();
+
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
@@ -440,10 +444,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               )),
         ),
-      ):Center(
-        child: 
- CircularProgressIndicator(),
-      ),
+  
+    ),
+    onLoading: Center(child: CircularProgressIndicator(),),
+    onEmpty: Text("Can't fetch data"),
+    onError: (error) => Center(child:Text(error.toString()))
     ));
   }
 }

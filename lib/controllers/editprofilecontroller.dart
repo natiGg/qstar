@@ -2,9 +2,10 @@ import 'package:get/state_manager.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 
-class EditprofileController extends GetxController {
+class EditprofileController extends GetxController with StateMixin{
   RxBool isLoading = true.obs;
   RxBool btnLoading = false.obs;
+  
   var uid = 0.obs;
 var suggested;
   var suggestObjs =<User>[].obs;
@@ -17,18 +18,25 @@ var suggested;
   }
 
   void fetchProfile(var id) async {
-      try {
-
-        suggested = await RemoteServices.fetchProfile(id);
      
-        if (suggested.id != null) {
-             isLoading(false);
 
+        try {
+          suggested = await RemoteServices.fetchProfile(id);
+               
+          if (suggested.id != null) {
+               isLoading(false);
+               change(suggested,status:RxStatus.success());
+          
+          }
+          else {
+            change(null,status: RxStatus.empty());
+          }
+        } on Exception catch (e) {
+       change(null,status: RxStatus.error("Something went wrong"));
         }
-      } finally {
-        // TODO
-        isLoading(false);
-      }
+        
+     
+       
   }
 
   void editProf() async {
@@ -50,5 +58,10 @@ var suggested;
       // TODO
       btnLoading(false);
     }
+  }
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
   }
 }
