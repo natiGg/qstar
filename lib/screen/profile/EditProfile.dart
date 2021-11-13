@@ -14,7 +14,7 @@ import 'package:flutter/gestures.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +40,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _imageFileList = value == null ? null : [value];
   }
 
+  @override
+  void deactivate() {
+    EasyLoading.dismiss();
+    super.deactivate();
+  }
+
   dynamic _pickImageError;
   static final List<Animal> _animals = [
     Animal(id: 1, name: "Book clubs"),
@@ -63,7 +69,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Animal(id: 19, name: "Gambling"),
     Animal(id: 20, name: "Yoga"),
   ];
-  final EditprofileController editprofileController = Get.find();
+  final EditprofileController editprofileController =
+      Get.put(EditprofileController());
   final _items = _animals
       .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
       .toList();
@@ -442,9 +449,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         )),
                   ),
                 ),
-            onLoading: Center(
-              child: CircularProgressIndicator(),
-            ),
+            onLoading: Center(child: loadData()),
             onEmpty: Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
   }
@@ -509,5 +514,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           );
         });
+  }
+
+  loadData() {
+    // Here you can write your code for open new view
+    EasyLoading.show();
+    Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+
+      EasyLoading.dismiss();
+    });
   }
 }

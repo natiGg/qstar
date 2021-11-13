@@ -29,11 +29,14 @@ class _CategoryVideo2 extends State<CategoryVid>
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 100,
         backgroundColor: Colors.white,
-        leading: Container(
-          padding: const EdgeInsets.only(left: 20, top: 15),
-          width: 100,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: mPrimaryColor,
+            onPressed: () {
+              Navigator.pushNamed(context, '/home');
+            }),
+        title: Container(
           child: const Text(
             "Q video",
             style: TextStyle(

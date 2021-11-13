@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
@@ -52,6 +53,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BottomSheetAction(iconData: Icons.logout, title: 'Logout', id: 7),
       ]);
     };
+  }
+
+  @override
+  void deactivate() {
+    EasyLoading.dismiss();
+    super.deactivate();
   }
 
   void _fetchUser() async {
@@ -209,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
         onLoading: Center(
-          child: CircularProgressIndicator(),
+          child: loadData(),
         ),
         onEmpty: Text("Can't fetch data"),
         onError: (error) => Center(child: Text(error.toString())));
@@ -302,5 +309,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  loadData() {
+    // Here you can write your code for open new view
+    EasyLoading.show();
+    Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+
+      EasyLoading.dismiss();
+    });
   }
 }

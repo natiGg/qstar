@@ -35,7 +35,7 @@ class _MyHomePageState extends State<EditPersonalInfo> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.of(context).pop(true);
+              Navigator.pushNamed(context, '/home');
             }),
         // ignore: prefer_const_constructors
         title: Text(

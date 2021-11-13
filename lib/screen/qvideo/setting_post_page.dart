@@ -41,7 +41,7 @@ class _SettingPostPageState extends State<SettingPostPage> {
                   icon: const Icon(Icons.arrow_back),
                   color: mPrimaryColor,
                   onPressed: () {
-                    Navigator.of(context).pop(true);
+                    Navigator.pushNamed(context, '/video');
                   }),
               title: const Text(
                 "New Post",

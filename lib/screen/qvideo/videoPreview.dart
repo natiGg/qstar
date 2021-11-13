@@ -145,7 +145,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.of(context).pop(true);
+              Navigator.pushNamed(context, '/video');
             }),
         title: const Text(
           "Preview video",
