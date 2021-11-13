@@ -65,9 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   ];
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
-  final _items = _animals
-      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-      .toList();
+  var _items;
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedItems2 = [];
   List<String> _tobeSent = [];
@@ -81,7 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late String _setTime, _setDate;
   bool isLoading = false;
   late String _hour, _minute, _time;
-
+  var body;
   late String dateTime;
 
   DateTime selectedDate = DateTime.now();
@@ -109,6 +107,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _multiSelectKey = GlobalKey<FormState>();
   @override
   void initState() {
+    editprofileController.birthdayControl = _dateController;
+
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
     _timeController.text = formatDate(
@@ -126,9 +126,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     print(token);
     if (token != null) {
       print(token.toString());
-      var body = json.decode(token);
+      body = json.decode(token);
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
+         _items = editprofileController.suggested.hobbies.toList()
+      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
+      .toList();
     }
   }
 
@@ -161,7 +164,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         body: editprofileController.obx(
             (editForm) => Form(
-                  key: _multiSelectKey,
+                  key: editprofileController.EditProf,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Container(
                     padding: EdgeInsets.only(left: 16, top: 25, right: 16),
                     child: GestureDetector(
@@ -206,20 +210,115 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             SizedBox(height: 24),
                             TextFieldWidget(
                               label: 'Name',
-                              text: editprofileController.suggested.name,
-                              onChanged: (name) {},
+                              controller: editprofileController.nameControl,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Name",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: editprofileController.nameControl,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.name =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validateName(value!);
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: 24),
-                            TextFieldWidget(
-                              label: 'Last Name',
-                              text: editprofileController.suggested.name,
-                              onChanged: (email) {},
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Bio",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: editprofileController.bioControl,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.bio =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validateBio(value!);
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: 24),
-                            TextFieldWidget(
-                              label: 'Username',
-                              text: editprofileController.suggested.userName,
-                              onChanged: (email) {},
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Username",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.unameControl,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.uname =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validateunName(value!);
+                                  },
+                                ),
+                              ],
                             ),
                             Column(
                               children: <Widget>[
@@ -238,6 +337,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     _selectDate(context);
+                                    editprofileController.birthdayControl =
+                                        _dateController;
                                   },
                                   child: Container(
                                     width: _width! / 1.7,
@@ -280,16 +381,150 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ],
                             ),
                             SizedBox(height: 24),
-                            TextFieldWidget(
-                              label: 'Email',
-                              text: editprofileController.suggested.email,
-                              onChanged: (email) {},
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "email",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.emailControl,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.email =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validateEmail(value!);
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: 30),
-                            TextFieldWidget(
-                              label: 'Password',
-                              text: "*******",
-                              onChanged: (email) {},
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Password",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: editprofileController.passControl,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.pass =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validatePass(value!);
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "new Password",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: editprofileController.passControl,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.pass =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validatePass(value!);
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Confirm new Password",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: editprofileController.passControl,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.pass =
+                                        value.toString();
+                                  },
+                                  validator: (value) {
+                                    return editprofileController
+                                        .validatePass(value!);
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: 30),
                             Container(
@@ -399,8 +634,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 // ignore: deprecated_member_use
                                 RaisedButton.icon(
                                   onPressed: () {
-                                    editprofileController.editProf();
-                                  },
+                                    editprofileController.editProf(body["id"]);
+                                    print(editprofileController.isLoading);
+                                    editprofileController.isLoading==true?Center(child: CircularProgressIndicator()):_showMessage();
+                                        },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10.0))),
@@ -446,6 +683,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             onLoading: Center(
               child: CircularProgressIndicator(),
             ),
+          
             onEmpty: Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
   }
@@ -510,5 +748,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           );
         });
+  }
+  void _showMessage()
+  {
+     showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+                                            title: new Text('info'),
+                                            content: new Text(json.decode(editprofileController.edited)["message"]),
+                                            actions: <Widget>[
+                                              new FlatButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(true);
+                                                
+                                                },
+                                                child: new Text('ok'),
+                                              ),
+                                            ],
+                                          
+                                     
+       )  );
   }
 }

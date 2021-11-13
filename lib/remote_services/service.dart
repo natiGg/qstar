@@ -53,13 +53,15 @@ class RemoteServices {
     }
   }
 
-  static Future<List> editprofile(var data) async {
-    res = await Network().getpassedData(data, "delete");
+  static Future<String> editprofile(var data,var id) async {
+    res = await Network().getpassedData(data, "profile/${id}");
     body = json.decode(res.body);
     if (res.statusCode == 200) {
-      return body;
+      print(body);
+      return body.toString();
     } else {
-      throw Exception('Failed to unFollow User');
+      print(body.toString());
+      throw Exception('Failed to edit profile');
     }
   }
 }
