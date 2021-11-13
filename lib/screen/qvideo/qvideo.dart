@@ -335,6 +335,7 @@ class _QvideoState2 extends State<Qvideoscreen>
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
             onPressed: () {
+              _controller.dispose();
               _controller.pause();
 
               Navigator.pushNamed(context, "/home");
@@ -345,6 +346,7 @@ class _QvideoState2 extends State<Qvideoscreen>
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
+              _controller.dispose();
               _controller.pause();
 
               Navigator.push(
@@ -467,6 +469,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
+                                        _controller.dispose();
                                         _controller.pause();
 
                                         Navigator.push(
@@ -516,6 +519,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  _controller.dispose();
                                   _controller.pause();
 
                                   Navigator.push(
@@ -592,6 +596,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                             // ignore: unnecessary_new
                             new GestureDetector(
                               onTap: () {
+                                _controller.dispose();
                                 _controller.pause();
 
                                 Navigator.pushReplacement(
@@ -733,6 +738,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                             ),
                             GestureDetector(
                               onTap: () {
+                                _controller.dispose();
                                 _controller.pause();
 
                                 Navigator.push(

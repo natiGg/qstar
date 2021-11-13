@@ -51,7 +51,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                   color: mPrimaryColor,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/home');
                 },
               ),
               actions: <Widget>[

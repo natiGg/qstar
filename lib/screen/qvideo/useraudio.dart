@@ -47,14 +47,7 @@ class _ProfileScreenState extends State<Useraudeio> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const Qvideoscreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.pushNamed(context, '/video');
             }),
         // ignore: prefer_const_constructors
         title: Text(

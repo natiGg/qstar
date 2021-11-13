@@ -14,7 +14,7 @@ import 'package:flutter/gestures.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +38,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   set _imageFile(XFile? value) {
     _imageFileList = value == null ? null : [value];
+  }
+
+  @override
+  void deactivate() {
+    EasyLoading.dismiss();
+    super.deactivate();
   }
 
   dynamic _pickImageError;
@@ -680,10 +686,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         )),
                   ),
                 ),
-            onLoading: Center(
-              child: CircularProgressIndicator(),
-            ),
-          
+            onLoading: Center(child: loadData()),
             onEmpty: Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
   }
@@ -768,5 +771,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           
                                      
        )  );
+
+  loadData() {
+    // Here you can write your code for open new view
+    EasyLoading.show();
+    Future.delayed(const Duration(milliseconds: 500), () {
+// Here you can write your code
+
+      EasyLoading.dismiss();
+    });
   }
-}
+}}
