@@ -771,7 +771,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           
                                      
        )  );
-
+  }
   loadData() {
     // Here you can write your code for open new view
     EasyLoading.show();
@@ -781,4 +781,4 @@ class _EditProfilePageState extends State<EditProfilePage> {
       EasyLoading.dismiss();
     });
   }
-}}
+}
