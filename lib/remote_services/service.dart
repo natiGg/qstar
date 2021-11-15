@@ -17,6 +17,16 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
+   static Future<List<User>> fetchHobbies() async {
+    res = await Network().getData("friendSuggestion");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
 
   static Future<bool> follow(String id) async {
     var data = {'following_id': id};

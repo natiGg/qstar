@@ -5,6 +5,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'model/hobbies.dart';
 import '../../constant.dart';
 
 class Animal {
