@@ -5,6 +5,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../changepassword.dart';
 import 'app_context.dart';
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,6 +66,20 @@ class BottomSheetActionWidget extends StatelessWidget {
                   backgroundColor: Colors.red,
                   textColor: Colors.white,
                   fontSize: 16.0);
+            }
+
+            break;
+
+          case "2":
+            {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      const ChangePassword(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
             }
 
             break;
