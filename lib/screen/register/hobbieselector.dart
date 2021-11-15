@@ -2,21 +2,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:qstar/controllers/hobbiescontroller.dart';
 import 'package:qstar/screen/register/suggested.dart';
 import 'package:qstar/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'model/hobbies.dart';
 import '../../constant.dart';
+import 'package:get/get.dart';
 
-class Animal {
-  final int id;
-  final String name;
 
-  Animal({
-    required this.id,
-    required this.name,
-  });
-}
 
 class Hobbieselector extends StatefulWidget {
   final String fname;
@@ -39,35 +33,14 @@ class Hobbieselector extends StatefulWidget {
 }
 
 class _HobbieselectorState extends State<Hobbieselector> {
-  static final List<Animal> _animals = [
-    Animal(id: 1, name: "Book clubs"),
-    Animal(id: 2, name: "Running clubs"),
-    Animal(id: 3, name: "Volunteering"),
-    Animal(id: 4, name: "Adult sports leagues"),
-    Animal(id: 5, name: "Improv classes"),
-    Animal(id: 6, name: "Bowling"),
-    Animal(id: 7, name: "Golfing"),
-    Animal(id: 8, name: "Board games"),
-    Animal(id: 9, name: "Content creation"),
-    Animal(id: 10, name: "Yoga"),
-    Animal(id: 11, name: "Cycling"),
-    Animal(id: 12, name: "Video Games"),
-    Animal(id: 13, name: "Fitness classes"),
-    Animal(id: 14, name: "Group travel"),
-    Animal(id: 15, name: "Watch TV"),
-    Animal(id: 16, name: "Reading"),
-    Animal(id: 17, name: "Fitness"),
-    Animal(id: 18, name: "Journaling"),
-    Animal(id: 19, name: "Gambling"),
-    Animal(id: 20, name: "Yoga"),
-  ];
-  final _items = _animals
-      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-      .toList();
+  HobbiesController hobbiesController =Get.put(HobbiesController());
+
+  var _items;
+  List<Hobbies> _hobbies=[];
   //List<Animal> _selectedAnimals = [];
-  List<Animal> _selectedItems2 = [];
+  List<Hobbies> _selectedItems2 = [];
   final List<String> _tobeSent = [];
-  final List<Animal> _selectedItems3 = [];
+  final List<Hobbies> _selectedItems3 = [];
 
   // ignore: non_constant_identifier_names
   String Preligion = "test";
@@ -78,7 +51,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
   //List<Animal> _selectedAnimals4 = [];
   bool _isLoading = false;
   @override
-  void initState() {
+  void initState() { 
+    hobbiesController.fetchHobbies();
+    
     super.initState();
   }
 
@@ -86,7 +61,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+      body: hobbiesController.obx((hobby)=> SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(20),
@@ -161,9 +136,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
                       width: 2,
                     ),
                   ),
-                  child: Column(
+                  child:Column(
                     children: <Widget>[
-                      MultiSelectBottomSheetField<Animal>(
+                      MultiSelectBottomSheetField<Hobbies>(
                         initialChildSize: 0.7,
                         maxChildSize: 0.95,
                         listType: MultiSelectListType.CHIP,
@@ -198,7 +173,7 @@ class _HobbieselectorState extends State<Hobbieselector> {
                             color: Colors.pink,
                           ),
                         ),
-                        items: _items,
+                        items: hobbiesController.hobItem,
                         onConfirm: (values) {
                           setState(() {
                             _selectedItems2 = values;
@@ -242,6 +217,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
                             )
                           : MultiSelectChipDisplay(),
                     ],
+                  
+     
+
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -306,6 +284,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
           ),
         ),
       ),
+            onLoading: Center(child: CircularProgressIndicator()),
+            onEmpty: Text("Can't fetch data"),
+            onError: (error) => Center(child: Text(error.toString()))),
     );
   }
 
@@ -320,7 +301,9 @@ class _HobbieselectorState extends State<Hobbieselector> {
       'password': widget.password,
       'password_confirmation': widget.password,
       'life_needs': hobbiesfield,
-      'hobbies': _tobeSent.join(",").toString()
+      'hobbies': _tobeSent.join(",").toString(),
+      'birth_date':widget.date.toString()
+ 
     };
 
     var res = await Network().authData(data, 'register/email');
@@ -329,6 +312,8 @@ class _HobbieselectorState extends State<Hobbieselector> {
     if (res.statusCode == 200) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString("token", body["token"].toString());
+      print(json.encode(body["user"]).toString());
+      localStorage.setString('user', json.encode(body['user']));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Suggested()),

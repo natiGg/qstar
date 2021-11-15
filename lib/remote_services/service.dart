@@ -4,6 +4,8 @@ import 'package:qstar/network_utils/api.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:convert';
 
+import 'package:qstar/screen/register/model/hobbies.dart';
+
 class RemoteServices {
   static var res, body;
 
@@ -17,11 +19,15 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
-   static Future<List<User>> fetchHobbies() async {
-    res = await Network().getData("friendSuggestion");
+   static Future<List<Hobbies>> fetchHobbies() async {
+    res = await Network().getData("lookup?type=hobbies");
     var body = json.decode(res.body);
+    var lookups;
     if (res.statusCode == 200) {
-      return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+    
+      lookups=body["lookups"];
+      print(lookups["data"]);
+      return lookups["data"].map((e) => Hobbies.fromJson(e)).toList().cast<Hobbies>();
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
       throw Exception('Failed to load Users');

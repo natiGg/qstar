@@ -4,6 +4,9 @@ import 'package:get/state_manager.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/profile/editprofile.dart';
+import 'package:qstar/screen/register/model/hobbies.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+
 
 class EditprofileController extends GetxController with StateMixin {
  
@@ -17,6 +20,11 @@ class EditprofileController extends GetxController with StateMixin {
   var pass = '';
   var isLoading=false.obs;
   var edited="";
+  var hobbies;
+  var hobItem;
+  var items;
+  List<Hobbies> hobbyitems=[];
+
    List<String> hobbiesSplit=[];
      var hobbiesSplit2=<Map>[].cast<Animal>();
 
@@ -53,7 +61,17 @@ class EditprofileController extends GetxController with StateMixin {
         print("just gotttt here");
         print(suggested.hobbies);
         hobbiesSplit=suggested.hobbies.toString().split(",");
-       
+        print(hobbiesSplit);
+        for (int i=0; i<hobbiesSplit.length;i++)
+        {
+          Hobbies hobbies = Hobbies(id: i,name: hobbiesSplit[i].toString());
+          hobbyitems.add(hobbies);
+        }
+        print(hobbyitems);
+        
+          hobItem= hobbyitems.
+        map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))
+      .toList();
         
         change(suggested, status: RxStatus.success());
       } else {

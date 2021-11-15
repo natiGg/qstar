@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/controllers/hobbiescontroller.dart';
 import 'package:qstar/screen/feed/model/user.dart';
+import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +17,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,35 +50,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   dynamic _pickImageError;
-  static final List<Animal> _animals = [
-    Animal(id: 1, name: "Book clubs"),
-    Animal(id: 2, name: "Running clubs"),
-    Animal(id: 3, name: "Volunteering"),
-    Animal(id: 4, name: "Adult sports leagues"),
-    Animal(id: 5, name: "Improv classes"),
-    Animal(id: 6, name: "Bowling"),
-    Animal(id: 7, name: "Golfing"),
-    Animal(id: 8, name: "Board games"),
-    Animal(id: 9, name: "Content creation"),
-    Animal(id: 10, name: "Yoga"),
-    Animal(id: 11, name: "Cycling"),
-    Animal(id: 12, name: "Video Games"),
-    Animal(id: 13, name: "Fitness classes"),
-    Animal(id: 14, name: "Group travel"),
-    Animal(id: 15, name: "Watch TV"),
-    Animal(id: 16, name: "Reading"),
-    Animal(id: 17, name: "Fitness"),
-    Animal(id: 18, name: "Journaling"),
-    Animal(id: 19, name: "Gambling"),
-    Animal(id: 20, name: "Yoga"),
+  static final List<Hobbies> _animals = [
+    Hobbies(id: 1, name: "Skylar"),
+    Hobbies(id: 2, name: "Desiree"),
+    Hobbies(id: 3, name: "Cecil"),
+
   ];
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
+      HobbiesController hobbiesController=Get.put(HobbiesController());
   var _items;
   //List<Animal> _selectedAnimals = [];
-  List<Animal> _selectedItems2 = [];
+  List<Hobbies> _selectedItems2 = [];
   List<String> _tobeSent = [];
-  List<Animal> _selectedItems3 = [];
+  List<Hobbies> _selectedItems3 = [];
+  static final List<Hobbies> _initial=[];
 
   String Preligion = "Hobbies";
 
@@ -135,10 +124,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body = json.decode(token);
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
-      _items = editprofileController.suggested.hobbies
-          .toList()
-          .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-          .toList();
+      print(editprofileController.hobbyitems.length);
+
+      editprofileController.hobbyitems.forEach((element) {
+        print(element.id.toString()+element.name.toString());
+        _initial.add(element);
+      });
+     
     }
   }
 
@@ -425,7 +417,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ],
                             ),
                             SizedBox(height: 30),
-                            Container(
+                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white38,
                                 border: Border.all(
@@ -435,7 +427,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                               child: Column(
                                 children: <Widget>[
-                                  MultiSelectBottomSheetField<Animal>(
+                                  MultiSelectBottomSheetField<Hobbies>(
                                     initialChildSize: 0.7,
                                     maxChildSize: 0.95,
                                     listType: MultiSelectListType.CHIP,
@@ -471,7 +463,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         color: Colors.pink,
                                       ),
                                     ),
-                                    items: _items,
+                                    items: hobbiesController.hobItem,
+                                    initialValue: editprofileController.hobbyitems,
                                     onConfirm: (values) {
                                       setState(() {
                                         _selectedItems2 = values;
@@ -481,8 +474,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           _tobeSent
                                               .add("${item.name.toString()}"));
 
-                                      /*senduserdata(
-                        'partnerreligion', '${_selectedItems2.toString()}');*/
+                                  
                                     },
                                     chipDisplay: MultiSelectChipDisplay(
                                       textStyle: TextStyle(
@@ -519,8 +511,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       : MultiSelectChipDisplay(),
                                 ],
                               ),
-                            ),
-                            SizedBox(
+                            ), SizedBox(
                               height: 35,
                             ),
                             Row(

@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _fetchUser() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
-
+    print("okke");
     print(token);
     if (token != null) {
       print(token.toString());
