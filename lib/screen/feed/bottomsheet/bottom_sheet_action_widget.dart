@@ -5,7 +5,6 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../changepassword.dart';
 
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -44,16 +43,7 @@ class BottomSheetActionWidget extends StatelessWidget {
 
         switch (action.id.toString()) {
           case "0":
-            {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const SettingsScreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            }
+            {}
             break;
 
           case "1":
@@ -71,43 +61,12 @@ class BottomSheetActionWidget extends StatelessWidget {
             break;
 
           case "2":
-            {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const ChangePassword(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            }
+            {}
 
             break;
 
           case "7":
-            {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Are you sure?'),
-                  content: const Text('Do you want to Logout'),
-                  actions: <Widget>[
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('No'),
-                    ),
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                      onPressed: () {
-                        _logout(context);
-                      },
-                      child: const Text('Yes'),
-                    ),
-                  ],
-                ),
-              );
-            }
+            {}
             break;
           default:
             {

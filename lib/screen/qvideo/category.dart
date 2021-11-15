@@ -46,6 +46,16 @@ class _CategoryVideo2 extends State<CategoryVid>
             ),
           ),
         ),
+        actions: [
+          IconButton(
+              // ignore: prefer_const_constructors
+              icon: Icon(
+                Icons.search,
+                size: 28,
+                color: mPrimaryColor,
+              ),
+              onPressed: () {}),
+        ],
       ),
       body: SafeArea(
         child: Container(

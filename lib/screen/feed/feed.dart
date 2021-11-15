@@ -1,6 +1,10 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -21,10 +25,20 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
+import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
+import 'package:qstar/screen/qvideo/videopicker.dart';
+import 'package:qstar/screen/qvideo/videopreview.dart';
 import 'package:qstar/screen/search/search.dart';
+import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
+import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 // import 'package:rive/rive.dart';
+
+// for refresh
 
 List<User> _users = [
   User(
@@ -279,26 +293,6 @@ List<Post> _posts = [
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
 
-List _usersd = [
-  const Item(
-      'Public',
-      Icon(
-        Icons.public,
-        color: mPrimaryColor,
-      )),
-  const Item(
-      'Friends',
-      Icon(
-        Icons.supervised_user_circle_sharp,
-        color: mPrimaryColor,
-      )),
-  const Item(
-      'Starts',
-      Icon(
-        Icons.star,
-        color: mPrimaryColor,
-      )),
-];
 List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
 late double rating_d = 3;
@@ -318,43 +312,64 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   TextEditingController nameController = TextEditingController();
-
-  List users = [
-    const Item(
-        'Android',
-        Icon(
-          Icons.android,
-          color: Color(0xFF167F67),
-        )),
-    const Item(
-        'Flutter',
-        Icon(
-          Icons.flag,
-          color: Color(0xFF167F67),
-        )),
-    const Item(
-        'ReactNative',
-        Icon(
-          Icons.format_indent_decrease,
-          color: Color(0xFF167F67),
-        )),
-    const Item(
-        'iOS',
-        Icon(
-          Icons.mobile_screen_share,
-          color: Color(0xFF167F67),
-        )),
-  ];
-
+  late VoidCallback _onShowMenu;
   bool connection = true;
   @override
   void initState() {
+    _fetchUser();
     super.initState();
+    _onShowMenu = () {
+      context.showBottomSheet([
+        BottomSheetAction(iconData: Icons.public, title: 'Public', id: 0),
+        BottomSheetAction(
+            iconData: Icons.supervised_user_circle_outlined,
+            title: 'Friends',
+            id: 1),
+        BottomSheetAction(iconData: Icons.stars, title: 'Stars', id: 2),
+      ]);
+    };
   }
 
+  void _fetchUser() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('user');
+
+    print(token);
+    if (token != null) {
+      print(token.toString());
+      var body = json.decode(token);
+      print(body["id"]);
+      editprofileController.fetchProfile(body["id"]);
+    }
+  }
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
+  ImagePicker picker = ImagePicker();
+  File? _cameraVideo;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return editprofileController.obx((edit) => Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -398,221 +413,281 @@ class _FeedState extends State<Feed> {
           ],
         ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              Card(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
-                elevation: 2,
-                shape: null,
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          // ignore: prefer_const_constructors
-                          CircleAvatar(
-                              backgroundImage: const AssetImage(
-                                  'assets/images/profile1.jpg')),
-                          const SizedBox(width: 8.0),
+        body: SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          header: WaterDropHeader(),
+          //cheak pull_to_refresh
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                Card(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+                  elevation: 2,
+                  shape: null,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            // ignore: prefer_const_constructors
+                            CircleAvatar(
+                                backgroundImage: const AssetImage(
+                                    'assets/images/profile1.jpg')),
+                            const SizedBox(width: 8.0),
 
-                          Expanded(
-                            // ignore: duplicate_ignore, duplicate_ignore
-                            child: Container(
-                              height: 40,
-                              width: 300,
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      color: Colors.grey.withOpacity(0.9))),
-                              // ignore: deprecated_member_use
-                              child: FlatButton(
-                                onPressed: () {
-                                  _postModal(context);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Share us your thought',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey.withOpacity(0.9),
-                                        ),
-                                      )),
+                            Expanded(
+                              // ignore: duplicate_ignore, duplicate_ignore
+                              child: Container(
+                                height: 40,
+                                width: 300,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                        color: Colors.grey.withOpacity(0.9))),
+                                // ignore: deprecated_member_use
+                                child: FlatButton(
+                                  onPressed: () {
+                                    _postModal(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Share us your thought',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.withOpacity(0.9),
+                                          ),
+                                        )),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 5.0, thickness: 0.5),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        height: 40.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            FlatButton.icon(
-                              onPressed: () {
-                                //    _postModal(context);
-                              },
-                              icon: const Icon(
-                                Icons.videocam,
-                                color: Colors.red,
-                              ),
-                              label: const Text('Live'),
-                            ),
-                            const VerticalDivider(width: 8.0),
-                            FlatButton.icon(
-                              onPressed: () {
-                                //  _fetchSuggested();
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            const PostPage(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.photo_library,
-                                color: Colors.green,
-                              ),
-                              label: const Text(' Post'),
-                            ),
-                            FlatButton.icon(
-                              onPressed: () {
-                                //  _postModal(context);
-                              },
-                              icon: const Icon(
-                                Icons.video_collection_sharp,
-                                color: Colors.blue,
-                              ),
-                              label: const Text(' Video'),
-                            ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 25.0),
-                    child: Text(
-                      'Your Perfect match',
-                      style: TextStyle(
-                          color: mPrimaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 150,
-                  ),
-                  const Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        FontAwesome.refresh,
-                        color: mPrimaryColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Container(
-                  height: 200,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Row(children: _users.map((e) => UserStories(e)).toList()),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(
-                thickness: 1.0,
-              ),
-              ..._posts.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: WPost(
-                    post: item,
-                  ),
-                );
-              }).toList(),
-              Container(
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Suggested Friends",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: mPrimaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 250,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: SizedBox(height: 5),
+                        const Divider(height: 5.0, thickness: 0.5),
+                        const SizedBox(
+                          height: 5,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        Container(
+                          height: 40.0,
                           child: Row(
-                              children:
-                                  _users.map((e) => UserAvatar(e)).toList()),
-                        )
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FlatButton.icon(
+                                onPressed: () async {
+                                  // This funcion will helps you to pick a Video File from Camera
+
+                                  // ignore: deprecated_member_use
+                                  PickedFile? pickedFile = await picker
+                                      .getVideo(source: ImageSource.camera);
+
+                                  _cameraVideo = File(pickedFile!.path);
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         PreviewImageScreengallery(imagePath: pickedFile.path),
+                                  //   ),
+                                  // );
+                                },
+                                icon: const Icon(
+                                  Icons.videocam,
+                                  color: Colors.red,
+                                ),
+                                label: const Text('Live'),
+                              ),
+                              const VerticalDivider(width: 8.0),
+                              FlatButton.icon(
+                                onPressed: () {
+                                  //  _fetchSuggested();
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              const PostPage(),
+                                      transitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.photo_library,
+                                  color: Colors.green,
+                                ),
+                                label: const Text(' Post'),
+                              ),
+                              FlatButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              const VideoRecorderExample(),
+                                      transitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.video_collection_sharp,
+                                  color: Colors.blue,
+                                ),
+                                label: const Text(' Video'),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 25.0),
+                      child: Text(
+                        'Your Perfect match',
+                        style: TextStyle(
+                            color: mPrimaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 150,
+                    ),
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          FontAwesome.refresh,
+                          color: mPrimaryColor,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              ..._posts.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: WPost(
-                    post: item,
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: Container(
+                    height: 200,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                            children:
+                                _users.map((e) => UserStories(e)).toList()),
+                      ],
+                    ),
                   ),
-                );
-              }).toList(),
-            ],
+                ),
+                const Divider(
+                  thickness: 1.0,
+                ),
+                ..._posts.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: WPost(
+                      post: item,
+                    ),
+                  );
+                }).toList(),
+                Container(
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Suggested Friends",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: mPrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 250,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: SizedBox(height: 5),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                                children:
+                                    _users.map((e) => UserAvatar(e)).toList()),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                ..._posts.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: WPost(
+                      post: item,
+                    ),
+                  );
+                }).toList(),
+              ],
+            ),
           ),
-        ));
+        )));
+  }
+
+  void _postType(context) {
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      const SizedBox(width: 8.0),
+                      Column(
+                        children: const [],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ));
   }
 
   void _postModal(context) {
@@ -640,11 +715,11 @@ class _FeedState extends State<Feed> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                child: const Center(
+                                child: Center(
                                   child: Padding(
                                     padding: EdgeInsets.all(2.0),
                                     child: Text(
-                                      "Betty",
+                                      editprofileController.suggested.name,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
@@ -652,47 +727,22 @@ class _FeedState extends State<Feed> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: Column(
-                                      children: [
-                                        DropdownButton(
-                                          items: _usersd
-                                              .map(
-                                                (user) => DropdownMenuItem(
-                                                  value: user,
-                                                  child: Row(
-                                                    children: [
-                                                      user.icon,
-                                                      const SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        user.name,
-                                                        style: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                              .toList(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              value;
-                                            });
-                                          },
-                                          hint: Container(
-                                            child: const Text("public"),
-                                          ),
-                                        ),
-                                      ],
+                              FlatButton(
+                                onPressed: () {
+                                  _onShowMenu();
+                                },
+                                padding:
+                                    const EdgeInsets.only(top: 0.0, left: 20),
+                                child: Row(
+                                  // Replace with a Row for horizontal icon + text
+                                  children: const <Widget>[
+                                    Icon(
+                                      Icons.public,
+                                      color: mPrimaryColor,
                                     ),
-                                  ),
-                                ],
+                                    Text("Public")
+                                  ],
+                                ),
                               ),
                               Container(
                                 padding: const EdgeInsets.only(
@@ -730,13 +780,13 @@ class _FeedState extends State<Feed> {
                     ],
                   ),
                   const SizedBox(
-                    height: 8.0,
+                    height: 18.0,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Container(
-                      height: 300,
+                      height: 400,
                       child: Column(
                         children: [
                           Expanded(

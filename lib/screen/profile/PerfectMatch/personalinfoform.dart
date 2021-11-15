@@ -395,10 +395,6 @@ class _MyHomePageState extends State<PersonalInfo> {
             const SizedBox(
               height: 15,
             ),
-            TextFormField(
-              decoration:
-                  const InputDecoration(labelText: 'Natinality preference'),
-            ),
             const SizedBox(
               height: 15,
             ),

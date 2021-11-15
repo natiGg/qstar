@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 import 'package:qstar/constant.dart';
@@ -67,6 +68,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   int _pageIndex = 0;
   @override
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
@@ -97,112 +120,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: mPrimaryColor)
                 ],
               ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            profileStats(
-                                screen: _screen,
-                                color: mPrimaryColor,
-                                context: context),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation1,
-                                                    animation2) =>
-                                                EditProfilePage(),
-                                            transitionDuration: Duration.zero,
-                                          ),
-                                        );
-                                      },
-                                      child: editProfile(
-                                        primaryColorDark: _primaryColorDark,
-                                        primaryColor: mPrimaryColor,
+              body: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+
+                //cheak pull_to_refresh
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              profileStats(
+                                  screen: _screen,
+                                  color: mPrimaryColor,
+                                  context: context),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  EditProfilePage(),
+                                              transitionDuration: Duration.zero,
+                                            ),
+                                          );
+                                        },
+                                        child: editProfile(
+                                          primaryColorDark: _primaryColorDark,
+                                          primaryColor: mPrimaryColor,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                SocialMedia()
-                              ],
+                                  SocialMedia()
+                                ],
+                              ),
+                            ],
+                          )),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Divider(
+                        height: 2,
+                        color: Colors.grey[500],
+                      ),
+                      ProfileTabBar(
+                        height: 46,
+                        color: Colors.grey[500],
+                        onTap: (value) {
+                          setState(() {
+                            _pageIndex = value;
+                          });
+                        },
+                      ),
+                      StaggeredGridView.countBuilder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisCount: _pageIndex != 1 ? 3 : 2,
+                        itemCount: Utils.listOfImageUrl.length,
+                        itemBuilder: (contex, index) {
+                          return Container(
+                            padding: _pageIndex == 1
+                                ? const EdgeInsets.all(5)
+                                : const EdgeInsets.all(0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Divider(
-                      height: 2,
-                      color: Colors.grey[500],
-                    ),
-                    ProfileTabBar(
-                      height: 46,
-                      color: Colors.grey[500],
-                      onTap: (value) {
-                        setState(() {
-                          _pageIndex = value;
-                        });
-                      },
-                    ),
-                    StaggeredGridView.countBuilder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      crossAxisCount: _pageIndex != 1 ? 3 : 2,
-                      itemCount: Utils.listOfImageUrl.length,
-                      itemBuilder: (contex, index) {
-                        return Container(
-                          padding: _pageIndex == 1
-                              ? const EdgeInsets.all(5)
-                              : const EdgeInsets.all(0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: _pageIndex == 1
-                                ? BorderRadius.circular(15)
-                                : BorderRadius.circular(0),
-                            child: Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  Utils.listOfImageUrl.elementAt(index)),
+                            child: ClipRRect(
+                              borderRadius: _pageIndex == 1
+                                  ? BorderRadius.circular(15)
+                                  : BorderRadius.circular(0),
+                              child: Image(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    Utils.listOfImageUrl.elementAt(index)),
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      staggeredTileBuilder: (index) => StaggeredTile.count(
-                          _pageIndex != 1 ? 1 : 1, _pageIndex != 1 ? 1 : 1.5),
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                    ),
-                  ],
+                          );
+                        },
+                        staggeredTileBuilder: (index) => StaggeredTile.count(
+                            _pageIndex != 1 ? 1 : 1, _pageIndex != 1 ? 1 : 1.5),
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

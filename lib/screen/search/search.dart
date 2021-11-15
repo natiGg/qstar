@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:qstar/constant.dart';
 
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
 
@@ -27,11 +29,10 @@ class _HomePageState extends State<HomePage> {
   static const historyLength = 5;
 
   final List<String> _searchHistory = [
-    'User',
-    'Video',
-    'Posts',
-    'Page',
-    'Hastag',
+    'Recent',
+    'Users',
+    'Hashtags',
+    'Places',
   ];
 
   late List<String> filteredSearchHistory;
@@ -89,112 +90,143 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: FloatingSearchBar(
-        controller: controller,
-        iconColor: mPrimaryColor,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
-            key: null,
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+
+      //cheak pull_to_refresh
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: FloatingSearchBar(
+          controller: controller,
+          iconColor: mPrimaryColor,
+          body: FloatingSearchBarScrollNotifier(
+            child: SearchResultsListView(
+              searchTerm: selectedTerm,
+              key: null,
+            ),
           ),
-        ),
-        transition: CircularFloatingSearchBarTransition(),
-        physics: const BouncingScrollPhysics(),
-        title: Text(
-          selectedTerm,
-          style: const TextStyle(
-              fontFamily: "font1", color: mPrimaryColor, fontSize: 25),
-        ),
-        hint: 'Search here...',
-        actions: [
-          FloatingSearchBarAction.searchToClear(),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-              color: Colors.white,
-              elevation: 4,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Start searching',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    );
-                  } else if (filteredSearchHistory.isEmpty) {
-                    return ListTile(
-                      title: Text(controller.query),
-                      leading: const Icon(Icons.search),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              leading: const Icon(Icons.history),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
+          transition: CircularFloatingSearchBarTransition(),
+          physics: const BouncingScrollPhysics(),
+          title: Text(
+            selectedTerm,
+            style: const TextStyle(
+                fontFamily: "font1", color: mPrimaryColor, fontSize: 25),
+          ),
+          hint: 'Search here...',
+          actions: [
+            FloatingSearchBarAction.searchToClear(),
+          ],
+          onQueryChanged: (query) {
+            setState(() {
+              filteredSearchHistory = filterSearchTerms(filter: query);
+            });
+          },
+          onSubmitted: (query) {
+            setState(() {
+              addSearchTerm(query);
+              selectedTerm = query;
+            });
+            controller.close();
+          },
+          builder: (context, transition) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Material(
+                color: Colors.white,
+                elevation: 4,
+                child: Builder(
+                  builder: (context) {
+                    if (filteredSearchHistory.isEmpty &&
+                        controller.query.isEmpty) {
+                      return Container(
+                        height: 56,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Start searching',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      );
+                    } else if (filteredSearchHistory.isEmpty) {
+                      return ListTile(
+                        title: Text(controller.query),
+                        leading: const Icon(Icons.search),
+                        onTap: () {
+                          setState(() {
+                            addSearchTerm(controller.query);
+                            selectedTerm = controller.query;
+                          });
+                          controller.close();
+                        },
+                      );
+                    } else {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: filteredSearchHistory
+                            .map(
+                              (term) => ListTile(
+                                title: Text(
+                                  term,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                leading: const Icon(Icons.history),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      deleteSearchTerm(term);
+                                    });
+                                  },
+                                ),
+                                onTap: () {
                                   setState(() {
-                                    deleteSearchTerm(term);
+                                    putSearchTermFirst(term);
+                                    selectedTerm = term;
                                   });
+                                  controller.close();
                                 },
                               ),
-                              onTap: () {
-                                setState(() {
-                                  putSearchTermFirst(term);
-                                  selectedTerm = term;
-                                });
-                                controller.close();
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-                  }
-                },
+                            )
+                            .toList(),
+                      );
+                    }
+                  },
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -237,13 +269,9 @@ class SearchResultsListView extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  _tagItem("User"),
-                  _tagItem("people"),
-                  _tagItem("Video"),
-                  _tagItem("Posts"),
-                  _tagItem("Page"),
-                  _tagItem("Hastag"),
-                  _tagItem("Sound"),
+                  GestureDetector(onTap: () {}, child: _tagItem("Recent")),
+                  _tagItem("Users"),
+                  _tagItem("Hashtags"),
                   _tagItem("Place"),
                 ],
               ),
