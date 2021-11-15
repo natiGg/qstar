@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
@@ -50,6 +51,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() async {
@@ -85,49 +108,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
         actions: _buildActions(),
       ),
-      body: WillPopScope(
-        onWillPop: _onBackPressed,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 1),
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.black38.withAlpha(10),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(20),
-                ),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+
+        //cheak pull_to_refresh
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: WillPopScope(
+          onWillPop: _onBackPressed,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(
+                height: 5,
               ),
-            ),
-            CategorySelector(tabController: tabController!),
-            const SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+              Container(
+                margin: const EdgeInsets.only(top: 1),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.black38.withAlpha(10),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
                   ),
                 ),
-                child: TabBarView(
-                  controller: tabController,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    const RecentChats(),
-                    const Online(),
-                    const Nearby(),
-                    const Match(),
-                  ],
+              ),
+              CategorySelector(tabController: tabController!),
+              const SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
+                  ),
+                  child: TabBarView(
+                    controller: tabController,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const RecentChats(),
+                      const Online(),
+                      const Nearby(),
+                      const Match(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

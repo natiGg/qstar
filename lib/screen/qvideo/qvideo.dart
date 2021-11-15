@@ -1,11 +1,14 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
@@ -23,6 +26,7 @@ import 'package:get/get.dart';
 
 import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:qstar/screen/feed/model/user.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 List<User> _users = [
   User(
@@ -278,6 +282,8 @@ class Qvideoscreen extends StatefulWidget {
 
 class _QvideoState2 extends State<Qvideoscreen>
     with SingleTickerProviderStateMixin {
+  ImagePicker picker = ImagePicker();
+  File? _cameraVideo;
   bool abo = false;
   bool foryou = true;
   bool play = true;
@@ -325,68 +331,114 @@ class _QvideoState2 extends State<Qvideoscreen>
     super.dispose();
   }
 
+  final RefreshController _refreshControllers =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshControllers.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshControllers.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
-            onPressed: () {
-              _controller.dispose();
-              _controller.pause();
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      header: WaterDropHeader(),
+      //cheak pull_to_refresh
+      controller: _refreshControllers,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
+              onPressed: () {
+                _controller.dispose();
+                _controller.pause();
 
-              Navigator.pushNamed(context, "/home");
-            }),
-        title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            iconSize: 30.0,
-            color: mPrimaryColor,
-            onPressed: () {
-              _controller.dispose();
-              _controller.pause();
+                Navigator.pushNamed(context, "/home");
+              }),
+          title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.add),
+              iconSize: 30.0,
+              color: mPrimaryColor,
+              onPressed: () {
+                _controller.dispose();
+                _controller.pause();
 
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const VideoRecorderExample(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            },
-          ),
-        ]),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.videocam),
-            iconSize: 30.0,
-            color: Colors.red,
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Stack(
-        children: <Widget>[
-          homescreen(),
-          SizedBox(
-            height: 500,
-            child: Center(
-              child: SizedBox(
-                width: 80,
-                height: 80,
-                child: FlareActor(
-                  'assets/images/instagram_like.flr',
-                  controller: flareControls,
-                  animation: 'idle',
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        const VideoRecorderExample(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
+            ),
+          ]),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.videocam),
+              iconSize: 30.0,
+              color: Colors.red,
+              onPressed: () async {
+                PickedFile? pickedFile =
+                    await picker.getVideo(source: ImageSource.camera);
+
+                _cameraVideo = File(pickedFile!.path);
+
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) =>
+                //         PreviewImageScreengallery(imagePath: pickedFile.path),
+                //   ),
+                // );
+              },
+            ),
+          ],
+        ),
+        body: Stack(
+          children: <Widget>[
+            homescreen(),
+            SizedBox(
+              height: height,
+              child: Center(
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: FlareActor(
+                    'assets/images/instagram_like.flr',
+                    controller: flareControls,
+                    animation: 'idle',
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -581,7 +633,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                       // ignore: prefer_const_constructors
                                       child: Icon(
                                         Icons.more_horiz,
-                                        size: 20,
+                                        size: 25,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -620,7 +672,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                       // ignore: prefer_const_constructors
                                       child: Icon(
                                         Icons.arrow_back_outlined,
-                                        size: 20,
+                                        size: 25,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -652,7 +704,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                       });
                                     },
                                     child: Icon(Icons.thumb_up,
-                                        size: 20,
+                                        size: 25,
                                         color: isActive
                                             ? mPrimaryColor
                                             : Colors.white),
@@ -682,7 +734,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                       });
                                     },
                                     child: Icon(Icons.thumb_down,
-                                        size: 20,
+                                        size: 25,
                                         color: isdisActive
                                             ? mPrimaryColor
                                             : Colors.white),
@@ -707,7 +759,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                         alignment: Alignment.center,
                                         transform: Matrix4.rotationY(math.pi),
                                         child: const Icon(Icons.sms,
-                                            size: 20, color: Colors.white)),
+                                            size: 25, color: Colors.white)),
                                     const Text('2051',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 10))
@@ -728,7 +780,7 @@ class _QvideoState2 extends State<Qvideoscreen>
                                         alignment: Alignment.center,
                                         transform: Matrix4.rotationY(math.pi),
                                         child: const Icon(Icons.reply,
-                                            size: 20, color: Colors.white)),
+                                            size: 25, color: Colors.white)),
                                     const Text('Share',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 10))

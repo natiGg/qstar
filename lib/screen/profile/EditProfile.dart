@@ -69,8 +69,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Animal(id: 19, name: "Gambling"),
     Animal(id: 20, name: "Yoga"),
   ];
-  final EditprofileController editprofileController =
-      Get.put(EditprofileController());
+  final EditprofileController editprofileController = Get.find();
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Animal> _selectedItems2 = [];
