@@ -135,9 +135,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body = json.decode(token);
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
-         _items = editprofileController.suggested.hobbies.toList()
-      .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
-      .toList();
+      _items = editprofileController.suggested.hobbies
+          .toList()
+          .map((animal) => MultiSelectItem<Animal>(animal, animal.name))
+          .toList();
     }
   }
 
@@ -424,115 +425,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ],
                             ),
                             SizedBox(height: 30),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Password",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller: editprofileController.passControl,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: mPrimaryColor, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onSaved: (value) {
-                                    editprofileController.pass =
-                                        value.toString();
-                                  },
-                                  validator: (value) {
-                                    return editprofileController
-                                        .validatePass(value!);
-                                  },
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "new Password",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller: editprofileController.passControl,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: mPrimaryColor, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onSaved: (value) {
-                                    editprofileController.pass =
-                                        value.toString();
-                                  },
-                                  validator: (value) {
-                                    return editprofileController
-                                        .validatePass(value!);
-                                  },
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Confirm new Password",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller: editprofileController.passControl,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: mPrimaryColor, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onSaved: (value) {
-                                    editprofileController.pass =
-                                        value.toString();
-                                  },
-                                  validator: (value) {
-                                    return editprofileController
-                                        .validatePass(value!);
-                                  },
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 30),
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white38,
@@ -642,8 +534,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   onPressed: () {
                                     editprofileController.editProf(body["id"]);
                                     print(editprofileController.isLoading);
-                                    editprofileController.isLoading==true?Center(child: CircularProgressIndicator()):_showMessage();
-                                        },
+                                    editprofileController.isLoading == true
+                                        ? Center(
+                                            child: CircularProgressIndicator())
+                                        : _showMessage();
+                                  },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10.0))),
@@ -752,26 +647,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         });
   }
-  void _showMessage()
-  {
-     showDialog(
+
+  void _showMessage() {
+    showDialog(
         context: context,
         builder: (context) => new AlertDialog(
-                                            title: new Text('info'),
-                                            content: new Text(json.decode(editprofileController.edited)["message"]),
-                                            actions: <Widget>[
-                                              new FlatButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop(true);
-                                                
-                                                },
-                                                child: new Text('ok'),
-                                              ),
-                                            ],
-                                          
-                                     
-       )  );
+              title: new Text('info'),
+              content: new Text(
+                  json.decode(editprofileController.edited)["message"]),
+              actions: <Widget>[
+                new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: new Text('ok'),
+                ),
+              ],
+            ));
   }
+
   loadData() {
     // Here you can write your code for open new view
     EasyLoading.show();

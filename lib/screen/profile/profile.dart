@@ -40,16 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         BottomSheetAction(iconData: Icons.settings, title: 'Setting', id: 0),
         BottomSheetAction(iconData: Icons.archive, title: 'Archive', id: 1),
         BottomSheetAction(
-            iconData: Icons.mobile_friendly_sharp,
-            title: 'Close friends',
-            id: 2),
-        BottomSheetAction(
-            iconData: Icons.history, title: 'Your activity', id: 3),
-        BottomSheetAction(iconData: Icons.scanner, title: 'QR Code', id: 4),
-        BottomSheetAction(
-            iconData: Icons.bookmark_border, title: 'Saved', id: 5),
-        BottomSheetAction(
-            iconData: Icons.group_add, title: 'Discover People', id: 6),
+            iconData: Icons.password, title: 'Change Password', id: 2),
         BottomSheetAction(iconData: Icons.logout, title: 'Logout', id: 7),
       ]);
     };
