@@ -145,7 +145,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushNamed(context, '/video');
+              Navigator.pop(context);
             }),
         title: const Text(
           "Preview video",
@@ -168,17 +168,18 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
       body: SingleChildScrollView(
-        child: Column(children: [
+        child: Stack(children: [
           FutureBuilder(
             future: _initializeVideoPlayerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 // If the VideoPlayerController has finished initialization, use
                 // the data it provides to limit the aspect ratio of the video.
-                return AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
+                return Expanded(
                   // Use the VideoPlayer widget to display the video.
-                  child: VideoPlayer(_controller),
+                  child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      child: VideoPlayer(_controller)),
                 );
               } else {
                 // If the VideoPlayerController is still initializing, show a
@@ -189,80 +190,101 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               }
             },
           ),
-          const Divider(
-            height: 1,
-          ),
-          const WriteCaptionWidget(),
-          const Divider(
-            height: 1,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: ListTile(
-              title: const Text('Tag People'),
-              dense: true,
-              onTap: () {},
-            ),
-          ),
-          const Divider(
-            height: 1,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Column(
-                    children: [
-                      DropdownButton(
-                        items: _usersd
-                            .map(
-                              (user) => DropdownMenuItem(
-                                value: user,
-                                child: Row(
-                                  children: [
-                                    user.icon,
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      user.name,
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 12),
-                                    ),
-                                  ],
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: SizedBox(
+              height: 700,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const WriteCaptionWidget(),
+                  const Divider(
+                    height: 1,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    child: ListTile(
+                      title: const Text(
+                        'Tag People',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      dense: true,
+                      onTap: () {},
+                    ),
+                  ),
+                  const Divider(
+                    height: 1,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Column(
+                            children: [
+                              DropdownButton(
+                                items: _usersd
+                                    .map(
+                                      (user) => DropdownMenuItem(
+                                        value: user,
+                                        child: Row(
+                                          children: [
+                                            user.icon,
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              user.name,
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    value;
+                                  });
+                                },
+                                hint: const Text(
+                                  "Select Categories ",
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            value;
-                          });
-                        },
-                        hint: const Text("Select Categories "),
-                      ),
-                    ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  const Divider(
+                    height: 1,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
+                    child: ListTile(
+                      title: const Text(
+                        'Setting',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      dense: true,
+                      onTap: () {},
+                    ),
+                  ),
+                  const Divider(
+                    height: 1,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            height: 1,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: ListTile(
-              title: const Text('Setting'),
-              dense: true,
-              onTap: () {},
-            ),
-          ),
-          const Divider(
-            height: 1,
-          ),
+          )
         ]),
       ),
 

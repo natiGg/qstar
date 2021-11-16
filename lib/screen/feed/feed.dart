@@ -367,6 +367,40 @@ class _FeedState extends State<Feed> {
 
   ImagePicker picker = ImagePicker();
   File? _cameraVideo;
+
+  _pickVideoFromCamera() async {
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.camera);
+
+    _cameraVideo = File(pickedFile!.path);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            PreviewImageScreengallery(imagePath: pickedFile.path),
+      ),
+    );
+  }
+
+  _pickVideo() async {
+    ImagePicker picker = ImagePicker();
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
+
+    // _video = File(pickedFile!.path);
+    await _playVideo(pickedFile!.path);
+  }
+
+  _playVideo(file) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PreviewImageScreengallery(imagePath: file),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return editprofileController.obx((edit) => Scaffold(
@@ -533,15 +567,38 @@ class _FeedState extends State<Feed> {
                               ),
                               FlatButton.icon(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder:
-                                          (context, animation1, animation2) =>
-                                              const VideoRecorderExample(),
-                                      transitionDuration: Duration.zero,
-                                    ),
-                                  );
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext bc) {
+                                        return SafeArea(
+                                          child: Container(
+                                            child: new Wrap(
+                                              children: <Widget>[
+                                                new ListTile(
+                                                    leading: new Icon(
+                                                        Icons.photo_library),
+                                                    title: new Text(
+                                                        'Video Library'),
+                                                    onTap: () {
+                                                      _pickVideo();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }),
+                                                new ListTile(
+                                                  leading: new Icon(
+                                                      Icons.videocam_sharp),
+                                                  title:
+                                                      new Text('Video Camera'),
+                                                  onTap: () {
+                                                    _pickVideoFromCamera();
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
                                 },
                                 icon: const Icon(
                                   Icons.video_collection_sharp,

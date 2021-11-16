@@ -17,16 +17,14 @@ class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
       child: Row(
         children: [
           Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Write a caption',
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(color: Theme.of(context).hintColor)),
+                  hintStyle: TextStyle(color: Colors.white)),
             ),
           )),
         ],
