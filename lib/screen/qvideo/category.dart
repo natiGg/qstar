@@ -3,22 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 
-class CategoryVid extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CategoryVideo(),
-    );
-  }
-}
+class CategoryVid extends StatefulWidget {
+  const CategoryVid({Key? key}) : super(key: key);
 
-class CategoryVideo extends StatefulWidget {
   @override
   _CategoryVideo2 createState() => _CategoryVideo2();
 }
 
-class _CategoryVideo2 extends State<CategoryVideo>
+class _CategoryVideo2 extends State<CategoryVid>
     with SingleTickerProviderStateMixin {
   final List<String> _listItem = [
     'assets/images/profile1.jpg',
@@ -37,12 +29,15 @@ class _CategoryVideo2 extends State<CategoryVideo>
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 100,
         backgroundColor: Colors.white,
-        leading: Container(
-          padding: EdgeInsets.only(left: 20, top: 15),
-          width: 100,
-          child: Text(
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: mPrimaryColor,
+            onPressed: () {
+              Navigator.pushNamed(context, '/home');
+            }),
+        title: Container(
+          child: const Text(
             "Q video",
             style: TextStyle(
               color: mPrimaryColor,
@@ -51,27 +46,34 @@ class _CategoryVideo2 extends State<CategoryVideo>
             ),
           ),
         ),
+        actions: [
+          IconButton(
+              // ignore: prefer_const_constructors
+              icon: Icon(
+                Icons.search,
+                size: 28,
+                color: mPrimaryColor,
+              ),
+              onPressed: () {}),
+        ],
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
               Expanded(
                   child: GridView.count(
                 crossAxisCount: 2,
                 children: _listItem
                     .map((item) => GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation1, animation2) =>
-                                        Qvideoscreen(),
+                                        const Qvideoscreen(),
                                 transitionDuration: Duration.zero,
                               ),
                             );
@@ -94,42 +96,40 @@ class _CategoryVideo2 extends State<CategoryVideo>
                                           Colors.black.withOpacity(.9),
                                           Colors.black.withOpacity(.1),
                                         ])),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child: IconButton(
-                                                  icon: Icon(
-                                                    Icons.play_arrow_rounded,
-                                                    color: Colors.white,
-                                                    size: 40.0,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (context,
-                                                                animation1,
-                                                                animation2) =>
-                                                            Qvideoscreen(),
-                                                        transitionDuration:
-                                                            Duration.zero,
-                                                      ),
-                                                    );
-                                                  },
-                                                )),
-                                          ],
-                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40.0,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) =>
+                                                          const Qvideoscreen(),
+                                                      transitionDuration:
+                                                          Duration.zero,
+                                                    ),
+                                                  );
+                                                },
+                                              )),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: Text(
@@ -154,10 +154,11 @@ class _CategoryVideo2 extends State<CategoryVideo>
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => Qvideoscreen(),
+              pageBuilder: (context, animation1, animation2) =>
+                  const Qvideoscreen(),
               transitionDuration: Duration.zero,
             ),
           );

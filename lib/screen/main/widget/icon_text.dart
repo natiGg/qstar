@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class IconText extends StatelessWidget {
   const IconText({
-    Key ?key,
+    Key? key,
     required this.iconUrl,
     required this.title,
   }) : super(key: key);
@@ -17,7 +17,7 @@ class IconText extends StatelessWidget {
     return Row(
       children: <Widget>[
         SvgPicture.asset(iconUrl, color: mTitleTextColor),
-        SizedBox(
+        const SizedBox(
           width: 6,
         ),
         Text(

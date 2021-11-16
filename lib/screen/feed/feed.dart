@@ -1,7 +1,15 @@
-import 'dart:async';
+// ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
+
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
@@ -14,27 +22,267 @@ import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
-import 'package:qstar/screen/comment/comment_page.dart';
+import 'package:get/get.dart';
 
-import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
-
-import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+import 'package:qstar/screen/profile/profile.dart';
+import 'package:qstar/screen/qvideo/userprofile.dart';
+import 'package:qstar/screen/qvideo/videopicker.dart';
+import 'package:qstar/screen/qvideo/videopreview.dart';
+import 'package:qstar/screen/search/search.dart';
+import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
+import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// ignore: import_of_legacy_library_into_null_safe
 // import 'package:rive/rive.dart';
 
+// for refresh
+
 List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: "")
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 1,
+      userName: "gelila",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 2,
+      userName: "natig",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 3,
+      userName: "bini",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 4,
+      userName: "yosi",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs),
+  User(
+      id: 5,
+      userName: "abrsh",
+      storyImage: "",
+      userImage: "",
+      name: "",
+      website: "",
+      bio: "",
+      email: "",
+      country_code: "",
+      phone_number: "",
+      gender: "",
+      enable_suggestion: "",
+      status: "",
+      date_of_birth: "",
+      current_location: "",
+      account_type: "",
+      online_status: "",
+      joined_date: "",
+      hobbies: "",
+      total_followers: "",
+      followed: false.obs)
 ];
 
 List<Post> _posts = [
@@ -44,714 +292,648 @@ List<Post> _posts = [
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
+
 List<bool> _isFF = [true, false, false, true, false];
+late int ratings = 3;
+late double rating_d = 3;
 
-void main() {
-  runApp(const UsersFeed());
-}
-
-class UsersFeed extends StatefulWidget {
-  const UsersFeed({Key? key}) : super(key: key);
-
-  @override
-  State<UsersFeed> createState() => _UsersFeedState();
-}
-
-late VoidCallback _onShowMenu;
-
-class _UsersFeedState extends State<UsersFeed> {
-  @override
-  void initState() {
-    super.initState();
-
-    _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.share, title: 'Share TO', id: 0),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 1', id: 1),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 2', id: 2),
-        BottomSheetAction(
-            iconData: Icons.account_circle_outlined, title: 'User 3', id: 3),
-      ]);
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Feed',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: mBackgroundColor,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Feed(),
-    );
-  }
+class Item {
+  const Item(this.name, this.icon);
+  final String name;
+  final Icon icon;
 }
 
 class Feed extends StatefulWidget {
+  const Feed({Key? key}) : super(key: key);
+
   @override
   State<Feed> createState() => _FeedState();
 }
 
 class _FeedState extends State<Feed> {
-  FocusNode _focus = new FocusNode();
-  List<String> _animals = ["Friends", "public", "only me"];
-
+  TextEditingController nameController = TextEditingController();
+  late VoidCallback _onShowMenu;
+  bool connection = true;
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(FontAwesome.heartbeat),
-            color: mPrimaryColor,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => MyPages(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            }),
-        title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            color: mPrimaryColor,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => MyApp(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            },
-          ),
-        ]),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        HomeScreen(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+  void initState() {
+    _fetchUser();
+    super.initState();
+    _onShowMenu = () {
+      context.showBottomSheet([
+        BottomSheetAction(iconData: Icons.public, title: 'Public', id: 0),
+        BottomSheetAction(
+            iconData: Icons.supervised_user_circle_outlined,
+            title: 'Friends',
+            id: 1),
+        BottomSheetAction(iconData: Icons.stars, title: 'Stars', id: 2),
+      ]);
+    };
+  }
 
-                // Navigator.pushReplacement(
-                //   context,
-                //   PageRouteBuilder(
-                //     pageBuilder: (context, animation1, animation2) =>
-                //         HomeScreen(),
-                //     transitionDuration: Duration.zero,
-                //   ),
-                // );
-              },
-              icon: Icon(Icons.send_outlined),
-              color: mPrimaryColor),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            // Padding(
-            //   padding: EdgeInsets.all(20),
-            //   child: Container(
-            //     height: 110,
-            //     child: ListView(
-            //       scrollDirection: Axis.horizontal,
-            //       children: [
-            //         SizedBox(height: 5),
-            //         Row(children: _users.map((e) => UserStories(e)).toList())
-            //       ],
-            //     ),
-            //   ),
-            // ),
+  void _fetchUser() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('user');
 
-            Card(
-              margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
-              elevation: 2,
-              shape: null,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/profile1.jpg')),
-                        const SizedBox(width: 8.0),
+    print(token);
+    if (token != null) {
+      print(token.toString());
+      var body = json.decode(token);
+      print(body["id"]);
+      editprofileController.fetchProfile(body["id"]);
+    }
+  }
 
-                        Expanded(
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Container(
-                              height: 40,
-                              width: 300,
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                      color: Colors.grey.withOpacity(0.9))),
-                              child: FlatButton(
-                                onPressed: () {
-                                  _postModal(context);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'What\'s on your mind?',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey.withOpacity(0.9),
-                                        ),
-                                      )),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Container(
-                        //   height: 120.0,
-                        //   padding: EdgeInsets.all(10),
-                        //   // decoration: BoxDecoration(
-                        //   //     color: Colors.white,
-                        //   //     borderRadius: BorderRadius.only(
-                        //   //         topLeft: Radius.circular(5),
-                        //   //         bottomLeft: Radius.circular(5),
-                        //   //         bottomRight: Radius.circular(5),
-                        //   //         topRight: Radius.circular(5)),
-                        //   //     boxShadow: [
-                        //   //       BoxShadow(
-                        //   //           color: Colors.grey.withOpacity(0.5),
-                        //   //           spreadRadius: 5,
-                        //   //           blurRadius: 7,
-                        //   //           offset: Offset(0, 3))
-                        //   //     ]),
-                        //   // child: Column(
-                        //   //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   //   children: [
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Live'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.public,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Public'),
-                        //   //       ),
-                        //   //     ),
-                        //   //     const SizedBox(height: 8.0),
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Photo'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.account_circle,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Friends'),
-                        //   //       ),
-                        //   //     ),
-                        //   //     const SizedBox(height: 8.0),
-                        //   //     Container(
-                        //   //       width: 120,
-                        //   //       height: 30,
-                        //   //       decoration: BoxDecoration(
-                        //   //           borderRadius: BorderRadius.circular(5),
-                        //   //           border: Border.all(color: mPrimaryColor)),
-                        //   //       child: FlatButton.icon(
-                        //   //         onPressed: () => print('Room'),
-                        //   //         icon: const Icon(
-                        //   //           Icons.star,
-                        //   //           color: mPrimaryColor,
-                        //   //         ),
-                        //   //         label: Text('Star'),
-                        //   //       ),
-                        //   //     ),
-                        //   //   ],
-                        //   // ),
-                        // ),
-                        // Container(
-                        //   height: 100.0,
-                        //   child: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       const VerticalDivider(width: 8.0),
-                        //       FlatButton.icon(
-                        //         onPressed: () => print('Photo'),
-                        //         icon: const Icon(
-                        //           Icons.photo_library,
-                        //           color: Colors.green,
-                        //         ),
-                        //         label: Text('Photo'),
-                        //       ),
-                        //       FlatButton.icon(
-                        //         onPressed: () => print('Live'),
-                        //         icon: const Icon(
-                        //           Icons.videocam,
-                        //           color: Colors.red,
-                        //         ),
-                        //         label: Text('Live'),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                    const Divider(height: 5.0, thickness: 0.5),
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Live'),
-                    //         icon: const Icon(
-                    //           Icons.public,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Public'),
-                    //       ),
-                    //     ),
-                    //     const SizedBox(height: 8.0),
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Photo'),
-                    //         icon: const Icon(
-                    //           Icons.account_circle,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Friends'),
-                    //       ),
-                    //     ),
-                    //     const SizedBox(height: 8.0),
-                    //     Container(
-                    //       width: 120,
-                    //       height: 30,
-                    //       decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(5),
-                    //           border: Border.all(color: mPrimaryColor)),
-                    //       child: FlatButton.icon(
-                    //         onPressed: () => print('Room'),
-                    //         icon: const Icon(
-                    //           Icons.star,
-                    //           color: mPrimaryColor,
-                    //         ),
-                    //         label: Text('Star'),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          FlatButton.icon(
-                            onPressed: () {
-                              _postModal(context);
-                            },
-                            icon: const Icon(
-                              Icons.videocam,
-                              color: Colors.red,
-                            ),
-                            label: Text('Live'),
-                          ),
-                          const VerticalDivider(width: 8.0),
-                          FlatButton.icon(
-                            onPressed: () => print('Photo'),
-                            icon: const Icon(
-                              Icons.photo_library,
-                              color: Colors.green,
-                            ),
-                            label: Text('Photo'),
-                          ),
-                          const VerticalDivider(width: 8.0),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: Text(
-                    'Perfect match for you',
-                    style: TextStyle(
-                        color: mPrimaryColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  width: 160,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      FontAwesome.refresh,
-                      color: mPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(25),
-              child: Container(
-                height: 260,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Row(children: _users.map((e) => UserStories(e)).toList()),
-                  ],
-                ),
-              ),
-            ),
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
 
-            Divider(
-              thickness: 1.0,
-            ),
-            ..._posts.map((item) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: WPost(
-                  post: item,
-                ),
-              );
-            }).toList(),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Suggested Friends",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 250,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(height: 5),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            children:
-                                _users.map((e) => UserAvatar(e)).toList()),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            ..._posts.map((item) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: WPost(
-                  post: item,
-                ),
-              );
-            }).toList(),
-          ],
-        ),
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
+  ImagePicker picker = ImagePicker();
+  File? _cameraVideo;
+
+  _pickVideoFromCamera() async {
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.camera);
+
+    _cameraVideo = File(pickedFile!.path);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            PreviewImageScreengallery(imagePath: pickedFile.path),
       ),
     );
   }
 
+  _pickVideo() async {
+    ImagePicker picker = ImagePicker();
+    // ignore: deprecated_member_use
+    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
+
+    // _video = File(pickedFile!.path);
+    await _playVideo(pickedFile!.path);
+  }
+
+  _playVideo(file) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PreviewImageScreengallery(imagePath: file),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return editprofileController.obx((edit) => Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          leading: IconButton(
+              icon: const Icon(FontAwesome.heartbeat),
+              color: mPrimaryColor,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        const MyPages(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              }),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const HomeScreen(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+
+                  // Navigator.push(
+                  //   context,
+                  //   PageRouteBuilder(
+                  //     pageBuilder: (context, animation1, animation2) =>
+                  //         HomeScreen(),
+                  //     transitionDuration: Duration.zero,
+                  //   ),
+                  // );
+                },
+                icon: const Icon(Icons.send_outlined),
+                color: mPrimaryColor),
+          ],
+        ),
+        backgroundColor: Colors.white,
+        body: SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          header: WaterDropHeader(),
+          //cheak pull_to_refresh
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                Card(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+                  elevation: 2,
+                  shape: null,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            // ignore: prefer_const_constructors
+                            CircleAvatar(
+                                backgroundImage: const AssetImage(
+                                    'assets/images/profile1.jpg')),
+                            const SizedBox(width: 8.0),
+
+                            Expanded(
+                              // ignore: duplicate_ignore, duplicate_ignore
+                              child: Container(
+                                height: 40,
+                                width: 300,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                        color: Colors.grey.withOpacity(0.9))),
+                                // ignore: deprecated_member_use
+                                child: FlatButton(
+                                  onPressed: () {
+                                    _postModal(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'Share us your thought',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.withOpacity(0.9),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 5.0, thickness: 0.5),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          height: 40.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FlatButton.icon(
+                                onPressed: () async {
+                                  // This funcion will helps you to pick a Video File from Camera
+
+                                  // ignore: deprecated_member_use
+                                  PickedFile? pickedFile = await picker
+                                      .getVideo(source: ImageSource.camera);
+
+                                  _cameraVideo = File(pickedFile!.path);
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         PreviewImageScreengallery(imagePath: pickedFile.path),
+                                  //   ),
+                                  // );
+                                },
+                                icon: const Icon(
+                                  Icons.videocam,
+                                  color: Colors.red,
+                                ),
+                                label: const Text('Live'),
+                              ),
+                              const VerticalDivider(width: 8.0),
+                              FlatButton.icon(
+                                onPressed: () {
+                                  //  _fetchSuggested();
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) =>
+                                              const PostPage(),
+                                      transitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.photo_library,
+                                  color: Colors.green,
+                                ),
+                                label: const Text(' Post'),
+                              ),
+                              FlatButton.icon(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext bc) {
+                                        return SafeArea(
+                                          child: Container(
+                                            child: new Wrap(
+                                              children: <Widget>[
+                                                new ListTile(
+                                                    leading: new Icon(
+                                                        Icons.photo_library),
+                                                    title: new Text(
+                                                        'Video Library'),
+                                                    onTap: () {
+                                                      _pickVideo();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }),
+                                                new ListTile(
+                                                  leading: new Icon(
+                                                      Icons.videocam_sharp),
+                                                  title:
+                                                      new Text('Video Camera'),
+                                                  onTap: () {
+                                                    _pickVideoFromCamera();
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.video_collection_sharp,
+                                  color: Colors.blue,
+                                ),
+                                label: const Text(' Video'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 25.0),
+                      child: Text(
+                        'Your Perfect match',
+                        style: TextStyle(
+                            color: mPrimaryColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 150,
+                    ),
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          FontAwesome.refresh,
+                          color: mPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(25),
+                  child: Container(
+                    height: 200,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Row(
+                            children:
+                                _users.map((e) => UserStories(e)).toList()),
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(
+                  thickness: 1.0,
+                ),
+                ..._posts.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: WPost(
+                      post: item,
+                    ),
+                  );
+                }).toList(),
+                Container(
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Suggested Friends",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: mPrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 250,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: SizedBox(height: 5),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                                children:
+                                    _users.map((e) => UserAvatar(e)).toList()),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                ..._posts.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: WPost(
+                      post: item,
+                    ),
+                  );
+                }).toList(),
+              ],
+            ),
+          ),
+        )));
+  }
+
+  void _postType(context) {
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      const SizedBox(width: 8.0),
+                      Column(
+                        children: const [],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ));
+  }
+
   void _postModal(context) {
     showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
         context: context,
-        builder: (BuildContext bc) {
-          return Container(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
                     children: [
-                      Row(
+                      const CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/profile1.jpg')),
+                      const SizedBox(width: 8.0),
+                      Column(
                         children: [
-                          CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile1.jpg')),
-                          const SizedBox(width: 8.0),
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(
-                                          "@Betty",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
+                              Container(
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(2.0),
+                                    child: Text(
+                                      editprofileController.suggested.name,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Container(
-                                          width: 100,
-                                          height: 50,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Column(
-                                            children: [
-                                              DropdownButton<String>(
-                                                onChanged: (value) {
-                                                  setState(() {});
-                                                },
-
-                                                // Hide the default underline
-                                                underline: Container(),
-                                                hint: Align(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      'Public',
-                                                      style: TextStyle(
-                                                          color: mPrimaryColor,
-                                                          fontSize: 10),
-                                                    )),
-                                                icon: Align(
-                                                  alignment:
-                                                      Alignment.topCenter,
-                                                  child: Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: mPrimaryColor,
-                                                  ),
-                                                ),
-                                                isExpanded: true,
-
-                                                // The list of options
-                                                items: _animals
-                                                    .map((e) =>
-                                                        DropdownMenuItem(
-                                                          child: Container(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Text(
-                                                              e,
-                                                              style: TextStyle(
-                                                                  fontSize: 12),
-                                                            ),
-                                                          ),
-                                                          value: e,
-                                                        ))
-                                                    .toList(),
-
-                                                // Customize the selected item
-                                                selectedItemBuilder:
-                                                    (BuildContext context) =>
-                                                        _animals
-                                                            .map((e) => Center(
-                                                                  child: Text(
-                                                                    e,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .amber,
-                                                                        fontStyle:
-                                                                            FontStyle
-                                                                                .italic,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  ),
-                                                                ))
-                                                            .toList(),
-                                              ),
-                                            ],
-                                          ),
+                                ),
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  _onShowMenu();
+                                },
+                                padding:
+                                    const EdgeInsets.only(top: 0.0, left: 20),
+                                child: Row(
+                                  // Replace with a Row for horizontal icon + text
+                                  children: const <Widget>[
+                                    Icon(
+                                      Icons.public,
+                                      color: mPrimaryColor,
+                                    ),
+                                    Text("Public")
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 50,
+                                ),
+                                child: Expanded(
+                                  child: Container(
+                                    height: 40,
+                                    width: 64,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: mPrimaryColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border:
+                                            Border.all(color: mPrimaryColor)),
+                                    child: FlatButton(
+                                      onPressed: () {},
+                                      child: const Center(
+                                          child: Text(
+                                        'Post',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 80, right: 10),
-                                    child: Expanded(
-                                      child: Container(
-                                        height: 40,
-                                        width: 80,
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        decoration: BoxDecoration(
-                                            color: mPrimaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: mPrimaryColor)),
-                                        child: FlatButton(
-                                          onPressed: () {},
-                                          child: Center(
-                                              child: Text(
-                                            'Post',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          )),
-                                        ),
-                                      ),
+                                      )),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      const Divider(height: 5.0, thickness: 0.5),
-                      SizedBox(
-                        height: 45,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          height: 50,
-                          child: Expanded(
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 18.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Container(
+                      height: 400,
+                      child: Column(
+                        children: [
+                          Expanded(
                             child: TextField(
-                              decoration: InputDecoration.collapsed(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(200),
+                              ],
+                              decoration: const InputDecoration.collapsed(
                                 hintText: 'What\'s on your mind?',
                               ),
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200,
-                        child: ListView(
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          SizedBox(
+                            height: 200,
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
                               children: [
-                                FlatButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    FontAwesome.video_camera,
-                                    color: Colors.red,
-                                  ),
-                                  label: Text('Add your Video'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Photo'),
-                                  icon: const Icon(
-                                    FontAwesome.photo,
-                                    color: Colors.green,
-                                  ),
-                                  label: Text(' Add Photo'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.user,
-                                    color: mPrimaryColor,
-                                  ),
-                                  label: Text('Add People'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.smile_o,
-                                    color: Colors.amber,
-                                  ),
-                                  label: Text('Feeling Activity'),
-                                ),
-                                FlatButton.icon(
-                                  onPressed: () => print('Room'),
-                                  icon: const Icon(
-                                    FontAwesome.location_arrow,
-                                    color: Colors.green,
-                                  ),
-                                  label: Text('Add  Location'),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FlatButton.icon(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        FontAwesome.video_camera,
+                                        color: Colors.red,
+                                      ),
+                                      label: const Text('Add your Video'),
+                                    ),
+                                    FlatButton.icon(
+                                      // ignore: avoid_print
+                                      onPressed: () => print('Photo'),
+                                      icon: const Icon(
+                                        FontAwesome.photo,
+                                        color: Colors.green,
+                                      ),
+                                      label: const Text(' Add Photo'),
+                                    ),
+                                    FlatButton.icon(
+                                      // ignore: avoid_print
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.user,
+                                        color: mPrimaryColor,
+                                      ),
+                                      label: const Text('Add People'),
+                                    ),
+                                    FlatButton.icon(
+                                      // ignore: avoid_print
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.smile_o,
+                                        color: Colors.amber,
+                                      ),
+                                      label: const Text('Feeling Activity'),
+                                    ),
+                                    FlatButton.icon(
+                                      // ignore: avoid_print
+                                      onPressed: () => print('Room'),
+                                      icon: const Icon(
+                                        FontAwesome.location_arrow,
+                                        color: Colors.green,
+                                      ),
+                                      label: const Text('Add  Location'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ));
-        });
+                ],
+              ),
+            ));
   }
 }
 
 class UserStories extends StatefulWidget {
   final User user;
 
-  UserStories(this.user);
+  const UserStories(this.user);
 
   @override
   State<UserStories> createState() => _UserStoriesState();
@@ -765,16 +947,15 @@ class _UserStoriesState extends State<UserStories> {
       children: [
         Container(
           child: Container(
-            margin: EdgeInsets.only(right: 10),
+            margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/post${this.widget.user.id}.jpg'),
+                  image: AssetImage('assets/images/post${widget.user.id}.jpg'),
                   fit: BoxFit.cover),
             ),
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   gradient:
@@ -787,80 +968,144 @@ class _UserStoriesState extends State<UserStories> {
                 children: <Widget>[
                   Container(
                     width: 110,
-                    height: 200,
+                    height: 150,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1.0, left: 9),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(children: const <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            size: 10,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 1,
+                          ),
+                          Text(
+                            'Addis Ababa',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ]),
+                        Row(children: const <Widget>[
+                          Icon(
+                            Icons.manage_accounts_sharp,
+                            size: 9,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 1,
+                          ),
+                          Text(
+                            'betty',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 9,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            ' 20',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ]),
+                        Row(children: const <Widget>[]),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 1.0, left: 9),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(children: <Widget>[
-                Icon(
-                  Icons.manage_accounts_sharp,
-                  size: 9,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  '@betty',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                Icon(
-                  Icons.calendar_today,
-                  size: 9,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  '20',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ]),
-              Row(children: <Widget>[
-                Icon(
-                  Icons.location_on,
-                  size: 10,
-                  color: mPrimaryColor,
-                ),
-                SizedBox(
-                  width: 1,
-                ),
-                Text(
-                  'Addis Ababa',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11,
-                  ),
-                ),
-              ])
-            ],
-          ),
-        )
       ],
     );
   }
 }
 
+class UserAvater2 extends StatefulWidget {
+  final User user;
+  const UserAvater2(this.user);
+
+  @override
+  State<UserAvater2> createState() => _UserAvatarState2();
+}
+
+class _UserAvatarState2 extends State<UserAvater2> {
+  bool isFollowed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Row(
+          children: List.generate(1, (index) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                            colors: [mPrimaryColor, mPrimaryColor],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                          height: 70,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/profile${widget.user.id}.jpg'),
+                                fit: BoxFit.cover),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Center(
+                  child: Text(
+                widget.user.userName,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: mPrimaryColor),
+              )),
+            ],
+          ),
+        );
+      }))
+    ]);
+  }
+}
+
 class UserAvatar extends StatefulWidget {
   final User user;
-  UserAvatar(this.user);
+  const UserAvatar(this.user);
 
   @override
   State<UserAvatar> createState() => _UserAvatarState();
@@ -907,7 +1152,7 @@ class _UserAvatarState extends State<UserAvatar> {
                       Container(
                         width: 68,
                         height: 68,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
                                 colors: [mPrimaryColor, mPrimaryColor],
@@ -924,7 +1169,7 @@ class _UserAvatarState extends State<UserAvatar> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/images/profile${this.widget.user.id}.jpg'),
+                                        'assets/images/profile${widget.user.id}.jpg'),
                                     fit: BoxFit.cover),
                               )),
                         ),
@@ -939,22 +1184,23 @@ class _UserAvatarState extends State<UserAvatar> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Center(
                       child: Text(
-                    '${this.widget.user.userName}',
+                    widget.user.userName,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: mPrimaryColor),
+                    style: const TextStyle(color: mPrimaryColor),
                   )),
                   RatingBarIndicator(
-                    rating: 2.75,
+                    rating: rating_d,
+                    // ignore: prefer_const_constructors
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
-                    itemCount: 5,
+                    itemCount: ratings,
                     itemSize: 20.0,
                     direction: Axis.horizontal,
                   ),
@@ -965,7 +1211,7 @@ class _UserAvatarState extends State<UserAvatar> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Text(
                           "12k",
                           style: TextStyle(
@@ -975,8 +1221,7 @@ class _UserAvatarState extends State<UserAvatar> {
                         ),
                         Text(
                           "followers",
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black),
+                          style: TextStyle(fontSize: 12, color: Colors.black),
                         ),
                       ],
                     ),
@@ -992,7 +1237,7 @@ class _UserAvatarState extends State<UserAvatar> {
 
   Widget followButton(isFollowed) {
     return Container(
-        margin: EdgeInsets.only(left: 50),
+        margin: const EdgeInsets.only(left: 50),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: mPrimaryColor, width: 1),
@@ -1010,7 +1255,7 @@ class _UserAvatarState extends State<UserAvatar> {
 class WPost extends StatefulWidget {
   final Post post;
 
-  WPost({required this.post});
+  const WPost({required this.post});
 
   @override
   State<WPost> createState() => _WPostState();
@@ -1022,9 +1267,6 @@ class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
 
-  /// Is the animation currently playing?
-  bool _isPlaying = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -1033,13 +1275,13 @@ class _WPostState extends State<WPost> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
+              const Spacer(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Stack(children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 45),
+                      padding: const EdgeInsets.only(left: 45),
                       child: Center(
                         child: Container(
                           decoration: BoxDecoration(
@@ -1048,18 +1290,31 @@ class _WPostState extends State<WPost> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(1.0),
-                            child: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage(
-                                    'assets/images/profile${this.widget.post.userid}.jpg')),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return const UserProfile();
+                                    },
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage(
+                                      'assets/images/profile${widget.post.userid}.jpg')),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    _isFF[(this.widget.post.userid) - 1]
+                    _isFF[(widget.post.userid) - 1]
                         ? Container(
-                            margin:
-                                EdgeInsets.only(left: 20, top: 55, right: 20),
+                            margin: const EdgeInsets.only(
+                                left: 20, top: 55, right: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1069,13 +1324,13 @@ class _WPostState extends State<WPost> {
                               child: followButton(isFollowed),
                             ),
                           )
-                        : SizedBox(
+                        : const SizedBox(
                             width: 0,
                           ),
                   ]),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
                 onPressed: () {
                   showDialog(
@@ -1084,18 +1339,17 @@ class _WPostState extends State<WPost> {
                     builder: (context) {
                       return Dialog(
                         child: ListView(
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             shrinkWrap: true,
                             children: [
                               'Report...',
-                              'Turn on Post notification',
-                              'Copy Link',
-                              'Share to...',
-                              'Mute'
+                              'Hide',
+                              'unfollow',
+                              'Block',
                             ]
                                 .map((e) => InkWell(
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 12, horizontal: 16),
                                         child: Text(e),
                                       ),
@@ -1108,7 +1362,7 @@ class _WPostState extends State<WPost> {
                     },
                   );
                 },
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
               )
             ],
           ),
@@ -1120,20 +1374,20 @@ class _WPostState extends State<WPost> {
                 children: [
                   Column(
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
-                          '${_users.where((element) => element.id == this.widget.post.userid).first.userName}     129K',
-                          style: TextStyle(color: Colors.black)),
-                      SizedBox(
+                          '${_users.where((element) => element.id == widget.post.userid).first.userName}     129K',
+                          style: const TextStyle(color: Colors.black)),
+                      const SizedBox(
                         height: 5,
                       ),
                       RatingBarIndicator(
-                        rating: 2.75,
-                        itemBuilder: (context, index) => Icon(
+                        rating: rating_d,
+                        itemBuilder: (context, index) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
-                        itemCount: 5,
+                        itemCount: ratings,
                         itemSize: 20.0,
                         direction: Axis.horizontal,
                       ),
@@ -1141,7 +1395,7 @@ class _WPostState extends State<WPost> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Container(
@@ -1159,13 +1413,13 @@ class _WPostState extends State<WPost> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
             ],
           ),
           Stack(children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             GestureDetector(
@@ -1185,8 +1439,8 @@ class _WPostState extends State<WPost> {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/post${this.widget.post.id}.jpg"),
+                      image:
+                          AssetImage("assets/images/post${widget.post.id}.jpg"),
                       fit: BoxFit.cover),
                 ),
                 height: 500,
@@ -1208,7 +1462,7 @@ class _WPostState extends State<WPost> {
             ),
           ]),
           Container(
-            padding: EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
             child: Row(
               children: [
                 GestureDetector(
@@ -1241,36 +1495,37 @@ class _WPostState extends State<WPost> {
                     child: activedisLikeButton(isdisActive)),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              CommentPage(),
-                          transitionDuration: Duration.zero,
-                        ),
-                      );
+                      showSheetcomment(context);
+                      // Navigator.push(
+                      //   context,
+                      //   PageRouteBuilder(
+                      //     pageBuilder: (context, animation1, animation2) =>
+                      //         CommentPage(),
+                      //     transitionDuration: Duration.zero,
+                      //   ),
+                      // );
                     },
                     child: Comment()),
                 Share(),
-                Spacer(),
-                Spacer(),
+                const Spacer(),
+                const Spacer(),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.bookmark_border,
                       color: mPrimaryColor,
                     )),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
+          const Padding(
+            padding: EdgeInsets.all(2.0),
             child: InfoWidget(),
           ),
-          Divider(
+          const Divider(
             thickness: 1.0,
           ),
         ],
@@ -1280,7 +1535,7 @@ class _WPostState extends State<WPost> {
 
   Widget activeLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1298,7 +1553,7 @@ class _WPostState extends State<WPost> {
 
   Widget followButton(isFollowed) {
     return Container(
-        margin: EdgeInsets.only(left: 50),
+        margin: const EdgeInsets.only(left: 50),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(color: mPrimaryColor, width: 1),
@@ -1314,7 +1569,7 @@ class _WPostState extends State<WPost> {
 
   Widget activedisLikeButton(isActive) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1332,11 +1587,11 @@ class _WPostState extends State<WPost> {
 
   Widget Comment() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: const <Widget>[
             Icon(Icons.chat, color: Colors.grey, size: 25),
           ],
         ),
@@ -1346,7 +1601,7 @@ class _WPostState extends State<WPost> {
 
   Widget Share() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1354,7 +1609,7 @@ class _WPostState extends State<WPost> {
             IconButton(
               icon: const Icon(Icons.share, color: Colors.grey, size: 25),
               onPressed: () {
-                _onShowMenu();
+                showSheet(context);
               },
             ),
           ],
@@ -1362,4 +1617,400 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
+}
+
+void showSheet(context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 10,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Spacer(),
+                    const Text(
+                      "Send to",
+                      style: TextStyle(
+                        color: mPrimaryColor,
+                        fontFamily: "font1",
+                        fontSize: 24,
+                      ),
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const Search(),
+                            transitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.search,
+                        color: mPrimaryColor,
+                        size: 15,
+                      ),
+                    ),
+                  ])
+                ],
+              )),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Expanded(
+                  child: Container(
+                    height: 150,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                  children: _users
+                                      .map((e) => UserAvater2(e))
+                                      .toList()),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+              const Divider(indent: 18, endIndent: 18, color: Colors.grey),
+              const Text(
+                "Share to",
+                style: TextStyle(
+                  color: mPrimaryColor,
+                  fontFamily: "font1",
+                  fontSize: 24,
+                ),
+              ),
+              Container(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 18,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.copy,
+                            color: mPrimaryColor,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("copy link",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.whatsapp,
+                            color: Colors.green,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("whatsapp",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.facebook,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("More Apps",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.instagram,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("Instagram",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.telegram,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("Telegram",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 21,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.twitter,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("twitter",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 26,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.google_plus,
+                            color: Colors.red,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("google_plus",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 32,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.twitch,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Text("twitch",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 25,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.youtube,
+                            color: Colors.red,
+                          ),
+                          Container(
+                            height: 8,
+                          ),
+                          Text("youtube",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 18,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            FontAwesome.google,
+                            color: Colors.redAccent,
+                          ),
+                          Container(
+                            height: 2,
+                          ),
+                          Text("google",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                      Container(
+                        width: 26,
+                      ),
+                      Container(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(
+                            Icons.more_horiz_sharp,
+                            color: mPrimaryColor,
+                          ),
+                          Container(
+                            height: 6,
+                          ),
+                          Text("More App",
+                              style: TextStyle(
+                                color: Colors.grey[400],
+                              ))
+                        ],
+                      )),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+}
+
+void showSheetcomment(context) {
+  showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+      backgroundColor: Colors.white,
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    CommentWidget(),
+                    CommentWidget(),
+                    CommentWidget(),
+                    CommentWidget(),
+                  ],
+                ),
+                Material(
+                  type: MaterialType.canvas,
+                  child: SafeArea(
+                    child: Container(
+                      height: kToolbarHeight,
+                      margin: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      padding: const EdgeInsets.only(left: 16, right: 8),
+                      child: Row(
+                        children: [
+                          // ignore: prefer_const_constructors
+                          CircleAvatar(
+                            backgroundImage:
+                                const AssetImage('assets/images/1.jpg'),
+                            radius: 18,
+                          ),
+                          // ignore: prefer_const_constructors
+                          Expanded(
+                            // ignore: prefer_const_constructors
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
+                              // ignore: prefer_const_constructors
+                              child: TextField(
+                                // ignore: prefer_const_constructors
+                                decoration: InputDecoration(
+                                    hintText: 'Comment here',
+                                    border: InputBorder.none),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              child: Text(
+                                'Post',
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText2
+                                    ?.copyWith(color: Colors.blue),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ));
 }

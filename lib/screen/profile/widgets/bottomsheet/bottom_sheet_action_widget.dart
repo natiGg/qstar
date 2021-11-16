@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:qstar/constant.dart';
-import 'app_context.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/screen/login/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../changepassword.dart';
+
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qstar/screen/profilesetting/setting.dart';
@@ -8,7 +14,8 @@ import 'package:qstar/screen/profilesetting/setting.dart';
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
 
-  BottomSheetActionWidget(this.action);
+  // ignore: use_key_in_widget_constructors
+  const BottomSheetActionWidget(this.action);
 
   @override
   Widget build(BuildContext context) {
@@ -16,34 +23,33 @@ class BottomSheetActionWidget extends StatelessWidget {
       highlightColor: Colors.blue.withOpacity(0.1),
       splashColor: Colors.blue.withOpacity(0.3),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Row(
           children: [
             Icon(
               action.iconData,
               color: mPrimaryColor,
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Text(
               action.title,
-              style: context.textTheme.subtitle1,
             )
           ],
         ),
       ),
-      onTap: () {
+      onTap: () async {
         // Navigator.pop(context, action);
 
         switch (action.id.toString()) {
           case "0":
             {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      SettingsScreen(),
+                      const SettingsScreen(),
                   transitionDuration: Duration.zero,
                 ),
               );
@@ -61,15 +67,70 @@ class BottomSheetActionWidget extends StatelessWidget {
                   textColor: Colors.white,
                   fontSize: 16.0);
             }
+
             break;
 
+          case "2":
+            {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      const ChangePassword(),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            }
+
+            break;
+
+          case "7":
+            {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content: const Text('Do you want to Logout'),
+                  actions: <Widget>[
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('No'),
+                    ),
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                      onPressed: () {
+                        _logout(context);
+                      },
+                      child: const Text('Yes'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            break;
           default:
             {
+              // ignore: avoid_print
               print("Invalid Date");
             }
             break;
         }
       },
+    );
+  }
+
+  void _logout(BuildContext context) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('token');
+    Get.delete<EditprofileController>();
+
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => const LoginScreen(),
+        transitionDuration: Duration.zero,
+      ),
     );
   }
 }

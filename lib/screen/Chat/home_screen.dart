@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
 import 'category_selector.dart';
-import 'favorite_contacts.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'recent_chats.dart';
 import 'package:qstar/constant.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -17,14 +19,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
-  TextEditingController _searchQueryController = TextEditingController();
+  final TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
 
   void onTabChange() {
     setState(() {
       currentTabIndex = tabController!.index;
-      print(currentTabIndex);
+      // print(currentTabIndex);
     });
   }
 
@@ -49,54 +51,121 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    //items.add((items.length+1).toString());
+    //if(mounted)
+    // setState(() {
+
+    // });
+    _refreshController.loadComplete();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Future<bool> _onBackPressed() async {
+      // This dialog will exit your app on saying yes
+      Navigator.of(context).pop(true);
+      return Future.value(false);
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: _isSearching
-            ? BackButton(
+            ? const BackButton(
                 color: mPrimaryColor,
               )
-            : Container(),
-        title: _isSearching ? _buildSearchField() : _buildTitle(context),
-        actions: _buildActions(),
-      ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 5,
-          ),
-          CategorySelector(tabController: tabController!),
-          SizedBox(
-            height: 5,
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
+            : IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: mPrimaryColor,
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                }),
+        title: _isSearching
+            ? _buildSearchField()
+            : const Text(
+                "Chat",
+                style: TextStyle(
+                  color: mPrimaryColor,
+                  fontSize: 27,
+                  fontFamily: 'font1',
                 ),
               ),
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  RecentChats(),
-                  Online(),
-                  Nearby(),
-                  Match(),
-                ],
+        actions: _buildActions(),
+      ),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+
+        //cheak pull_to_refresh
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: WillPopScope(
+          onWillPop: _onBackPressed,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(
+                height: 5,
               ),
-            ),
+              Container(
+                margin: const EdgeInsets.only(top: 1),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.black38.withAlpha(10),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+              ),
+              CategorySelector(tabController: tabController!),
+              const SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
+                  ),
+                  child: TabBarView(
+                    controller: tabController,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const RecentChats(),
+                      const Online(),
+                      const Nearby(),
+                      const Match(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // Navigator.pushReplacement(
+          // Navigator.push(
           //   context,
           //   PageRouteBuilder(
           //     pageBuilder: (context, animation1, animation2) => Qvideoscreen(),
@@ -115,12 +184,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return TextField(
       controller: _searchQueryController,
       autofocus: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Search Data...",
         border: InputBorder.none,
         hintStyle: TextStyle(color: mPrimaryColor),
       ),
-      style: TextStyle(color: Colors.black, fontSize: 16.0),
+      style: const TextStyle(color: Colors.black, fontSize: 16.0),
       onChanged: (query) => updateSearchQuery(query),
     );
   }
@@ -132,6 +201,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           icon: const Icon(Icons.clear),
           color: mPrimaryColor,
           onPressed: () {
+            // ignore: unnecessary_null_comparison
             if (_searchQueryController == null ||
                 _searchQueryController.text.isEmpty) {
               Navigator.pop(context);
@@ -144,32 +214,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
 
     return <Widget>[
-      IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: mPrimaryColor,
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => UsersFeed(),
-                transitionDuration: Duration.zero,
-              ),
-            );
-          }),
-      SizedBox(
-        width: 10,
-      ),
-      Padding(
-        padding: const EdgeInsets.only(right: 210.0, top: 16),
-        child: Text(
-          "Chat",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 27,
-            fontFamily: 'font1',
-          ),
-        ),
-      ),
       IconButton(
         icon: const Icon(Icons.search),
         onPressed: _startSearch,
@@ -207,6 +251,4 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       updateSearchQuery("");
     });
   }
-
-  _buildTitle(BuildContext context) {}
 }

@@ -3,26 +3,29 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/post/setting_post_page.dart';
 
 class Searchlocation extends StatelessWidget {
+  const Searchlocation({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation1, animation2) =>
-                      SettingPostPage(),
+                      const SettingPostPage(),
                   transitionDuration: Duration.zero,
                 ),
               );
             }),
         automaticallyImplyLeading: false,
         elevation: 8,
+        // ignore: prefer_const_constructors
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -30,11 +33,11 @@ class Searchlocation extends StatelessWidget {
         title: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey, width: 0.5),
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
           ),
-          child: Container(
+          child: const SizedBox(
             height: 40,
             width: 800,
             child: TextField(
@@ -53,26 +56,26 @@ class Searchlocation extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Divider(
+            const Divider(
               height: 10,
             ),
             ListTile(
-              title: Text('Addis ababa,Ethiopia'),
+              title: const Text('Addis ababa,Ethiopia'),
               dense: true,
               onTap: () {},
             ),
             ListTile(
-              title: Text('Mexico,Addis ababa'),
+              title: const Text('Mexico,Addis ababa'),
               dense: true,
               onTap: () {},
             ),
             ListTile(
-              title: Text('Ledeta'),
+              title: const Text('Ledeta'),
               dense: true,
               onTap: () {},
             ),
             ListTile(
-              title: Text('Adama'),
+              title: const Text('Adama'),
               dense: true,
               onTap: () {},
             ),

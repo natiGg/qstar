@@ -1,69 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 
-class TextFieldWidget extends StatefulWidget {
-  final int maxLines;
+class TextFieldWidget extends StatelessWidget {
   final String label;
-  final String text;
-  final ValueChanged<String> onChanged;
+  final TextEditingController controller;
+  const TextFieldWidget({ Key? key,required this.label,required this.controller}) : super(key: key);
 
-  const TextFieldWidget({
-    Key? key,
-    this.maxLines = 1,
-    required this.label,
-    required this.text,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  _TextFieldWidgetState createState() => _TextFieldWidgetState();
-}
-
-class _TextFieldWidgetState extends State<TextFieldWidget> {
-  late final TextEditingController controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller = TextEditingController(text: widget.text);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: controller,
             decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                
-               borderSide: const BorderSide(color: mPrimaryColor, width: 2.0),
-
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: mPrimaryColor, width: 2.0),
                 borderRadius: BorderRadius.circular(12),
               ),
               border: OutlineInputBorder(
-                
-                
-              borderSide: const BorderSide(color: Colors.white, width: 2.0),
-
+                borderSide: const BorderSide(color: Colors.white, width: 2.0),
                 borderRadius: BorderRadius.circular(12),
+                
               ),
             ),
-            
-            maxLines: widget.maxLines,
+
+   
           ),
         ],
       );

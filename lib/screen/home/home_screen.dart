@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/home/widget/login_and_register.dart';
-import 'package:qstar/screen/home/widget/login_with_facebook.dart';
-import 'package:qstar/screen/home/widget/slider_dot.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        padding: EdgeInsetsDirectional.all(20),
-        margin: EdgeInsets.only(top: 100),
+        padding: const EdgeInsetsDirectional.all(20),
+        margin: const EdgeInsets.only(top: 100),
         child: Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             Image.asset(
@@ -22,10 +23,10 @@ class HomeScreen extends StatelessWidget {
               height: 200,
               width: 200,
             ),
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
-            LoginAndRegister(),
+            const LoginAndRegister(),
           ],
         ),
       ),

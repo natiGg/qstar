@@ -1,33 +1,31 @@
+// ignore_for_file: deprecated_member_use, prefer_typing_uninitialized_variables
+
 import 'dart:core';
 
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/login/login_screen.dart';
+import 'package:qstar/controllers/suggesteduserscontroller.dart';
+
 import 'package:qstar/screen/main/main_screen.dart';
-import 'package:qstar/screen/register/widget/register_button.dart';
-import 'package:qstar/screen/register/widget/register_form.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:qstar/screen/register/verification.dart';
+
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-List<User> _users = [
-  User(id: 1, userName: "gelila", storyImage: "", userImage: ""),
-  User(id: 2, userName: "natig", storyImage: "", userImage: ""),
-  User(id: 3, userName: "bini", storyImage: "", userImage: ""),
-  User(id: 4, userName: "yosi", storyImage: "", userImage: ""),
-  User(id: 5, userName: "abrsh", storyImage: "", userImage: ""),
-];
+late int ratings = 3;
+// ignore: non_constant_identifier_names
+late double rating_d = 3;
 
 class Suggested extends StatelessWidget {
+  final SuggestedUserController suggestedUserController =
+      Get.put(SuggestedUserController());
+
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    const textStyle = TextStyle(
       color: Colors.white,
     );
     return Scaffold(
@@ -36,61 +34,64 @@ class Suggested extends StatelessWidget {
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Column contents vertically,
         children: <Widget>[
-          Container(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 35,
+          Column(
+            children: [
+              const Text(
+                "Quick follow",
+                style: TextStyle(
+                  // we use the [TextStyle] widget to customize text
+                  color: mPrimaryColor, // set the color
+                  fontSize: 25.0,
+                  fontFamily: 'font1', // and the font size
                 ),
-                Text(
-                  "Quick follow",
-                  style: TextStyle(
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Connect with your best friend on Qstar",
+                style: TextStyle(
                     // we use the [TextStyle] widget to customize text
-                    color: mPrimaryColor, // set the color
-                    fontSize: 25.0,
-                    fontFamily: 'font1', // and the font size
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Connect with your best friend on Q star",
+                    color: Colors.black, // set the color
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.normal,
+                    fontStyle: FontStyle.italic
+                    // and the font size
+                    ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 5, left: 30.0, right: 30),
+                child: Text(
+                  "Reward your 1st star to your profile by following suggested friends on Qstar.",
                   style: TextStyle(
-                      // we use the [TextStyle] widget to customize text
-                      color: mPrimaryColor, // set the color
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold // and the font size
-                      ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5, left: 30.0, right: 30),
-                  child: Text(
-                    "Reward your 1st star to your profile by following suggested friends on Q star.",
-                    style: TextStyle(
-                      color: mPrimaryColor,
-                      decorationStyle: TextDecorationStyle.wavy,
-                    ),
-                    textAlign: TextAlign.center,
+                    color: mPrimaryColor,
+                    decorationStyle: TextDecorationStyle.wavy,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Container(
-                    height: 400,
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        SizedBox(height: 4),
-                        Column(
-                            children:
-                                _users.map((e) => SuggestedUsers(e)).toList())
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Obx(() {
+                  if (suggestedUserController.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return SizedBox(
+                        height: 300,
+                        child: ListView.builder(
+                            itemCount:
+                                suggestedUserController.suggestObjs.length,
+                            itemBuilder: (context, index) {
+                              return SuggestedUsers(
+                                  user: suggestedUserController
+                                      .suggestObjs[index]);
+                            }));
+                  }
+                }),
+              ),
+            ],
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -103,7 +104,7 @@ class Suggested extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MyHomePage(),
+                    builder: (context) => const MyHomePage(),
                   ),
                 );
               },
@@ -111,7 +112,7 @@ class Suggested extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Get Started ',
                   style: textStyle,
                 ),
@@ -126,15 +127,12 @@ class Suggested extends StatelessWidget {
 
 class SuggestedUsers extends StatelessWidget {
   final User user;
-
-  SuggestedUsers(this.user);
+  const SuggestedUsers({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    const textStyle = const TextStyle(
-      color: Colors.white,
-    );
+    final SuggestedUserController suggestedUserController = Get.find();
+
     return Column(children: <Widget>[
       Container(
         padding: const EdgeInsets.only(top: 10),
@@ -148,7 +146,7 @@ class SuggestedUsers extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/images/profile${this.user.id}.jpg',
+                    'assets/images/profile${user.status}.jpg',
                   ),
                 ),
               ),
@@ -162,8 +160,18 @@ class SuggestedUsers extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: Text(
-                      "@Egele",
-                      style: TextStyle(
+                      user.userName,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: mPrimaryColor),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 26),
+                    child: Text(
+                      user.name,
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: mPrimaryColor),
@@ -172,60 +180,96 @@ class SuggestedUsers extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 20),
                     child: RatingBarIndicator(
-                      rating: 2.75,
-                      itemBuilder: (context, index) => Icon(
+                      rating: rating_d,
+                      itemBuilder: (context, index) => const Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      itemCount: 5,
+                      itemCount: ratings,
                       itemSize: 20.0,
                       direction: Axis.horizontal,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
-                    child: Container(
-                      child: Text(
-                        "127K",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: mPrimaryColor),
-                      ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      "127K",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: mPrimaryColor),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20),
-                    child: Container(
-                      width: 100,
-                      height: 30,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(36),
-                        ),
-                        color: mPrimaryColor,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return Verification();
-                              },
-                            ),
-                          );
-                        },
+                  Obx(
+                    () => (Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: SizedBox(
+                        width: 100,
+                        height: 30,
                         child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Follow',
-                            style: textStyle,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(36),
+                              border: Border.all(
+                                  color:
+                                      // ignore: unrelated_type_equality_checks
+                                      user.followed == true
+                                          ? mPrimaryColor
+                                          : Colors.transparent)),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(36),
+                            ),
+                            color:
+                                // ignore: unrelated_type_equality_checks
+                                user.followed == false
+                                    ? mPrimaryColor
+                                    : Colors.white,
+                            onPressed: () {
+                              suggestedUserController.updateId(user.id);
+                              // ignore: unrelated_type_equality_checks
+                              if (user.followed == false) {
+                                suggestedUserController.follow();
+                              } else {
+                                suggestedUserController.unfollow();
+                              }
+                            },
+                            // ignore: unrelated_type_equality_checks
+                            child: suggestedUserController.btnLoading == false
+                                ? Container(
+                                    width: double.infinity,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    alignment: Alignment.center,
+                                    // ignore: unrelated_type_equality_checks
+                                    child: user.followed == false
+                                        ? const Text('Follow',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ))
+                                        : const Text(
+                                            'Following',
+                                            style: TextStyle(
+                                              color: mPrimaryColor,
+                                            ),
+                                          ),
+                                  )
+                                : SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        // ignore: unrelated_type_equality_checks
+                                        color: user.followed == true
+                                            ? mPrimaryColor
+                                            : Colors.white,
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    )),
+                  )
                 ],
               ),
             ),

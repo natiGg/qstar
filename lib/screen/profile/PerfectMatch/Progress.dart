@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
+
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 class MyPages extends StatelessWidget {
+  const MyPages({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -20,13 +22,7 @@ class MyPages extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) => UsersFeed(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.pushNamed(context, '/home');
             }),
         // ignore: prefer_const_constructors
         title: Text(
@@ -38,12 +34,14 @@ class MyPages extends StatelessWidget {
           ),
         ),
       ),
-      body: OnBoardingPage(),
+      body: const OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
+
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }
@@ -52,10 +50,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.pushReplacement(
+    Navigator.push(
+      // ignore: prefer_const_constructors
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => PersonalInfo(),
+        pageBuilder: (context, animation1, animation2) => const PersonalInfo(),
         transitionDuration: Duration.zero,
       ),
     );
@@ -73,7 +72,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       fontFamily: "font1",
     );
 
-    const pageDecoration = const PageDecoration(
+    const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
           fontSize: 24.0, fontWeight: FontWeight.w400, color: mPrimaryColor),
       bodyTextStyle: bodyStyle,
@@ -88,23 +87,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
       pages: [
         PageViewModel(
-          title: "Perfect Match",
-          body: "one step to find your Perfect Match",
-          image: _buildImage('img1.jpg'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
           title: "Find your Perfect Match",
-          body:
-              "find someone you can talk to openly, have fun with, and share your interests and activities with",
-          image: _buildImage('img2.jpg'),
-          decoration: pageDecoration,
-        ),
-        PageViewModel(
-          title: "Fill the Next Form",
-          body:
-              "fill the remaining  Form about your General , Personal information and your Match Perference for your perfect match ",
-          image: _buildImage('img3.jpg'),
+          body: "To find your perfectmatch fill the next form",
+          image: _buildImage('pm.jpg'),
           decoration: pageDecoration,
         ),
       ],

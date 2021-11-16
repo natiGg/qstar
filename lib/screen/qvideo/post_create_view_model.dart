@@ -1,8 +1,10 @@
-import 'dart:developer' as developer;
+// ignore_for_file: constant_identifier_names, duplicate_ignore
 
 import 'package:flutter/foundation.dart';
 
+// ignore: duplicate_ignore, duplicate_ignore, duplicate_ignore
 class PostCreateViewModel extends ChangeNotifier {
+  // ignore: constant_identifier_names
   static const TAG = 'PostCreateViewModel';
 
   List<String> locationSuggest = ['Addis Ababa', 'Adama', 'New York', 'Adama'];

@@ -1,4 +1,4 @@
-import 'dart:developer' as developer;
+// ignore_for_file: constant_identifier_names
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/login/widget/input_text_field.dart';
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
-    Key? key,
-  }) : super(key: key);
+  final String email;
+  final String password;
+
+  const LoginForm({Key? key, required this.email, required this.password})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +27,22 @@ class LoginForm extends StatelessWidget {
                   hintText: "Username",
                   fillColor: Colors.white,
                   filled: true,
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  contentPadding:
+                      const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: Colors.white, width: 3.0))),
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 3.0))),
+              validator: (emailval) {
+                if (emailval!.isEmpty) {
+                  return "Please put your email";
+                }
+                email != emailval;
+                return null;
+              },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Material(
@@ -47,11 +57,20 @@ class LoginForm extends StatelessWidget {
                 hintText: 'Password',
                 fillColor: Colors.white,
                 filled: true,
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                contentPadding:
+                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: Colors.white, width: 3.0)),
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 3.0)),
               ),
+              validator: (passwordval) {
+                if (passwordval!.isEmpty) {
+                  return "Please put your email";
+                }
+                password != passwordval;
+                return null;
+              },
             ),
           ),
         ],

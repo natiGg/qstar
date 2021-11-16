@@ -1,100 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
+
 import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
 
 import 'package:qstar/widget/utils.dart';
-
-Widget profileStats({required Size screen, required Color color,required BuildContext context}) {
-  return Container(
-    padding: const EdgeInsets.only(left: 10, right: 10, top: 60),
-    child: Column(
-      children: <Widget>[
-        Container(
-          width: 100,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: profileAvatar(
-              height: 100,
-              width: 100,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: RatingBarIndicator(
-            rating: 2.75,
-            itemBuilder: (context, index) => Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            itemCount: 5,
-            itemSize: 20.0,
-            direction: Axis.horizontal,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Text(
-              "@Betty",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-          ),
-        ),
-        bio(primaryColor: mPrimaryColor),
-        SizedBox(
-          height: 15,
-        ),
-        Container(
-          width: screen.width - 100 - 20,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              statsBox(count: '57', title: 'Posts'),
-              GestureDetector(
-                onTap: (){
-                      Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followers(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '185', title: 'Followers')),
-              GestureDetector(
-                onTap: (){
-                      Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            Followed(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                },
-                child: statsBox(count: '241', title: 'Following')),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
 
 Widget bio({required Color primaryColor}) {
   return Container(
@@ -109,7 +21,7 @@ Widget bio({required Color primaryColor}) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           RichText(
-            text: TextSpan(
+            text: const TextSpan(
               children: [
                 TextSpan(
                   text: 'It is what it is...',
@@ -134,12 +46,12 @@ Widget editProfile(
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: mPrimaryColor,
       ),
-      child: Center(
+      child: const Center(
           child: Text(
         'Edit Profile',
         style: TextStyle(
@@ -150,6 +62,8 @@ Widget editProfile(
     ),
   );
 }
+
+// ignore: non_constant_identifier_names
 Widget Following() {
   return Container(
     color: Colors.transparent,
@@ -157,14 +71,11 @@ Widget Following() {
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
-      child: Center(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
+      child: const Center(
           child: Text(
         'remove',
         style: TextStyle(
@@ -175,6 +86,8 @@ Widget Following() {
     ),
   );
 }
+
+// ignore: non_constant_identifier_names
 Widget Unfollow() {
   return Container(
     color: Colors.transparent,
@@ -182,14 +95,11 @@ Widget Unfollow() {
     child: Container(
       height: 30,
       width: 100,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      
-     
+      margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: mPrimaryColor)),
-      child: Center(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: mPrimaryColor)),
+      child: const Center(
           child: Text(
         'Following',
         style: TextStyle(
@@ -200,13 +110,14 @@ Widget Unfollow() {
     ),
   );
 }
+
 Widget storyHighlight({@required primaryColor}) {
   return Container(
     color: Colors.white,
     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           'Story Highligts',
           style: TextStyle(
@@ -223,18 +134,19 @@ Widget storyHighlight({@required primaryColor}) {
   );
 }
 
+// ignore: non_constant_identifier_names
 Widget SocialMedia() {
   return Row(
     children: [
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
-            image: new AssetImage("assets/images/yt.png"),
+          child: const Image(
+            image: AssetImage("assets/images/yt.png"),
             width: 20,
             height: 20,
           ),
@@ -242,18 +154,18 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
-            image: new AssetImage("assets/images/fb.png"),
+          child: const Image(
+            image: AssetImage("assets/images/fb.png"),
             width: 20,
             height: 20,
           ),
@@ -261,18 +173,18 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
-            image: new AssetImage("assets/images/tiktok.png"),
+          child: const Image(
+            image: AssetImage("assets/images/tiktok.png"),
             width: 20,
             height: 20,
           ),
@@ -280,18 +192,18 @@ Widget SocialMedia() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
-      Container(
+      SizedBox(
         width: 40,
         height: 30,
         child: RawMaterialButton(
           onPressed: () {},
           elevation: 2.0,
           fillColor: Colors.white,
-          child: Image(
-            image: new AssetImage("assets/images/inst.png"),
+          child: const Image(
+            image: AssetImage("assets/images/inst.png"),
             width: 20,
             height: 20,
           ),
@@ -317,7 +229,7 @@ Widget statsBox({
       children: <Widget>[
         Text(
           count,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Text(
@@ -357,7 +269,7 @@ Widget profileAvatar({
             child: Container(
               height: height - 10, //140,
               width: width - 10, //140,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
                 shape: BoxShape.circle,
               ),

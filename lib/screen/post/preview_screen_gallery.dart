@@ -1,21 +1,23 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/photofilters.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:qstar/screen/post/camera_screen.dart';
+
 import 'package:qstar/screen/post/setting_post_page.dart';
-import 'package:path/path.dart';
+
+// ignore: library_prefixes
 import 'package:image/image.dart' as imageLib;
 import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
 
+  // ignore: use_key_in_widget_constructors
   const PreviewImageScreengallery({required this.imagePath});
 
   @override
@@ -44,21 +46,22 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
     image = imageLib.copyResize(image!, width: 600);
     Map imagefile = await Navigator.push(
       context,
-      new MaterialPageRoute(
-        builder: (context) => new PhotoFilterSelector(
-          title: Text("Photo Filter "),
+      MaterialPageRoute(
+        builder: (context) => PhotoFilterSelector(
+          title: const Text("Photo Filter "),
           image: image!,
           filters: presetFiltersList,
           filename: fileName,
-          loader: Center(child: CircularProgressIndicator()),
+          loader: const Center(child: CircularProgressIndicator()),
           fit: BoxFit.contain,
         ),
       ),
     );
-    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+    if (imagefile.containsKey('image_filtered')) {
       setState(() {
         imageFile = imagefile['image_filtered'];
       });
+      // ignore: avoid_print
       print(imageFile!.path);
     }
   }
@@ -68,17 +71,17 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
     if (imageFile == null) {
       getImage(context);
     }
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.popUntil(context, (route) => route.isFirst);
             }),
-        title: Text(
+        title: const Text(
           "Preview",
           style: TextStyle(
             color: mPrimaryColor,
@@ -89,36 +92,36 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_forward),
+            icon: const Icon(Icons.arrow_forward),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingPostPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingPostPage()));
             },
           ),
         ],
       ),
       body: Center(
-        child: new Container(
+        child: Container(
           child: imageFile == null
-              ? Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 2, child: Image.file(File(widget.imagePath))),
-                      SizedBox(height: 5.0),
-                    ],
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 2, child: Image.file(File(widget.imagePath))),
+                    const SizedBox(height: 5.0),
+                  ],
                 )
               : Image.file(imageFile!),
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => getImage(context),
         tooltip: 'refreshe',
-        child: new Icon(Icons.edit),
+        child: const Icon(Icons.edit),
       ),
     );
   }

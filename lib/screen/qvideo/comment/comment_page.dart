@@ -1,31 +1,27 @@
-import 'dart:io';
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
-import 'auth_bloc.dart';
 
-import 'dart:developer' as developer;
-import 'package:flutter_svg/svg.dart';
 import 'comment_widget.dart';
-import 'package:qstar/screen/feed/feed.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CommentPage extends StatefulWidget {
+  // ignore: constant_identifier_names
   static const ROUTE_NAME = 'CommentPage';
+
+  const CommentPage({Key? key}) : super(key: key);
 
   @override
   _CommentPageState createState() => _CommentPageState();
 }
 
 class _CommentPageState extends State<CommentPage> {
-  static const TAG = 'CommentPage';
   @override
   Widget build(BuildContext context) {
     // ignore: unnecessary_new
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Qvideoscreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const Qvideoscreen()));
         return true;
       },
       child: Scaffold(
@@ -33,19 +29,19 @@ class _CommentPageState extends State<CommentPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor,
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                        Qvideoscreen(),
+                        const Qvideoscreen(),
                     transitionDuration: Duration.zero,
                   ),
                 );
               }),
-          title: Text(
+          title: const Text(
             "Comments",
             style: TextStyle(
               color: mPrimaryColor,
@@ -56,9 +52,7 @@ class _CommentPageState extends State<CommentPage> {
           elevation: 0.0,
         ),
         body: Column(
-          children: <Widget>[
-            CommentWidget(),
-            CommentWidget(),
+          children: const <Widget>[
             CommentWidget(),
             CommentWidget(),
             CommentWidget(),
@@ -72,19 +66,19 @@ class _CommentPageState extends State<CommentPage> {
               height: kToolbarHeight,
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
-              padding: EdgeInsets.only(left: 16, right: 8),
+              padding: const EdgeInsets.only(left: 16, right: 8),
               child: Row(
                 children: [
                   // ignore: prefer_const_constructors
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/1.jpg'),
+                    backgroundImage: const AssetImage('assets/images/1.jpg'),
                     radius: 18,
                   ),
                   // ignore: prefer_const_constructors
                   Expanded(
                     // ignore: prefer_const_constructors
                     child: Padding(
-                      padding: EdgeInsets.only(left: 16, right: 8),
+                      padding: const EdgeInsets.only(left: 16, right: 8),
                       // ignore: prefer_const_constructors
                       child: TextField(
                         // ignore: prefer_const_constructors
@@ -123,5 +117,5 @@ class _CommentPageState extends State<CommentPage> {
   //   return true; //
   // }
   // _moveToScreen2(BuildContext context) =>
-  //     Navigator.pushReplacementNamed(context, "screen2");
+  //     Navigator.pushNamed(context, "screen2");
 }

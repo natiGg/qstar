@@ -1,10 +1,7 @@
-import 'dart:ui';
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/login/widget/login_button.dart';
-import 'package:qstar/screen/login/widget/login_form.dart';
 import 'package:qstar/screen/login/widget/welcome_back.dart';
 
 class Forgotpassword extends StatelessWidget {
@@ -17,8 +14,8 @@ class Forgotpassword extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          WelcomeBack(),
-          Text(
+          const WelcomeBack(),
+          const Text(
             "Please Enter  email address",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -27,8 +24,8 @@ class Forgotpassword extends StatelessWidget {
               fontFamily: 'font1', // and the font size
             ),
           ),
-          SizedBox(height: 10),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "Confirmation  will be sent to your email",
             style: TextStyle(
               // we use the [TextStyle] widget to customize text
@@ -36,7 +33,7 @@ class Forgotpassword extends StatelessWidget {
               fontSize: 10.0, // and the font size
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -53,15 +50,16 @@ class Forgotpassword extends StatelessWidget {
                     hintText: 'Email',
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide:
-                            BorderSide(color: Colors.white, width: 3.0))),
+                            const BorderSide(color: Colors.white, width: 3.0))),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Container(
@@ -83,7 +81,7 @@ class Forgotpassword extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Submit',
                   style: TextStyle(
                     color: Colors.white,

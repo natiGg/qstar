@@ -8,8 +8,8 @@ class InstaAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget trailing;
   final Color backgroundColor;
 
+  // ignore: use_key_in_widget_constructors
   const InstaAppBar({
-   
     required this.height,
     required this.leading,
     required this.center,
@@ -21,11 +21,10 @@ class InstaAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20),
       height: height,
-      color: backgroundColor == null
-          ? Theme.of(context).primaryColor
-          : backgroundColor,
+      // ignore: unnecessary_null_comparison
+      color: backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,

@@ -8,12 +8,13 @@ import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart'
 import 'widgets/profile_tab_bar.dart';
 import 'widgets/profile_widgets.dart';
 
-import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/widget/utils.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class UserProfile extends StatefulWidget {
+  const UserProfile({Key? key}) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -36,7 +37,6 @@ class _ProfileScreenState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
-    var _primaryColor = Colors.transparent;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -46,14 +46,7 @@ class _ProfileScreenState extends State<UserProfile> {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      Qvideoscreen(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              Navigator.pushNamed(context, '/home');
             }),
         // ignore: prefer_const_constructors
         title: Text(
@@ -70,7 +63,7 @@ class _ProfileScreenState extends State<UserProfile> {
               onPressed: () {
                 _onShowMenu!();
               },
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               color: mPrimaryColor),
         ],
       ),
@@ -80,7 +73,7 @@ class _ProfileScreenState extends State<UserProfile> {
             Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
                   boxShadow: [
@@ -88,7 +81,7 @@ class _ProfileScreenState extends State<UserProfile> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
@@ -98,7 +91,7 @@ class _ProfileScreenState extends State<UserProfile> {
                         screen: _screen,
                         color: mPrimaryColor,
                         context: context),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -119,12 +112,12 @@ class _ProfileScreenState extends State<UserProfile> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               PageRouteBuilder(
                                 pageBuilder:
                                     (context, animation1, animation2) =>
-                                        HomeScreen(),
+                                        const HomeScreen(),
                                 transitionDuration: Duration.zero,
                               ),
                             );
@@ -147,7 +140,7 @@ class _ProfileScreenState extends State<UserProfile> {
                     )
                   ],
                 )),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Divider(
@@ -164,15 +157,16 @@ class _ProfileScreenState extends State<UserProfile> {
               },
             ),
             StaggeredGridView.countBuilder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: _pageIndex != 1 ? 3 : 2,
               itemCount: Utils.listOfImageUrl.length,
               itemBuilder: (contex, index) {
                 return Align(
                   child: Container(
-                    padding:
-                        _pageIndex == 1 ? EdgeInsets.all(5) : EdgeInsets.all(0),
+                    padding: _pageIndex == 1
+                        ? const EdgeInsets.all(5)
+                        : const EdgeInsets.all(0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -208,12 +202,12 @@ class _ProfileScreenState extends State<UserProfile> {
       child: Container(
         height: 30,
         width: 70,
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: mPrimaryColor,
         ),
-        child: Center(
+        child: const Center(
             child: Text(
           'Folllow',
           style: TextStyle(
@@ -231,12 +225,12 @@ class _ProfileScreenState extends State<UserProfile> {
       child: Container(
         height: 30,
         width: 70,
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: mPrimaryColor,
         ),
-        child: Center(
+        child: const Center(
             child: Text(
           'Message',
           style: TextStyle(

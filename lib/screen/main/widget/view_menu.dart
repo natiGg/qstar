@@ -21,7 +21,7 @@ class ViewMenu extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return MenuScreen();
+                return const MenuScreen();
               },
             ),
           );
