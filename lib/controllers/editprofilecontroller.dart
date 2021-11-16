@@ -27,7 +27,8 @@ class EditprofileController extends GetxController with StateMixin {
   var edited="";
   var hobbies;
   var hobItem;
-  var items;
+  var image;
+  var id;
   List<Hobbies> hobbyitems=[];
 
    List<String> hobbiesSplit=[];
@@ -54,6 +55,7 @@ class EditprofileController extends GetxController with StateMixin {
 
   void fetchProfile(var id) async {
     try {
+        id=id;
       suggested = await RemoteServices.fetchProfile(id);
 
       if (suggested.id != null) {
@@ -73,9 +75,11 @@ class EditprofileController extends GetxController with StateMixin {
         }
         print(hobbyitems);
         
+        
           hobItem= hobbyitems.
         map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))
       .toList();
+      hobbyitems.clear();
         
         change(suggested, status: RxStatus.success());
       } else {
@@ -93,6 +97,7 @@ class EditprofileController extends GetxController with StateMixin {
       if (isValid == true) {
         isLoading(true);
         EditProf.currentState!.save();
+        var uploaded = await RemoteServices.uploadImage(image, id.toString());
         var data = {
           "name": name,
           "website": "https://www.qstar.com",
