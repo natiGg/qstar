@@ -21,15 +21,6 @@ import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Animal {
-  final int id;
-  final String name;
-
-  Animal({
-    required this.id,
-    required this.name,
-  });
-}
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -103,6 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     editprofileController.birthdayControl = _dateController;
+
 
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
@@ -207,10 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               height: 10,
                             ),
                             SizedBox(height: 24),
-                            TextFieldWidget(
-                              label: 'Name',
-                              controller: editprofileController.nameControl,
-                            ),
+                           
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -317,8 +306,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         .validateunName(value!);
                                   },
                                 ),
+                               editprofileController.unames!=null?Padding(
+                                 padding: EdgeInsets.only(left: 10),
+                                 child: Text(
+                         "username already taken try ${editprofileController.unames.toString()}",
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                      )):Padding( 
+                        padding: EdgeInsets.only(left: 10),
+                        child:Text(
+                         '',
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                      ))
                               ],
                             ),
+                            
                             Column(
                               children: <Widget>[
                                 SizedBox(height: 24),
@@ -414,6 +419,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         .validateEmail(value!);
                                   },
                                 ),
+                                editprofileController.emailsInfo!=null?Padding(
+                                 padding: EdgeInsets.only(left: 10),
+                                 child: Text(
+                         "email already taken",
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                      )):Padding( 
+                        padding: EdgeInsets.only(left: 10),
+                        child:Text(
+                         '',
+                        style: const TextStyle(
+                          color: mPrimaryColor,
+                        ),
+                      ))
                               ],
                             ),
                             SizedBox(height: 30),
@@ -470,7 +490,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       });
                                       print('selected : ${_selectedItems2}');
                                       _selectedItems2.forEach((item) =>
-                                          _tobeSent
+                                        editprofileController.tobeSent
                                               .add("${item.name.toString()}"));
 
                                   
@@ -483,13 +503,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       onTap: (value) {
                                         setState(() {
                                           _selectedItems2.remove(value);
-                                          _tobeSent.remove(value.toString());
+                                          editprofileController.tobeSent.remove(value.toString());
                                         });
 
                                         print(
                                             'removed: ${_selectedItems2.toString()}');
                                         _selectedItems2.forEach((item) =>
-                                            _tobeSent.add(
+                                            editprofileController.tobeSent.add(
                                                 "${item.name.toString()}"));
                                       },
                                     ),

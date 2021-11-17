@@ -11,6 +11,7 @@ import 'package:async/async.dart';
 
 class RemoteServices {
   static var res, body;
+  static List<String> sent = [];
 
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
@@ -20,6 +21,54 @@ class RemoteServices {
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
       throw Exception('Failed to load Users');
+    }
+  }
+
+  static Future<List<String>> checkUname(String uname) async {
+    var data = {'username': uname};
+    res = await Network().authData(data, "validateUsername");
+    body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      sent = [
+        res.statusCode.toString(),
+        body["data"].toString(),
+        body["message"].toString()
+      ];
+      return sent;
+    } else if (res.statusCode == 422) {
+      Map<String, dynamic> map = body["errors"];
+      List<dynamic> data = map["username"];
+      sent = [
+        res.statusCode.toString(),
+        data[0]["message"].toString(),
+        data[0]["suggestion"].toString()
+      ];
+      return sent;
+    } else {
+      throw Exception('Failed to check username');
+    }
+  }
+
+  static Future<List<String>> checkEmail(String uname) async {
+    var data = {'username': uname};
+    res = await Network().authData(data, "validateEmail");
+    body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      sent = [
+        res.statusCode.toString(),
+        body["success"].toString(),
+        body["message"].toString()
+      ];
+      return sent;
+    } else if (res.statusCode == 422) {
+      Map<String, dynamic> map = body["errors"];
+      List<dynamic> data = map["email"];
+      sent = [res.statusCode.toString(), data[0].toString()];
+      return sent;
+    } else {
+      throw Exception('Failed to check email');
     }
   }
 
@@ -55,19 +104,18 @@ class RemoteServices {
     var data = {'following_id': id};
     var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
     var length = await image.length();
-      // create multipart request
-    res = await Network().uploadFile("updateProfilePicture/${id}",image,stream,length);
-    
+    // create multipart request
+    res = await Network()
+        .uploadFile("updateProfilePicture/${id}", image, stream, length);
+
     if (res.statusCode == 200) {
-    res.stream.transform(utf8.decoder).listen((value) {
+      res.stream.transform(utf8.decoder).listen((value) {
         print(value);
-
-  });    
+      });
       return true;
+    } else {
+      print(res.statusCode);
 
-  } else {
-    print(res.statusCode);
-    
       throw Exception('Failed to Upload file');
     }
   }

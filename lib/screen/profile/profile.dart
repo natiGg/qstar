@@ -261,7 +261,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: profileAvatar(
                 height: 100,
                 width: 100,
-                id: editprofileController.uid
               
               ),
             ),

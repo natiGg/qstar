@@ -8,6 +8,7 @@ import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
 import 'package:get/get.dart';
 import 'package:qstar/widget/utils.dart';
+EditprofileController editprofileController=Get.find();
 
 Widget bio({required Color primaryColor}) {
   return Container(
@@ -245,10 +246,8 @@ Widget statsBox({
 Widget profileAvatar({
   required double height,
   required double width,
-  required String id,
   bool isStorySeen = false,
 }) {
-  print(id);
   return Container(
     color: Colors.transparent,
     height: height, //155,
@@ -277,7 +276,7 @@ Widget profileAvatar({
                 shape: BoxShape.circle,
               ),
               child: CircleAvatar(
-                backgroundImage: NetworkImage("https://qstar.mindethiopia.com/api/getProfilePicture/${id}"),
+                backgroundImage: NetworkImage("https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
               ),
             ),
           ),
