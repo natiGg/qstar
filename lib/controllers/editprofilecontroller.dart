@@ -28,7 +28,7 @@ class EditprofileController extends GetxController with StateMixin {
   var hobbies;
   var hobItem;
   var image;
-  var id;
+  late String uid="";
   List<Hobbies> hobbyitems=[];
 
    List<String> hobbiesSplit=[];
@@ -55,7 +55,7 @@ class EditprofileController extends GetxController with StateMixin {
 
   void fetchProfile(var id) async {
     try {
-        id=id;
+        uid=id.toString();
       suggested = await RemoteServices.fetchProfile(id);
 
       if (suggested.id != null) {
