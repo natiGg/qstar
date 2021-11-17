@@ -464,7 +464,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       ),
                                     ),
                                     items: hobbiesController.hobItem,
-                                    initialValue: editprofileController.hobbyitems,
                                     onConfirm: (values) {
                                       setState(() {
                                         _selectedItems2 = values;
@@ -498,6 +497,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   _selectedItems2 == null ||
                                           _selectedItems2.isEmpty
                                       ? MultiSelectChipDisplay(
+                                        items: editprofileController.hobItem,
                                           onTap: (item) {
                                             setState(() {
                                               _selectedItems3.remove(item);
@@ -579,6 +579,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   final ImagePicker _picker = ImagePicker();
   ImagePicker picker = ImagePicker();
+
   _imgFromCamera() async {
     try {
       final pickedFile = await _picker.pickImage(
@@ -586,6 +587,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
+        File file = File( pickedFile!.path );
+
+        editprofileController.image=file;
       });
     } catch (e) {
       setState(() {
@@ -601,6 +605,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
+        File file = File( pickedFile!.path );
+
+        editprofileController.image=file;
+
       });
     } catch (e) {
       setState(() {

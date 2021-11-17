@@ -114,6 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 actions: [
                   IconButton(
                       onPressed: () {
+                        print(editprofileController.suggested.storyImage);
                         _onShowMenu();
                       },
                       icon: const Icon(Icons.menu),
@@ -260,6 +261,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: profileAvatar(
                 height: 100,
                 width: 100,
+              
+                
               ),
             ),
           ),
