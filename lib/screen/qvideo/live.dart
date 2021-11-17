@@ -15,18 +15,15 @@ import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 
 import 'package:qstar/screen/qvideo/comment/comment_widget.dart';
-import 'package:qstar/screen/qvideo/live.dart';
-import 'package:qstar/screen/qvideo/useraudio.dart';
-import 'package:qstar/screen/qvideo/userprofile.dart';
+
 import 'package:qstar/screen/qvideo/videoPreview.dart';
 import 'package:qstar/screen/search/search.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:math' as math;
+
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 
-import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -275,15 +272,14 @@ List<User> _users = [
       followed: false.obs)
 ];
 
-class Qvideoscreen extends StatefulWidget {
-  const Qvideoscreen({Key? key}) : super(key: key);
+class Live extends StatefulWidget {
+  const Live({Key? key}) : super(key: key);
 
   @override
   _QvideoState2 createState() => _QvideoState2();
 }
 
-class _QvideoState2 extends State<Qvideoscreen>
-    with SingleTickerProviderStateMixin {
+class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
   ImagePicker picker = ImagePicker();
   File? _cameraVideo;
   bool abo = false;
@@ -377,25 +373,18 @@ class _QvideoState2 extends State<Qvideoscreen>
   }
 
   void _onLoading() async {
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    //items.add((items.length+1).toString());
-    //if(mounted)
-    // setState(() {
 
-    // });
     _refreshControllers.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(),
+      header: const WaterDropHeader(),
       //cheak pull_to_refresh
       controller: _refreshControllers,
       onRefresh: _onRefresh,
@@ -404,68 +393,30 @@ class _QvideoState2 extends State<Qvideoscreen>
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          centerTitle: true,
           leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
+              icon: const Icon(Icons.arrow_back),
+              color: mPrimaryColor,
               onPressed: () {
-                _controller.dispose();
                 _controller.pause();
-
-                Navigator.pushNamed(context, "/home");
+                _controller.dispose();
+                Navigator.pushNamed(context, '/video');
               }),
-          title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          title: const Text(
+            "Live Video",
+            style: TextStyle(
+              color: mPrimaryColor,
+              fontSize: 27,
+              fontFamily: 'font1',
+            ),
+          ),
+          actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.add),
               iconSize: 30.0,
               color: mPrimaryColor,
-              onPressed: () {
-                _controller.pause();
-
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return SafeArea(
-                        child: Wrap(
-                          children: <Widget>[
-                            ListTile(
-                                leading: const Icon(Icons.photo_library),
-                                title: const Text('Video Library'),
-                                onTap: () {
-                                  _pickVideo();
-                                  Navigator.of(context).pop();
-                                }),
-                            ListTile(
-                              leading: Icon(Icons.videocam_sharp),
-                              title: const Text('Video Camera'),
-                              onTap: () {
-                                _pickVideoFromCamera();
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
-            ),
-          ]),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.videocam),
-              iconSize: 30.0,
-              color: Colors.red,
               onPressed: () async {
                 _controller.pause();
                 _controller.dispose();
-
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const Live(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
               },
             ),
           ],
@@ -521,361 +472,150 @@ class _QvideoState2 extends State<Qvideoscreen>
             },
             child: Stack(
               children: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        if (play) {
-                          _controller.pause();
-                          play = !play;
-                        } else {
-                          _controller.play();
-                          play = !play;
-                        }
-                      });
-                    },
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: VideoPlayer(_controller),
-                    )),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: VideoPlayer(_controller),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 0, top: 100),
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
                   child: Align(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.bottomCenter,
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width - 100,
-                      height: 90,
+                      height: kToolbarHeight,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text.rich(
-                                TextSpan(children: <TextSpan>[
-                                  TextSpan(text: 'football love'),
-                                  TextSpan(
-                                      text: '#foot\n',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                ]),
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              )),
-                          Row(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 13),
-                                width: 62,
-                                height: 42,
-                                child: Stack(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        _controller.dispose();
-                                        _controller.pause();
-
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation1,
-                                                    animation2) =>
-                                                const UserProfile(),
-                                            transitionDuration: Duration.zero,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                              borderRadius: BorderRadius.circular(9),
+                              type: MaterialType.transparency,
+                              child: SafeArea(
+                                child: Container(
+                                  height: kToolbarHeight,
+                                  padding:
+                                      const EdgeInsets.only(left: 16, right: 8),
+                                  child: Row(
+                                    children: [
+                                      // ignore: prefer_const_constructors
+                                      CircleAvatar(
+                                        backgroundImage: const AssetImage(
+                                            'assets/images/1.jpg'),
+                                        radius: 18,
+                                      ),
+                                      // ignore: prefer_const_constructors
+                                      Expanded(
+                                        // ignore: prefer_const_constructors
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 3, right: 8),
+                                          // ignore: prefer_const_constructors
+                                          child: TextField(
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                                hintText: 'Comment here',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12),
+                                                border: InputBorder.none),
                                           ),
-                                        );
-                                      },
-                                      child: const CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor: Colors.white,
-                                        child: CircleAvatar(
-                                          radius: 19,
-                                          backgroundColor: Colors.black,
-                                          backgroundImage:
-                                              AssetImage('assets/spook.png'),
                                         ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.white, width: 1),
-                                        ),
-                                        child: CircleAvatar(
-                                          radius: 7,
-                                          backgroundColor:
-                                              mPrimaryColor.withOpacity(1),
-                                          child: Center(
-                                              child: GestureDetector(
-                                            onTap: () {},
-                                            child: const Icon(Icons.add,
-                                                size: 11, color: Colors.white),
-                                          )),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                          child: Text(
+                                            'Post',
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText2
+                                                ?.copyWith(color: Colors.white),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 18),
+                                          child: IconButton(
+                                              icon: const Icon(Icons.share),
+                                              color: Colors.white,
+                                              onPressed: () {}),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  _controller.dispose();
-                                  _controller.pause();
-
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder:
-                                          (context, animation1, animation2) =>
-                                              const UserProfile(),
-                                      transitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                },
-                                child: const Text.rich(
-                                  TextSpan(children: <TextSpan>[
-                                    TextSpan(text: 'UserName'),
-                                  ]),
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ]),
                     ),
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(bottom: 25, right: 10),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: SizedBox(
-                        width: 70,
-                        height: 450,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                  padding: const EdgeInsets.only(bottom: 100, top: 0),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      height: kToolbarHeight,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.only(top: 50),
-                              width: 40,
-                              height: 25,
-                              child: Stack(
-                                children: const <Widget>[],
-                              ),
-                            ),
-
-                            GestureDetector(
-                              onTap: () {
-                                _onShowMenu();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
+                            Material(
+                              borderRadius: BorderRadius.circular(9),
+                              type: MaterialType.transparency,
+                              child: SafeArea(
+                                child: Container(
+                                  height: kToolbarHeight,
+                                  margin: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .top),
+                                  padding:
+                                      const EdgeInsets.only(left: 16, right: 8),
+                                  child: Row(
+                                    children: [
                                       // ignore: prefer_const_constructors
-                                      child: Icon(
-                                        Icons.more_horiz,
-                                        size: 25,
-                                        color: Colors.white,
+                                      CircleAvatar(
+                                        backgroundImage: const AssetImage(
+                                            'assets/images/1.jpg'),
+                                        radius: 18,
                                       ),
-                                    ),
-                                    // ignore: prefer_const_constructors
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // ignore: unnecessary_new
-                            new GestureDetector(
-                              onTap: () {
-                                _controller.dispose();
-                                _controller.pause();
-
-                                Navigator.pushReplacement(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            const UserProfile(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.rotationY(math.pi),
                                       // ignore: prefer_const_constructors
-                                      child: Icon(
-                                        Icons.arrow_back_outlined,
-                                        size: 25,
-                                        color: Colors.white,
+                                      Expanded(
+                                        // ignore: prefer_const_constructors
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 3, right: 8),
+                                          // ignore: prefer_const_constructors
+                                          child: TextField(
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                            // ignore: prefer_const_constructors
+                                            decoration: InputDecoration(
+                                                hintText: 'username',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13),
+                                                border: InputBorder.none),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    // ignore: prefer_const_constructors
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            Container(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isdisActive && !isActive) {
-                                          isActive = !isActive;
-                                          isdisActive = !isdisActive;
-                                        } else if (!isdisActive && isActive) {
-                                          isActive = !isActive;
-                                        } else if (!isdisActive && !isActive) {
-                                          isActive = !isActive;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(Icons.thumb_up,
-                                        size: 25,
-                                        color: isActive
-                                            ? mPrimaryColor
-                                            : Colors.white),
-                                  ),
-                                  const Text('427.9K',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10))
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isActive && !isdisActive) {
-                                          isActive = !isActive;
-                                          isdisActive = !isdisActive;
-                                        } else if (isdisActive && !isActive) {
-                                          isdisActive = !isdisActive;
-                                        } else if (!isdisActive && !isActive) {
-                                          isdisActive = !isdisActive;
-                                        }
-                                      });
-                                    },
-                                    child: Icon(Icons.thumb_down,
-                                        size: 25,
-                                        color: isdisActive
-                                            ? mPrimaryColor
-                                            : Colors.white),
-                                  ),
-                                  const Text('Dislike',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10))
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // _controller.pause();
-                                showSheetcomment(context);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.rotationY(math.pi),
-                                        child: const Icon(Icons.sms,
-                                            size: 25, color: Colors.white)),
-                                    const Text('2051',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 10))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                showSheet(context);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.rotationY(math.pi),
-                                        child: const Icon(Icons.reply,
-                                            size: 25, color: Colors.white)),
-                                    const Text('Share',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 10))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _controller.dispose();
-                                _controller.pause();
-
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (context, animation1, animation2) =>
-                                            const Useraudeio(),
-                                    transitionDuration: Duration.zero,
-                                  ),
-                                );
-                              },
-                              child: AnimatedBuilder(
-                                animation: animationController,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      const Color(0x00222222).withOpacity(1),
-                                  child: const CircleAvatar(
-                                    radius: 12,
-                                    backgroundImage:
-                                        AssetImage('assets/images/music.jpg'),
+                                    ],
                                   ),
                                 ),
-                                builder: (context, _widget) {
-                                  return Transform.rotate(
-                                      angle: animationController.value * 6.3,
-                                      child: _widget);
-                                },
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ))
+                            ),
+                          ]),
+                    ),
+                  ),
+                ),
               ],
             ),
           );
@@ -1211,56 +951,6 @@ void showSheetcomment(context) {
                     CommentWidget(),
                     CommentWidget(),
                   ],
-                ),
-                Material(
-                  type: MaterialType.canvas,
-                  child: SafeArea(
-                    child: Container(
-                      height: kToolbarHeight,
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      padding: const EdgeInsets.only(left: 16, right: 8),
-                      child: Row(
-                        children: [
-                          // ignore: prefer_const_constructors
-                          CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/images/1.jpg'),
-                            radius: 18,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            // ignore: prefer_const_constructors
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 8),
-                              // ignore: prefer_const_constructors
-                              child: TextField(
-                                // ignore: prefer_const_constructors
-                                decoration: InputDecoration(
-                                    hintText: 'Comment here',
-                                    border: InputBorder.none),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              child: Text(
-                                'Post',
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText2
-                                    ?.copyWith(color: Colors.blue),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),

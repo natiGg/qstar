@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/screen/qvideo/videopreview.dart';
 
 class VideoRecorderExample extends StatefulWidget {
