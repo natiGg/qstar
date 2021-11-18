@@ -12,7 +12,7 @@ import "package:storage_path/storage_path.dart" show StoragePath;
 
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:camera_camera/camera_camera.dart';
-import 'package:qstar/screen/post/preview_screen.dart';
+
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class PostPage extends StatefulWidget {
@@ -113,22 +113,25 @@ class _MyHomePageState extends State<PostPage> {
                     // ignore: unnecessary_new
                     child: new GestureDetector(
                       onTap: () {
+                        if (image != null) {
+                          _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                            duration: const Duration(seconds: 1),
+                            content: Row(
+                              children: const <Widget>[
+                                CircularProgressIndicator(),
+                                Text(" Loading...")
+                              ],
+                            ),
+                          ));
+                          _ondelay().whenComplete(() => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PreviewImageScreengallery(
+                                        imagePath: image!,
+                                      ))));
+                        }
                         // ignore: deprecated_member_use
-                        _scaffoldKey.currentState!.showSnackBar(SnackBar(
-                          duration: const Duration(seconds: 4),
-                          content: Row(
-                            children: const <Widget>[
-                              CircularProgressIndicator(),
-                              Text(" Loading...")
-                            ],
-                          ),
-                        ));
-                        _ondelay().whenComplete(() => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PreviewImageScreengallery(
-                                      imagePath: image!,
-                                    ))));
                       },
                       child: const Text(
                         'Next',
@@ -239,7 +242,7 @@ class _MyHomePageState extends State<PostPage> {
   }
 
   _ondelay() {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -256,7 +259,7 @@ class _MyHomePageState extends State<PostPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreen(imagePath: path),
+        builder: (context) => PreviewImageScreengallery(imagePath: path),
       ),
     );
   }

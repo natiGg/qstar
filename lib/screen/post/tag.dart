@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/post/setting_post_page.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -13,16 +12,7 @@ class Search extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const SettingPostPage(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
-            }),
+            onPressed: () {}),
         automaticallyImplyLeading: false,
         elevation: 8,
         iconTheme: const IconThemeData(

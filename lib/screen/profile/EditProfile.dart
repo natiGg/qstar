@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
@@ -54,17 +53,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Hobbies(id: 1, name: "Skylar"),
     Hobbies(id: 2, name: "Desiree"),
     Hobbies(id: 3, name: "Cecil"),
-
   ];
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
-      HobbiesController hobbiesController=Get.put(HobbiesController());
+  HobbiesController hobbiesController = Get.put(HobbiesController());
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Hobbies> _selectedItems2 = [];
   List<String> _tobeSent = [];
   List<Hobbies> _selectedItems3 = [];
-  static final List<Hobbies> _initial=[];
+  static final List<Hobbies> _initial = [];
 
   String Preligion = "Hobbies";
 
@@ -127,10 +125,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       print(editprofileController.hobbyitems.length);
 
       editprofileController.hobbyitems.forEach((element) {
-        print(element.id.toString()+element.name.toString());
+        print(element.id.toString() + element.name.toString());
         _initial.add(element);
       });
-     
     }
   }
 
@@ -417,7 +414,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ],
                             ),
                             SizedBox(height: 30),
-                             Container(
+                            Container(
                               decoration: BoxDecoration(
                                 color: Colors.white38,
                                 border: Border.all(
@@ -472,8 +469,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       _selectedItems2.forEach((item) =>
                                           _tobeSent
                                               .add("${item.name.toString()}"));
-
-                                  
                                     },
                                     chipDisplay: MultiSelectChipDisplay(
                                       textStyle: TextStyle(
@@ -497,7 +492,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   _selectedItems2 == null ||
                                           _selectedItems2.isEmpty
                                       ? MultiSelectChipDisplay(
-                                        items: editprofileController.hobItem,
+                                          items: editprofileController.hobItem,
                                           onTap: (item) {
                                             setState(() {
                                               _selectedItems3.remove(item);
@@ -511,7 +506,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       : MultiSelectChipDisplay(),
                                 ],
                               ),
-                            ), SizedBox(
+                            ),
+                            SizedBox(
                               height: 35,
                             ),
                             Row(
@@ -587,9 +583,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
-        File file = File( pickedFile!.path );
+        File file = File(pickedFile!.path);
 
-        editprofileController.image=file;
+        editprofileController.image = file;
       });
     } catch (e) {
       setState(() {
@@ -605,10 +601,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
-        File file = File( pickedFile!.path );
+        File file = File(pickedFile!.path);
 
-        editprofileController.image=file;
-
+        editprofileController.image = file;
       });
     } catch (e) {
       setState(() {

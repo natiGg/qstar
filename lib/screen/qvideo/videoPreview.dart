@@ -138,6 +138,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(

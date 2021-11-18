@@ -576,7 +576,9 @@ class _FeedState extends State<Feed> {
                                               children: <Widget>[
                                                 new ListTile(
                                                     leading: new Icon(
-                                                        Icons.photo_library),
+                                                      Icons.photo_library,
+                                                      color: mPrimaryColor,
+                                                    ),
                                                     title: new Text(
                                                         'Video Library'),
                                                     onTap: () {
@@ -586,7 +588,9 @@ class _FeedState extends State<Feed> {
                                                     }),
                                                 new ListTile(
                                                   leading: new Icon(
-                                                      Icons.videocam_sharp),
+                                                    Icons.videocam_sharp,
+                                                    color: mPrimaryColor,
+                                                  ),
                                                   title:
                                                       new Text('Video Camera'),
                                                   onTap: () {

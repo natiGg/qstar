@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/post/setting_post_page.dart';
 
 class Searchlocation extends StatelessWidget {
   const Searchlocation({Key? key}) : super(key: key);
@@ -14,14 +13,14 @@ class Searchlocation extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const SettingPostPage(),
-                  transitionDuration: Duration.zero,
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, animation1, animation2) =>
+              //         const SettingPostPage(),
+              //     transitionDuration: Duration.zero,
+              //   ),
+              // );
             }),
         automaticallyImplyLeading: false,
         elevation: 8,

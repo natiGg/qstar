@@ -402,74 +402,80 @@ class _QvideoState2 extends State<Qvideoscreen>
       onLoading: _onLoading,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
-              onPressed: () {
-                _controller.dispose();
-                _controller.pause();
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   centerTitle: true,
+        //   leading: IconButton(
+        //       icon: const Icon(Icons.arrow_back, color: mPrimaryColor),
+        //       onPressed: () {
+        //         _controller.dispose();
+        //         _controller.pause();
 
-                Navigator.pushNamed(context, "/home");
-              }),
-          title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add),
-              iconSize: 30.0,
-              color: mPrimaryColor,
-              onPressed: () {
-                _controller.pause();
+        //         Navigator.pushNamed(context, "/home");
+        //       }),
+        //   title: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        //     IconButton(
+        //       icon: const Icon(Icons.add),
+        //       iconSize: 30.0,
+        //       color: mPrimaryColor,
+        //       onPressed: () {
+        //         _controller.pause();
 
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return SafeArea(
-                        child: Wrap(
-                          children: <Widget>[
-                            ListTile(
-                                leading: const Icon(Icons.photo_library),
-                                title: const Text('Video Library'),
-                                onTap: () {
-                                  _pickVideo();
-                                  Navigator.of(context).pop();
-                                }),
-                            ListTile(
-                              leading: Icon(Icons.videocam_sharp),
-                              title: const Text('Video Camera'),
-                              onTap: () {
-                                _pickVideoFromCamera();
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
-            ),
-          ]),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.videocam),
-              iconSize: 30.0,
-              color: Colors.red,
-              onPressed: () async {
-                _controller.pause();
-                _controller.dispose();
+        //         showModalBottomSheet(
+        //             context: context,
+        //             builder: (BuildContext bc) {
+        //               return SafeArea(
+        //                 child: Wrap(
+        //                   children: <Widget>[
+        //                     ListTile(
+        //                         leading: const Icon(
+        //                           Icons.photo_library,
+        //                           color: mPrimaryColor,
+        //                         ),
+        //                         title: const Text('Video Library'),
+        //                         onTap: () {
+        //                           _pickVideo();
+        //                           Navigator.of(context).pop();
+        //                         }),
+        //                     ListTile(
+        //                       leading: const Icon(
+        //                         Icons.videocam_sharp,
+        //                         color: mPrimaryColor,
+        //                       ),
+        //                       title: const Text('Video Camera'),
+        //                       onTap: () {
+        //                         _pickVideoFromCamera();
+        //                         Navigator.of(context).pop();
+        //                       },
+        //                     ),
+        //                   ],
+        //                 ),
+        //               );
+        //             });
+        //       },
+        //     ),
+        //   ]),
+        //   actions: <Widget>[
+        //     IconButton(
+        //       icon: const Icon(Icons.videocam),
+        //       iconSize: 30.0,
+        //       color: Colors.red,
+        //       onPressed: () async {
+        //         _controller.pause();
+        //         _controller.dispose();
 
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const Live(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+        //         Navigator.push(
+        //           context,
+        //           PageRouteBuilder(
+        //             pageBuilder: (context, animation1, animation2) =>
+        //                 const Live(),
+        //             transitionDuration: Duration.zero,
+        //           ),
+        //         );
+        //       },
+        //     ),
+        //   ],
+        // ),
         body: Stack(
           children: <Widget>[
             homescreen(),
@@ -646,6 +652,102 @@ class _QvideoState2 extends State<Qvideoscreen>
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 100,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    height: 48,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                                icon: const Icon(Icons.arrow_back,
+                                    color: mPrimaryColor),
+                                onPressed: () {
+                                  _controller.dispose();
+                                  _controller.pause();
+
+                                  Navigator.pushNamed(context, "/home");
+                                }),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: IconButton(
+                              icon: const Icon(Icons.add),
+                              iconSize: 30.0,
+                              color: mPrimaryColor,
+                              onPressed: () {
+                                _controller.pause();
+
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext bc) {
+                                      return SafeArea(
+                                        child: Wrap(
+                                          children: <Widget>[
+                                            ListTile(
+                                                leading: const Icon(
+                                                  Icons.photo_library,
+                                                  color: mPrimaryColor,
+                                                ),
+                                                title:
+                                                    const Text('Video Library'),
+                                                onTap: () {
+                                                  _pickVideo();
+                                                  Navigator.of(context).pop();
+                                                }),
+                                            ListTile(
+                                              leading: const Icon(
+                                                Icons.videocam_sharp,
+                                                color: mPrimaryColor,
+                                              ),
+                                              title: const Text('Video Camera'),
+                                              onTap: () {
+                                                _pickVideoFromCamera();
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: const Icon(Icons.videocam),
+                              iconSize: 30.0,
+                              color: Colors.red,
+                              onPressed: () async {
+                                _controller.pause();
+
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) =>
+                                            const Live(),
+                                    transitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -14,6 +14,7 @@ class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           const CircleAvatar(
@@ -24,7 +25,7 @@ class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: InputDecoration.collapsed(
                   border: InputBorder.none,
                   hintText: 'Write a caption',
                   hintStyle: Theme.of(context)
