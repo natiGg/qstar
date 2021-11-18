@@ -4,9 +4,9 @@ import 'package:get/state_manager.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/profile/editprofile.dart';
+import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-
 
 class EditprofileController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
@@ -20,19 +20,23 @@ class EditprofileController extends GetxController with StateMixin {
   var email = '';
   var name = '';
   var uname = '';
+  var prevuname = '';
+  var prevemail = '';
   var birthday = '';
   var bio = '';
   var pass = '';
-  var isLoading=false.obs;
-  var edited="";
+  var isLoading = false.obs;
+  var edited = "";
   var hobbies;
   var hobItem;
   var image;
-  var id;
-  List<Hobbies> hobbyitems=[];
+  late String uid = "";
+  var unamechecker, messages,emailchecker;
+  late String unames='',emailsInfo='';
+  List<Hobbies> hobbyitems = [];
+  List<String> hobbiesSplit = [];
+  List<String> tobeSent = [];
 
-   List<String> hobbiesSplit=[];
-     var hobbiesSplit2=<Map>[].cast<Animal>();
 
   // ignore: prefer_typing_uninitialized_variables
   var suggested;
@@ -55,7 +59,7 @@ class EditprofileController extends GetxController with StateMixin {
 
   void fetchProfile(var id) async {
     try {
-        id=id;
+      uid = id.toString();
       suggested = await RemoteServices.fetchProfile(id);
 
       if (suggested.id != null) {
@@ -64,23 +68,24 @@ class EditprofileController extends GetxController with StateMixin {
         birthdayControl.text = suggested.date_of_birth;
         unameControl.text = suggested.userName;
         bioControl.text = suggested.bio;
+        prevuname = suggested.userName;
+        prevemail=suggested.email;
         print("just gotttt here");
         print(suggested.hobbies);
-        hobbiesSplit=suggested.hobbies.toString().split(",");
+        hobbiesSplit = suggested.hobbies.toString().split(",");
         print(hobbiesSplit);
-        for (int i=0; i<hobbiesSplit.length;i++)
-        {
-          Hobbies hobbies = Hobbies(id: i,name: hobbiesSplit[i].toString());
+
+        for (int i = 0; i < hobbiesSplit.length; i++) {
+          Hobbies hobbies = Hobbies(id: i, name: hobbiesSplit[i].toString());
           hobbyitems.add(hobbies);
         }
         print(hobbyitems);
-        
-        
-          hobItem= hobbyitems.
-        map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))
-      .toList();
-      hobbyitems.clear();
-        
+
+        hobItem = hobbyitems
+            .map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))
+            .toList();
+        hobbyitems.clear();
+
         change(suggested, status: RxStatus.success());
       } else {
         change(null, status: RxStatus.empty());
@@ -97,27 +102,67 @@ class EditprofileController extends GetxController with StateMixin {
       if (isValid == true) {
         isLoading(true);
         EditProf.currentState!.save();
-        var uploaded = await RemoteServices.uploadImage(image, id.toString());
-        var data = {
-          "name": name,
-          "website": "https://www.qstar.com",
-          "bio": bio,
-          "email": email,
-          "phone_number": 0945525252,
-          "gender": "male",
-          "country_code": "+251",
-          "date_of_birth": birthdayControl.text,
-          "current_location": "Addis Ababa",
-          "account_type": "personal",
-          "_method": "put"
-        };
-        edited = await RemoteServices.editprofile(data, id);
-        if (edited.length! > 0) {
-          isLoading(false);
+        print(prevuname);
+        print(unameControl.text);
+        if (prevuname != unameControl.text && prevemail!=emailControl.text) {
+          unamechecker = await RemoteServices.checkUname(unameControl.text);
+          emailchecker = await RemoteServices.checkEmail(emailControl.text);
+        } else if(prevuname != unameControl.text)
+        {
+          unamechecker = await RemoteServices.checkUname(unameControl.text);
+        }
+        else if(prevemail != emailControl.text)
+        {
+          emailchecker = await RemoteServices.checkEmail(emailControl.text);
+        }
+        else {
+          await updateProf(id);
+        }
+        if (unamechecker[0] == "200") {
+          // if uname avaialble update profile data
+          await updateProf(id);
+        } else {
+          print("herere");
+          unameControl.clear();
+          unames = unamechecker[2];
+          print(unames.toString());
+        }
+        if (emailchecker[0] == "200") {
+          // if uname avaialble update profile data
+          await updateProf(id);
+        } else {
+          print("herere");
+          emailControl.clear();
+          emailsInfo = emailchecker[1];
+          print(emailsInfo.toString());
         }
       }
     } finally {
       // TODO
+    }
+  }
+
+  Future<void> updateProf(id) async {
+    var uploaded = await RemoteServices.uploadImage(image, id.toString());
+    var data = {
+      "name": name,
+      "website": "https://www.qstar.com",
+      "bio": bio,
+      "email": email,
+      "phone_number": 0945525252,
+      "gender": "male",
+      "country_code": "+251",
+      "date_of_birth": birthdayControl.text,
+      "current_location": "Addis Ababa",
+      "account_type": "personal",
+      "hobbies": tobeSent.join(",").toString(),
+      "_method": "put"
+    };
+
+    edited = await RemoteServices.editprofile(data, id);
+    if (edited.length! > 0) {
+      fetchProfile(id);
+      isLoading(false);
     }
   }
 
@@ -144,7 +189,8 @@ class EditprofileController extends GetxController with StateMixin {
 
   String? validateunName(String value) {
     if (value.isEmpty) {
-      return "please Provide a uname";
+      messages = 'please Provide a uname';
+      return messages;
     }
     return null;
   }

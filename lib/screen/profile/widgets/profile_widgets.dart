@@ -9,6 +9,7 @@ import 'package:qstar/screen/profile/following.dart';
 import 'package:get/get.dart';
 import 'package:qstar/widget/utils.dart';
 EditprofileController editprofileController=Get.find();
+
 Widget bio({required Color primaryColor}) {
   return Container(
     color: Colors.white,
@@ -275,7 +276,7 @@ Widget profileAvatar({
                 shape: BoxShape.circle,
               ),
               child: CircleAvatar(
-                backgroundImage: NetworkImage("https://qstar.mindethiopia.com/api/getProfilePicture/170"),
+                backgroundImage: NetworkImage("https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
               ),
             ),
           ),
