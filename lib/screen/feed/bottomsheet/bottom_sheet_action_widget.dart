@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,9 +13,9 @@ import 'package:qstar/screen/profilesetting/setting.dart';
 
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
-
+  PostController postController = Get.find();
   // ignore: use_key_in_widget_constructors
-  const BottomSheetActionWidget(this.action);
+  BottomSheetActionWidget(this.action);
 
   @override
   Widget build(BuildContext context) {
@@ -43,31 +44,28 @@ class BottomSheetActionWidget extends StatelessWidget {
 
         switch (action.id.toString()) {
           case "0":
-            {}
+            {
+              postController.changePostype("public");
+              Navigator.pop(context);
+            }
             break;
 
           case "1":
             {
-              Fluttertoast.showToast(
-                  msg: "1",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              postController.changePostype("friends");
+              Navigator.pop(context);
             }
 
             break;
 
           case "2":
-            {}
+            {
+              postController.changePostype("stars");
+              Navigator.pop(context);
+            }
 
             break;
 
-          case "7":
-            {}
-            break;
           default:
             {
               // ignore: avoid_print

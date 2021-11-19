@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -292,6 +293,14 @@ List<Post> _posts = [
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
+  List<XFile>? _imageFileList;
+
+  set _imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
+  dynamic _pickImageError;
+
 
 List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
@@ -312,12 +321,14 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   TextEditingController nameController = TextEditingController();
+  PostController postController = Get.put(PostController());
   late VoidCallback _onShowMenu;
   bool connection = true;
   @override
   void initState() {
     _fetchUser();
     super.initState();
+
     _onShowMenu = () {
       context.showBottomSheet([
         BottomSheetAction(iconData: Icons.public, title: 'Public', id: 0),
@@ -364,6 +375,7 @@ class _FeedState extends State<Feed> {
     // });
     _refreshController.loadComplete();
   }
+  
 
   ImagePicker picker = ImagePicker();
   File? _cameraVideo;
@@ -756,178 +768,280 @@ class _FeedState extends State<Feed> {
         isScrollControlled: true,
         builder: (context) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/profile1.jpg')),
-                      const SizedBox(width: 8.0),
-                      Column(
+              child: Obx(() => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(2.0),
-                                    child: Text(
-                                      editprofileController.suggested.name,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
+                          const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/profile1.jpg')),
+                          const SizedBox(width: 8.0),
+                          Container(
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(2.0),
+                                child: Text(
+                                  editprofileController.suggested.name,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
-                              FlatButton(
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Container(
+                              height: 25,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                      color: Colors.grey.withOpacity(0.9))),
+                              child: FlatButton(
                                 onPressed: () {
                                   _onShowMenu();
                                 },
-                                padding:
-                                    const EdgeInsets.only(top: 0.0, left: 20),
                                 child: Row(
                                   // Replace with a Row for horizontal icon + text
-                                  children: const <Widget>[
+                                  children: <Widget>[
                                     Icon(
-                                      Icons.public,
+                                      postController.post_type.value
+                                                  .toString() ==
+                                              "public"
+                                          ? Icons.public
+                                          : postController.post_type.value
+                                                      .toString() ==
+                                                  "friends"
+                                              ? Icons
+                                                  .supervised_user_circle_outlined
+                                              : Icons.star,
                                       color: mPrimaryColor,
+                                      size: 20,
                                     ),
-                                    Text("Public")
+                                    Text(postController.post_type.value
+                                        .toString())
                                   ],
                                 ),
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                  left: 50,
-                                ),
-                                child: Expanded(
-                                  child: Container(
-                                    height: 40,
-                                    width: 64,
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    decoration: BoxDecoration(
-                                        color: mPrimaryColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                        border:
-                                            Border.all(color: mPrimaryColor)),
-                                    child: FlatButton(
-                                      onPressed: () {},
-                                      child: const Center(
-                                          child: Text(
-                                        'Post',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      )),
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              left: 50,
+                            ),
+                            child: Expanded(
+                              child: Container(
+                                height: 40,
+                                width: 64,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                    color: mPrimaryColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: mPrimaryColor)),
+                                child: FlatButton(
+                                  onPressed: () {
+                                    postController.createPost();
+                                  },
+                                  child: const Center(
+                                      child: Text(
+                                    'Post',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 18.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Container(
+                          height: 400,
+                          child: Form(
+                            key: postController.CaptionForm,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    minLines: 1,
+                                    maxLines:
+                                        5, // allow user to enter 5 line in textfield
+                                    keyboardType: TextInputType
+                                        .multiline, // user keyboard will have a button to move cursor to next line
+
+                                    controller:
+                                        postController.captionController,
+
+                                    decoration: const InputDecoration.collapsed(
+                                      hintText: 'What\'s on your mind?',
+                                    ),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                    validator: (value) {
+                                      return postController
+                                          .validateCaption(value!);
+                                    },
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 18.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: Container(
-                      height: 400,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(200),
-                              ],
-                              decoration: const InputDecoration.collapsed(
-                                hintText: 'What\'s on your mind?',
-                              ),
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          SizedBox(
-                            height: 200,
-                            child: ListView(
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    FlatButton.icon(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesome.video_camera,
-                                        color: Colors.red,
+                                const Divider(
+                                  thickness: 1,
+                                ),
+                                SizedBox(
+                                  height: 200,
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          FlatButton.icon(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              FontAwesome.video_camera,
+                                              color: Colors.red,
+                                            ),
+                                            label: const Text('Add your Video'),
+                                          ),
+                                          FlatButton.icon(
+                                            // ignore: avoid_print
+                                            onPressed: () {
+                                           _showPicker(context);
+                                            },
+                                            icon: const Icon(
+                                              FontAwesome.photo,
+                                              color: Colors.green,
+                                            ),
+                                            label: const Text(' Add Photo'),
+                                          ),
+                                          FlatButton.icon(
+                                            // ignore: avoid_print
+                                            onPressed: () => print('Room'),
+                                            icon: const Icon(
+                                              FontAwesome.user,
+                                              color: mPrimaryColor,
+                                            ),
+                                            label: const Text('Add People'),
+                                          ),
+                                          FlatButton.icon(
+                                            // ignore: avoid_print
+                                            onPressed: () => print('Room'),
+                                            icon: const Icon(
+                                              FontAwesome.smile_o,
+                                              color: Colors.amber,
+                                            ),
+                                            label:
+                                                const Text('Feeling Activity'),
+                                          ),
+                                          FlatButton.icon(
+                                            // ignore: avoid_print
+                                            onPressed: () => print('Room'),
+                                            icon: const Icon(
+                                              FontAwesome.location_arrow,
+                                              color: Colors.green,
+                                            ),
+                                            label: const Text('Add  Location'),
+                                          ),
+                                        ],
                                       ),
-                                      label: const Text('Add your Video'),
-                                    ),
-                                    FlatButton.icon(
-                                      // ignore: avoid_print
-                                      onPressed: () => print('Photo'),
-                                      icon: const Icon(
-                                        FontAwesome.photo,
-                                        color: Colors.green,
-                                      ),
-                                      label: const Text(' Add Photo'),
-                                    ),
-                                    FlatButton.icon(
-                                      // ignore: avoid_print
-                                      onPressed: () => print('Room'),
-                                      icon: const Icon(
-                                        FontAwesome.user,
-                                        color: mPrimaryColor,
-                                      ),
-                                      label: const Text('Add People'),
-                                    ),
-                                    FlatButton.icon(
-                                      // ignore: avoid_print
-                                      onPressed: () => print('Room'),
-                                      icon: const Icon(
-                                        FontAwesome.smile_o,
-                                        color: Colors.amber,
-                                      ),
-                                      label: const Text('Feeling Activity'),
-                                    ),
-                                    FlatButton.icon(
-                                      // ignore: avoid_print
-                                      onPressed: () => print('Room'),
-                                      icon: const Icon(
-                                        FontAwesome.location_arrow,
-                                        color: Colors.green,
-                                      ),
-                                      label: const Text('Add  Location'),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
+                  )),
+            ));
+  }
+
+final ImagePicker _picker = ImagePicker();
+  ImagePicker picker2 = ImagePicker();
+
+  _imgFromCamera() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.camera,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+        File file = File(pickedFile!.path);
+
+        editprofileController.image = file;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  _imgFromGallery() async {
+    try {
+      final pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      setState(() {
+        _imageFile = pickedFile;
+        File file = File(pickedFile!.path);
+
+        editprofileController.image = file;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+   void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
               ),
-            ));
+            ),
+          );
+        });
   }
+
+
 }
 
 class UserStories extends StatefulWidget {
@@ -1938,6 +2052,9 @@ void showSheet(context) {
         );
       });
 }
+
+  
+
 
 void showSheetcomment(context) {
   showModalBottomSheet(

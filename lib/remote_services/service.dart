@@ -72,6 +72,28 @@ class RemoteServices {
     }
   }
 
+  static Future<List<String>> changeUname(String uname) async {
+    var data = {'username': uname};
+    res = await Network().authData(data, "validateEmail");
+    body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      sent = [
+        res.statusCode.toString(),
+        body["success"].toString(),
+        body["message"].toString()
+      ];
+      return sent;
+    } else if (res.statusCode == 422) {
+      Map<String, dynamic> map = body["errors"];
+      List<dynamic> data = map["email"];
+      sent = [res.statusCode.toString(), data[0].toString()];
+      return sent;
+    } else {
+      throw Exception('Failed to check email');
+    }
+  }
+
   static Future<List<Hobbies>> fetchHobbies() async {
     res = await Network().getData("lookup?type=hobbies");
     var body = json.decode(res.body);
@@ -148,10 +170,25 @@ class RemoteServices {
     body = json.decode(res.body);
     if (res.statusCode == 200) {
       print(body);
-      return body.toString();
+      return res.statusCode.toString();
     } else {
-      print(body.toString());
-      throw Exception('Failed to edit profile');
+      Map<String, dynamic> map = body["errors"];
+      return map.toString();
+    }
+  }
+    static Future<String> createPost(File image,var data) async {
+      var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
+    var length = await image.length();
+    // create multipart request
+    res = await Network().postFile("post",image,stream,length,data);
+    body = json.decode(res.body);
+    if (res.statusCode == 200) 
+    {
+      print(body);
+      return res.statusCode.toString();
+    } else {
+      Map<String, dynamic> map = body["errors"];
+      return map.toString();
     }
   }
 }

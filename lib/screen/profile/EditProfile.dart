@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/hobbiescontroller.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/profile/profile.dart';
+import 'package:qstar/screen/profile/usernamedit.dart';
 import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +23,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -45,17 +47,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     Hobbies(id: 1, name: "Skylar"),
     Hobbies(id: 2, name: "Desiree"),
     Hobbies(id: 3, name: "Cecil"),
-
   ];
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
-      HobbiesController hobbiesController=Get.put(HobbiesController());
+  HobbiesController hobbiesController = Get.put(HobbiesController());
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Hobbies> _selectedItems2 = [];
   List<String> _tobeSent = [];
   List<Hobbies> _selectedItems3 = [];
-  static final List<Hobbies> _initial=[];
+  static final List<Hobbies> _initial = [];
 
   String Preligion = "Hobbies";
 
@@ -95,7 +96,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     editprofileController.birthdayControl = _dateController;
 
-
     _dateController.text = DateFormat.yMd().format(DateTime.now());
 
     _timeController.text = formatDate(
@@ -119,10 +119,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       print(editprofileController.hobbyitems.length);
 
       editprofileController.hobbyitems.forEach((element) {
-        print(element.id.toString()+element.name.toString());
+        print(element.id.toString() + element.name.toString());
         _initial.add(element);
       });
-     
     }
   }
 
@@ -199,7 +198,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               height: 10,
                             ),
                             SizedBox(height: 24),
-                           
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -273,57 +271,54 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             SizedBox(height: 24),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Username",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller:
-                                      editprofileController.unameControl,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: mPrimaryColor, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Change Username",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                      ),
                                     ),
                                   ),
-                                  onSaved: (value) {
-                                    editprofileController.uname =
-                                        value.toString();
-                                  },
-                                  validator: (value) {
-                                    return editprofileController
-                                        .validateunName(value!);
-                                  },
-                                ),
-                               editprofileController.unames!=null?Padding(
-                                 padding: EdgeInsets.only(left: 10),
-                                 child: Text(
-                         "username already taken try ${editprofileController.unames.toString()}",
-                        style: const TextStyle(
-                          color: mPrimaryColor,
-                        ),
-                      )):Padding( 
-                        padding: EdgeInsets.only(left: 10),
-                        child:Text(
-                         '',
-                        style: const TextStyle(
-                          color: mPrimaryColor,
-                        ),
-                      ))
-                              ],
-                            ),
-                            
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation1,
+                                                  animation2) =>
+                                              unamedit(),
+                                          transitionDuration: Duration.zero,
+                                        ),
+                                      );
+                                    },
+                                    child: Card(
+                                      elevation: 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              editprofileController
+                                                  .suggested.userName,
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {},
+                                              icon: const Icon(
+                                                  FontAwesome.angle_right))
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ]),
                             Column(
                               children: <Widget>[
                                 SizedBox(height: 24),
@@ -384,60 +379,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 24),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "email",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller:
-                                      editprofileController.emailControl,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: mPrimaryColor, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onSaved: (value) {
-                                    editprofileController.email =
-                                        value.toString();
-                                  },
-                                  validator: (value) {
-                                    return editprofileController
-                                        .validateEmail(value!);
-                                  },
-                                ),
-                                editprofileController.emailsInfo!=null?Padding(
-                                 padding: EdgeInsets.only(left: 10),
-                                 child: Text(
-                         "email already taken",
-                        style: const TextStyle(
-                          color: mPrimaryColor,
-                        ),
-                      )):Padding( 
-                        padding: EdgeInsets.only(left: 10),
-                        child:Text(
-                         '',
-                        style: const TextStyle(
-                          color: mPrimaryColor,
-                        ),
-                      ))
-                              ],
-                            ),
                             SizedBox(height: 30),
-                             Container(
+                            Container(
                               decoration: BoxDecoration(
                                 color: Colors.white38,
                                 border: Border.all(
@@ -490,10 +433,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       });
                                       print('selected : ${_selectedItems2}');
                                       _selectedItems2.forEach((item) =>
-                                        editprofileController.tobeSent
+                                          editprofileController.tobeSent
                                               .add("${item.name.toString()}"));
-
-                                  
                                     },
                                     chipDisplay: MultiSelectChipDisplay(
                                       textStyle: TextStyle(
@@ -503,9 +444,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       onTap: (value) {
                                         setState(() {
                                           _selectedItems2.remove(value);
-                                          editprofileController.tobeSent.remove(value.toString());
+                                          editprofileController.tobeSent
+                                              .remove(value.toString());
                                         });
-
                                         print(
                                             'removed: ${_selectedItems2.toString()}');
                                         _selectedItems2.forEach((item) =>
@@ -517,7 +458,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   _selectedItems2 == null ||
                                           _selectedItems2.isEmpty
                                       ? MultiSelectChipDisplay(
-                                        items: editprofileController.hobItem,
+                                          items: editprofileController.hobItem,
                                           onTap: (item) {
                                             setState(() {
                                               _selectedItems3.remove(item);
@@ -531,7 +472,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       : MultiSelectChipDisplay(),
                                 ],
                               ),
-                            ), SizedBox(
+                            ),
+                            SizedBox(
                               height: 35,
                             ),
                             Row(
@@ -545,10 +487,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   onPressed: () {
                                     editprofileController.editProf(body["id"]);
                                     print(editprofileController.isLoading);
-                                    editprofileController.isLoading == true
-                                        ? Center(
-                                            child: CircularProgressIndicator())
-                                        : _showMessage();
+                          
                                   },
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
@@ -607,9 +546,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
-        File file = File( pickedFile!.path );
+        File file = File(pickedFile!.path);
 
-        editprofileController.image=file;
+        editprofileController.image = file;
       });
     } catch (e) {
       setState(() {
@@ -625,10 +564,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
       setState(() {
         _imageFile = pickedFile;
-        File file = File( pickedFile!.path );
+        File file = File(pickedFile!.path);
 
-        editprofileController.image=file;
-
+        editprofileController.image = file;
       });
     } catch (e) {
       setState(() {
@@ -665,24 +603,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           );
         });
-  }
-
-  void _showMessage() {
-    showDialog(
-        context: context,
-        builder: (context) => new AlertDialog(
-              title: new Text('info'),
-              content: new Text(
-                  json.decode(editprofileController.edited)["message"]),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                  child: new Text('ok'),
-                ),
-              ],
-            ));
   }
 
   loadData() {

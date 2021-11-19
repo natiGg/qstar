@@ -48,6 +48,24 @@ class Network {
     return await request.send();
   }
 
+  postFile(apiUrl, file, stream, length, data) async {
+    var fullUrl = _url + apiUrl;
+    var uri = Uri.parse(fullUrl);
+    await _getToken();
+    var request = new http.MultipartRequest("POST", uri);
+    request.headers.addAll(_setFileHeaders());
+    request.fields["location"] = data["location"];
+    request.fields["caption"] = data["caption"];
+    request.fields["post_type"] = data["post_type"];
+    request.fields["comment_disabled"] = data["comment_disabled"];
+    request.fields["hashtags"] = data["hashtags"];
+    var multipartFile = new http.MultipartFile(
+        'post_attachment', stream, length,
+        filename: basename(file.path));
+    request.files.add(multipartFile);
+    return await request.send();
+  }
+
   getpassedData(data, apiUrl) async {
     var fullUrl = _url + apiUrl;
     var uri = Uri.parse(fullUrl);

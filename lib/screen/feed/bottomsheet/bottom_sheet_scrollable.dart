@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:qstar/controllers/postcontroller.dart';
 
 import 'bottom_sheet_action_widget.dart';
-
+import 'package:get/get.dart';
 import 'bottom_sheet_action.dart';
 
 class BottomSheetScrollable extends StatelessWidget {
