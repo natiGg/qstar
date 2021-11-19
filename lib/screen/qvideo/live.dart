@@ -316,39 +316,6 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
     };
   }
 
-  _pickVideoFromCamera() async {
-    // ignore: deprecated_member_use
-    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.camera);
-
-    _cameraVideo = File(pickedFile!.path);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            PreviewImageScreengallery(imagePath: pickedFile.path),
-      ),
-    );
-  }
-
-  _pickVideo() async {
-    ImagePicker picker = ImagePicker();
-    // ignore: deprecated_member_use
-    PickedFile? pickedFile = await picker.getVideo(source: ImageSource.gallery);
-
-    // _video = File(pickedFile!.path);
-    await _playVideo(pickedFile!.path);
-  }
-
-  _playVideo(file) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: file),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([
@@ -391,36 +358,36 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
       onLoading: _onLoading,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: mPrimaryColor,
-              onPressed: () {
-                _controller.pause();
-                _controller.dispose();
-                Navigator.pushNamed(context, '/video');
-              }),
-          title: const Text(
-            "Live Video",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add),
-              iconSize: 30.0,
-              color: mPrimaryColor,
-              onPressed: () async {
-                _controller.pause();
-                _controller.dispose();
-              },
-            ),
-          ],
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   leading: IconButton(
+        //       icon: const Icon(Icons.arrow_back),
+        //       color: mPrimaryColor,
+        //       onPressed: () {
+        //         _controller.pause();
+        //         _controller.dispose();
+        //         Navigator.pushNamed(context, '/video');
+        //       }),
+        //   title: const Text(
+        //     "Live Video",
+        //     style: TextStyle(
+        //       color: mPrimaryColor,
+        //       fontSize: 27,
+        //       fontFamily: 'font1',
+        //     ),
+        //   ),
+        //   actions: <Widget>[
+        //     IconButton(
+        //       icon: const Icon(Icons.add),
+        //       iconSize: 30.0,
+        //       color: mPrimaryColor,
+        //       onPressed: () async {
+        //         _controller.pause();
+        //         _controller.dispose();
+        //       },
+        //     ),
+        //   ],
+        // ),
         body: Stack(
           children: <Widget>[
             homescreen(),
@@ -478,144 +445,253 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
                   child: VideoPlayer(_controller),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      height: kToolbarHeight,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Material(
-                              borderRadius: BorderRadius.circular(9),
-                              type: MaterialType.transparency,
-                              child: SafeArea(
-                                child: Container(
-                                  height: kToolbarHeight,
-                                  padding:
-                                      const EdgeInsets.only(left: 16, right: 8),
-                                  child: Row(
-                                    children: [
-                                      // ignore: prefer_const_constructors
-                                      CircleAvatar(
-                                        backgroundImage: const AssetImage(
-                                            'assets/images/1.jpg'),
-                                        radius: 18,
-                                      ),
-                                      // ignore: prefer_const_constructors
-                                      Expanded(
-                                        // ignore: prefer_const_constructors
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 3, right: 8),
-                                          // ignore: prefer_const_constructors
-                                          child: TextField(
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            // ignore: prefer_const_constructors
-                                            decoration: InputDecoration(
-                                                hintText: 'Comment here',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12),
-                                                border: InputBorder.none),
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 8),
-                                          child: Text(
-                                            'Post',
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyText2
-                                                ?.copyWith(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 18),
-                                          child: IconButton(
-                                              icon: const Icon(Icons.share),
-                                              color: Colors.white,
-                                              onPressed: () {}),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]),
+                  padding: const EdgeInsets.only(bottom: 60),
+                  child: Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        height: kToolbarHeight,
+                        // child: Column(
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   children: <Widget>[
+                        //     Column(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: const <Widget>[
+                        //         CommentWidget(),
+                        //         // CommentWidget(),
+                        //         // CommentWidget(),
+                        //         // CommentWidget(),
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: const <Widget>[
+                              CommentWidget(),
+                              CommentWidget(),
+                              CommentWidget(),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 100, top: 0),
+                  padding: EdgeInsets.only(bottom: 20),
                   child: Align(
-                    alignment: Alignment.topCenter,
+                    alignment: Alignment.bottomCenter,
                     child: SizedBox(
                       height: kToolbarHeight,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Material(
-                              borderRadius: BorderRadius.circular(9),
-                              type: MaterialType.transparency,
-                              child: SafeArea(
-                                child: Container(
-                                  height: kToolbarHeight,
-                                  margin: EdgeInsets.only(
-                                      bottom: MediaQuery.of(context)
-                                          .viewInsets
-                                          .top),
-                                  padding:
-                                      const EdgeInsets.only(left: 16, right: 8),
-                                  child: Row(
-                                    children: [
+                      child: Material(
+                        borderRadius: BorderRadius.circular(9),
+                        type: MaterialType.transparency,
+                        child: SafeArea(
+                          child: Container(
+                            height: kToolbarHeight,
+                            padding: const EdgeInsets.only(left: 16, right: 8),
+                            child: Row(
+                              children: [
+                                // ignore: prefer_const_constructors
+                                CircleAvatar(
+                                  backgroundImage:
+                                      const AssetImage('assets/images/1.jpg'),
+                                  radius: 18,
+                                ),
+                                // ignore: prefer_const_constructors
+                                Expanded(
+                                  // ignore: prefer_const_constructors
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 3, right: 8),
+                                    // ignore: prefer_const_constructors
+                                    child: TextField(
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       // ignore: prefer_const_constructors
-                                      CircleAvatar(
-                                        backgroundImage: const AssetImage(
-                                            'assets/images/1.jpg'),
-                                        radius: 18,
-                                      ),
-                                      // ignore: prefer_const_constructors
-                                      Expanded(
-                                        // ignore: prefer_const_constructors
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 3, right: 8),
-                                          // ignore: prefer_const_constructors
-                                          child: TextField(
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            // ignore: prefer_const_constructors
-                                            decoration: InputDecoration(
-                                                hintText: 'username',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 13),
-                                                border: InputBorder.none),
+                                      decoration: InputDecoration(
+                                          hintText: 'Comment here',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    'Post',
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText2
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                ),
+
+                                InkWell(
+                                  onTap: () {},
+                                  child: IconButton(
+                                      icon: const Icon(Icons.share),
+                                      color: Colors.white,
+                                      onPressed: () {}),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 110,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    height: 78,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: SizedBox(
+                              height: kToolbarHeight,
+                              child: Material(
+                                borderRadius: BorderRadius.circular(9),
+                                type: MaterialType.transparency,
+                                child: SafeArea(
+                                  child: Container(
+                                    height: kToolbarHeight,
+                                    margin: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .top),
+                                    padding: const EdgeInsets.only(
+                                        left: 16, right: 8),
+                                    child: Row(
+                                      children: const [
+                                        CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage('assets/images/1.jpg'),
+                                          radius: 18,
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 3, right: 8),
+                                            child: TextField(
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                              decoration: InputDecoration(
+                                                  hintText: 'username',
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14),
+                                                  border: InputBorder.none),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ]),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 18.0),
+                              child: IconButton(
+                                icon: const Icon(Icons.add),
+                                iconSize: 30.0,
+                                color: mPrimaryColor,
+                                onPressed: () async {
+                                  // _controller.pause();
+                                  // _controller.dispose();
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   PageRouteBuilder(
+                                  //     pageBuilder:
+                                  //         (context, animation1, animation2) =>
+                                  //             const Live(),
+                                  //     transitionDuration: Duration.zero,
+                                  //   ),
+                                  // );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 100, top: 0),
+                //   child: Align(
+                //     alignment: Alignment.topCenter,
+                //     child: SizedBox(
+                //       height: kToolbarHeight,
+                //       child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: <Widget>[
+                //             Material(
+                //               borderRadius: BorderRadius.circular(9),
+                //               type: MaterialType.transparency,
+                //               child: SafeArea(
+                //                 child: Container(
+                //                   height: kToolbarHeight,
+                //                   margin: EdgeInsets.only(
+                //                       bottom: MediaQuery.of(context)
+                //                           .viewInsets
+                //                           .top),
+                //                   padding:
+                //                       const EdgeInsets.only(left: 16, right: 8),
+                //                   child: Row(
+                //                     children: [
+                //                       // ignore: prefer_const_constructors
+                //                       CircleAvatar(
+                //                         backgroundImage: const AssetImage(
+                //                             'assets/images/1.jpg'),
+                //                         radius: 18,
+                //                       ),
+                //                       // ignore: prefer_const_constructors
+                //                       Expanded(
+                //                         // ignore: prefer_const_constructors
+                //                         child: Padding(
+                //                           padding: const EdgeInsets.only(
+                //                               left: 3, right: 8),
+                //                           // ignore: prefer_const_constructors
+                //                           child: TextField(
+                //                             style:
+                //                                 TextStyle(color: Colors.white),
+                //                             // ignore: prefer_const_constructors
+                //                             decoration: InputDecoration(
+                //                                 hintText: 'username',
+                //                                 hintStyle: TextStyle(
+                //                                     color: Colors.white,
+                //                                     fontSize: 13),
+                //                                 border: InputBorder.none),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ]),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           );

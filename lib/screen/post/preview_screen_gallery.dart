@@ -8,7 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-import 'package:qstar/screen/post/setting_post_page.dart';
+import 'package:qstar/screen/post/settingpostpage.dart';
 
 // ignore: library_prefixes
 import 'package:image/image.dart' as imageLib;
@@ -25,7 +25,7 @@ class PreviewImageScreengallery extends StatefulWidget {
 }
 
 class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
-  late String fileName;
+  late String fileName, filtedpath;
   List<Filter> filters = presetFiltersList;
   File? imageFile;
 
@@ -48,8 +48,12 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
       context,
       MaterialPageRoute(
         builder: (context) => PhotoFilterSelector(
-          title: const Text("Photo Filter "),
+          title: const Text(
+            "Filter",
+            style: TextStyle(color: Colors.white),
+          ),
           image: image!,
+          appBarColor: Colors.black,
           filters: presetFiltersList,
           filename: fileName,
           loader: const Center(child: CircularProgressIndicator()),
@@ -60,6 +64,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
     if (imagefile.containsKey('image_filtered')) {
       setState(() {
         imageFile = imagefile['image_filtered'];
+        filtedpath = imageFile!.path;
       });
       // ignore: avoid_print
       print(imageFile!.path);
@@ -92,14 +97,15 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.arrow_forward),
+            icon: const Icon(Icons.navigate_next),
             iconSize: 30.0,
             color: mPrimaryColor,
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SettingPostPage()));
+                      builder: (context) =>
+                          SettingPostPage(imagePath: filtedpath)));
             },
           ),
         ],

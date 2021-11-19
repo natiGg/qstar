@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
-import 'package:qstar/screen/post/preview_screen.dart';
+
+import 'package:qstar/screen/post/preview_screen_gallery.dart';
 
 class CameraScreen extends StatelessWidget {
   const CameraScreen({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreen(imagePath: path),
+        builder: (context) => PreviewImageScreengallery(imagePath: path),
       ),
     );
   }
