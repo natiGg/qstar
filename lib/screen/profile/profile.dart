@@ -242,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onLoading: Center(
           child: loadData(),
         ),
-        onEmpty: Text("Can't fetch data"),
+        onEmpty: const Text("Can't fetch data"),
         onError: (error) => Center(child: Text(error.toString())));
   }
 
