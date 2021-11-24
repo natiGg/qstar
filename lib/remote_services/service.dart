@@ -176,19 +176,19 @@ class RemoteServices {
       return map.toString();
     }
   }
-    static Future<String> createPost(File image,var data) async {
-      var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
-    var length = await image.length();
-    // create multipart request
-    res = await Network().postFile("post",image,stream,length,data);
-    body = json.decode(res.body);
-    if (res.statusCode == 200) 
-    {
-      print(body);
+    static Future<String> createPost(var image,var data) async {
+          // create multipart request
+    res = await Network().postFile("post",image,data);
+    print(res.statusCode);
+     if (res.statusCode == 200) {
+      res.stream.transform(utf8.decoder).listen((value) {
+        print(value.toString());
+      });
       return res.statusCode.toString();
     } else {
-      Map<String, dynamic> map = body["errors"];
-      return map.toString();
+      print(res.statusCode);
+
+      throw Exception("can't post");
     }
   }
 }

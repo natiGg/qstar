@@ -16,6 +16,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
+import 'package:qstar/screen/feed/my.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
 
 import 'package:qstar/screen/post/main.dart';
@@ -293,14 +294,13 @@ List<Post> _posts = [
   Post(userid: 4, id: 4, title: 'mike check'),
   Post(userid: 5, id: 5, title: 'mike check'),
 ];
-  List<XFile>? _imageFileList;
+List<XFile>? _imageFileList = [];
 
-  set _imageFile(XFile? value) {
-    _imageFileList = value == null ? null : [value];
-  }
+set _imageFile(XFile? value) {
+  _imageFileList = value == null ? null : [value];
+}
 
-  dynamic _pickImageError;
-
+dynamic _pickImageError;
 
 List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
@@ -375,7 +375,6 @@ class _FeedState extends State<Feed> {
     // });
     _refreshController.loadComplete();
   }
-  
 
   ImagePicker picker = ImagePicker();
   File? _cameraVideo;
@@ -764,6 +763,10 @@ class _FeedState extends State<Feed> {
   }
 
   void _postModal(context) {
+    var size = MediaQuery.of(context).size;
+
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -840,7 +843,8 @@ class _FeedState extends State<Feed> {
                             child: Expanded(
                               child: Container(
                                 height: 40,
-                                width: 64,
+                                width:
+                                    postController.isPosted == false ? 64 : 90,
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
@@ -851,14 +855,33 @@ class _FeedState extends State<Feed> {
                                   onPressed: () {
                                     postController.createPost();
                                   },
-                                  child: const Center(
-                                      child: Text(
-                                    'Post',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  )),
+                                  child: postController.isPosting == false
+                                      ? Center(
+                                          child: postController.isPosted ==
+                                                  false
+                                              ? Text(
+                                                  'Post',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  'Posted',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ))
+                                      : SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                                // ignore: unrelated_type_equality_checks
+                                                color: Colors.white),
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
@@ -875,34 +898,101 @@ class _FeedState extends State<Feed> {
                           height: 400,
                           child: Form(
                             key: postController.CaptionForm,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: TextFormField(
-                                    minLines: 1,
-                                    maxLines:
-                                        5, // allow user to enter 5 line in textfield
-                                    keyboardType: TextInputType
-                                        .multiline, // user keyboard will have a button to move cursor to next line
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          minLines: 1,
+                                          maxLines:
+                                              5, // allow user to enter 5 line in textfield
+                                          keyboardType: TextInputType
+                                              .multiline, // user keyboard will have a button to move cursor to next line
 
-                                    controller:
-                                        postController.captionController,
+                                          controller:
+                                              postController.captionController,
 
-                                    decoration: const InputDecoration.collapsed(
-                                      hintText: 'What\'s on your mind?',
-                                    ),
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                    validator: (value) {
-                                      return postController
-                                          .validateCaption(value!);
-                                    },
+                                          decoration:
+                                              const InputDecoration.collapsed(
+                                                  hintText:
+                                                      'What\'s on your mind?',
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 15,
+                                                  )),
+
+                                          validator: (value) {
+                                            return postController
+                                                .validateCaption(value!);
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                      ),
+                                    ],
                                   ),
                                 ),
+                                Obx(() => postController.imagesList.isNotEmpty
+                                    ? Expanded(
+                                        child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 12.0, right: 12.0),
+                                        child: GridView.count(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1,
+                                          children: List.generate(
+                                              postController.imagesList.length,
+                                              (index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 4.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: Image.file(
+                                                      File(postController
+                                                          .imagesList[index]
+                                                          .path),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    right: 5,
+                                                    top: 5,
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: mPrimaryColor
+                                                              .withOpacity(0.5),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                      child: InkWell(
+                                                        child: Icon(
+                                                          FontAwesome.remove,
+                                                          size: 15,
+                                                          color: Colors.white
+                                                              .withOpacity(0.8),
+                                                        ),
+                                                        onTap: () {
+                                                          postController
+                                                              .removeItem(
+                                                                  index);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      ))
+                                    : Container()),
                                 const Divider(
                                   thickness: 1,
                                 ),
@@ -926,7 +1016,7 @@ class _FeedState extends State<Feed> {
                                           FlatButton.icon(
                                             // ignore: avoid_print
                                             onPressed: () {
-                                           _showPicker(context);
+                                              _showPicker(context);
                                             },
                                             icon: const Icon(
                                               FontAwesome.photo,
@@ -977,8 +1067,24 @@ class _FeedState extends State<Feed> {
             ));
   }
 
-final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
   ImagePicker picker2 = ImagePicker();
+
+  void selectImages() async {
+    postController.isPosted(false);
+    final List<XFile>? selectedImages = await _picker.pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      _imageFileList!.addAll(selectedImages);
+      for (var file in _imageFileList!) {
+        File convertedFile = File(file.path);
+        print(convertedFile);
+        postController.imagesList.add(convertedFile);
+      }
+      selectedImages.clear();
+      _imageFileList!.clear();
+    }
+    setState(() {});
+  }
 
   _imgFromCamera() async {
     try {
@@ -988,7 +1094,6 @@ final ImagePicker _picker = ImagePicker();
       setState(() {
         _imageFile = pickedFile;
         File file = File(pickedFile!.path);
-
         editprofileController.image = file;
       });
     } catch (e) {
@@ -1000,14 +1105,9 @@ final ImagePicker _picker = ImagePicker();
 
   _imgFromGallery() async {
     try {
-      final pickedFile = await _picker.pickImage(
-        source: ImageSource.gallery,
-      );
+      final pickedFile = await _picker.pickMultiImage();
       setState(() {
-        _imageFile = pickedFile;
-        File file = File(pickedFile!.path);
-
-        editprofileController.image = file;
+        _imageFileList = pickedFile;
       });
     } catch (e) {
       setState(() {
@@ -1015,7 +1115,8 @@ final ImagePicker _picker = ImagePicker();
       });
     }
   }
-   void _showPicker(context) {
+
+  void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -1027,15 +1128,22 @@ final ImagePicker _picker = ImagePicker();
                       leading: new Icon(Icons.photo_library),
                       title: new Text('Photo Library'),
                       onTap: () {
-                        _imgFromGallery();
+                        selectImages();
                         Navigator.of(context).pop();
                       }),
                   new ListTile(
                     leading: new Icon(Icons.photo_camera),
                     title: new Text('Camera'),
                     onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              MyApp(),
+                          transitionDuration: Duration.zero,
+                        ),
+                      ); // _imgFromCamera();
+                      // Navigator.of(context).pop();
                     },
                   ),
                 ],
@@ -1044,8 +1152,6 @@ final ImagePicker _picker = ImagePicker();
           );
         });
   }
-
-
 }
 
 class UserStories extends StatefulWidget {
@@ -2056,9 +2162,6 @@ void showSheet(context) {
         );
       });
 }
-
-  
-
 
 void showSheetcomment(context) {
   showModalBottomSheet(

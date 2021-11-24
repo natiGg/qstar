@@ -73,7 +73,7 @@ dependencies:
   
   multi_select_flutter: ^4.0.0
   progress_indicators: ^1.0.0
-  
+  rich_text_controller: ^1.4.0
   flutter_lints: ^1.0.4
   camera_camera: ^2.0.2
   video_player: ^2.2.6
