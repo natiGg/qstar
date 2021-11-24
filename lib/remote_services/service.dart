@@ -124,21 +124,26 @@ class RemoteServices {
 
   static Future<bool> uploadImage(File image, String id) async {
     var data = {'following_id': id};
-    var stream = new http.ByteStream(DelegatingStream.typed(image.openRead()));
-    var length = await image.length();
-    // create multipart request
-    res = await Network()
-        .uploadFile("updateProfilePicture/${id}", image, stream, length);
+    if (image != null) {
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(image.openRead()));
+      var length = await image.length();
+      // create multipart request
+      res = await Network()
+          .uploadFile("updateProfilePicture/${id}", image, stream, length);
 
-    if (res.statusCode == 200) {
-      res.stream.transform(utf8.decoder).listen((value) {
-        print(value);
-      });
-      return true;
+      if (res.statusCode == 200) {
+        res.stream.transform(utf8.decoder).listen((value) {
+          print(value);
+        });
+        return true;
+      } else {
+        print(res.statusCode);
+
+        throw Exception('Failed to Upload file');
+      }
     } else {
-      print(res.statusCode);
-
-      throw Exception('Failed to Upload file');
+      return false;
     }
   }
 
@@ -176,11 +181,12 @@ class RemoteServices {
       return map.toString();
     }
   }
-    static Future<String> createPost(var image,var data) async {
-          // create multipart request
-    res = await Network().postFile("post",image,data);
+
+  static Future<String> createPost(var image, var data) async {
+    // create multipart request
+    res = await Network().postFile("post", image, data);
     print(res.statusCode);
-     if (res.statusCode == 200) {
+    if (res.statusCode == 200) {
       res.stream.transform(utf8.decoder).listen((value) {
         print(value.toString());
       });
