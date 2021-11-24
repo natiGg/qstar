@@ -1026,7 +1026,10 @@ class _FeedState extends State<Feed> {
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: () => print('Room'),
+                                            onPressed: () {
+                                              print(postController.hashtags);
+
+                                            },
                                             icon: const Icon(
                                               FontAwesome.user,
                                               color: mPrimaryColor,

@@ -14,72 +14,75 @@ import 'dart:io';
 
 import 'package:rich_text_controller/rich_text_controller.dart';
 
-
 class PostController extends GetxController {
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
-  late RichTextController  captionController;
+  late RichTextController captionController;
   var caption;
   var post_type = 'public'.obs;
-    var image;
-    var posted;
-    var imageAdded=false.obs;
-    var imagesList = <File>[].obs;
-    var isPosting=false.obs;
-    var isPosted=false.obs;
-    var hasHash=false.obs;
-    var hashtags;
+  var image;
+  var posted;
+  var imageAdded = false.obs;
+  var imagesList = <File>[].obs;
+  var isPosting = false.obs;
+  var isPosted = false.obs;
+  var hasHash = false.obs;
+  var hashtags;
   @override
   void onInit() {
-     captionController = RichTextController(
+    captionController = RichTextController(
       patternMatchMap: {
-        RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(color: mPrimaryColor, fontSize: 18,
-                                            fontWeight: FontWeight.bold),
+        RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
-        hashtags=matches;
+        hashtags = matches;
       },
       deleteOnBack: true,
     );
     // TODO: implement onInit
     super.onInit();
-   
-    
   }
 
   void changePostype(var type) async {
     post_type.value = type;
   }
-  void removeItem(var index) async{
-      imagesList.removeAt(index);
+
+  void removeItem(var index) async {
+    imagesList.removeAt(index);
   }
 
-  void createPost() async{
-    try{
+  void createPost() async {
+    try {
       var isValid = CaptionForm.currentState!.validate();
-      if(isValid){
+      if (isValid) {
         var data = {
-      "location": "Addis Ababa",
-      "caption": captionController.text,
-      "post_type": post_type,
-      "comment_disabled": 1,
-      "hashtags": "#hashtags",
-    };
-      isPosting(true);
-      posted=await RemoteServices.createPost(imagesList,data);
-      print(posted);
-      if(posted.toString()=="200"){
-        isPosting(false);
-        isPosted(true);
-        imagesList.clear();
-        captionController.clear();
-        post_type.value="public";
+          "location": "Addis Ababa",
+          "caption": captionController.text,
+          "post_type": post_type,
+          "comment_disabled": 1,
+          "hashtags": "#hashtags",
+        };
+        isPosting(true);
+        posted = await RemoteServices.createPost(imagesList, data);
+        print(posted);
+        if (posted.toString() == "200") {
+          isPosting(false);
+          isPosted(true);
+          imagesList.clear();
+          captionController.clear();
+          post_type.value = "public";
+        }
       }
-      }
-     
-    }
-    finally{
-    }
+    } finally {}
+  }
+
+  void fetchSuggestion() async {
+    try{
+
+    } finally {}
   }
 
   String? validateCaption(String value) {
@@ -88,5 +91,4 @@ class PostController extends GetxController {
     }
     return null;
   }
-
 }
