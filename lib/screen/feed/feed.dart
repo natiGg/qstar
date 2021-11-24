@@ -486,8 +486,9 @@ class _FeedState extends State<Feed> {
                           children: [
                             // ignore: prefer_const_constructors
                             CircleAvatar(
-                                backgroundImage: const AssetImage(
-                                    'assets/images/profile1.jpg')),
+                              backgroundImage: NetworkImage(
+                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
+                            ),
                             const SizedBox(width: 8.0),
 
                             Expanded(
@@ -782,9 +783,10 @@ class _FeedState extends State<Feed> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile1.jpg')),
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
+                          ),
                           const SizedBox(width: 8.0),
                           Container(
                             child: Center(
@@ -800,7 +802,7 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
+                            padding: const EdgeInsets.only(left: 10.0),
                             child: Container(
                               height: 25,
                               decoration: BoxDecoration(

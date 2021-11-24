@@ -261,7 +261,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: profileAvatar(
                 height: 100,
                 width: 100,
-              
               ),
             ),
           ),
@@ -293,7 +292,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          bio(primaryColor: mPrimaryColor),
+          Container(
+            color: Colors.white,
+            height: 40,
+            width: 200,
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+            child: Card(
+              elevation: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: editprofileController.suggested.bio,
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(
             height: 15,
           ),

@@ -37,7 +37,7 @@ class EditprofileController extends GetxController with StateMixin {
   var hobItem;
   var image;
   late String uid = "";
-  var unamechecker, messages,errorMessages, emailchecker;
+  var unamechecker, messages, errorMessages, emailchecker;
   late String unames = '', emailsInfo = '';
   List<Hobbies> hobbyitems = [];
   List<String> hobbiesSplit = [];
@@ -79,7 +79,6 @@ class EditprofileController extends GetxController with StateMixin {
         print(hobbiesSplit);
 
         for (int i = 0; i < hobbiesSplit.length; i++) {
-          
           Hobbies hobbies = Hobbies(id: i, name: hobbiesSplit[i].toString());
           hobbyitems.add(hobbies);
         }
@@ -99,7 +98,6 @@ class EditprofileController extends GetxController with StateMixin {
     }
   }
 
-
   void editProf(var id) async {
     try {
       final isValid = EditProf.currentState!.validate();
@@ -114,70 +112,87 @@ class EditprofileController extends GetxController with StateMixin {
     }
   }
 
-
   Future<void> updateProf(id) async {
- 
-        openAndCloseLoadingDialog();
+    openAndCloseLoadingDialog();
 
     var uploaded = await RemoteServices.uploadImage(image, id.toString());
     print(uploaded.toString());
-    if (uploaded)
-    {
-      if(tobeSent[0]==null)
-      {
+    if (uploaded) {
+      if (tobeSent.length < 1) {
         print("tobe null");
-        tobeSent=hobbiesSplit;
+        tobeSent = hobbiesSplit;
       }
 
- 
-    var data = {
-      "name": name,
-      "website": "https://www.qstar.com",
-      "bio": bio,
-      "phone_number": 0945525252,
-      "gender": "male",
-      "country_code": "+251",
-      "date_of_birth": birthdayControl.text,
-      "current_location": "Addis Ababa",
-      "account_type": "personal",
-      "hobbies": tobeSent.join(",").toString(),
-      "_method": "put"
-    };
-    print(tobeSent.join(",").toString());
-    edited = await RemoteServices.editprofile(data, id);
-    print(edited);
+      var data = {
+        "name": name,
+        "website": "https://www.qstar.com",
+        "bio": bio,
+        "phone_number": 0945525252,
+        "gender": "male",
+        "country_code": "+251",
+        "date_of_birth": birthdayControl.text,
+        "current_location": "Addis Ababa",
+        "account_type": "personal",
+        "hobbies": tobeSent.join(",").toString(),
+        "_method": "put"
+      };
+      print(tobeSent.join(",").toString());
+      edited = await RemoteServices.editprofile(data, id);
+      print(edited);
 
-    if (edited == "200") {
-      closeDialog(true,'');
-      isLoading(false);
-    }
-    else{
-      errorMessages = edited;
-      closeDialog(false,errorMessages);
-      print(edited.toString());
-    }
-       }
-       else{
-            closeDialog(false,"can't upload image");
+      if (edited == "200") {
+        closeDialog(true, '');
+        isLoading(false);
+      } else {
+        errorMessages = edited;
+        closeDialog(false, errorMessages);
+        print(edited.toString());
+      }
+    } else {
+      if (tobeSent.length < 1) {
+        print("tobe null");
+        tobeSent = hobbiesSplit;
+      }
 
-       }
+      var data = {
+        "name": name,
+        "website": "https://www.qstar.com",
+        "bio": bio,
+        "phone_number": 0945525252,
+        "gender": "male",
+        "country_code": "+251",
+        "date_of_birth": birthdayControl.text,
+        "current_location": "Addis Ababa",
+        "account_type": "personal",
+        "hobbies": tobeSent.join(",").toString(),
+        "_method": "put"
+      };
+      print(tobeSent.join(",").toString());
+      edited = await RemoteServices.editprofile(data, id);
+      print(edited);
+
+      if (edited == "200") {
+        closeDialog(true, '');
+        isLoading(false);
+      } else {
+        errorMessages = edited;
+        closeDialog(false, errorMessages);
+        print(edited.toString());
+      }
+    }
   }
 
+  Future<void> openSnackBar() async {
+    Get.snackbar("info", "profile updated",
+        icon: Icon(Icons.person, color: mPrimaryColor.withOpacity(0.05)),
+        snackPosition: SnackPosition.TOP);
+  }
 
-  Future<void> openSnackBar() async
-  {
-       Get.snackbar(
-              "info", "profile updated",
-              icon: Icon(Icons.person,
-              color: mPrimaryColor.withOpacity(0.05)),
-            snackPosition: SnackPosition.TOP);
-  }  
   Future<void> openAndCloseLoadingDialog() async {
     showDialog(
       context: Get.context!,
       barrierDismissible: false,
-        barrierColor: Colors.grey.withOpacity(0.3),
-
+      barrierColor: Colors.grey.withOpacity(0.3),
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
         child: Center(
@@ -192,35 +207,30 @@ class EditprofileController extends GetxController with StateMixin {
         ),
       ),
     );
-
-   
   }
-  Future<void> closeDialog(bool stat,String data) async {
 
-     await Future.delayed(Duration(seconds: 3));
+  Future<void> closeDialog(bool stat, String data) async {
+    await Future.delayed(Duration(seconds: 3));
     // Dismiss CircularProgressIndicator
     Navigator.of(Get.context!).pop();
-    if(stat == false)
-    {
+    if (stat == false) {
       Get.dialog(
-      AlertDialog(
-        title: Text("info"),
-        content: Text(data),
-        actions: <Widget>[
-          FlatButton(
-            child: Text("close"),
-            onPressed: () {
-              Get.back();
-            },
-          )
-        ],
-      ),
-      barrierDismissible: false,
-
-    );
-    }else
-    {
-       openSnackBar();
+        AlertDialog(
+          title: Text("info"),
+          content: Text(data),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("close"),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ),
+        barrierDismissible: false,
+      );
+    } else {
+      openSnackBar();
     }
   }
 
