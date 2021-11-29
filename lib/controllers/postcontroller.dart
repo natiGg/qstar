@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/data/model/user.dart';
 
 import 'package:qstar/remote_services/service.dart';
 
@@ -13,37 +14,88 @@ import 'package:rich_text_controller/rich_text_controller.dart';
 class PostController extends GetxController {
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
-  late RichTextController captionController;
-  // ignore: prefer_typing_uninitialized_variables
+  late RichTextController captionController, searchController;
   var caption;
   // ignore: non_constant_identifier_names
   var post_type = 'public'.obs;
-  // ignore: prefer_typing_uninitialized_variables
   var image;
-  // ignore: prefer_typing_uninitialized_variables
   var posted;
   var imageAdded = false.obs;
   var imagesList = <File>[].obs;
   var isPosting = false.obs;
   var isPosted = false.obs;
   var hasHash = false.obs;
-  // ignore: prefer_typing_uninitialized_variables
-  var hashtags;
+  var unames = [""].obs;
+  var hashtags = [""].obs;
+
+  var suggestions;
+  var searched = <User>[].obs;
+  var isSelected = false.obs;
+  var selectedUsers = [].obs;
+
   @override
   void onInit() {
-    captionController = RichTextController(
+    fetchall();
+    searchController = RichTextController(
       patternMatchMap: {
-        RegExp(r"\B#[a-zA-Z0-9]+\b"): const TextStyle(
+        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
             color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
-        hashtags = matches;
+        unames.value = matches;
       },
       deleteOnBack: true,
     );
+    captionController = RichTextController(
+      patternMatchMap: {
+        RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+      },
+      onMatch: (List<String> matches) {
+        // Do something with matches.
+        hashtags.value = matches;
+        print(hashtags);
+      },
+      deleteOnBack: true,
+    );
+    fetchall();
     // TODO: implement onInit
     super.onInit();
+  }
+
+  void onSearchTextChanged(String text) async {
+    searched.clear();
+    if (text.isEmpty) {
+      return;
+    }
+    suggestions.forEach((userDetail) {
+      if (userDetail.name.toLowerCase().contains(text) ||
+          userDetail.userName.toLowerCase().contains(text)) {
+        searched.add(userDetail);
+      }
+    });
+  }
+
+  void tapSelection(var index) {
+    if (captionController.text.isEmpty) {
+      selectedUsers.clear();
+    }
+    if (selectedUsers.contains(suggestions[index].userName) ||
+        hashtags.contains(suggestions[index].userName)) {
+      print("already added");
+    } else {
+      print(hashtags);
+      selectedUsers.add(suggestions[index].userName);
+      captionController.text =
+          captionController.text + "@" + suggestions[index].userName + " ";
+    }
+  }
+
+  void fetchall() async {
+    suggestions = await RemoteServices.fetchallFollowers();
   }
 
   void changePostype(var type) async {
@@ -67,7 +119,7 @@ class PostController extends GetxController {
         };
         isPosting(true);
         posted = await RemoteServices.createPost(imagesList, data);
-
+        print(posted);
         if (posted.toString() == "200") {
           isPosting(false);
           isPosted(true);

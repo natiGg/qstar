@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
+import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -503,9 +505,8 @@ class _FeedState extends State<Feed> {
                           children: [
                             // ignore: prefer_const_constructors
                             CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
-                            ),
+                                backgroundImage: const AssetImage(
+                                    'assets/images/profile1.jpg')),
                             const SizedBox(width: 8.0),
 
                             Expanded(
@@ -770,10 +771,9 @@ class _FeedState extends State<Feed> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
-                          ),
+                          const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/profile1.jpg')),
                           const SizedBox(width: 8.0),
                           Container(
                             child: Center(
@@ -789,7 +789,7 @@ class _FeedState extends State<Feed> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
+                            padding: const EdgeInsets.only(left: 20.0),
                             child: Container(
                               height: 25,
                               decoration: BoxDecoration(
@@ -923,6 +923,48 @@ class _FeedState extends State<Feed> {
                                       const SizedBox(
                                         height: 40,
                                       ),
+                                      // TypeAheadFormField<User?>(
+                                      //   hideOnEmpty: true,
+                                      //   textFieldConfiguration:
+                                      //       TextFieldConfiguration(
+                                      //     controller:
+                                      //         postController.captionController,
+                                      //     decoration:
+                                      //         const InputDecoration.collapsed(
+                                      //             hintText:
+                                      //                 'What\'s on your mind?',
+                                      //             hintStyle: TextStyle(
+                                      //               fontSize: 15,
+                                      //             )),
+                                      //   ),
+                                      //   suggestionsCallback:
+                                      //       RemoteServices.fetchFollowers,
+                                      //   itemBuilder:
+                                      //       (context, User? suggestion) {
+                                      //     final user = suggestion!;
+                                      //     return ListTile(
+                                      //       leading: CircleAvatar(
+                                      //         backgroundImage: NetworkImage(
+                                      //             "https://qstar.mindethiopia.com/api/getProfilePicture/${user.id}"),
+                                      //       ),
+                                      //       title: Text(user.name),
+                                      //     );
+                                      //   },
+                                      //   onSuggestionSelected:
+                                      //       (User? suggestion) {
+                                      //     final user = suggestion;
+                                      //     ScaffoldMessenger.of(context)
+                                      //       ..removeCurrentSnackBar()
+                                      //       ..showSnackBar(SnackBar(
+                                      //         content: Text(
+                                      //             'Selected user: ${user!.name}'),
+                                      //       ));
+                                      //   },
+                                      //   validator: (value) {
+                                      //     return postController
+                                      //         .validateCaption(value!);
+                                      //   },
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -1013,11 +1055,13 @@ class _FeedState extends State<Feed> {
                                               FontAwesome.photo,
                                               color: Colors.green,
                                             ),
-                                            label: const Text(' Add Photo'),
+                                            label: const Text('Add Photo'),
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: () => print('Room'),
+                                            onPressed: () {
+                                              _showPeople(context);
+                                            },
                                             icon: const Icon(
                                               FontAwesome.user,
                                               color: mPrimaryColor,
@@ -1094,8 +1138,119 @@ class _FeedState extends State<Feed> {
     }
   }
 
+  _imgFromGallery() async {
+    try {
+      final pickedFile = await _picker.pickMultiImage();
+      setState(() {
+        _imageFileList = pickedFile;
+      });
+    } catch (e) {
+      setState(() {
+        _pickImageError = e;
+      });
+    }
+  }
+
+  void _showPeople(context) {
+         showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+            return Column(
+                      children: [
+                        Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Card(
+                child: new ListTile(
+                  leading: new Icon(Icons.search),
+                  title: new TextField(
+                    controller: postController.searchController,
+                    decoration: new InputDecoration(
+                        hintText: 'Search', border: InputBorder.none),
+                        onChanged: postController.onSearchTextChanged,
+                  ),
+                  trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
+                                      postController.searchController.clear();
+                                     postController.onSearchTextChanged('');
+
+
+                  },),
+                ),
+              ),
+            ),
+            
+
+                       Obx(() => Expanded(
+                          child: postController.searched.value.isNotEmpty || postController.searchController.text.isNotEmpty? ListView.builder(
+                              reverse: false,
+                              itemCount: postController.searched.value.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child:  Wrap(children: <Widget>[
+                                          
+                                    ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.searched[index].id.toString()}"),
+                                        ),
+                                        title: Text(postController.searched[index].name.toString()),
+                                        onTap: (){
+                                           postController.tapSelection(index);
+                                               Navigator.of(context).pop(true);
+                                         }, 
+                                            ),
+                                ])));
+                              }):ListView.builder(
+                              reverse: false,
+                              itemCount: postController.suggestions.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child:  Wrap(children: <Widget>[
+                                          
+                                    ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.suggestions[index].id.toString()}"),
+                                        ),
+                                        title: Text(postController.suggestions[index].name.toString()),
+                                         onTap: (){
+                                           postController.tapSelection(index);
+                                          Navigator.of(context).pop(true);
+                                         },
+   
+                                            ),
+                                ])));
+                              }),
+                        )),
+                      ],
+                    );
+          // return Container(
+          //   height: 300,
+          //   child: FutureBuilder(
+          //       future: RemoteServices.fetchallFollowers(),
+          //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //         if (snapshot.hasError) {
+          //           return Center(
+          //             child: Text(snapshot.error.toString()),
+          //           );
+          //         }
+          //         if (snapshot.hasData) {
+                  
+          //         } else {
+          //           return Center(
+          //             child: CircularProgressIndicator(),
+          //           );
+          //         }
+          //       }),
+          // );
+        });
+  }
+
   void _showPicker(context) {
-    showModalBottomSheet(
+       showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
@@ -1117,7 +1272,7 @@ class _FeedState extends State<Feed> {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              const MyApp(),
+                               MyApp(),
                           transitionDuration: Duration.zero,
                         ),
                       ); // _imgFromCamera();

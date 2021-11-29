@@ -16,7 +16,6 @@ class EditprofileController extends GetxController with StateMixin {
   final GlobalKey<FormState> EditProf = GlobalKey<FormState>();
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditUname = GlobalKey<FormState>();
-
   late TextEditingController nameControl,
       unameControl,
       birthdayControl,
@@ -69,8 +68,8 @@ class EditprofileController extends GetxController with StateMixin {
   void fetchProfile(var id) async {
     try {
       uid = id.toString();
+      print(uid);
       suggested = await RemoteServices.fetchProfile(id);
-
       if (suggested.id != null) {
         nameControl.text = suggested.name;
         birthdayControl.text = suggested.date_of_birth;
