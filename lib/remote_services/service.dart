@@ -24,6 +24,34 @@ class RemoteServices {
     }
   }
 
+    static Future<List<User>> fetchFollowers(String querys) async {
+    res = await Network().getData("friendship/170/followers");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => User.fromJson(e)).where((user){
+        final uname=user.userName.toLowerCase().toString();
+        final query=querys.toLowerCase();
+        return uname.contains(query);
+      }).toList().cast<User>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
+  static Future<List<User>> fetchallFollowers() async {
+    res = await Network().getData("friendship/170/followers");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+ 
+ 
+
   static Future<List<String>> checkUname(String uname) async {
     var data = {'username': uname};
     res = await Network().authData(data, "validateUsername");

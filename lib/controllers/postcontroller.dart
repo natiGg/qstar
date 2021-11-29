@@ -16,7 +16,7 @@ import 'package:rich_text_controller/rich_text_controller.dart';
 
 class PostController extends GetxController {
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
-  late RichTextController captionController;
+  late RichTextController captionController,searchController;
   var caption;
   var post_type = 'public'.obs;
   var image;
@@ -26,9 +26,28 @@ class PostController extends GetxController {
   var isPosting = false.obs;
   var isPosted = false.obs;
   var hasHash = false.obs;
-  var hashtags;
+  var unames=[""].obs;
+  var hashtags=[""].obs;
+
+  var suggestions;
+  var searched=<User>[].obs;
+  var isSelected=false.obs;
+  var selectedUsers=[].obs;
+
   @override
   void onInit() {
+    fetchall();
+    searchController=RichTextController(
+      patternMatchMap: {
+        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+      },
+      onMatch: (List<String> matches) {
+        // Do something with matches.
+        unames.value = matches;
+      },
+      deleteOnBack: true,
+    );
     captionController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
@@ -38,14 +57,45 @@ class PostController extends GetxController {
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
-        hashtags = matches;
+        hashtags.value = matches;
+        print(hashtags);
       },
       deleteOnBack: true,
+    
     );
+    fetchall();
     // TODO: implement onInit
     super.onInit();
   }
+  void onSearchTextChanged(String text) async {
+    searched.clear();
+     if (text.isEmpty) {
+      return;
+    }
+    suggestions.forEach((userDetail) {
+      if (userDetail.name.toLowerCase().contains(text) || userDetail.userName.toLowerCase().contains(text)){  
+        searched.add(userDetail);
+      }  
+      
+    });
+  }
+  void tapSelection(var index){
+    if(captionController.text.isEmpty){
+      selectedUsers.clear();
+    }
+    if(selectedUsers.contains(suggestions[index].userName) || hashtags.contains(suggestions[index].userName) ){
+      print("already added");
+    }
+    else {
+      print(hashtags);
+      selectedUsers.add(suggestions[index].userName);
+      captionController.text=captionController.text+"@"+suggestions[index].userName+" ";                               
+   }
+  }
 
+  void fetchall() async {
+    suggestions=await RemoteServices.fetchallFollowers();
+  }
   void changePostype(var type) async {
     post_type.value = type;
   }
@@ -79,11 +129,9 @@ class PostController extends GetxController {
     } finally {}
   }
 
-  void fetchSuggestion() async {
-    try{
 
-    } finally {}
-  }
+
+
 
   String? validateCaption(String value) {
     if (value.isEmpty) {
