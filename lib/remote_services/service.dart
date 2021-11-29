@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
+
 import 'package:async/async.dart';
 
 class RemoteServices {
@@ -100,7 +100,7 @@ class RemoteServices {
     var lookups;
     if (res.statusCode == 200) {
       lookups = body["lookups"];
-      print(lookups["data"]);
+
       return lookups["data"]
           .map((e) => Hobbies.fromJson(e))
           .toList()
@@ -123,23 +123,20 @@ class RemoteServices {
   }
 
   static Future<bool> uploadImage(File image, String id) async {
-    var data = {'following_id': id};
+    // ignore: unnecessary_null_comparison
     if (image != null) {
       var stream =
-          new http.ByteStream(DelegatingStream.typed(image.openRead()));
+          // ignore: deprecated_member_use
+          http.ByteStream(DelegatingStream.typed(image.openRead()));
       var length = await image.length();
       // create multipart request
       res = await Network()
           .uploadFile("updateProfilePicture/${id}", image, stream, length);
 
       if (res.statusCode == 200) {
-        res.stream.transform(utf8.decoder).listen((value) {
-          print(value);
-        });
+        res.stream.transform(utf8.decoder).listen((value) {});
         return true;
       } else {
-        print(res.statusCode);
-
         throw Exception('Failed to Upload file');
       }
     } else {
@@ -165,16 +162,15 @@ class RemoteServices {
     if (res.statusCode == 200) {
       return User.fromJson(body["data"]);
     } else {
-      print(res.headers.toString());
       throw Exception('Failed to load User' + res.statusCode.toString());
     }
   }
 
   static Future<String> editprofile(var data, var id) async {
+    // ignore: unnecessary_brace_in_string_interps
     res = await Network().getpassedData(data, "profile/${id}");
     body = json.decode(res.body);
     if (res.statusCode == 200) {
-      print(body);
       return res.statusCode.toString();
     } else {
       Map<String, dynamic> map = body["errors"];
@@ -182,19 +178,83 @@ class RemoteServices {
     }
   }
 
+  static Future<bool> cheakpf() async {
+    // ignore: unnecessary_brace_in_string_interps
+    res = await Network().getData("personalInformation");
+    print(res.body.toString());
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<Userpf> fetchpf() async {
+    res = await Network().getData("personalInformation");
+
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return Userpf.fromJson(body["data"]);
+    } else {
+      throw Exception('Failed to load User' + res.statusCode.toString());
+    }
+  }
+
   static Future<String> createPost(var image, var data) async {
     // create multipart request
     res = await Network().postFile("post", image, data);
-    print(res.statusCode);
+
     if (res.statusCode == 200) {
-      res.stream.transform(utf8.decoder).listen((value) {
-        print(value.toString());
-      });
+      res.stream.transform(utf8.decoder).listen((value) {});
       return res.statusCode.toString();
     } else {
-      print(res.statusCode);
-
       throw Exception("can't post");
+    }
+  }
+
+  static Future<String> updatePersonalInfo(var data) async {
+    List<String> errors = [];
+    // create multipart request
+    res = await Network().getpassedData(data, "personalInformation");
+
+    body = json.decode(res.body);
+    print(body.toString());
+    if (res.statusCode == 200) {
+      return res.statusCode.toString();
+    } else {
+      if (body["message"] != null) {
+        return body["message"].toString();
+      } else {
+        Map<String, dynamic> map = body["errors"];
+        map.forEach((key, value) {
+          errors.add(value[0].toString());
+        });
+
+        return errors.join("\n").toString();
+      }
+    }
+  }
+
+  static Future<String> editPersonalInfo(var data) async {
+    List<String> errors = [];
+    // create multipart request
+    res = await Network().getpassedData(data, "personalInformation");
+
+    body = json.decode(res.body);
+    print(res.statusCode.toString());
+    if (res.statusCode == 200) {
+      return res.statusCode.toString();
+    } else {
+      if (body["message"] != null) {
+        return body["message"].toString();
+      } else {
+        Map<String, dynamic> map = body["errors"];
+        map.forEach((key, value) {
+          errors.add(value[0].toString());
+        });
+
+        return errors.join("\n").toString();
+      }
     }
   }
 }

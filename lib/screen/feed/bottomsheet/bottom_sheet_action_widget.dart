@@ -8,9 +8,8 @@ import 'package:qstar/screen/login/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_sheet_action.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:qstar/screen/profilesetting/setting.dart';
 
+// ignore: must_be_immutable
 class BottomSheetActionWidget extends StatelessWidget {
   final BottomSheetAction action;
   PostController postController = Get.find();

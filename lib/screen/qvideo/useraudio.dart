@@ -8,7 +8,6 @@ import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart'
 import 'widgets/profile_tab_bar_au.dart';
 import 'widgets/profile_widgets_au.dart';
 
-import 'package:qstar/screen/qvideo/qvideo.dart';
 import 'package:qstar/widget/utils.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

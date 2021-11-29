@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +15,7 @@ class VideoRecorderExample extends StatefulWidget {
 }
 
 class _VideoRecorderExampleState extends State<VideoRecorderExample> {
+  // ignore: unused_field
   File? _cameraVideo;
 
   ImagePicker picker = ImagePicker();

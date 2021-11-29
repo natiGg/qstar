@@ -46,6 +46,7 @@ class _UsernameState extends State<Username> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
+    // ignore: unused_local_variable
     String? selectedCity;
 
     final controllerCity = TextEditingController();

@@ -1,12 +1,16 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:language_picker/languages.dart';
 import 'package:language_picker/languages.g.dart';
 import 'package:qstar/constant.dart';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:language_picker/language_picker.dart';
+import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -17,18 +21,16 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<PersonalInfo> {
-  int currentStep = 0;
-  String? _gender, _hob, _edu, _emp;
-  String? list2 = "Counrty";
   String? lan = "Language";
-  RangeValues _currentRangeValues = const RangeValues(18, 65);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  PerfectMatchController pfcontroller = Get.put(PerfectMatchController());
+  var isLastStep;
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -54,11 +56,13 @@ class _MyHomePageState extends State<PersonalInfo> {
         )),
         child: Stepper(
           steps: getSteps(),
+          key: Key(Random.secure().nextDouble().toString()),
           controlsBuilder: (BuildContext context,
               {VoidCallback? onStepContinue,
               VoidCallback? onStepCancel,
               VoidCallback? onStpeFinish}) {
-            final isLastStep = currentStep == getSteps().length - 1;
+            isLastStep =
+                pfcontroller.currentStep.value == getSteps().length - 1;
             return Row(
               children: <Widget>[
                 OutlinedButton(
@@ -69,19 +73,15 @@ class _MyHomePageState extends State<PersonalInfo> {
                     ),
                     child: (isLastStep)
                         ? GestureDetector(
-                            onTap: () {
-                              _scaffoldKey.currentState!
-                                  // ignore: deprecated_member_use
-                                  .showSnackBar(SnackBar(
-                                duration: const Duration(seconds: 4),
-                                content: Row(
-                                  children: const <Widget>[
-                                    CircularProgressIndicator(),
-                                    Text("    Loading...")
-                                  ],
-                                ),
-                              ));
-                              _ondelay();
+                            onTap: () async {
+                              Get.delete<PerfectMatchController>();
+                              pfcontroller.setInfo();
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           const ProfileImageAppbarRoute()),
+                              // );
                             },
                             child: const Text('Submit'))
                         : const Text(
@@ -110,17 +110,37 @@ class _MyHomePageState extends State<PersonalInfo> {
               ],
             );
           },
-          currentStep: currentStep,
-          onStepTapped: (int step) {
-            setState(() {
-              currentStep = step;
-            });
-          },
+          currentStep: pfcontroller.currentStep.value,
           onStepCancel: () {
-            currentStep > 0 ? setState(() => currentStep -= 1) : null;
+            pfcontroller.currentStep.value > 0
+                ? setState(() => pfcontroller.currentStep.value -= 1)
+                : null;
           },
           onStepContinue: () {
-            currentStep < 3 ? setState(() => currentStep += 1) : null;
+            setState(() {
+              pfcontroller.currentStep.value < 3
+                  ? pfcontroller.currentStep.value
+                  : null;
+            });
+
+            if (pfcontroller.currentStep.value == 0) {
+              pfcontroller.create();
+            }
+
+            if (pfcontroller.currentStep.value == 1) {
+              pfcontroller.create2();
+            }
+
+            if (pfcontroller.currentStep.value == 2) {
+              pfcontroller.create3();
+            }
+            if (pfcontroller.currentStep.value == 3) {
+              pfcontroller.create4();
+            }
+
+            // if (pfcontroller.currentStep.value == 2) {
+            //   pfcontroller.create();
+            // }
           },
         ),
       ),
@@ -131,346 +151,332 @@ class _MyHomePageState extends State<PersonalInfo> {
     return [
       Step(
         title: const Text('Genral Info'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Full name'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            DropdownButton<String>(
-              value: _gender,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black),
-              items: <String>[
-                'Male',
-                'Female',
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint: const Text(
-                "Gender",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+        content: Form(
+          key: pfcontroller.Form,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: pfcontroller.fullname,
+                decoration: const InputDecoration(labelText: 'Full name'),
+                validator: (value) {
+                  return pfcontroller.validateName(value!);
+                },
               ),
-              onChanged: (value) {
-                setState(() {
-                  _gender = value!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            GestureDetector(
-              onTap: () {
-                showCountryPicker(
-                  context: context,
-                  countryListTheme: CountryListThemeData(
-                    flagSize: 25,
-                    backgroundColor: Colors.white,
-                    textStyle:
-                        const TextStyle(fontSize: 16, color: Colors.blueGrey),
-                    //Optional. Sets the border radius for the bottomsheet.
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                    ),
-                    //Optional. Styles the search field.
-                    inputDecoration: InputDecoration(
-                      labelText: 'Search',
-                      hintText: 'Start typing to search',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: const Color(0xFF8C98A8).withOpacity(0.2),
+              const SizedBox(
+                height: 15,
+              ),
+              // DropdownButton<String>(
+              //   value: pfcontroller.gender.value,
+              //   isExpanded: true,
+              //   style: const TextStyle(color: Colors.black),
+              //   items: <String>[
+              //     'Male',
+              //     'Female',
+              //   ].map<DropdownMenuItem<String>>((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(value),
+              //     );
+              //   }).toList(),
+              //   hint: const Text(
+              //     "Gender",
+              //     style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.w300),
+              //   ),
+              //   onChanged: (value) {
+              //     setState(() {
+              //       pfcontroller.gender.value = value!;
+              //     });
+              //   },
+              // ),
+              const SizedBox(
+                height: 15,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showCountryPicker(
+                    context: context,
+                    countryListTheme: CountryListThemeData(
+                      flagSize: 25,
+                      backgroundColor: Colors.white,
+                      textStyle:
+                          const TextStyle(fontSize: 16, color: Colors.blueGrey),
+                      //Optional. Sets the border radius for the bottomsheet.
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0),
+                      ),
+                      //Optional. Styles the search field.
+                      inputDecoration: InputDecoration(
+                        labelText: 'Search',
+                        hintText: 'Start typing to search',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: const Color(0xFF8C98A8).withOpacity(0.2),
+                          ),
                         ),
                       ),
                     ),
+                    onSelect: (Country country) => setState(() {
+                      pfcontroller.country.value = country.displayName;
+                    }),
+                  );
+                },
+                child: AbsorbPointer(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        labelText:
+                            pfcontroller.country.value.toString() == "Counrty"
+                                ? pfcontroller.country.value = "Counrty"
+                                : pfcontroller.country.value.toString()),
                   ),
-                  onSelect: (Country country) => setState(() {
-                    list2 = country.displayName;
-                  }),
-                );
-              },
-              child: AbsorbPointer(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: list2.toString() == "Counrty"
-                          ? list2 = "Counrty"
-                          : list2.toString()),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'City'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Phone Number'),
-              keyboardType: TextInputType.number,
-            ),
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: pfcontroller.city,
+                decoration: const InputDecoration(labelText: 'City'),
+                validator: (value) {
+                  return pfcontroller.validateName(value!);
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: pfcontroller.phone,
+                decoration: const InputDecoration(labelText: 'Phone Number'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  return pfcontroller.validatephone(value!);
+                },
+              ),
+            ],
+          ),
         ),
-        isActive: currentStep >= 0,
-        state: currentStep == 0 ? StepState.editing : StepState.complete,
+        isActive: pfcontroller.currentStep.value >= 0,
+        state: pfcontroller.currentStep.value == 0
+            ? StepState.editing
+            : StepState.complete,
       ),
       Step(
         title: const Text('Personal Details'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Religion'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'height'),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            LanguagePickerDropdown(
-                initialValue: Languages.english,
-                onValuePicked: (Language language) {
-                  lan = language.name;
-                }),
-            const SizedBox(
-              height: 15,
-            ),
-            DropdownButton<String>(
-              value: _hob,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black),
-              items: <String>[
-                'Music',
-                'Sport',
-                'Reading',
-                'Gaming',
-                'Art / Drawing / Painting ',
-                'Watch TV',
-                'Fitness',
-                'Cooking',
-                'Singing',
-                'Dancing',
-                'Gambling',
-                'Swimming',
-                'Writing ',
-                'Traveling ',
-              ].map<DropdownMenuItem<String>>((String hob) {
-                return DropdownMenuItem<String>(
-                  value: hob,
-                  child: Text(hob),
-                );
-              }).toList(),
-              hint: const Text(
-                "Hobbies",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+        content: Form(
+          key: pfcontroller.Form2,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                controller: pfcontroller.religion,
+                decoration: const InputDecoration(labelText: 'Religion'),
+                validator: (value) {
+                  return pfcontroller.validatereligion(value!);
+                },
               ),
-              onChanged: (value) {
-                setState(() {
-                  _hob = value!;
-                });
-              },
-            ),
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: pfcontroller.height,
+                decoration: const InputDecoration(labelText: 'height'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  return pfcontroller.validateheight(value!);
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
         ),
-        isActive: currentStep >= 1,
-        state: currentStep == 1
+        isActive: pfcontroller.currentStep.value >= 1,
+        state: pfcontroller.currentStep.value == 1
             ? StepState.editing
-            : currentStep < 1
+            : pfcontroller.currentStep.value < 1
                 ? StepState.disabled
                 : StepState.complete,
       ),
       Step(
         title: const Text("BackGround Info"),
-        content: Column(
-          children: <Widget>[
-            DropdownButton<String>(
-              value: _edu,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black),
-              items: <String>[
-                'Preschool',
-                'Primary School',
-                'Middle School',
-                'Highschool',
-                'Undergraduate school',
-                'Graduate school',
-                'Doctorate',
-                'Dipilma',
-                'Masters',
-              ].map<DropdownMenuItem<String>>((String edu) {
-                return DropdownMenuItem<String>(
-                  value: edu,
-                  child: Text(edu),
-                );
-              }).toList(),
-              hint: const Text(
-                "Educaition",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+        content: Form(
+          key: pfcontroller.Form3,
+          child: Column(
+            children: <Widget>[
+              DropdownButton<String>(
+                value: pfcontroller.edu,
+                isExpanded: true,
+                style: const TextStyle(color: Colors.black),
+                items: <String>[
+                  'Preschool',
+                  'Primary School',
+                  'Middle School',
+                  'Highschool',
+                  'Undergraduate school',
+                  'Graduate school',
+                  'Doctorate',
+                  'Dipilma',
+                  'Masters',
+                ].map<DropdownMenuItem<String>>((String edu) {
+                  return DropdownMenuItem<String>(
+                    value: edu,
+                    child: Text(edu),
+                  );
+                }).toList(),
+                hint: const Text(
+                  "Educaition",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    pfcontroller.edu = value!;
+                  });
+                },
               ),
-              onChanged: (value) {
-                setState(() {
-                  _edu = value!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            DropdownButton<String>(
-              value: _emp,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black),
-              items: <String>[
-                'Employed',
-                'Self-employed',
-                'Out of wor',
-                'Homemaker',
-                'Student',
-                'Retired',
-                'Unable to work',
-              ].map<DropdownMenuItem<String>>((String emp) {
-                return DropdownMenuItem<String>(
-                  value: emp,
-                  child: Text(emp),
-                );
-              }).toList(),
-              hint: const Text(
-                "Employment",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+              const SizedBox(
+                height: 15,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _emp = value!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Occupation'),
-            ),
-          ],
+              DropdownButton<String>(
+                value: pfcontroller.emp,
+                isExpanded: true,
+                style: const TextStyle(color: Colors.black),
+                items: <String>[
+                  'Employed',
+                  'Self-employed',
+                  'Out of wor',
+                  'Homemaker',
+                  'Student',
+                  'Retired',
+                  'Unable to work',
+                ].map<DropdownMenuItem<String>>((String emp) {
+                  return DropdownMenuItem<String>(
+                    value: emp,
+                    child: Text(emp),
+                  );
+                }).toList(),
+                hint: const Text(
+                  "Employment",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    pfcontroller.emp = value!;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: pfcontroller.occ,
+                decoration: const InputDecoration(labelText: 'Occupation'),
+                validator: (value) {
+                  return pfcontroller.validateOccupation(value!);
+                },
+              ),
+            ],
+          ),
         ),
-        isActive: currentStep >= 2,
-        state: currentStep == 2
+        isActive: pfcontroller.currentStep.value >= 2,
+        state: pfcontroller.currentStep.value == 2
             ? StepState.editing
-            : currentStep < 2
+            : pfcontroller.currentStep.value < 2
                 ? StepState.disabled
                 : StepState.complete,
       ),
       Step(
         title: const Text("Match Perference"),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration:
-                  const InputDecoration(labelText: 'Location preference'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            DropdownButton<String>(
-              value: _gender,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.black),
-              items: <String>[
-                'Male',
-                'Female',
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              hint: const Text(
-                "Gender preference",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300),
+        content: Form(
+          key: pfcontroller.Form4,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                  controller: pfcontroller.location,
+                  decoration: const InputDecoration(
+                      labelText: 'enter your match location Preference'),
+                  validator: (value) {
+                    return pfcontroller.validatelocation(value!);
+                  }),
+              const SizedBox(
+                height: 15,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _gender = value!;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(right: 208.0),
-              child: Text('Age preference'),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            RangeSlider(
-              values: _currentRangeValues,
-              min: 18,
-              max: 100,
-              divisions: 10,
-              labels: RangeLabels(
-                _currentRangeValues.start.round().toString(),
-                _currentRangeValues.end.round().toString(),
+              const SizedBox(
+                height: 15,
               ),
-              onChanged: (RangeValues values) {
-                setState(() {
-                  _currentRangeValues = values;
-                });
-              },
-            ),
-          ],
+              DropdownButton<String>(
+                value: pfcontroller.macthgender,
+                isExpanded: true,
+                style: const TextStyle(color: Colors.black),
+                items: <String>[
+                  'Male',
+                  'Female',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: const Text(
+                  "Gender preference",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    pfcontroller.macthgender = value!;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(right: 208.0),
+                child: Text('Age preference'),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              RangeSlider(
+                values: pfcontroller.currentRangeValues,
+                min: 18,
+                max: 100,
+                divisions: 10,
+                labels: RangeLabels(
+                  pfcontroller.currentRangeValues.start.round().toString(),
+                  pfcontroller.currentRangeValues.end.round().toString(),
+                ),
+                onChanged: (RangeValues values) {
+                  setState(() {
+                    pfcontroller.currentRangeValues = values;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
-        isActive: currentStep >= 3,
-        state: currentStep == 3
+        isActive: pfcontroller.currentStep.value >= 3,
+        state: pfcontroller.currentStep.value == 3
             ? StepState.editing
-            : currentStep < 3
+            : pfcontroller.currentStep.value < 3
                 ? StepState.disabled
                 : StepState.complete,
       ),
     ];
-  }
-
-  _ondelay() {
-    Future.delayed(const Duration(seconds: 3), () {
-      // Navigator.popUntil(context, (route) {
-      //   return count++ == 2;
-      // });
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const ProfileImageAppbarRoute()),
-      );
-    });
   }
 }

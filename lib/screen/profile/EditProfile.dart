@@ -1,29 +1,29 @@
+// ignore_for_file: unused_field, prefer_const_constructors
+
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/hobbiescontroller.dart';
-import 'package:qstar/screen/feed/model/user.dart';
-import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/profile/usernamedit.dart';
-import 'package:qstar/screen/profile/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qstar/constant.dart';
-import 'package:flutter/gestures.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:qstar/screen/register/model/hobbies.dart';
-import 'package:qstar/screen/register/phonevarification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -41,19 +41,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.deactivate();
   }
 
-  dynamic _pickImageError;
-  static final List<Hobbies> _animals = [
-    Hobbies(id: 1, name: "Skylar"),
-    Hobbies(id: 2, name: "Desiree"),
-    Hobbies(id: 3, name: "Cecil"),
-  ];
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
   HobbiesController hobbiesController = Get.put(HobbiesController());
+  // ignore: prefer_typing_uninitialized_variables
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Hobbies> _selectedItems2 = [];
-  List<String> _tobeSent = [];
+  final List<String> _tobeSent = [];
   List<Hobbies> _selectedItems3 = [];
   static final List<Hobbies> _initial = [];
 
@@ -109,16 +104,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
 
-    print(token);
     if (token != null) {
-      print(token.toString());
       body = json.decode(token);
-      print(body["id"]);
+
       editprofileController.fetchProfile(body["id"]);
-      print(editprofileController.hobbyitems.length);
 
       editprofileController.hobbyitems.forEach((element) {
-        print(element.id.toString() + element.name.toString());
         _initial.add(element);
       });
     }
@@ -139,7 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               },
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor),
-          title: Container(
+          title: SizedBox(
             width: 100,
             child: const Text(
               "Edit Profile",
@@ -362,7 +353,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       onSaved: (val) async {
                                         _setDate = val!;
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           disabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide.none),
                                           // labelText: 'Time',
@@ -378,7 +369,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white38,
@@ -395,30 +386,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     listType: MultiSelectListType.CHIP,
                                     checkColor: Colors.pink,
                                     selectedColor: mPrimaryColor,
-                                    selectedItemsTextStyle: TextStyle(
+                                    selectedItemsTextStyle: const TextStyle(
                                       fontSize: 25,
                                       color: Colors.white,
                                     ),
                                     unselectedColor:
                                         mPrimaryColor.withOpacity(.08),
-                                    buttonIcon: Icon(
+                                    buttonIcon: const Icon(
                                       Icons.add,
                                       color: Colors.pinkAccent,
                                     ),
-                                    searchHintStyle: TextStyle(
+                                    searchHintStyle: const TextStyle(
                                       fontSize: 20,
                                     ),
                                     searchable: true,
                                     buttonText: Text(
-                                      '$Preligion', //"????",
-                                      style: TextStyle(
+                                      Preligion, //"????",
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         color: Colors.grey,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 5,
                                     ),
-                                    title: Text(
+                                    title: const Text(
                                       "Hobbies",
                                       style: TextStyle(
                                         fontSize: 25,
@@ -430,7 +421,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       setState(() {
                                         _selectedItems2 = values;
                                       });
-                                      print('selected : ${_selectedItems2}');
+                                      // ignore: avoid_print
+
                                       _selectedItems2.forEach((item) =>
                                           editprofileController.tobeSent
                                               .add("${item.name.toString()}"));
@@ -446,8 +438,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           editprofileController.tobeSent
                                               .remove(value.toString());
                                         });
-                                        print(
-                                            'removed: ${_selectedItems2.toString()}');
+
                                         _selectedItems2.forEach((item) =>
                                             editprofileController.tobeSent.add(
                                                 "${item.name.toString()}"));
@@ -478,24 +469,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 35,
                                 ),
                                 // ignore: deprecated_member_use
                                 RaisedButton.icon(
                                   onPressed: () {
                                     editprofileController.editProf(body["id"]);
+                                    // ignore: avoid_print
                                     print(editprofileController.isLoading);
-                          
                                   },
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10.0))),
-                                  label: Text(
+                                  label: const Text(
                                     'Update Profile',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.update,
                                     color: Colors.white,
                                   ),
@@ -507,13 +498,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 RaisedButton.icon(
                                   onPressed: () {},
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(10.0))),
-                                  label: Text(
+                                  label: const Text(
                                     'Cancel  ',
                                     style: TextStyle(color: mPrimaryColor),
                                   ),
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.cancel,
                                     color: mPrimaryColor,
                                   ),
@@ -521,7 +512,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   splashColor: mPrimaryColor,
                                   color: Colors.white,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 35,
                                 ),
                               ],
@@ -531,7 +522,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
             onLoading: Center(child: loadData()),
-            onEmpty: Text("Can't fetch data"),
+            onEmpty: const Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
   }
 
@@ -550,9 +541,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         editprofileController.image = file;
       });
     } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
+      setState(() {});
     }
   }
 
@@ -568,9 +557,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         editprofileController.image = file;
       });
     } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
+      setState(() {});
     }
   }
 
@@ -579,26 +566,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Photo Library'),
                     onTap: () {
-                      _imgFromCamera();
+                      _imgFromGallery();
                       Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
+                    }),
+                ListTile(
+                  leading: Icon(Icons.photo_camera),
+                  title: Text('Camera'),
+                  onTap: () {
+                    _imgFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
           );
         });

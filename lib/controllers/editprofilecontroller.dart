@@ -10,9 +10,11 @@ import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter/material.dart';
 
+// ignore: duplicate_ignore
 class EditprofileController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditProf = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditUname = GlobalKey<FormState>();
 
   late TextEditingController nameControl,
@@ -37,7 +39,9 @@ class EditprofileController extends GetxController with StateMixin {
   var hobItem;
   // ignore: prefer_typing_uninitialized_variables
   var image;
+  var gender;
   late String uid = "";
+
   var unamechecker, messages, errorMessages, emailchecker;
   late String unames = '', emailsInfo = '';
   List<Hobbies> hobbyitems = [];
@@ -74,6 +78,7 @@ class EditprofileController extends GetxController with StateMixin {
         bioControl.text = suggested.bio;
         prevuname = suggested.userName;
         prevemail = suggested.email;
+        gender = suggested.gender;
 
         hobbiesSplit = suggested.hobbies.toString().split(",");
 

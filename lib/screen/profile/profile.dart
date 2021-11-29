@@ -56,31 +56,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _fetchUser() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
-    print("okke");
-    print(token);
+
+    // ignore: avoid_print
+
     if (token != null) {
-      print(token.toString());
       var body = json.decode(token);
+      // ignore: avoid_print
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
     }
   }
 
   int _pageIndex = 0;
-  @override
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     //items.add((items.length+1).toString());
     //if(mounted)
@@ -90,6 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _refreshController.loadComplete();
   }
 
+  @override
   Widget build(BuildContext context) {
     var _screen = MediaQuery.of(context).size;
     var _primaryColorDark = Theme.of(context).primaryColorDark;
@@ -114,6 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 actions: [
                   IconButton(
                       onPressed: () {
+                        // ignore: avoid_print
                         print(editprofileController.suggested.storyImage);
                         _onShowMenu();
                       },
@@ -285,10 +287,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           Center(
             child: Padding(
-              padding: EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
               child: Text(
                 editprofileController.suggested.userName,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
           ),

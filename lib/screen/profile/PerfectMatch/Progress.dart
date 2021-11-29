@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 class MyPages extends StatelessWidget {
-  const MyPages({Key? key}) : super(key: key);
+  MyPages({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MyPages extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.pushNamed(context, '/home');
@@ -27,20 +28,20 @@ class MyPages extends StatelessWidget {
         // ignore: prefer_const_constructors
         title: Text(
           "Perfect Match",
-          style: const TextStyle(
+          style: TextStyle(
             color: mPrimaryColor,
             fontSize: 27,
             fontFamily: 'font1',
           ),
         ),
       ),
-      body: const OnBoardingPage(),
+      body: OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
-  const OnBoardingPage({Key? key}) : super(key: key);
+  OnBoardingPage({Key? key}) : super(key: key);
 
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
@@ -54,7 +55,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       // ignore: prefer_const_constructors
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => const PersonalInfo(),
+        pageBuilder: (context, animation1, animation2) => PersonalInfo(),
         transitionDuration: Duration.zero,
       ),
     );
@@ -120,7 +121,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      dotsContainerDecorator: const ShapeDecoration(
+      dotsContainerDecorator: ShapeDecoration(
         color: Colors.black54,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),

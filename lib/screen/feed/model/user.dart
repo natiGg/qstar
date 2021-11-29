@@ -90,6 +90,87 @@ class User {
   }
 }
 
+class Userpf {
+  int id;
+  String full_name;
+  String location;
+  String country;
+  String city;
+  String phone_number;
+  String height;
+  String language;
+  // ignore: non_constant_identifier_names
+  String education;
+  // ignore: non_constant_identifier_names
+  String employment;
+  String occupation;
+
+  String age_min;
+  String age_max;
+
+  String pfgender;
+  String religion;
+  String min_height;
+  String max_height;
+  String pflanguage;
+  String pfemployment;
+  String pflocation;
+  // ignore: non_constant_identifier_names
+
+  Userpf({
+    required this.id,
+    required this.full_name,
+    required this.location,
+    required this.country,
+    required this.city,
+    required this.phone_number,
+    required this.height,
+    required this.language,
+    // ignore: non_constant_identifier_names
+    required this.education,
+    // ignore: non_constant_identifier_names
+    required this.employment,
+    required this.occupation,
+    required this.age_min,
+    required this.age_max,
+    required this.pfgender,
+    required this.religion,
+    required this.min_height,
+    required this.max_height,
+    required this.pflanguage,
+    required this.pfemployment,
+    required this.pflocation,
+
+    // ignore: non_constant_identifier_names
+  });
+
+  factory Userpf.fromJson(Map<String, dynamic> json) {
+    var pref = json["matchPreference"] as Map;
+
+    return Userpf(
+        id: pref["id"] as int,
+        full_name: json['full_name'].toString(),
+        location: json['location'].toString(),
+        country: json['country'].toString(),
+        city: json['city'].toString(),
+        phone_number: json['phone_number'].toString(),
+        height: json['height'].toString(),
+        language: json['language'].toString(),
+        education: json['education'].toString(),
+        employment: json['employment'].toString(),
+        occupation: json['occupation'].toString(),
+        age_min: pref["age_min"].toString(),
+        age_max: pref["age_max"].toString(),
+        pfgender: pref["gender"].toString(),
+        religion: json["religion"].toString(),
+        min_height: pref["min_height"].toString(),
+        max_height: pref["max_height"].toString(),
+        pflanguage: pref["pflanguage"].toString(),
+        pfemployment: pref["employment"].toString(),
+        pflocation: pref["location"].toString());
+  }
+}
+
 class Post {
   int userid;
   int id;

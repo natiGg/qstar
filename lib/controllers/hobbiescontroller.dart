@@ -35,10 +35,9 @@ class HobbiesController extends GetxController with StateMixin {
 
         change(hobbies, status: RxStatus.success());
       } else {
-        print(hobItem);
         change(null, status: RxStatus.empty());
       }
-    } on Exception catch (e) {
+    } on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
     }
   }

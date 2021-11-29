@@ -5,18 +5,16 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:qstar/screen/main/main_screen.dart';
 import 'package:qstar/screen/profilesetting/localstring.dart';
 import 'package:qstar/screen/qvideo/category.dart';
-import 'package:qstar/screen/qvideo/qvideo.dart';
+
 import 'package:qstar/screen/splash/error.dart';
 import 'package:qstar/screen/splash/splash_screen.dart';
 import 'package:qstar/constant.dart';
 
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
@@ -25,8 +23,6 @@ void main() {
 }
 
 void configLoading() {
-  final EditprofileController editprofileController =
-      Get.put(EditprofileController());
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -85,7 +81,6 @@ class _MyHomePageState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    String string;
     switch (_source.keys.toList()[0]) {
       case ConnectivityResult.none:
         setState(() {

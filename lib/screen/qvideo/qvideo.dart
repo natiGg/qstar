@@ -26,7 +26,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 
-import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -285,6 +284,7 @@ class Qvideoscreen extends StatefulWidget {
 class _QvideoState2 extends State<Qvideoscreen>
     with SingleTickerProviderStateMixin {
   ImagePicker picker = ImagePicker();
+  // ignore: unused_field
   File? _cameraVideo;
   bool abo = false;
   bool foryou = true;
@@ -391,11 +391,10 @@ class _QvideoState2 extends State<Qvideoscreen>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: true,
-      header: WaterDropHeader(),
+      header: const WaterDropHeader(),
       //cheak pull_to_refresh
       controller: _refreshControllers,
       onRefresh: _onRefresh,

@@ -15,9 +15,9 @@ class _WriteCaptionWidgetState extends State<WriteCaptionWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
-        children: [
+        children: const [
           Expanded(
-              child: const Padding(
+              child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
               style: TextStyle(color: Colors.white),

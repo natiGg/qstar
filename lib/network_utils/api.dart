@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:qstar/screen/register/model/hobbies.dart';
+
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
@@ -37,11 +37,10 @@ class Network {
     var fullUrl = _url + apiUrl;
     var uri = Uri.parse(fullUrl);
     await _getToken();
-    var request = new http.MultipartRequest("POST", uri);
+    var request = http.MultipartRequest("POST", uri);
     request.headers.addAll(_setFileHeaders());
     request.fields["_method"] = "put";
-    var multipartFile = new http.MultipartFile(
-        'profile_picture', stream, length,
+    var multipartFile = http.MultipartFile('profile_picture', stream, length,
         filename: basename(file.path));
     request.files.add(multipartFile);
     return await request.send();
@@ -49,6 +48,7 @@ class Network {
 
   postFile(apiUrl, files, data) async {
     var fullUrl = _url + apiUrl;
+    // ignore: prefer_typing_uninitialized_variables
     var multipartFile;
     var uri = Uri.parse(fullUrl);
     await _getToken();
@@ -61,10 +61,10 @@ class Network {
     request.fields["hashtags"] = data["hashtags"].toString();
 
     for (var file in files) {
-      var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
+      // ignore: deprecated_member_use
+      var stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
       var length = await file.length();
-      var multipartFile = new http.MultipartFile(
-          'post_attachment', stream, length,
+      var multipartFile = http.MultipartFile('post_attachment', stream, length,
           filename: basename(file.path));
       request.files.add(multipartFile);
     }

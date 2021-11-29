@@ -114,6 +114,7 @@ class _MyHomePageState extends State<PostPage> {
                     child: new GestureDetector(
                       onTap: () {
                         if (image != null) {
+                          // ignore: deprecated_member_use
                           _scaffoldKey.currentState!.showSnackBar(SnackBar(
                             duration: const Duration(seconds: 1),
                             content: Row(

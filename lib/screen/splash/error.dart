@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/main.dart';
 
 class ConnectionFaildScreen extends StatefulWidget {
   const ConnectionFaildScreen({Key? key}) : super(key: key);

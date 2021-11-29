@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:get/get.dart';
 import 'package:qstar/constant.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'dart:convert';
 import 'dart:ui';
 
@@ -42,10 +41,7 @@ class _EditProfilePageState extends State<ChangePassword> {
 
   // ignore: prefer_typing_uninitialized_variables
   var body;
-  double? _height;
-  double? _width;
 
-  final _multiSelectKey = GlobalKey<FormState>();
   @override
   void initState() {
     _fetchUser();
@@ -56,10 +52,13 @@ class _EditProfilePageState extends State<ChangePassword> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
 
+    // ignore: avoid_print
     print(token);
     if (token != null) {
+      // ignore: avoid_print
       print(token.toString());
       body = json.decode(token);
+      // ignore: avoid_print
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
     }
@@ -67,8 +66,6 @@ class _EditProfilePageState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -97,14 +94,15 @@ class _EditProfilePageState extends State<ChangePassword> {
                   key: editprofileController.EditProf,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Container(
-                    padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 25, right: 16),
                     child: GestureDetector(
                         onTap: () {
                           FocusScope.of(context).unfocus();
                         },
                         child: ListView(
                           children: [
-                            SizedBox(height: 24),
+                            const SizedBox(height: 24),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -224,7 +222,9 @@ class _EditProfilePageState extends State<ChangePassword> {
                                 RaisedButton.icon(
                                   onPressed: () {
                                     editprofileController.editProf(body["id"]);
+                                    // ignore: avoid_print
                                     print(editprofileController.isLoading);
+                                    // ignore: unrelated_type_equality_checks
                                     editprofileController.isLoading == true
                                         ? const Center(
                                             child: CircularProgressIndicator())
@@ -257,26 +257,26 @@ class _EditProfilePageState extends State<ChangePassword> {
                   ),
                 ),
             onLoading: Center(child: loadData()),
-            onEmpty: Text("Can't fetch data"),
+            onEmpty: const Text("Can't fetch data"),
             onError: (error) => Center(child: Text(error.toString()))));
   }
 
-  final ImagePicker _picker = ImagePicker();
   ImagePicker picker = ImagePicker();
 
   void _showMessage() {
     showDialog(
         context: context,
-        builder: (context) => new AlertDialog(
-              title: new Text('info'),
-              content: new Text(
-                  json.decode(editprofileController.edited)["message"]),
+        builder: (context) => AlertDialog(
+              title: const Text('info'),
+              content:
+                  Text(json.decode(editprofileController.edited)["message"]),
               actions: <Widget>[
-                new FlatButton(
+                // ignore: deprecated_member_use
+                FlatButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: new Text('ok'),
+                  child: const Text('ok'),
                 ),
               ],
             ));

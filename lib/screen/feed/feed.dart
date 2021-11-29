@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 
@@ -27,6 +28,7 @@ import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
+import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/qvideo/videopicker.dart';
@@ -323,6 +325,8 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> {
   TextEditingController nameController = TextEditingController();
   PostController postController = Get.put(PostController());
+  PerfectMatchController perfectMatchController =
+      Get.put(PerfectMatchController());
   late VoidCallback _onShowMenu;
   bool connection = true;
   @override
@@ -422,15 +426,28 @@ class _FeedState extends State<Feed> {
           leading: IconButton(
               icon: const Icon(FontAwesome.heartbeat),
               color: mPrimaryColor,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const MyPages(),
-                    transitionDuration: Duration.zero,
-                  ),
-                );
+              onPressed: () async {
+                print(await perfectMatchController.check());
+                if (await perfectMatchController.check() == true) {
+                  // perfectMatchController.fetchPf();
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProfileImageAppbarRoute(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          MyPages(),
+                      transitionDuration: Duration.zero,
+                    ),
+                  );
+                }
               }),
           actions: [
             IconButton(

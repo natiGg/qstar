@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';
@@ -177,7 +178,7 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
                 // the data it provides to limit the aspect ratio of the video.
                 return Expanded(
                   // Use the VideoPlayer widget to display the video.
-                  child: Container(
+                  child: SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: VideoPlayer(_controller)),
                 );

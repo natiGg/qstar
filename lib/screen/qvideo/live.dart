@@ -1,7 +1,5 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +9,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/feed.dart';
-import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
-import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 
 import 'package:qstar/screen/qvideo/comment/comment_widget.dart';
 
-import 'package:qstar/screen/qvideo/videoPreview.dart';
 import 'package:qstar/screen/search/search.dart';
 import 'package:video_player/video_player.dart';
 
@@ -281,7 +276,6 @@ class Live extends StatefulWidget {
 
 class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
   ImagePicker picker = ImagePicker();
-  File? _cameraVideo;
   bool abo = false;
   bool foryou = true;
   bool play = true;
@@ -293,7 +287,6 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.8);
   PageController foryouController = PageController();
-  late VoidCallback _onShowMenu;
   @override
   void initState() {
     super.initState();
@@ -306,14 +299,6 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
         _controller.setLooping(true);
         setState(() {});
       });
-
-    _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.download, title: 'Save Video', id: 2),
-        BottomSheetAction(iconData: Icons.report, title: 'Report', id: 0),
-        BottomSheetAction(iconData: Icons.block, title: 'Block', id: 1),
-      ]);
-    };
   }
 
   @override
@@ -479,7 +464,7 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(

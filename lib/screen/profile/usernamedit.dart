@@ -1,16 +1,17 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:get/get.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/unameditcontroller.dart';
-import 'package:qstar/screen/profile/profile.dart';
-import 'dart:convert';
-import 'dart:io';
 
 import '../../constant.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class unamedit extends StatelessWidget {
   UnameController unameController = Get.put(UnameController());
+
+  unamedit({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -25,26 +26,31 @@ class unamedit extends StatelessWidget {
                   Navigator.of(context).pop(true);
                 }),
             actions: [
+              // ignore: duplicate_ignore, duplicate_ignore
               Padding(
                 padding: const EdgeInsets.all(20.0),
+                // ignore: unrelated_type_equality_checks
                 child: unameController.saved == false
-                    ? Text("Save", style: TextStyle(color: mPrimaryColor))
-                    : Text(
+                    ? const Text("Save", style: TextStyle(color: mPrimaryColor))
+                    : const Text(
                         "Saved",
                         style: TextStyle(color: mPrimaryColor),
                       ),
               ),
-              unameController.isLoading == false 
+              unameController.isLoading == false
                   ? IconButton(
                       onPressed: () {
                         unameController.editUname();
                       },
-                      icon: unameController.saved==false?Icon(Icons.save):Icon(Icons.check),
+                      icon: unameController.saved == false
+                          ? const Icon(Icons.save)
+                          : const Icon(Icons.check),
                       color: mPrimaryColor)
-                  : SizedBox(
-                    height: 1,
-                    width: 50,
+                  : const SizedBox(
+                      height: 1,
+                      width: 50,
                       child: Center(
+                        // ignore: duplicate_ignore
                         child: CircularProgressIndicator(
                             // ignore: unrelated_type_equality_checks
                             color: mPrimaryColor),
@@ -56,15 +62,15 @@ class unamedit extends StatelessWidget {
             key: unameController.EditUname,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Container(
-              padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+              padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
               child: ListView(children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Username",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
@@ -90,18 +96,18 @@ class unamedit extends StatelessWidget {
                     ),
                     unameController.unames != ''
                         ? Padding(
-                            padding: EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 10),
                             child: Text(
                               "username already taken try ${unameController.unames.toString()}",
                               style: const TextStyle(
                                 color: mPrimaryColor,
                               ),
                             ))
-                        : Padding(
+                        : const Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
                               '',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: mPrimaryColor,
                               ),
                             ))

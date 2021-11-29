@@ -4,8 +4,11 @@ import 'package:qstar/constant.dart';
 class TextFieldWidget extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  const TextFieldWidget({ Key? key,required this.label,required this.controller}) : super(key: key);
+  const TextFieldWidget(
+      {Key? key, required this.label, required this.controller})
+      : super(key: key);
 
+  @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,11 +27,8 @@ class TextFieldWidget extends StatelessWidget {
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.white, width: 2.0),
                 borderRadius: BorderRadius.circular(12),
-                
               ),
             ),
-
-   
           ),
         ],
       );

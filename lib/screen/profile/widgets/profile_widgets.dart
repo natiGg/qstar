@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 
-import 'package:qstar/screen/profile/followers.dart';
-import 'package:qstar/screen/profile/following.dart';
 import 'package:get/get.dart';
-import 'package:qstar/widget/utils.dart';
-EditprofileController editprofileController=Get.find();
+
+EditprofileController editprofileController = Get.find();
 
 Widget bio({required Color primaryColor}) {
   return Container(
@@ -276,7 +273,8 @@ Widget profileAvatar({
                 shape: BoxShape.circle,
               ),
               child: CircleAvatar(
-                backgroundImage: NetworkImage("https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
+                backgroundImage: NetworkImage(
+                    "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}"),
               ),
             ),
           ),

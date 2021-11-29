@@ -1,14 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'location_selector_widget.dart';
-import 'post_create_view_model.dart';
 
 import 'package:qstar/constant.dart';
 import 'write_caption_widget.dart';
 
-import 'package:qstar/screen/post/tag.dart';
-import 'package:qstar/screen/post/location.dart';
 import 'package:qstar/screen/post/setting.dart';
 
 class SettingPostPage extends StatefulWidget {

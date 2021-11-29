@@ -36,14 +36,12 @@ class _CategoryVideo2 extends State<CategoryVid>
             onPressed: () {
               Navigator.pushNamed(context, '/home');
             }),
-        title: Container(
-          child: const Text(
-            "Q video",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
-            ),
+        title: const Text(
+          "Q video",
+          style: TextStyle(
+            color: mPrimaryColor,
+            fontSize: 27,
+            fontFamily: 'font1',
           ),
         ),
         actions: [
