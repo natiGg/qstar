@@ -505,8 +505,8 @@ class _FeedState extends State<Feed> {
                           children: [
                             // ignore: prefer_const_constructors
                             CircleAvatar(
-                                backgroundImage: const AssetImage(
-                                    'assets/images/profile1.jpg')),
+                                backgroundImage: NetworkImage(
+                                    "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}")),
                             const SizedBox(width: 8.0),
 
                             Expanded(
@@ -1152,81 +1152,84 @@ class _FeedState extends State<Feed> {
   }
 
   void _showPeople(context) {
-         showModalBottomSheet(
+    showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-            return Column(
-                      children: [
-                        Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: new Card(
-                child: new ListTile(
-                  leading: new Icon(Icons.search),
-                  title: new TextField(
-                    controller: postController.searchController,
-                    decoration: new InputDecoration(
-                        hintText: 'Search', border: InputBorder.none),
-                        onChanged: postController.onSearchTextChanged,
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new Card(
+                  child: new ListTile(
+                    leading: new Icon(Icons.search),
+                    title: new TextField(
+                      controller: postController.searchController,
+                      decoration: new InputDecoration(
+                          hintText: 'Search', border: InputBorder.none),
+                      onChanged: postController.onSearchTextChanged,
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.cancel),
+                      onPressed: () {
+                        postController.searchController.clear();
+                        postController.onSearchTextChanged('');
+                      },
+                    ),
                   ),
-                  trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
-                                      postController.searchController.clear();
-                                     postController.onSearchTextChanged('');
-
-
-                  },),
                 ),
               ),
-            ),
-            
-
-                       Obx(() => Expanded(
-                          child: postController.searched.value.isNotEmpty || postController.searchController.text.isNotEmpty? ListView.builder(
-                              reverse: false,
-                              itemCount: postController.searched.value.length,
-                              padding: EdgeInsets.all(8),
-                              itemBuilder: (BuildContext context, int index) {
-                                return SafeArea(
-                                    child: Container(
-                                        child:  Wrap(children: <Widget>[
-                                          
-                                    ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.searched[index].id.toString()}"),
-                                        ),
-                                        title: Text(postController.searched[index].name.toString()),
-                                        onTap: (){
-                                           postController.tapSelection(index);
-                                               Navigator.of(context).pop(true);
-                                         }, 
-                                            ),
-                                ])));
-                              }):ListView.builder(
-                              reverse: false,
-                              itemCount: postController.suggestions.length,
-                              padding: EdgeInsets.all(8),
-                              itemBuilder: (BuildContext context, int index) {
-                                return SafeArea(
-                                    child: Container(
-                                        child:  Wrap(children: <Widget>[
-                                          
-                                    ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.suggestions[index].id.toString()}"),
-                                        ),
-                                        title: Text(postController.suggestions[index].name.toString()),
-                                         onTap: (){
-                                           postController.tapSelection(index);
-                                          Navigator.of(context).pop(true);
-                                         },
-   
-                                            ),
-                                ])));
-                              }),
-                        )),
-                      ],
-                    );
+              Obx(() => Expanded(
+                    child: postController.searched.value.isNotEmpty ||
+                            postController.searchController.text.isNotEmpty
+                        ? ListView.builder(
+                            reverse: false,
+                            itemCount: postController.searched.value.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.searched[index].id.toString()}"),
+                                  ),
+                                  title: Text(postController
+                                      .searched[index].name
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            })
+                        : ListView.builder(
+                            reverse: false,
+                            itemCount: postController.suggestions.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.suggestions[index].id.toString()}"),
+                                  ),
+                                  title: Text(postController
+                                      .suggestions[index].name
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            }),
+                  )),
+            ],
+          );
           // return Container(
           //   height: 300,
           //   child: FutureBuilder(
@@ -1238,7 +1241,7 @@ class _FeedState extends State<Feed> {
           //           );
           //         }
           //         if (snapshot.hasData) {
-                  
+
           //         } else {
           //           return Center(
           //             child: CircularProgressIndicator(),
@@ -1250,7 +1253,7 @@ class _FeedState extends State<Feed> {
   }
 
   void _showPicker(context) {
-       showModalBottomSheet(
+    showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
@@ -1272,7 +1275,7 @@ class _FeedState extends State<Feed> {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                               MyApp(),
+                              MyApp(),
                           transitionDuration: Duration.zero,
                         ),
                       ); // _imgFromCamera();
