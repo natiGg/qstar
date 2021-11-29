@@ -771,9 +771,9 @@ class _FeedState extends State<Feed> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/images/profile1.jpg')),
+                          CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}")),
                           const SizedBox(width: 8.0),
                           Container(
                             child: Center(
