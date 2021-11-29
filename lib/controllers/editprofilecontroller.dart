@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -6,8 +6,6 @@ import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/profile/editprofile.dart';
-import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +30,11 @@ class EditprofileController extends GetxController with StateMixin {
   var pass = '';
   var isLoading = false.obs;
   var edited = "";
+  // ignore: prefer_typing_uninitialized_variables
   var hobbies;
+  // ignore: prefer_typing_uninitialized_variables
   var hobItem;
+  // ignore: prefer_typing_uninitialized_variables
   var image;
   late String uid = "";
   var unamechecker, messages, errorMessages, emailchecker;
@@ -72,16 +73,13 @@ class EditprofileController extends GetxController with StateMixin {
         bioControl.text = suggested.bio;
         prevuname = suggested.userName;
         prevemail = suggested.email;
-        print("just gotttt here");
-        print(suggested.hobbies);
+
         hobbiesSplit = suggested.hobbies.toString().split(",");
-        print(hobbiesSplit);
 
         for (int i = 0; i < hobbiesSplit.length; i++) {
           Hobbies hobbies = Hobbies(id: i, name: hobbiesSplit[i].toString());
           hobbyitems.add(hobbies);
         }
-        print(hobbyitems);
 
         hobItem = hobbyitems
             .map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))
@@ -115,10 +113,9 @@ class EditprofileController extends GetxController with StateMixin {
     openAndCloseLoadingDialog();
 
     var uploaded = await RemoteServices.uploadImage(image, id.toString());
-    print(uploaded.toString());
+
     if (uploaded) {
       if (tobeSent.length < 1) {
-        print("tobe null");
         tobeSent = hobbiesSplit;
       }
 
@@ -135,9 +132,8 @@ class EditprofileController extends GetxController with StateMixin {
         "hobbies": tobeSent.join(",").toString(),
         "_method": "put"
       };
-      print(tobeSent.join(",").toString());
+
       edited = await RemoteServices.editprofile(data, id);
-      print(edited);
 
       if (edited == "200") {
         closeDialog(true, '');
@@ -145,11 +141,9 @@ class EditprofileController extends GetxController with StateMixin {
       } else {
         errorMessages = edited;
         closeDialog(false, errorMessages);
-        print(edited.toString());
       }
     } else {
       if (tobeSent.length < 1) {
-        print("tobe null");
         tobeSent = hobbiesSplit;
       }
 
@@ -166,9 +160,8 @@ class EditprofileController extends GetxController with StateMixin {
         "hobbies": tobeSent.join(",").toString(),
         "_method": "put"
       };
-      print(tobeSent.join(",").toString());
+
       edited = await RemoteServices.editprofile(data, id);
-      print(edited);
 
       if (edited == "200") {
         closeDialog(true, '');
@@ -176,7 +169,6 @@ class EditprofileController extends GetxController with StateMixin {
       } else {
         errorMessages = edited;
         closeDialog(false, errorMessages);
-        print(edited.toString());
       }
     }
   }
@@ -194,7 +186,7 @@ class EditprofileController extends GetxController with StateMixin {
       barrierColor: Colors.grey.withOpacity(0.3),
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
-        child: Center(
+        child: const Center(
           child: SizedBox(
             width: 30,
             height: 30,
@@ -209,17 +201,18 @@ class EditprofileController extends GetxController with StateMixin {
   }
 
   Future<void> closeDialog(bool stat, String data) async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     // Dismiss CircularProgressIndicator
     Navigator.of(Get.context!).pop();
     if (stat == false) {
       Get.dialog(
         AlertDialog(
-          title: Text("info"),
+          title: const Text("info"),
           content: Text(data),
           actions: <Widget>[
+            // ignore: deprecated_member_use
             FlatButton(
-              child: Text("close"),
+              child: const Text("close"),
               onPressed: () {
                 Get.back();
               },

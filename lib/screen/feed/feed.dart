@@ -302,6 +302,7 @@ set _imageFile(XFile? value) {
   _imageFileList = value == null ? null : [value];
 }
 
+// ignore: unused_element
 dynamic _pickImageError;
 
 List<bool> _isFF = [true, false, false, true, false];
@@ -347,28 +348,26 @@ class _FeedState extends State<Feed> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
 
-    print(token);
     if (token != null) {
-      print(token.toString());
       var body = json.decode(token);
-      print(body["id"]);
+
       editprofileController.fetchProfile(body["id"]);
     }
   }
 
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     //items.add((items.length+1).toString());
     //if(mounted)
@@ -379,6 +378,7 @@ class _FeedState extends State<Feed> {
   }
 
   ImagePicker picker = ImagePicker();
+  // ignore: unused_field
   File? _cameraVideo;
 
   _pickVideoFromCamera() async {
@@ -585,27 +585,27 @@ class _FeedState extends State<Feed> {
                                       builder: (BuildContext bc) {
                                         return SafeArea(
                                           child: Container(
-                                            child: new Wrap(
+                                            child: Wrap(
                                               children: <Widget>[
-                                                new ListTile(
-                                                    leading: new Icon(
+                                                ListTile(
+                                                    leading: const Icon(
                                                       Icons.photo_library,
                                                       color: mPrimaryColor,
                                                     ),
-                                                    title: new Text(
+                                                    title: const Text(
                                                         'Video Library'),
                                                     onTap: () {
                                                       _pickVideo();
                                                       Navigator.of(context)
                                                           .pop();
                                                     }),
-                                                new ListTile(
-                                                  leading: new Icon(
+                                                ListTile(
+                                                  leading: const Icon(
                                                     Icons.videocam_sharp,
                                                     color: mPrimaryColor,
                                                   ),
-                                                  title:
-                                                      new Text('Video Camera'),
+                                                  title: const Text(
+                                                      'Video Camera'),
                                                   onTap: () {
                                                     _pickVideoFromCamera();
                                                     Navigator.of(context).pop();
@@ -738,37 +738,7 @@ class _FeedState extends State<Feed> {
         )));
   }
 
-  void _postType(context) {
-    showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-        backgroundColor: Colors.white,
-        context: context,
-        isScrollControlled: true,
-        builder: (context) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      const SizedBox(width: 8.0),
-                      Column(
-                        children: const [],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ));
-  }
-
   void _postModal(context) {
-    var size = MediaQuery.of(context).size;
-
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2;
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -791,10 +761,10 @@ class _FeedState extends State<Feed> {
                           Container(
                             child: Center(
                               child: Padding(
-                                padding: EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(2.0),
                                 child: Text(
                                   editprofileController.suggested.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -837,7 +807,7 @@ class _FeedState extends State<Feed> {
                               ),
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             padding: const EdgeInsets.only(
                               left: 50,
@@ -846,6 +816,7 @@ class _FeedState extends State<Feed> {
                               child: Container(
                                 height: 40,
                                 width:
+                                    // ignore: unrelated_type_equality_checks
                                     postController.isPosted == false ? 64 : 90,
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 10),
@@ -859,23 +830,24 @@ class _FeedState extends State<Feed> {
                                   },
                                   child: postController.isPosting == false
                                       ? Center(
+                                          // ignore: unrelated_type_equality_checks
                                           child: postController.isPosted ==
                                                   false
-                                              ? Text(
+                                              ? const Text(
                                                   'Post',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white,
                                                   ),
                                                 )
-                                              : Text(
+                                              : const Text(
                                                   'Posted',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white,
                                                   ),
                                                 ))
-                                      : SizedBox(
+                                      : const SizedBox(
                                           height: 20,
                                           width: 20,
                                           child: Center(
@@ -931,7 +903,7 @@ class _FeedState extends State<Feed> {
                                           },
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 40,
                                       ),
                                       // TypeAheadFormField<User?>(
@@ -1123,7 +1095,7 @@ class _FeedState extends State<Feed> {
       _imageFileList!.addAll(selectedImages);
       for (var file in _imageFileList!) {
         File convertedFile = File(file.path);
-        print(convertedFile);
+
         postController.imagesList.add(convertedFile);
       }
       selectedImages.clear();

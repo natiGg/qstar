@@ -28,9 +28,8 @@ class Network {
     var uri = Uri.parse(fullUrl);
 
     await _getToken();
-    print("inside gett datatatat");
-    print(token);
-    print(_setHeaders().toString());
+    // ignore: avoid_print
+
     return await http.get(uri, headers: _setHeaders());
   }
 
@@ -49,7 +48,6 @@ class Network {
   }
 
   postFile(apiUrl, files, data) async {
-    
     var fullUrl = _url + apiUrl;
     var multipartFile;
     var uri = Uri.parse(fullUrl);
@@ -61,17 +59,16 @@ class Network {
     request.fields["post_type"] = data["post_type"].toString();
     request.fields["comment_disabled"] = data["comment_disabled"].toString();
     request.fields["hashtags"] = data["hashtags"].toString();
-    
-    for (var file in files)
-    {
-    var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
-    var length = await file.length();
-    var multipartFile = new http.MultipartFile(
-        'post_attachment', stream, length,
-        filename: basename(file.path));  
-        request.files.add(multipartFile);
+
+    for (var file in files) {
+      var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
+      var length = await file.length();
+      var multipartFile = new http.MultipartFile(
+          'post_attachment', stream, length,
+          filename: basename(file.path));
+      request.files.add(multipartFile);
     }
-    
+
     return await request.send();
   }
 
