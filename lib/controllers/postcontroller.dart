@@ -32,7 +32,7 @@ class PostController extends GetxController {
   var searched = <User>[].obs;
   var isSelected = false.obs;
   var selectedUsers = [].obs;
-
+  var imagefile = <File>[].obs;
   @override
   void onInit() {
     fetchall();
@@ -101,6 +101,11 @@ class PostController extends GetxController {
 
   void removeItem(var index) async {
     imagesList.removeAt(index);
+    imagefile.removeAt(index);
+  }
+
+  void removeEdited(var index) async {
+    imagefile.removeAt(index);
   }
 
   void createPost() async {

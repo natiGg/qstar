@@ -98,17 +98,17 @@ List _usersd = [
       )),
 ];
 
-class PreviewImageScreengallery extends StatefulWidget {
+class VideoPreview extends StatefulWidget {
   final String imagePath;
 
   // ignore: use_key_in_widget_constructors
-  const PreviewImageScreengallery({required this.imagePath});
+  const VideoPreview({required this.imagePath});
 
   @override
   _PreviewImageScreenState createState() => _PreviewImageScreenState();
 }
 
-class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
+class _PreviewImageScreenState extends State<VideoPreview> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
