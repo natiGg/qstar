@@ -80,15 +80,12 @@ class PostController extends GetxController {
   }
 
   void tapSelection(var index) {
-    if (captionController.text.isEmpty) {
-      selectedUsers.clear();
-    }
-    if (selectedUsers.contains(suggestions[index].userName) ||
-        hashtags.contains(suggestions[index].userName)) {
+    print("objectf");
+    if (hashtags.contains("@"+suggestions[index].userName)==true) {
       print("already added");
     } else {
       print(hashtags);
-      selectedUsers.add(suggestions[index].userName);
+      hashtags.add(suggestions[index].userName);
       captionController.text =
           captionController.text + "@" + suggestions[index].userName + " ";
     }
