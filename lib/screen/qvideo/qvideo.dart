@@ -329,8 +329,7 @@ class _QvideoState2 extends State<Qvideoscreen>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            PreviewImageScreengallery(imagePath: pickedFile.path),
+        builder: (context) => VideoPreview(imagePath: pickedFile.path),
       ),
     );
   }
@@ -348,7 +347,7 @@ class _QvideoState2 extends State<Qvideoscreen>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: file),
+        builder: (context) => VideoPreview(imagePath: file),
       ),
     );
   }

@@ -10,7 +10,7 @@ import 'package:qstar/screen/register/model/hobbies.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter/material.dart';
 
-// ignore: duplicate_ignore
+// ignore: duplicate_ignore, duplicate_ignore, duplicate_ignore
 class EditprofileController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditProf = GlobalKey<FormState>();

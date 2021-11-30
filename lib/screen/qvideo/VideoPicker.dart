@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/qvideo/videopreview.dart';
+import 'package:qstar/screen/qvideo/videoPreview.dart';
 
 class VideoRecorderExample extends StatefulWidget {
   const VideoRecorderExample({Key? key}) : super(key: key);
@@ -30,8 +30,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            PreviewImageScreengallery(imagePath: pickedFile.path),
+        builder: (context) => VideoPreview(imagePath: pickedFile.path),
       ),
     );
   }
@@ -98,7 +97,7 @@ class _VideoRecorderExampleState extends State<VideoRecorderExample> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: file),
+        builder: (context) => VideoPreview(imagePath: file),
       ),
     );
   }
