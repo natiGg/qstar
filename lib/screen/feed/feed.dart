@@ -1357,18 +1357,18 @@ class _FeedState extends State<Feed> {
                     leading: const Icon(Icons.photo_camera),
                     title: const Text('Camera'),
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (_) => CameraCamera(
-                      //               onFile: (file) {
-                      //                 _onCapturePressed(file);
+                      Navigator.of(context).pop();
 
-                      //                 setState(() {});
-                      //               },
-                      //             )));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => CameraCamera(
+                                    onFile: (file) {
+                                      Navigator.of(context).pop();
+                                      _onCapturePressed(file);
+                                    },
+                                  )));
                       // _imgFromCamera();
-                      // Navigator.of(context).pop();
                     },
                   ),
                 ],

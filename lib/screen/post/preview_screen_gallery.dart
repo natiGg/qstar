@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:camera_camera/camera_camera.dart';
 import 'package:get/get.dart';
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/photofilters.dart';
@@ -9,6 +10,7 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:qstar/controllers/postcontroller.dart';
+import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:qstar/screen/post/settingpostpage.dart';
 
@@ -109,8 +111,11 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               //     MaterialPageRoute(
               //         builder: (context) =>
               //             SettingPostPage(imagePath: filtedpath)));
-
+              print("woops");
               postController.imagefile.add(imageFile!);
+              postController.imagesList.add(imageFile!);
+              print(postController.imagefile.length);
+
               Navigator.of(context).pop(true);
               //  Navigator.of(context).pop(true);
             },
