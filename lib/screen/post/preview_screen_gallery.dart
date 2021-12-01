@@ -120,7 +120,6 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
                 }
                 else{
                 postController.imagesList[postController.index.value]=imageFile as File;
-
                 }
               }
               else{

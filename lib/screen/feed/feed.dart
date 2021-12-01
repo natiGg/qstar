@@ -991,16 +991,19 @@ class _FeedState extends State<Feed> {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: GestureDetector(
-                                                      onTap: (){
-                                                             postController.index.value=index;
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
+                                                      onTap: () {
+                                                        postController.index
+                                                            .value = index;
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        PreviewImageScreengallery(
+                                                                          imagePath: postController
+                                                                              .imagesList[index]
+                                                                              .path,
+                                                                        )));
                                                       },
                                                       child: Image.file(
                                                         File(postController
@@ -1008,7 +1011,7 @@ class _FeedState extends State<Feed> {
                                                             .path),
                                                         fit: BoxFit.cover,
                                                         height: 100,
-                                                                width: 400,
+                                                        width: 400,
                                                       ),
                                                     ),
                                                   ),
@@ -1127,11 +1130,27 @@ class _FeedState extends State<Feed> {
     final List<XFile>? selectedImages = await _picker.pickMultiImage();
     if (selectedImages!.isNotEmpty) {
       _imageFileList!.addAll(selectedImages);
-      for (var file in _imageFileList!) {
-        File convertedFile = File(file.path);
-        postController.imagesList.add(convertedFile);
-        print(postController.imagesList.length);
+      if (_imageFileList!.length > 1) {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          postController.imagesList.add(convertedFile);
+          print(postController.imagesList.length);
+        }
+      } else {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          postController.imagesList.add(convertedFile);
+          postController.index.value = postController.imagesList.length-1;
+          print(postController.imagesList.length);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PreviewImageScreengallery(
+                        imagePath: file.path,
+                      )));
+        }
       }
+
       selectedImages.clear();
       _imageFileList!.clear();
     }
@@ -1282,7 +1301,7 @@ class _FeedState extends State<Feed> {
                           MaterialPageRoute(
                               builder: (_) => CameraCamera(
                                     onFile: (file) {
-                                      postController.isCam.value=true;
+                                      postController.isCam.value = true;
                                       Navigator.of(context).pop();
                                       _onCapturePressed(file);
                                     },
