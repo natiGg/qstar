@@ -20,7 +20,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
-
+ 
   // ignore: use_key_in_widget_constructors
   const PreviewImageScreengallery({required this.imagePath});
 
@@ -112,15 +112,17 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               //         builder: (context) =>
               //             SettingPostPage(imagePath: filtedpath)));
               print("woops");
-              if (postController.imagesList.isNotEmpty) {
-                if (postController.isCam.value) {
-                  postController.imagesList.add(imageFile!);
-                  postController.isCam.value = false;
-                } else {
-                  postController.imagesList[postController.index.value] =
-                      imageFile as File;
+              if(postController.imagesList.isNotEmpty){
+                if(postController.isCam.value)
+                {
+                 postController.imagesList.add(imageFile!);
+                 postController.isCam.value=false;
                 }
-              } else {
+                else{
+                postController.imagesList[postController.index.value]=imageFile as File;
+                }
+              }
+              else{
                 postController.imagesList.add(imageFile!);
               }
               Navigator.of(context).pop(true);
