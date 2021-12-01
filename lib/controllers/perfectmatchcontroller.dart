@@ -86,7 +86,7 @@ class PerfectMatchController extends GetxController with StateMixin {
 
         macthgender = fetched.pfgender;
 
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 1));
         // Dismiss CircularProgressIndicator
         Navigator.of(Get.context!).pop();
       }
@@ -219,7 +219,7 @@ class PerfectMatchController extends GetxController with StateMixin {
     Get.snackbar("", "profile Edited",
         icon: Icon(Icons.person, color: mPrimaryColor.withOpacity(0.05)),
         snackPosition: SnackPosition.TOP);
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     Navigator.pushNamed(Get.context!, '/home');
   }
 
@@ -245,7 +245,7 @@ class PerfectMatchController extends GetxController with StateMixin {
   }
 
   Future<void> closeDialog(bool stat, String data) async {
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     // Dismiss CircularProgressIndicator
     // Navigator.of(Get.context!).pop();
     if (stat == false) {

@@ -291,7 +291,7 @@ class _QvideoState2 extends State<Live> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 5));
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     animationController.repeat();
     _controller = VideoPlayerController.asset('assets/vod.mp4')
       ..initialize().then((value) {

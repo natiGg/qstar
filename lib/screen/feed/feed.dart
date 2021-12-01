@@ -431,7 +431,6 @@ class _FeedState extends State<Feed> {
               icon: const Icon(FontAwesome.heartbeat),
               color: mPrimaryColor,
               onPressed: () async {
-                print(await perfectMatchController.check());
                 if (await perfectMatchController.check() == true) {
                   // perfectMatchController.fetchPf();
                   Navigator.push(

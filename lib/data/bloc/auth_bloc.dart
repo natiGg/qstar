@@ -4,7 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/data/model/user.dart';
 
-const Duration _defaultDelayResponse = Duration(seconds: 2);
+const Duration _defaultDelayResponse = Duration(seconds: 1);
 
 class AuthBloc extends ChangeNotifier {
   static const TAG = 'AuthBloc';

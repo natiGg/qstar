@@ -206,7 +206,7 @@ class EditprofileController extends GetxController with StateMixin {
   }
 
   Future<void> closeDialog(bool stat, String data) async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     // Dismiss CircularProgressIndicator
     Navigator.of(Get.context!).pop();
     if (stat == false) {
