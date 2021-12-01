@@ -270,28 +270,6 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs),
-  User(
-      id: 5,
-      userName: "abrsh",
-      storyImage: "",
-      userImage: "",
-      name: "",
-      website: "",
-      bio: "",
-      email: "",
-      country_code: "",
-      phone_number: "",
-      gender: "",
-      enable_suggestion: "",
-      status: "",
-      date_of_birth: "",
-      current_location: "",
-      account_type: "",
-      online_status: "",
-      joined_date: "",
-      hobbies: "",
-      total_followers: "",
-      followed: false.obs)
 ];
 
 List<Post> _posts = [
@@ -990,16 +968,19 @@ class _FeedState extends State<Feed> {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: GestureDetector(
-                                                      onTap: (){
-                                                             postController.index.value=index;
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
+                                                      onTap: () {
+                                                        postController.index
+                                                            .value = index;
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        PreviewImageScreengallery(
+                                                                          imagePath: postController
+                                                                              .imagesList[index]
+                                                                              .path,
+                                                                        )));
                                                       },
                                                       child: Image.file(
                                                         File(postController
@@ -1007,7 +988,7 @@ class _FeedState extends State<Feed> {
                                                             .path),
                                                         fit: BoxFit.cover,
                                                         height: 100,
-                                                                width: 400,
+                                                        width: 400,
                                                       ),
                                                     ),
                                                   ),
@@ -1281,7 +1262,7 @@ class _FeedState extends State<Feed> {
                           MaterialPageRoute(
                               builder: (_) => CameraCamera(
                                     onFile: (file) {
-                                      postController.isCam.value=true;
+                                      postController.isCam.value = true;
                                       Navigator.of(context).pop();
                                       _onCapturePressed(file);
                                     },
