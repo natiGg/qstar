@@ -1107,11 +1107,27 @@ class _FeedState extends State<Feed> {
     final List<XFile>? selectedImages = await _picker.pickMultiImage();
     if (selectedImages!.isNotEmpty) {
       _imageFileList!.addAll(selectedImages);
-      for (var file in _imageFileList!) {
-        File convertedFile = File(file.path);
-        postController.imagesList.add(convertedFile);
-        print(postController.imagesList.length);
+      if (_imageFileList!.length > 1) {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          postController.imagesList.add(convertedFile);
+          print(postController.imagesList.length);
+        }
+      } else {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          postController.imagesList.add(convertedFile);
+          postController.index.value = postController.imagesList.length-1;
+          print(postController.imagesList.length);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PreviewImageScreengallery(
+                        imagePath: file.path,
+                      )));
+        }
       }
+
       selectedImages.clear();
       _imageFileList!.clear();
     }
