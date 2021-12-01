@@ -2,7 +2,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'user.dart';
 
-const Duration _defaultDelayResponse = Duration(seconds: 2);
+const Duration _defaultDelayResponse = Duration(seconds: 1);
 
 class AuthBloc extends ChangeNotifier {
   // ignore: constant_identifier_names

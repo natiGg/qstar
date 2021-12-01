@@ -106,7 +106,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                               _scaffoldKey.currentState!
                                   // ignore: deprecated_member_use
                                   .showSnackBar(SnackBar(
-                                duration: const Duration(seconds: 4),
+                                duration: const Duration(seconds: 1),
                                 content: Row(
                                   children: const <Widget>[
                                     CircularProgressIndicator(),
@@ -458,7 +458,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
   }
 
   _ondelay() {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       // Navigator.popUntil(context, (route) {
       //   return count++ == 2;
       // });
