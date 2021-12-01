@@ -971,157 +971,75 @@ class _FeedState extends State<Feed> {
                                 ),
                                 Obx(() => postController.imagesList.isNotEmpty
                                     ? Expanded(
+                                        child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 12.0, right: 12.0),
                                         child: GridView.count(
-                                        crossAxisCount: 3,
-                                        childAspectRatio: 1,
-                                        children: List.generate(
-                                            postController.imagesList.length,
-                                            (index) {
-                                          return Stack(
-                                            children: <Widget>[
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: postController
-                                                        .imagefile.isEmpty
-                                                    ? GestureDetector(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1,
+                                          children: List.generate(
+                                              postController.imagesList.length,
+                                              (index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 4.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: GestureDetector(
+                                                      onTap: (){
+                                                             postController.index.value=index;
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          PreviewImageScreengallery(
+                                                                            imagePath:
+                                                                                postController.imagesList[index].path,
+                                                                          )));
+                                                      },
+                                                      child: Image.file(
+                                                        File(postController
+                                                            .imagesList[index]
+                                                            .path),
+                                                        fit: BoxFit.cover,
+                                                        height: 100,
+                                                                width: 400,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    right: 5,
+                                                    top: 5,
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: mPrimaryColor
+                                                              .withOpacity(0.5),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                      child: InkWell(
+                                                        child: Icon(
+                                                          FontAwesome.remove,
+                                                          size: 15,
+                                                          color: Colors.white
+                                                              .withOpacity(0.8),
+                                                        ),
                                                         onTap: () {
                                                           postController
-                                                              .removeEdited(
+                                                              .removeItem(
                                                                   index);
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
                                                         },
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            postController
-                                                                .removeEdited(
-                                                                    index);
-                                                            Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            PreviewImageScreengallery(
-                                                                              imagePath: postController.imagesList[index].path,
-                                                                            )));
-                                                          },
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              postController
-                                                                  .removeEdited(
-                                                                      index);
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
-                                                            },
-                                                            child: Image.file(
-                                                              File(postController
-                                                                  .imagesList[
-                                                                      index]
-                                                                  .path),
-                                                              fit: BoxFit.cover,
-                                                              height: 100,
-                                                              width: 400,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : postController.imagesList
-                                                                    .length >
-                                                                postController
-                                                                    .imagefile
-                                                                    .length &&
-                                                            postController
-                                                                .imagefile
-                                                                .isNotEmpty
-                                                        ? GestureDetector(
-                                                            onTap: () {
-                                                              postController
-                                                                  .removeEdited(
-                                                                      index);
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
-                                                            },
-                                                            child: Image.file(
-                                                              File(postController
-                                                                  .imagesList[
-                                                                      index]
-                                                                  .path),
-                                                              fit: BoxFit.cover,
-                                                              height: 100,
-                                                              width: 400,
-                                                            ),
-                                                          )
-                                                        : GestureDetector(
-                                                            onTap: () {
-                                                              postController
-                                                                  .removeEdited(
-                                                                      index);
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PreviewImageScreengallery(
-                                                                            imagePath:
-                                                                                postController.imagesList[index].path,
-                                                                          )));
-                                                            },
-                                                            child: Image.file(
-                                                              File(postController
-                                                                  .imagefile[
-                                                                      index]
-                                                                  .path),
-                                                              fit: BoxFit.cover,
-                                                              height: 100,
-                                                              width: 400,
-                                                            ),
-                                                          ),
-                                              ),
-                                              Positioned(
-                                                right: 5,
-                                                top: 5,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: mPrimaryColor
-                                                          .withOpacity(0.5),
-                                                      shape: BoxShape.circle),
-                                                  child: InkWell(
-                                                    child: Icon(
-                                                      FontAwesome.remove,
-                                                      size: 15,
-                                                      color: Colors.white
-                                                          .withOpacity(0.8),
+                                                      ),
                                                     ),
-                                                    onTap: () {
-                                                      postController
-                                                          .removeItem(index);
-                                                    },
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          );
-                                        }),
+                                            );
+                                          }),
+                                        ),
                                       ))
                                     : Container()),
                                 const Divider(
@@ -1210,8 +1128,8 @@ class _FeedState extends State<Feed> {
       _imageFileList!.addAll(selectedImages);
       for (var file in _imageFileList!) {
         File convertedFile = File(file.path);
-
         postController.imagesList.add(convertedFile);
+        print(postController.imagesList.length);
       }
       selectedImages.clear();
       _imageFileList!.clear();
@@ -1363,6 +1281,7 @@ class _FeedState extends State<Feed> {
                           MaterialPageRoute(
                               builder: (_) => CameraCamera(
                                     onFile: (file) {
+                                      postController.isCam.value=true;
                                       Navigator.of(context).pop();
                                       _onCapturePressed(file);
                                     },
