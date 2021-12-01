@@ -27,8 +27,9 @@ class PostController extends GetxController {
   var hasHash = false.obs;
   var unames = [""].obs;
   var hashtags = [""].obs;
-
+  var index=0.obs;
   var suggestions;
+  var isCam=false.obs;
   var searched = <User>[].obs;
   var isSelected = false.obs;
   var selectedUsers = [].obs;
@@ -105,6 +106,7 @@ class PostController extends GetxController {
   }
 
   void removeEdited(var index) async {
+    
     imagefile.removeAt(index);
   }
 
