@@ -130,6 +130,7 @@ class _MyHomePageState extends State<PostPage> {
                                   builder: (context) =>
                                       PreviewImageScreengallery(
                                         imagePath: image!,
+                                        isfrompost: true,
                                       ))));
                         }
                         // ignore: deprecated_member_use
@@ -249,6 +250,7 @@ class _MyHomePageState extends State<PostPage> {
           MaterialPageRoute(
               builder: (context) => PreviewImageScreengallery(
                     imagePath: image!,
+                    isfrompost: true,
                   )));
     });
   }
@@ -260,7 +262,10 @@ class _MyHomePageState extends State<PostPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: path),
+        builder: (context) => PreviewImageScreengallery(
+          imagePath: path,
+          isfrompost: true,
+        ),
       ),
     );
   }

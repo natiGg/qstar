@@ -302,10 +302,10 @@ class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
 
   @override
-  State<Feed> createState() => _FeedState();
+  State<Feed> createState() => FeedState();
 }
 
-class _FeedState extends State<Feed> {
+class FeedState extends State<Feed> {
   TextEditingController nameController = TextEditingController();
   PostController postController = Get.put(PostController());
   PerfectMatchController perfectMatchController =
@@ -315,6 +315,7 @@ class _FeedState extends State<Feed> {
   @override
   void initState() {
     _fetchUser();
+
     super.initState();
 
     _onShowMenu = () {
@@ -502,7 +503,7 @@ class _FeedState extends State<Feed> {
                                 // ignore: deprecated_member_use
                                 child: FlatButton(
                                   onPressed: () {
-                                    _postModal(context);
+                                    postModal(context);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
@@ -734,7 +735,7 @@ class _FeedState extends State<Feed> {
         )));
   }
 
-  void _postModal(context) {
+  void postModal(context) {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -806,7 +807,7 @@ class _FeedState extends State<Feed> {
                           const Spacer(),
                           Container(
                             padding: const EdgeInsets.only(
-                              left: 50,
+                              left: 40,
                             ),
                             child: Expanded(
                               child: Container(
@@ -980,6 +981,8 @@ class _FeedState extends State<Feed> {
                                                                           imagePath: postController
                                                                               .imagesList[index]
                                                                               .path,
+                                                                          isfrompost:
+                                                                              false,
                                                                         )));
                                                       },
                                                       child: Image.file(
@@ -1117,13 +1120,14 @@ class _FeedState extends State<Feed> {
         for (var file in _imageFileList!) {
           File convertedFile = File(file.path);
           postController.imagesList.add(convertedFile);
-          postController.index.value = postController.imagesList.length-1;
+          postController.index.value = postController.imagesList.length - 1;
           print(postController.imagesList.length);
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => PreviewImageScreengallery(
                         imagePath: file.path,
+                        isfrompost: false,
                       )));
         }
       }
@@ -1300,7 +1304,10 @@ class _FeedState extends State<Feed> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: path),
+        builder: (context) => PreviewImageScreengallery(
+          imagePath: path,
+          isfrompost: false,
+        ),
       ),
     );
   }

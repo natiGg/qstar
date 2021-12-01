@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:camera_camera/camera_camera.dart';
 import 'package:get/get.dart';
 import 'package:photofilters/filters/filters.dart';
 import 'package:photofilters/photofilters.dart';
@@ -10,19 +9,19 @@ import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:qstar/controllers/postcontroller.dart';
-import 'package:qstar/screen/feed/feed.dart';
-
-import 'package:qstar/screen/post/settingpostpage.dart';
 
 // ignore: library_prefixes
 import 'package:image/image.dart' as imageLib;
+import 'package:qstar/screen/feed/feed.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
 class PreviewImageScreengallery extends StatefulWidget {
   final String imagePath;
- 
+  final bool isfrompost;
+
   // ignore: use_key_in_widget_constructors
-  const PreviewImageScreengallery({required this.imagePath});
+  const PreviewImageScreengallery(
+      {required this.imagePath, required this.isfrompost});
 
   @override
   _PreviewImageScreenState createState() => _PreviewImageScreenState();
@@ -111,22 +110,24 @@ class _PreviewImageScreenState extends State<PreviewImageScreengallery> {
               //     MaterialPageRoute(
               //         builder: (context) =>
               //             SettingPostPage(imagePath: filtedpath)));
-              print("woops");
-              if(postController.imagesList.isNotEmpty){
-                if(postController.isCam.value)
-                {
-                 postController.imagesList.add(imageFile!);
-                 postController.isCam.value=false;
+
+              if (postController.imagesList.isNotEmpty) {
+                if (postController.isCam.value) {
+                  postController.imagesList.add(imageFile!);
+                  postController.isCam.value = false;
+                } else {
+                  postController.imagesList[postController.index.value] =
+                      imageFile as File;
                 }
-                else{
-                postController.imagesList[postController.index.value]=imageFile as File;
-                }
-              }
-              else{
+              } else {
                 postController.imagesList.add(imageFile!);
               }
-              Navigator.of(context).pop(true);
-              //  Navigator.of(context).pop(true);
+              if (widget.isfrompost == true) {
+                FeedState feed = new FeedState();
+                feed.postModal(context);
+              } else {
+                Navigator.of(context).pop(true);
+              }
             },
           ),
         ],

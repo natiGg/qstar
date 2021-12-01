@@ -84,7 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PreviewImageScreengallery(imagePath: path),
+        builder: (context) => PreviewImageScreengallery(
+          imagePath: path,
+          isfrompost: false,
+        ),
       ),
     );
   }
