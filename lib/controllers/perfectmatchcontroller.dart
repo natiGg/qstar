@@ -103,6 +103,11 @@ class PerfectMatchController extends GetxController with StateMixin {
     return checkpf;
   }
 
+  Future<bool> checkmp() async {
+    checkpf = await RemoteServices.machpf();
+    return checkpf;
+  }
+
   void create() async {
     try {
       var isValid = Form.currentState!.validate();

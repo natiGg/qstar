@@ -7,6 +7,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
@@ -336,7 +337,7 @@ class Feed extends StatefulWidget {
   State<Feed> createState() => FeedState();
 }
 
-class FeedState extends State<Feed> {
+class FeedState extends ResumableState<Feed> {
   TextEditingController nameController = TextEditingController();
   PostController postController = Get.put(PostController());
   FeedController feedController = Get.find();
@@ -344,13 +345,12 @@ class FeedState extends State<Feed> {
       Get.put(PerfectMatchController());
   late VoidCallback _onShowMenu;
   bool connection = true;
+  bool alreadySaved = false;
   @override
   void initState() {
-    _fetchUser();
-
-
     super.initState();
-
+    _fetchUser();
+    _cheakperfect();
     _onShowMenu = () {
       context.showBottomSheet([
         BottomSheetAction(iconData: Icons.public, title: 'Public', id: 0),
@@ -361,6 +361,32 @@ class FeedState extends State<Feed> {
         BottomSheetAction(iconData: Icons.stars, title: 'Stars', id: 2),
       ]);
     };
+  }
+
+  void onReady() {
+    // Implement your code inside here
+    print('HomeScreen is ready!');
+    _cheakperfect();
+  }
+
+  @override
+  void onResume() {
+    // Implement your code inside here
+    print('HomeScreen is resumed!');
+    _cheakperfect();
+  }
+
+  void _cheakperfect() async {
+    if (await perfectMatchController.checkmp() == false) {
+      alreadySaved = true;
+    } else {
+      alreadySaved = false;
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   void _fetchUser() async {
@@ -378,9 +404,9 @@ class FeedState extends State<Feed> {
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
-    // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
     // if failed,use refreshFailed()
+    setState(() {});
     _refreshController.refreshCompleted();
   }
 
@@ -390,9 +416,9 @@ class FeedState extends State<Feed> {
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     //items.add((items.length+1).toString());
     //if(mounted)
-    // setState(() {
 
-    // });
+    //_cheakperfect();
+
     _refreshController.loadComplete();
   }
 
@@ -493,11 +519,12 @@ class FeedState extends State<Feed> {
         body: SmartRefresher(
           enablePullDown: true,
           enablePullUp: true,
-          header: WaterDropHeader(),
+          header: const WaterDropHeader(),
           //cheak pull_to_refresh
           controller: _refreshController,
           onRefresh: _onRefresh,
           onLoading: _onLoading,
+
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -663,50 +690,7 @@ class FeedState extends State<Feed> {
                 const SizedBox(
                   height: 15,
                 ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 25.0),
-                      child: Text(
-                        'Your Perfect match',
-                        style: TextStyle(
-                            color: mPrimaryColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 150,
-                    ),
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          FontAwesome.refresh,
-                          color: mPrimaryColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Container(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Row(
-                            children: feedController.perfectMatches
-                                .map((e) => UserStories(e))
-                                .toList().cast<Widget>()),
-                      ],
-                    ),
-                  ),
-                ),
+                alreadySaved ? perfectmach() : Container(),
                 const Divider(
                   thickness: 1.0,
                 ),
@@ -1351,6 +1335,57 @@ class FeedState extends State<Feed> {
       ),
     );
   }
+
+  perfectmach() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 25.0),
+              child: Text(
+                'Your Perfect match',
+                style: TextStyle(
+                    color: mPrimaryColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              width: 150,
+            ),
+            const Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  FontAwesome.refresh,
+                  color: mPrimaryColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(25),
+          child: Container(
+            height: 200,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Row(
+                    children: feedController.perfectMatches
+                        .map((e) => UserStories(e))
+                        .toList()
+                        .cast<Widget>()),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class UserStories extends StatefulWidget {
@@ -1374,7 +1409,8 @@ class _UserStoriesState extends State<UserStories> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: NetworkImage('https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}'),
+                  image: NetworkImage(
+                      'https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}'),
                   fit: BoxFit.cover),
             ),
             child: Container(
@@ -1399,52 +1435,40 @@ class _UserStoriesState extends State<UserStories> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.location_on,
                             size: 10,
                             color: Colors.white,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 1,
                           ),
                           Text(
                             widget.user.current_location,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 11,
                             ),
                           ),
                         ]),
                         Row(children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.manage_accounts_sharp,
                             size: 9,
                             color: Colors.white,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 1,
                           ),
                           Text(
                             widget.user.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 30,
-                          ),
-                          Icon(
-                            Icons.calendar_today,
-                            size: 9,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            widget.user.date_of_birth,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                            ),
                           ),
                         ]),
                         Row(children: const <Widget>[]),

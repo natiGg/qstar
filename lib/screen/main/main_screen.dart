@@ -13,6 +13,7 @@ import 'package:qstar/screen/search/search.dart';
 import 'package:qstar/screen/activity/activity_page.dart';
 import 'package:qstar/screen/main/widget/bottom_navigation_item.dart';
 import 'package:get/get.dart';
+
 class MyHomePage extends StatefulWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = 'BottomNavPage';
@@ -25,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 
 class _BottomNavPageState extends State<MyHomePage> {
   int _currentTabIndex = 0;
-       FeedController feedController = Get.put(FeedController());
+  FeedController feedController = Get.put(FeedController());
 
   final PageController _pageController = PageController(initialPage: 0);
 
@@ -39,7 +40,7 @@ class _BottomNavPageState extends State<MyHomePage> {
 
   @override
   void initState() {
-        feedController.fetchPerfectMatches();
+    feedController.fetchPerfectMatches();
     super.initState();
   }
 

@@ -98,11 +98,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         (edit) => Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
-                leadingWidth: 100,
+                leadingWidth: 200,
                 backgroundColor: Colors.white,
                 leading: Container(
                   padding: const EdgeInsets.only(left: 20, top: 15),
-                  width: 100,
+                  width: 300,
                   child: Text(
                     editprofileController.suggested.name,
                     style: const TextStyle(

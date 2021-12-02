@@ -230,6 +230,18 @@ class RemoteServices {
     }
   }
 
+  static Future<bool> machpf() async {
+    // ignore: unnecessary_brace_in_string_interps
+    res = await Network().getData("myPerfectMatch");
+    var body = json.decode(res.body);
+
+    if (body["data"].isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static Future<Userpf> fetchpf() async {
     res = await Network().getData("personalInformation");
 
