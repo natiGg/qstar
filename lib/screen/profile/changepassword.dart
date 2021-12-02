@@ -78,9 +78,8 @@ class _EditProfilePageState extends State<ChangePassword> {
               icon: const Icon(Icons.arrow_back),
               color: mPrimaryColor),
           title: const SizedBox(
-            width: 100,
             child: Text(
-              "Edit Passwors",
+              "Edit Password",
               style: TextStyle(
                 color: mPrimaryColor,
                 fontSize: 23,

@@ -28,41 +28,50 @@ class User {
   // ignore: non_constant_identifier_names
   String joined_date;
   String hobbies;
+
   // ignore: non_constant_identifier_names
   String total_followers;
   RxBool followed;
 
-  User(
-      {required this.id,
-      required this.userName,
-      required this.storyImage,
-      required this.userImage,
-      required this.name,
-      required this.website,
-      required this.bio,
-      required this.email,
-      // ignore: non_constant_identifier_names
-      required this.country_code,
-      // ignore: non_constant_identifier_names
-      required this.phone_number,
-      required this.gender,
-      // ignore: non_constant_identifier_names
-      required this.enable_suggestion,
-      required this.status,
-      // ignore: non_constant_identifier_names
-      required this.date_of_birth,
-      // ignore: non_constant_identifier_names
-      required this.current_location,
-      // ignore: non_constant_identifier_names
-      required this.account_type,
-      // ignore: non_constant_identifier_names
-      required this.online_status,
-      // ignore: non_constant_identifier_names
-      required this.joined_date,
-      required this.hobbies,
-      // ignore: non_constant_identifier_names
-      required this.total_followers,
-      required this.followed});
+  String posts_count;
+  String followers_count;
+  String following_count;
+
+  User({
+    required this.id,
+    required this.userName,
+    required this.storyImage,
+    required this.userImage,
+    required this.name,
+    required this.website,
+    required this.bio,
+    required this.email,
+    // ignore: non_constant_identifier_names
+    required this.country_code,
+    // ignore: non_constant_identifier_names
+    required this.phone_number,
+    required this.gender,
+    // ignore: non_constant_identifier_names
+    required this.enable_suggestion,
+    required this.status,
+    // ignore: non_constant_identifier_names
+    required this.date_of_birth,
+    // ignore: non_constant_identifier_names
+    required this.current_location,
+    // ignore: non_constant_identifier_names
+    required this.account_type,
+    // ignore: non_constant_identifier_names
+    required this.online_status,
+    // ignore: non_constant_identifier_names
+    required this.joined_date,
+    required this.hobbies,
+    // ignore: non_constant_identifier_names
+    required this.total_followers,
+    required this.followed,
+    required this.posts_count,
+    required this.followers_count,
+    required this.following_count,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -86,6 +95,9 @@ class User {
         joined_date: json['joined_date'].toString(),
         hobbies: json['hobbies'].toString(),
         total_followers: json['total_followers'].toString(),
+        posts_count: json['posts_count'].toString(),
+        followers_count: json['followers_count'].toString(),
+        following_count: json['following_count'].toString(),
         followed: false.obs);
   }
 }

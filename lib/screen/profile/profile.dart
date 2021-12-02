@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  EditProfilePage(),
+                                                  const EditProfilePage(),
                                               transitionDuration: Duration.zero,
                                             ),
                                           );
@@ -331,7 +331,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                statsBox(count: '57', title: 'Posts'),
+                statsBox(
+                    count: editprofileController.suggested.posts_count,
+                    title: 'Posts'),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -343,7 +345,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       );
                     },
-                    child: statsBox(count: '185', title: 'Followers')),
+                    child: statsBox(
+                        count: editprofileController.suggested.followers_count,
+                        title: 'Followers')),
                 GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -355,7 +359,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       );
                     },
-                    child: statsBox(count: '241', title: 'Following')),
+                    child: statsBox(
+                        count: editprofileController.suggested.following_count,
+                        title: 'Following')),
               ],
             ),
           ),

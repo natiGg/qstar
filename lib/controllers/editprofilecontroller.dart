@@ -39,6 +39,9 @@ class EditprofileController extends GetxController with StateMixin {
   // ignore: prefer_typing_uninitialized_variables
   var image;
   var gender;
+  var followers_count;
+  var following_count;
+  var posts_count;
   late String uid = "";
 
   var unamechecker, messages, errorMessages, emailchecker;
@@ -78,6 +81,9 @@ class EditprofileController extends GetxController with StateMixin {
         prevuname = suggested.userName;
         prevemail = suggested.email;
         gender = suggested.gender;
+        followers_count = suggested.followers_count;
+        following_count = suggested.following_count;
+        posts_count = suggested.posts_count;
 
         hobbiesSplit = suggested.hobbies.toString().split(",");
 

@@ -24,15 +24,19 @@ class RemoteServices {
     }
   }
 
-    static Future<List<User>> fetchFollowers(String querys) async {
+  static Future<List<User>> fetchFollowers(String querys) async {
     res = await Network().getData("friendship/170/followers");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      return body["data"].map((e) => User.fromJson(e)).where((user){
-        final uname=user.userName.toLowerCase().toString();
-        final query=querys.toLowerCase();
-        return uname.contains(query);
-      }).toList().cast<User>();
+      return body["data"]
+          .map((e) => User.fromJson(e))
+          .where((user) {
+            final uname = user.userName.toLowerCase().toString();
+            final query = querys.toLowerCase();
+            return uname.contains(query);
+          })
+          .toList()
+          .cast<User>();
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
       throw Exception('Failed to load Users');
@@ -49,8 +53,6 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
- 
- 
 
   static Future<List<String>> checkUname(String uname) async {
     var data = {'username': uname};
@@ -267,6 +269,29 @@ class RemoteServices {
     List<String> errors = [];
     // create multipart request
     res = await Network().getpassedData(data, "personalInformation");
+
+    body = json.decode(res.body);
+    print(res.statusCode.toString());
+    if (res.statusCode == 200) {
+      return res.statusCode.toString();
+    } else {
+      if (body["message"] != null) {
+        return body["message"].toString();
+      } else {
+        Map<String, dynamic> map = body["errors"];
+        map.forEach((key, value) {
+          errors.add(value[0].toString());
+        });
+
+        return errors.join("\n").toString();
+      }
+    }
+  }
+
+  static Future<String> editPassword(var data) async {
+    List<String> errors = [];
+    // create multipart request
+    res = await Network().getpassedData(data, "changePassword");
 
     body = json.decode(res.body);
     print(res.statusCode.toString());

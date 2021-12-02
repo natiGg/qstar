@@ -71,7 +71,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 2,
       userName: "natig",
@@ -93,7 +96,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 3,
       userName: "bini",
@@ -115,7 +121,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 4,
       userName: "yosi",
@@ -137,7 +146,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 5,
       userName: "abrsh",
@@ -159,7 +171,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 1,
       userName: "gelila",
@@ -181,7 +196,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 2,
       userName: "natig",
@@ -203,7 +221,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 3,
       userName: "bini",
@@ -225,7 +246,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 4,
       userName: "yosi",
@@ -247,7 +271,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
   User(
       id: 5,
       userName: "abrsh",
@@ -269,7 +296,10 @@ List<User> _users = [
       joined_date: "",
       hobbies: "",
       total_followers: "",
-      followed: false.obs),
+      followed: false.obs,
+      followers_count: "",
+      following_count: "",
+      posts_count: ""),
 ];
 
 List<Post> _posts = [
@@ -1265,14 +1295,20 @@ class FeedState extends State<Feed> {
               child: Wrap(
                 children: <Widget>[
                   ListTile(
-                      leading: const Icon(Icons.photo_library),
+                      leading: const Icon(
+                        Icons.photo_library,
+                        color: mPrimaryColor,
+                      ),
                       title: const Text('Photo Library'),
                       onTap: () {
                         selectImages();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
-                    leading: const Icon(Icons.photo_camera),
+                    leading: const Icon(
+                      Icons.photo_camera,
+                      color: mPrimaryColor,
+                    ),
                     title: const Text('Camera'),
                     onTap: () {
                       Navigator.of(context).pop();
