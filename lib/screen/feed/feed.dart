@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/services.dart';
@@ -317,7 +318,6 @@ class FeedState extends State<Feed> {
   @override
   void initState() {
     _fetchUser();
-
 
     super.initState();
 
@@ -651,15 +651,23 @@ class FeedState extends State<Feed> {
                     const SizedBox(
                       width: 150,
                     ),
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          FontAwesome.refresh,
-                          color: mPrimaryColor,
+                    Obx(()=>GestureDetector(
+                      onTap: () {
+                        print("I'm here refreshing");
+                        feedController.refreshMatches();
+                      },
+                      child: Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: feedController.isRefreshing.value
+                              ? Refresh()
+                              : Icon(
+                                  FontAwesome.refresh,
+                                  color: mPrimaryColor,
+                                ),
                         ),
                       ),
-                    ),
+                    )),
                   ],
                 ),
                 Padding(
@@ -669,10 +677,11 @@ class FeedState extends State<Feed> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        Row(
+                        Obx(() => Row(
                             children: feedController.perfectMatches
                                 .map((e) => UserStories(e))
-                                .toList().cast<Widget>()),
+                                .toList()
+                                .cast<Widget>())),
                       ],
                     ),
                   ),
@@ -738,6 +747,7 @@ class FeedState extends State<Feed> {
           ),
         )));
   }
+  
 
   void postModal(context) {
     showModalBottomSheet(
@@ -1338,7 +1348,8 @@ class _UserStoriesState extends State<UserStories> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: NetworkImage('https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}'),
+                  image: NetworkImage(
+                      'https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}'),
                   fit: BoxFit.cover),
             ),
             child: Container(
@@ -1638,6 +1649,40 @@ class _UserAvatarState extends State<UserAvatar> {
         ));
   }
 }
+class Refresh extends StatefulWidget {
+
+
+  @override
+  State<Refresh> createState() => RefreshState();
+}
+class RefreshState extends State<Refresh> with SingleTickerProviderStateMixin{
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: Duration(seconds: 2))..repeat();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+          animation: _controller,
+          builder: (_, child) {
+            return Transform.rotate(
+              angle: _controller.value * 5 * pi,
+              child: child,
+            );
+          },
+          child: Icon(
+                                  FontAwesome.refresh,
+                                  color: mPrimaryColor,
+                                ),
+        );
+    
+  }
+}
+
 
 class WPost extends StatefulWidget {
   final Post post;
