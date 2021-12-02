@@ -49,6 +49,17 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
+    static Future<List<User>> fetchPerfectMatch() async {
+    res = await Network().getData("myPerfectMatch");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+ 
  
  
 

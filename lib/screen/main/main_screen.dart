@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:qstar/screen/profile/profile.dart';
@@ -11,7 +12,7 @@ import 'package:tuple/tuple.dart';
 import 'package:qstar/screen/search/search.dart';
 import 'package:qstar/screen/activity/activity_page.dart';
 import 'package:qstar/screen/main/widget/bottom_navigation_item.dart';
-
+import 'package:get/get.dart';
 class MyHomePage extends StatefulWidget {
   // ignore: constant_identifier_names
   static const ROUTE_NAME = 'BottomNavPage';
@@ -24,6 +25,8 @@ class MyHomePage extends StatefulWidget {
 
 class _BottomNavPageState extends State<MyHomePage> {
   int _currentTabIndex = 0;
+       FeedController feedController = Get.put(FeedController());
+
   final PageController _pageController = PageController(initialPage: 0);
 
   List<Tuple2<String, String>> tabsIcons = [
@@ -36,6 +39,7 @@ class _BottomNavPageState extends State<MyHomePage> {
 
   @override
   void initState() {
+        feedController.fetchPerfectMatches();
     super.initState();
   }
 

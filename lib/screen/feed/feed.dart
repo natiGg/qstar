@@ -7,6 +7,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
@@ -308,6 +309,7 @@ class Feed extends StatefulWidget {
 class FeedState extends State<Feed> {
   TextEditingController nameController = TextEditingController();
   PostController postController = Get.put(PostController());
+  FeedController feedController = Get.find();
   PerfectMatchController perfectMatchController =
       Get.put(PerfectMatchController());
   late VoidCallback _onShowMenu;
@@ -315,6 +317,7 @@ class FeedState extends State<Feed> {
   @override
   void initState() {
     _fetchUser();
+
 
     super.initState();
 
@@ -667,8 +670,9 @@ class FeedState extends State<Feed> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Row(
-                            children:
-                                _users.map((e) => UserStories(e)).toList()),
+                            children: feedController.perfectMatches
+                                .map((e) => UserStories(e))
+                                .toList().cast<Widget>()),
                       ],
                     ),
                   ),
@@ -1334,7 +1338,7 @@ class _UserStoriesState extends State<UserStories> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                  image: AssetImage('assets/images/post${widget.user.id}.jpg'),
+                  image: NetworkImage('https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}'),
                   fit: BoxFit.cover),
             ),
             child: Container(
@@ -1358,7 +1362,7 @@ class _UserStoriesState extends State<UserStories> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(children: const <Widget>[
+                        Row(children: <Widget>[
                           Icon(
                             Icons.location_on,
                             size: 10,
@@ -1368,14 +1372,14 @@ class _UserStoriesState extends State<UserStories> {
                             width: 1,
                           ),
                           Text(
-                            'Addis Ababa',
+                            widget.user.current_location,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 11,
                             ),
                           ),
                         ]),
-                        Row(children: const <Widget>[
+                        Row(children: <Widget>[
                           Icon(
                             Icons.manage_accounts_sharp,
                             size: 9,
@@ -1385,7 +1389,7 @@ class _UserStoriesState extends State<UserStories> {
                             width: 1,
                           ),
                           Text(
-                            'betty',
+                            widget.user.name,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -1400,7 +1404,7 @@ class _UserStoriesState extends State<UserStories> {
                             color: Colors.white,
                           ),
                           Text(
-                            ' 20',
+                            widget.user.date_of_birth,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 11,
