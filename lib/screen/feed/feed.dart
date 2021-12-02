@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/services.dart';
@@ -348,6 +349,8 @@ class FeedState extends ResumableState<Feed> {
   bool alreadySaved = false;
   @override
   void initState() {
+    _fetchUser();
+
     super.initState();
     _fetchUser();
     _cheakperfect();
@@ -1696,6 +1699,40 @@ class _UserAvatarState extends State<UserAvatar> {
               child: Icon(isFollowed ? Icons.check : Icons.add,
                   size: 16, color: isFollowed ? Colors.white : mPrimaryColor)),
         ));
+  }
+}
+
+class Refresh extends StatefulWidget {
+  @override
+  State<Refresh> createState() => RefreshState();
+}
+
+class RefreshState extends State<Refresh> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2))
+          ..repeat();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, child) {
+        return Transform.rotate(
+          angle: _controller.value * 5 * pi,
+          child: child,
+        );
+      },
+      child: Icon(
+        FontAwesome.refresh,
+        color: mPrimaryColor,
+      ),
+    );
   }
 }
 
