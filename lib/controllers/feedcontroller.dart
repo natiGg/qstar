@@ -41,6 +41,7 @@ class FeedController extends GetxController with StateMixin {
 
   void refreshMatches() async {
     try {
+      print("i am refreshing");
       isRefreshing(true);
       refreshedMatches.value = await RemoteServices.refreshMatch();
       perfectMatches.value = refreshedMatches.value;

@@ -1355,15 +1355,20 @@ class FeedState extends ResumableState<Feed>
             const SizedBox(
               width: 150,
             ),
-            const Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  FontAwesome.refresh,
-                  color: mPrimaryColor,
-                ),
-              ),
-            ),
+              Obx(()=>GestureDetector(
+                      onTap: () {
+                        print("I'm here refreshing");
+                        feedController.refreshMatches();
+                      },
+                      child: Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: feedController.isRefreshing.value
+                              ? Refresh()
+                              : Icon(
+                                  FontAwesome.refresh,
+                                  color: mPrimaryColor,
+                                ))))),
           ],
         ),
         Padding(
@@ -1373,11 +1378,11 @@ class FeedState extends ResumableState<Feed>
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                Row(
+                Obx(()=>Row(
                     children: feedController.perfectMatches
                         .map((e) => UserStories(e))
                         .toList()
-                        .cast<Widget>()),
+                        .cast<Widget>())),
               ],
             ),
           ),
