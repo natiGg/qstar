@@ -22,7 +22,8 @@ class PostPage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<PostPage> {
+class _MyHomePageState extends State<PostPage>
+    with AutomaticKeepAliveClientMixin {
   FileModel? selectedModel;
   String? image;
   List<FileModel>? files;
@@ -269,6 +270,9 @@ class _MyHomePageState extends State<PostPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   // ignore: non_constant_identifier_names
 

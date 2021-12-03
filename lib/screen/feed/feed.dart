@@ -338,7 +338,8 @@ class Feed extends StatefulWidget {
   State<Feed> createState() => FeedState();
 }
 
-class FeedState extends ResumableState<Feed> {
+class FeedState extends ResumableState<Feed>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController nameController = TextEditingController();
   PostController postController = Get.put(PostController());
   FeedController feedController = Get.find();
@@ -366,18 +367,18 @@ class FeedState extends ResumableState<Feed> {
     };
   }
 
-  void onReady() {
-    // Implement your code inside here
-    print('HomeScreen is ready!');
-    _cheakperfect();
-  }
+  // void onReady() {
+  //   // Implement your code inside here
+  //   print('HomeScreen is ready!');
+  //   _cheakperfect();
+  // }
 
-  @override
-  void onResume() {
-    // Implement your code inside here
-    print('HomeScreen is resumed!');
-    _cheakperfect();
-  }
+  // @override
+  // void onResume() {
+  //   // Implement your code inside here
+  //   print('HomeScreen is resumed!');
+  //   _cheakperfect();
+  // }
 
   void _cheakperfect() async {
     if (await perfectMatchController.checkmp() == false) {
@@ -385,11 +386,6 @@ class FeedState extends ResumableState<Feed> {
     } else {
       alreadySaved = false;
     }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   void _fetchUser() async {
@@ -1389,6 +1385,9 @@ class FeedState extends ResumableState<Feed> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class UserStories extends StatefulWidget {

@@ -72,7 +72,7 @@ class RemoteServices {
       return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
-      throw Exception('Failed to load Users');
+      throw Exception('Failed to Load Users');
     }
   }
 
