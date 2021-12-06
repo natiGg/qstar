@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
 
 import 'package:qstar/remote_services/service.dart';
 
@@ -10,9 +13,11 @@ import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:io';
 
 import 'package:rich_text_controller/rich_text_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostController extends GetxController {
   // ignore: non_constant_identifier_names
+
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
   late RichTextController captionController, searchController;
   var caption;
@@ -27,15 +32,24 @@ class PostController extends GetxController {
   var hasHash = false.obs;
   var unames = [""].obs;
   var hashtags = [""].obs;
-  var index=0.obs;
+  var index = 0.obs;
   var suggestions;
-  var isCam=false.obs;
+  var isCam = false.obs;
   var searched = <User>[].obs;
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
+  var id;
   @override
-  void onInit() {
+  void onInit() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('user');
+
+    if (token != null) {
+      var body = json.decode(token);
+
+      id = body['id'];
+    }
     fetchall();
     searchController = RichTextController(
       patternMatchMap: {
@@ -82,7 +96,7 @@ class PostController extends GetxController {
 
   void tapSelection(var index) {
     print("objectf");
-    if (hashtags.contains("@"+suggestions[index].userName)==true) {
+    if (hashtags.contains("@" + suggestions[index].userName) == true) {
       print("already added");
     } else {
       print(hashtags);
@@ -93,7 +107,8 @@ class PostController extends GetxController {
   }
 
   void fetchall() async {
-    suggestions = await RemoteServices.fetchallFollowers();
+    print(id.toString() + "fdfdf");
+    suggestions = await RemoteServices.fetchallFollower(id.toString());
   }
 
   void changePostype(var type) async {
@@ -106,7 +121,6 @@ class PostController extends GetxController {
   }
 
   void removeEdited(var index) async {
-    
     imagefile.removeAt(index);
   }
 

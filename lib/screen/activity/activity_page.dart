@@ -14,7 +14,8 @@ class ActivityPage extends StatefulWidget {
   _ActivityPageState createState() => _ActivityPageState();
 }
 
-class _ActivityPageState extends State<ActivityPage> {
+class _ActivityPageState extends State<ActivityPage>
+    with AutomaticKeepAliveClientMixin {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -73,4 +74,7 @@ class _ActivityPageState extends State<ActivityPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

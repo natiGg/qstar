@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
+import 'package:qstar/screen/profile/followres.dart';
 
 import 'package:qstar/widget/utils.dart';
 
