@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/screen/feed/feed.dart';
 
@@ -27,7 +28,8 @@ class MyHomePage extends StatefulWidget {
 class _BottomNavPageState extends State<MyHomePage> {
   int _currentTabIndex = 0;
   FeedController feedController = Get.put(FeedController());
-
+  EditprofileController editprofileController =
+      Get.put(EditprofileController());
   final PageController _pageController = PageController(initialPage: 0);
 
   List<Tuple2<String, String>> tabsIcons = [

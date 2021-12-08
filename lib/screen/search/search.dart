@@ -1,10 +1,15 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:qstar/constant.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/remote_services/service.dart';
+import 'package:qstar/screen/feed/model/user.dart';
+import 'package:qstar/screen/profile/following.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -25,7 +30,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   static const historyLength = 5;
 
   final List<String> _searchHistory = [
@@ -230,12 +236,15 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class SearchResultsListView extends StatelessWidget {
   final String searchTerm;
-
-  const SearchResultsListView({
+  EditprofileController editprofileController = Get.find();
+  SearchResultsListView({
     Key? key,
     required this.searchTerm,
   }) : super(key: key);
@@ -258,45 +267,76 @@ class SearchResultsListView extends StatelessWidget {
 
     final fsb = FloatingSearchBar.of(context);
 
-    return ListView(
-      padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
-      children: List.generate(
-        1,
-        (index) => ListTile(
-            title: Container(
-              height: 30,
-              margin: const EdgeInsets.only(top: 13, bottom: 5),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  GestureDetector(onTap: () {}, child: _tagItem("Recent")),
-                  _tagItem("Users"),
-                  _tagItem("Hashtags"),
-                  _tagItem("Place"),
-                ],
-              ),
-            ),
-            subtitle: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  children: [
-                    searchTerm == "Search"
-                        ? const Icon(
-                            Icons.search_sharp,
-                            size: 0,
-                          )
-                        : const Icon(
-                            Icons.search_sharp,
-                            size: 15,
-                          ),
-                    Padding(
-                      child: searchTerm == "Search"
-                          ? const Text('')
-                          : Text(searchTerm),
-                      padding: const EdgeInsets.only(left: 10),
+    return SizedBox(
+      height: 200.0,
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
+        children: List.generate(
+            1,
+            (index) => ListTile(
+                  title: Container(
+                    height: 30,
+                    margin: const EdgeInsets.only(top: 13, bottom: 5),
+                    child: SizedBox(
+                      height: 200.0,
+                      child: ListView(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          GestureDetector(
+                              onTap: () {}, child: _tagItem("Recent")),
+                          _tagItem("Users"),
+                          _tagItem("Hashtags"),
+                          _tagItem("Place"),
+                        ],
+                      ),
                     ),
-                  ],
-                ))),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        searchTerm == "Search"
+                            ? const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              )
+                            : const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              ),
+                        FutureBuilder(
+                            future: RemoteServices.fetachsearch(searchTerm),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text(snapshot.error.toString()),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                return Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return SearchList(
+                                          user: snapshot.data[index]);
+                                    },
+                                    itemCount: snapshot.data.length,
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
+                      ],
+                    ),
+                  ),
+                )),
       ),
     );
   }
@@ -315,5 +355,60 @@ class SearchResultsListView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SearchList extends StatelessWidget {
+  final User? user;
+  const SearchList({Key? key, required this.user}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                      boxShadow: [
+                        BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.1),
+                            offset: const Offset(0, 10))
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                              "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                ),
+                Expanded(
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: user!.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                        ])))),
+              ],
+            ),
+          ),
+          onTap: () {},
+        ));
   }
 }

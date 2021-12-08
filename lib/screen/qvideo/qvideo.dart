@@ -290,7 +290,7 @@ class Qvideoscreen extends StatefulWidget {
 }
 
 class _QvideoState2 extends State<Qvideoscreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   ImagePicker picker = ImagePicker();
   // ignore: unused_field
   File? _cameraVideo;
@@ -989,6 +989,9 @@ class _QvideoState2 extends State<Qvideoscreen>
           );
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 void showSheet(context) {

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
@@ -13,6 +12,7 @@ import 'package:rich_text_controller/rich_text_controller.dart';
 class PerfectMatchController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form2 = GlobalKey<FormState>();
   GlobalKey<FormState> Form3 = GlobalKey<FormState>();
   GlobalKey<FormState> Form4 = GlobalKey<FormState>();
@@ -67,10 +67,11 @@ class PerfectMatchController extends GetxController with StateMixin {
     try {
       openAndCloseLoadingDialog();
       fetched = await RemoteServices.fetchpf();
-      print(fetched);
+      //   print(fetched);
       if (fetched != "") {
         isFetched.value = true;
         fullname.text = fetched.full_name;
+
         country.value = fetched.country;
         matchcountry.value = fetched.pflocation;
         city.text = fetched.city;
@@ -171,8 +172,6 @@ class PerfectMatchController extends GetxController with StateMixin {
       print(inforesponse.toString());
       closeDialog(true, '');
     } else {
-      print(inforesponse.toString());
-
       closeDialog(false, inforesponse);
     }
   }
@@ -200,12 +199,8 @@ class PerfectMatchController extends GetxController with StateMixin {
     };
     inforesponse = await RemoteServices.editPersonalInfo(data);
     if (inforesponse.toString() == "200") {
-      print("bini");
-      print(inforesponse.toString());
       closeDialog(true, '');
     } else {
-      print(inforesponse.toString());
-
       closeDialog(false, inforesponse);
     }
   }

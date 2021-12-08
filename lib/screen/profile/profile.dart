@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,8 @@ import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
 import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
 import 'package:qstar/widget/utils.dart';
-import 'package:qstar/screen/profile/followers.dart';
 import 'package:qstar/screen/profile/following.dart';
+import 'package:qstar/screen/profile/followres.dart';
 import 'package:qstar/screen/profile/editprofile.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -30,7 +31,8 @@ class ProfileScreen extends StatefulWidget {
 final EditprofileController editprofileController =
     Get.put(EditprofileController());
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with AutomaticKeepAliveClientMixin {
   late VoidCallback _onShowMenu;
   @override
   void initState() {
@@ -74,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
+    setState(() {});
     _refreshController.refreshCompleted();
   }
 
@@ -102,7 +104,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.white,
                 leading: Container(
                   padding: const EdgeInsets.only(left: 20, top: 15),
-                  width: 300,
                   child: Text(
                     editprofileController.suggested.name,
                     style: const TextStyle(
@@ -379,4 +380,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       EasyLoading.dismiss();
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
