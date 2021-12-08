@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
@@ -470,11 +471,12 @@ class FeedState extends ResumableState<Feed>
               onPressed: () async {
                 if (await perfectMatchController.check() == true) {
                   // perfectMatchController.fetchPf();
+
                   Navigator.push(
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) =>
-                          ProfileImageAppbarRoute(),
+                          const ProfileImageAppbarRoute(),
                       transitionDuration: Duration.zero,
                     ),
                   );
@@ -774,16 +776,17 @@ class FeedState extends ResumableState<Feed>
                           const SizedBox(width: 8.0),
                           Container(
                             child: Center(
-                              child: Text(
-                                editprofileController.suggested.name.substring(
-                                    0,
-                                    editprofileController.suggested.name
-                                        .indexOf(' ')),
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w300),
-                              ),
-                            ),
+                                // child: Text(
+                                //   editprofileController.suggested.name.substring(
+                                //       0,
+                                //       editprofileController.suggested.name
+                                //           .indexOf(' ')),
+                                //   overflow: TextOverflow.ellipsis,
+                                //   style: const TextStyle(
+                                //       fontSize: 14, fontWeight: FontWeight.w300),
+                                // ),
+                                child:
+                                    Text(editprofileController.suggested.name)),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 20.0),
