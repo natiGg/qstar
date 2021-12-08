@@ -2,14 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
-
 import 'package:qstar/remote_services/service.dart';
-
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:io';
-
+import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
+import 'package:video_player/video_player.dart';
 
 class PostController extends GetxController {
   // ignore: non_constant_identifier_names
@@ -22,6 +21,7 @@ class PostController extends GetxController {
   var posted;
   var imageAdded = false.obs;
   var imagesList = <File>[].obs;
+  var videosList = <File>[].obs;
   var isPosting = false.obs;
   var isPosted = false.obs;
   var hasHash = false.obs;
@@ -34,6 +34,8 @@ class PostController extends GetxController {
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
+    late VideoPlayerController controller;
+  late Future<void> initializeVideoPlayerFuture;
   @override
   void onInit() {
     fetchall();
@@ -68,6 +70,7 @@ class PostController extends GetxController {
   }
 
   void onSearchTextChanged(String text) async {
+    print(videosList.length);
     searched.clear();
     if (text.isEmpty) {
       return;

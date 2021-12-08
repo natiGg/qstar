@@ -40,7 +40,8 @@ import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
 import 'package:qstar/screen/qvideo/videopicker.dart';
-
+import 'package:qstar/screen/register/phonevarification.dart';
+import 'package:video_player/video_player.dart';
 import 'package:qstar/screen/search/search.dart';
 import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
@@ -430,7 +431,6 @@ class FeedState extends ResumableState<Feed>
     PickedFile? pickedFile = await picker.getVideo(source: ImageSource.camera);
 
     _cameraVideo = File(pickedFile!.path);
-
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -1041,8 +1041,76 @@ class FeedState extends ResumableState<Feed>
                                             );
                                           }),
                                         ),
-                                      ))
-                                    : Container()),
+                                      )) 
+                                    : postController.videosList.isNotEmpty ? Expanded(
+                                        child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 12.0, right: 12.0),
+                                        child: GridView.count(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1,
+                                          children: List.generate(
+                                              postController.imagesList.length,
+                                              (index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 4.0),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        postController.index
+                                                            .value = index;
+                                                        // Navigator.push(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //         builder:
+                                                        //             (context) =>
+                                                        //                 PreviewImageScreengallery(
+                                                        //                   imagePath: postController
+                                                        //                       .videosList[index]
+                                                        //                       .path,
+                                                        //                   isfrompost:
+                                                        //                       false,
+                                                        //                 )));
+                                                      },
+                                                      child:  AspectRatio(aspectRatio:1/2, child: VideoPlayer(postController.controller)),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    right: 5,
+                                                    top: 5,
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: mPrimaryColor
+                                                              .withOpacity(0.5),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                      child: InkWell(
+                                                        child: Icon(
+                                                          FontAwesome.remove,
+                                                          size: 15,
+                                                          color: Colors.white
+                                                              .withOpacity(0.8),
+                                                        ),
+                                                        onTap: () {
+                                                          postController
+                                                              .removeItem(
+                                                                  index);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                        ),
+                                      )):Container()),
                                 const Divider(
                                   thickness: 1,
                                 ),
@@ -1056,7 +1124,9 @@ class FeedState extends ResumableState<Feed>
                                             CrossAxisAlignment.start,
                                         children: [
                                           FlatButton.icon(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                            _showVideoPicker(context);
+                                            },
                                             icon: const Icon(
                                               FontAwesome.video_camera,
                                               color: Colors.red,
@@ -1131,6 +1201,7 @@ class FeedState extends ResumableState<Feed>
         for (var file in _imageFileList!) {
           File convertedFile = File(file.path);
           postController.imagesList.add(convertedFile);
+          postController.videosList.clear();
           print(postController.imagesList.length);
         }
       } else {
@@ -1148,11 +1219,73 @@ class FeedState extends ResumableState<Feed>
                       )));
         }
       }
-
       selectedImages.clear();
       _imageFileList!.clear();
     }
     setState(() {});
+  }
+
+    void selectVideos() async {
+
+    postController.isPosted(false);
+    final XFile? selectedVids = await _picker.pickVideo(source: ImageSource.gallery);
+
+    if (selectedVids!.path.isNotEmpty) {
+
+      _imageFileList!.add(selectedVids);
+      if (_imageFileList!.length > 1) {
+          print(_imageFileList![0].path);
+        for (var file in _imageFileList!) {
+          postController.imagesList.clear();
+          File convertedFile = File(file.path);
+          postController.videosList.add(convertedFile);
+          postController.controller=VideoPlayerController.network(convertedFile.path);
+          // Initialize the controller and store the Future for later use.
+          postController.initializeVideoPlayerFuture = postController.controller.initialize();
+          // Use the controller to loop the video.
+          postController.controller.setLooping(true);
+        }
+      }    
+    }
+    setState(() {});
+  }
+
+  void _showVideoPicker(context) async {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext bc) {
+              return SafeArea(
+                child: Container(
+                  child: Wrap(
+                    children: <Widget>[
+                      ListTile(
+                          leading: const Icon(
+                            Icons.photo_library,
+                            color: mPrimaryColor,
+                          ),
+                          title: const Text(
+                              'Video Library'),
+                          onTap: () {
+                              selectVideos();                            
+                              Navigator.of(context).pop();
+                          }),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.videocam_sharp,
+                          color: mPrimaryColor,
+                        ),
+                        title: const Text(
+                            'Video Camera'),
+                        onTap: () {
+                          _pickVideoFromCamera();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
   }
 
   _imgFromCamera() async {
@@ -1299,7 +1432,6 @@ class FeedState extends ResumableState<Feed>
                     title: const Text('Camera'),
                     onTap: () {
                       Navigator.of(context).pop();
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
