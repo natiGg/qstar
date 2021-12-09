@@ -108,6 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body = json.decode(token);
 
       editprofileController.fetchProfile(body["id"]);
+      editprofileController.fetchlinks(body["id"]);
 
       editprofileController.hobbyitems.forEach((element) {
         _initial.add(element);
@@ -208,7 +209,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     ),
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
-                                          color: Colors.white, width: 2.0),
+                                          color: mPrimaryColor, width: 12.0),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
@@ -466,6 +467,139 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             SizedBox(
                               height: 35,
                             ),
+                            SizedBox(height: 24),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Youtube channel Link",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.youtubecontroller,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.link =
+                                        value.toString();
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Instagram  username",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.instacontroller,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.link =
+                                        value.toString();
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "TikTok  username",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.tiktokcontroller,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.link =
+                                        value.toString();
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "FaceBook  username",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller:
+                                      editprofileController.facebookcontroller,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: mPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 2.0),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onSaved: (value) {
+                                    editprofileController.link =
+                                        value.toString();
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -477,7 +611,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   onPressed: () {
                                     editprofileController.editProf(body["id"]);
                                     // ignore: avoid_print
-                                    print(editprofileController.isLoading);
                                   },
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
@@ -495,23 +628,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   color: mPrimaryColor,
                                 ),
                                 // ignore: deprecated_member_use
-                                RaisedButton.icon(
-                                  onPressed: () {},
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0))),
-                                  label: const Text(
-                                    'Cancel  ',
-                                    style: TextStyle(color: mPrimaryColor),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.cancel,
-                                    color: mPrimaryColor,
-                                  ),
-                                  textColor: mPrimaryColor,
-                                  splashColor: mPrimaryColor,
-                                  color: Colors.white,
-                                ),
+
                                 const SizedBox(
                                   height: 35,
                                 ),

@@ -9,7 +9,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
+
 import 'package:qstar/screen/profile/following.dart';
+import 'package:qstar/screen/profile/userprofiledetail.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -35,10 +37,10 @@ class _HomePageState extends State<HomePage>
   static const historyLength = 5;
 
   final List<String> _searchHistory = [
-    'Recent',
-    'Users',
-    'Hashtags',
-    'Places',
+    'user1',
+    'user2',
+    'user3',
+    'user4',
   ];
 
   late List<String> filteredSearchHistory;
@@ -130,108 +132,383 @@ class _HomePageState extends State<HomePage>
       onLoading: _onLoading,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: FloatingSearchBar(
-          controller: controller,
-          iconColor: mPrimaryColor,
-          body: FloatingSearchBarScrollNotifier(
-            child: SearchResultsListView(
-              searchTerm: selectedTerm,
-              key: null,
-            ),
-          ),
-          transition: CircularFloatingSearchBarTransition(),
-          physics: const BouncingScrollPhysics(),
-          title: Text(
-            selectedTerm,
-            style: const TextStyle(
-                fontFamily: "font1", color: mPrimaryColor, fontSize: 25),
-          ),
-          hint: 'Search here...',
-          actions: [
-            FloatingSearchBarAction.searchToClear(),
-          ],
-          onQueryChanged: (query) {
-            setState(() {
-              filteredSearchHistory = filterSearchTerms(filter: query);
-            });
-          },
-          onSubmitted: (query) {
-            setState(() {
-              addSearchTerm(query);
-              selectedTerm = query;
-            });
-            controller.close();
-          },
-          builder: (context, transition) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Material(
-                color: Colors.white,
-                elevation: 4,
-                child: Builder(
-                  builder: (context) {
-                    if (filteredSearchHistory.isEmpty &&
-                        controller.query.isEmpty) {
-                      return Container(
-                        height: 56,
-                        width: double.infinity,
-                        alignment: Alignment.center,
+        body: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+              body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                const SliverAppBar(
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
+                  title: TabBar(
+                    labelColor: mPrimaryColor,
+                    unselectedLabelColor: mPrimaryColor,
+                    indicatorWeight: 2.0,
+                    indicatorColor: mPrimaryColor,
+                    isScrollable: true,
+                    tabs: [
+                      Tab(
                         child: Text(
-                          'Start searching',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.caption,
+                          "Users",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 26,
+                            fontFamily: 'font1',
+                          ),
                         ),
-                      );
-                    } else if (filteredSearchHistory.isEmpty) {
-                      return ListTile(
-                        title: Text(controller.query),
-                        leading: const Icon(Icons.search),
-                        onTap: () {
-                          setState(() {
-                            addSearchTerm(controller.query);
-                            selectedTerm = controller.query;
-                          });
-                          controller.close();
-                        },
-                      );
-                    } else {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: filteredSearchHistory
-                            .map(
-                              (term) => ListTile(
-                                title: Text(
-                                  term,
+                      ),
+                      Tab(
+                        child: Text(
+                          "Hashtag",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 26,
+                            fontFamily: 'font1',
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Places",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 26,
+                            fontFamily: 'font1',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ];
+            },
+            body: TabBarView(
+              children: <Widget>[
+                // Users
+                FloatingSearchBar(
+                  controller: controller,
+                  iconColor: mPrimaryColor,
+                  body: FloatingSearchBarScrollNotifier(
+                    child: UserSearchResultsListView(
+                      searchTerm: selectedTerm,
+                      key: null,
+                    ),
+                  ),
+                  transition: CircularFloatingSearchBarTransition(),
+                  physics: const BouncingScrollPhysics(),
+                  title: Text(
+                    selectedTerm,
+                    style: const TextStyle(
+                        fontFamily: "font1",
+                        color: mPrimaryColor,
+                        fontSize: 25),
+                  ),
+                  hint: 'Search here...',
+                  actions: [
+                    FloatingSearchBarAction.searchToClear(),
+                  ],
+                  onQueryChanged: (query) {
+                    setState(() {
+                      filteredSearchHistory = filterSearchTerms(filter: query);
+                    });
+                  },
+                  onSubmitted: (query) {
+                    setState(() {
+                      addSearchTerm(query);
+                      selectedTerm = query;
+                    });
+                    controller.close();
+                  },
+                  builder: (context, transition) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 4,
+                        child: Builder(
+                          builder: (context) {
+                            if (filteredSearchHistory.isEmpty &&
+                                controller.query.isEmpty) {
+                              return Container(
+                                height: 56,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Start searching',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.caption,
                                 ),
-                                leading: const Icon(Icons.history),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () {
-                                    setState(() {
-                                      deleteSearchTerm(term);
-                                    });
-                                  },
-                                ),
+                              );
+                            } else if (filteredSearchHistory.isEmpty) {
+                              return ListTile(
+                                title: Text(controller.query),
+                                leading: const Icon(Icons.search),
                                 onTap: () {
                                   setState(() {
-                                    putSearchTermFirst(term);
-                                    selectedTerm = term;
+                                    addSearchTerm(controller.query);
+                                    selectedTerm = controller.query;
                                   });
                                   controller.close();
                                 },
-                              ),
-                            )
-                            .toList(),
-                      );
-                    }
+                              );
+                            } else {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: filteredSearchHistory
+                                    .map(
+                                      (term) => ListTile(
+                                        title: Text(
+                                          term,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        leading: const Icon(Icons.history),
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () {
+                                            setState(() {
+                                              deleteSearchTerm(term);
+                                            });
+                                          },
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            putSearchTermFirst(term);
+                                            selectedTerm = term;
+                                          });
+                                          controller.close();
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    );
                   },
                 ),
-              ),
-            );
-          },
+
+                // Hastags
+
+                FloatingSearchBar(
+                  controller: controller,
+                  iconColor: mPrimaryColor,
+                  body: FloatingSearchBarScrollNotifier(
+                    child: HastagSearchResultsListView(
+                      searchTerm: selectedTerm,
+                      key: null,
+                    ),
+                  ),
+                  transition: CircularFloatingSearchBarTransition(),
+                  physics: const BouncingScrollPhysics(),
+                  title: Text(
+                    selectedTerm,
+                    style: const TextStyle(
+                        fontFamily: "font1",
+                        color: mPrimaryColor,
+                        fontSize: 25),
+                  ),
+                  hint: 'Search here...',
+                  actions: [
+                    FloatingSearchBarAction.searchToClear(),
+                  ],
+                  onQueryChanged: (query) {
+                    setState(() {
+                      filteredSearchHistory = filterSearchTerms(filter: query);
+                    });
+                  },
+                  onSubmitted: (query) {
+                    setState(() {
+                      addSearchTerm(query);
+                      selectedTerm = query;
+                    });
+                    controller.close();
+                  },
+                  builder: (context, transition) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 4,
+                        child: Builder(
+                          builder: (context) {
+                            if (filteredSearchHistory.isEmpty &&
+                                controller.query.isEmpty) {
+                              return Container(
+                                height: 56,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Start searching',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              );
+                            } else if (filteredSearchHistory.isEmpty) {
+                              return ListTile(
+                                title: Text(controller.query),
+                                leading: const Icon(Icons.search),
+                                onTap: () {
+                                  setState(() {
+                                    addSearchTerm(controller.query);
+                                    selectedTerm = controller.query;
+                                  });
+                                  controller.close();
+                                },
+                              );
+                            } else {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: filteredSearchHistory
+                                    .map(
+                                      (term) => ListTile(
+                                        title: Text(
+                                          term,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        leading: const Icon(Icons.history),
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () {
+                                            setState(() {
+                                              deleteSearchTerm(term);
+                                            });
+                                          },
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            putSearchTermFirst(term);
+                                            selectedTerm = term;
+                                          });
+                                          controller.close();
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                //places
+                FloatingSearchBar(
+                  controller: controller,
+                  iconColor: mPrimaryColor,
+                  body: FloatingSearchBarScrollNotifier(
+                    child: placesSearchResultsListView(
+                      searchTerm: selectedTerm,
+                      key: null,
+                    ),
+                  ),
+                  transition: CircularFloatingSearchBarTransition(),
+                  physics: const BouncingScrollPhysics(),
+                  title: Text(
+                    selectedTerm,
+                    style: const TextStyle(
+                        fontFamily: "font1",
+                        color: mPrimaryColor,
+                        fontSize: 25),
+                  ),
+                  hint: 'Search here...',
+                  actions: [
+                    FloatingSearchBarAction.searchToClear(),
+                  ],
+                  onQueryChanged: (query) {
+                    setState(() {
+                      filteredSearchHistory = filterSearchTerms(filter: query);
+                    });
+                  },
+                  onSubmitted: (query) {
+                    setState(() {
+                      addSearchTerm(query);
+                      selectedTerm = query;
+                    });
+                    controller.close();
+                  },
+                  builder: (context, transition) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Material(
+                        color: Colors.white,
+                        elevation: 4,
+                        child: Builder(
+                          builder: (context) {
+                            if (filteredSearchHistory.isEmpty &&
+                                controller.query.isEmpty) {
+                              return Container(
+                                height: 56,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Start searching',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              );
+                            } else if (filteredSearchHistory.isEmpty) {
+                              return ListTile(
+                                title: Text(controller.query),
+                                leading: const Icon(Icons.search),
+                                onTap: () {
+                                  setState(() {
+                                    addSearchTerm(controller.query);
+                                    selectedTerm = controller.query;
+                                  });
+                                  controller.close();
+                                },
+                              );
+                            } else {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: filteredSearchHistory
+                                    .map(
+                                      (term) => ListTile(
+                                        title: Text(
+                                          term,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        leading: const Icon(Icons.history),
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () {
+                                            setState(() {
+                                              deleteSearchTerm(term);
+                                            });
+                                          },
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            putSearchTermFirst(term);
+                                            selectedTerm = term;
+                                          });
+                                          controller.close();
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )),
         ),
       ),
     );
@@ -241,10 +518,11 @@ class _HomePageState extends State<HomePage>
   bool get wantKeepAlive => true;
 }
 
-class SearchResultsListView extends StatelessWidget {
+// ignore: must_be_immutable
+class UserSearchResultsListView extends StatelessWidget {
   final String searchTerm;
   EditprofileController editprofileController = Get.find();
-  SearchResultsListView({
+  UserSearchResultsListView({
     Key? key,
     required this.searchTerm,
   }) : super(key: key);
@@ -275,29 +553,11 @@ class SearchResultsListView extends StatelessWidget {
         children: List.generate(
             1,
             (index) => ListTile(
-                  title: Container(
-                    height: 30,
-                    margin: const EdgeInsets.only(top: 13, bottom: 5),
-                    child: SizedBox(
-                      height: 200.0,
-                      child: ListView(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          GestureDetector(
-                              onTap: () {}, child: _tagItem("Recent")),
-                          _tagItem("Users"),
-                          _tagItem("Hashtags"),
-                          _tagItem("Place"),
-                        ],
-                      ),
-                    ),
-                  ),
                   subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       children: [
-                        searchTerm == "Search"
+                        searchTerm == "Search Accounts"
                             ? const Icon(
                                 Icons.search_sharp,
                                 size: 0,
@@ -340,19 +600,169 @@ class SearchResultsListView extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _tagItem(String title) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10),
-      child: Container(
-        child: Text(title),
-        margin: const EdgeInsets.all(5),
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.grey),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5),
+class HastagSearchResultsListView extends StatelessWidget {
+  final String searchTerm;
+  EditprofileController editprofileController = Get.find();
+  HastagSearchResultsListView({
+    Key? key,
+    required this.searchTerm,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (searchTerm == null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(
+              Icons.search,
+              size: 64,
+            ),
+          ],
         ),
+      );
+    }
+
+    final fsb = FloatingSearchBar.of(context);
+
+    return SizedBox(
+      height: 200.0,
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
+        children: List.generate(
+            1,
+            (index) => ListTile(
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Row(
+                      children: [
+                        searchTerm == "Search Tags"
+                            ? const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              )
+                            : const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              ),
+                        FutureBuilder(
+                            future: RemoteServices.fetachsearchtag(searchTerm),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text(snapshot.error.toString()),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                return Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return SearchListtag(
+                                          tag: snapshot.data[index]);
+                                    },
+                                    itemCount: snapshot.data.length,
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
+                      ],
+                    ),
+                  ),
+                )),
+      ),
+    );
+  }
+}
+
+class placesSearchResultsListView extends StatelessWidget {
+  final String searchTerm;
+  EditprofileController editprofileController = Get.find();
+  placesSearchResultsListView({
+    Key? key,
+    required this.searchTerm,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (searchTerm == null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(
+              Icons.search,
+              size: 64,
+            ),
+          ],
+        ),
+      );
+    }
+
+    final fsb = FloatingSearchBar.of(context);
+
+    return SizedBox(
+      height: 200.0,
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
+        children: List.generate(
+            1,
+            (index) => ListTile(
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Row(
+                      children: [
+                        searchTerm == "Search Place"
+                            ? const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              )
+                            : const Icon(
+                                Icons.search_sharp,
+                                size: 0,
+                              ),
+                        FutureBuilder(
+                            future: RemoteServices.fetachsearch(searchTerm),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text(snapshot.error.toString()),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                return Expanded(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return SearchList(
+                                          user: snapshot.data[index]);
+                                    },
+                                    itemCount: snapshot.data.length,
+                                  ),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
+                      ],
+                    ),
+                  ),
+                )),
       ),
     );
   }
@@ -367,45 +777,128 @@ class SearchList extends StatelessWidget {
     return Material(
         color: Theme.of(context).cardColor,
         child: InkWell(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 4,
-                          color: Theme.of(context).scaffoldBackgroundColor),
-                      boxShadow: [
-                        BoxShadow(
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            color: Colors.black.withOpacity(0.1),
-                            offset: const Offset(0, 10))
-                      ],
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      UserProfileDetail(
+                    user: user,
+                  ),
+                  transitionDuration: Duration.zero,
                 ),
-                Expanded(
-                    child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: user!.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
-                        ])))),
-              ],
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, 10))
+                        ],
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                  ),
+                  Expanded(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: user!.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                          ])))),
+                ],
+              ),
+            ),
+          ),
+          onTap: () {},
+        ));
+  }
+}
+
+class SearchListtag extends StatelessWidget {
+  final Tag? tag;
+  const SearchListtag({Key? key, required this.tag}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, animation1, animation2) =>
+              //         UserProfileDetail(
+              //       user: tag,
+              //     ),
+              //     transitionDuration: Duration.zero,
+              //   ),
+              // );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, 10))
+                        ],
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/images/hash.png'),
+                        )),
+                  ),
+                  Expanded(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: tag!.hashtag,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                          ])))),
+                ],
+              ),
             ),
           ),
           onTap: () {},

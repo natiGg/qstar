@@ -102,6 +102,47 @@ class User {
   }
 }
 
+class links {
+  String fb_link;
+  String instagram_link;
+  String tiktok_link;
+  String youtube_link;
+
+  links({
+    required this.fb_link,
+    required this.instagram_link,
+    required this.tiktok_link,
+    required this.youtube_link,
+  });
+
+  factory links.fromJson(dynamic json) {
+    return links(
+      fb_link: json[0]['fb_link'],
+      instagram_link: json[0]['instagram_link'],
+      tiktok_link: json[0]['tiktok_link'],
+      youtube_link: json[0]['youtube_link'],
+    );
+  }
+}
+
+class Tag {
+  // ignore: non_constant_identifier_names
+  String number_of_posts;
+  String hashtag;
+
+  Tag({
+    required this.number_of_posts,
+    required this.hashtag,
+  });
+
+  factory Tag.fromJson(dynamic json) {
+    return Tag(
+      number_of_posts: json['number_of_posts'],
+      hashtag: json['hashtag'],
+    );
+  }
+}
+
 class Userpf {
   int id;
   String full_name;

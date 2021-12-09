@@ -20,6 +20,8 @@ import 'package:qstar/screen/profile/editprofile.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -66,6 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       // ignore: avoid_print
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
+      editprofileController.fetchlinks(body["id"]);
     }
   }
 
@@ -186,7 +189,114 @@ class _ProfileScreenState extends State<ProfileScreen>
                                       ),
                                     ),
                                   ),
-                                  SocialMedia()
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 40,
+                                            height: 30,
+                                            child: RawMaterialButton(
+                                              onPressed: () {
+                                                _launchURL();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Colors.white,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/yt.png"),
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                            height: 30,
+                                            child: RawMaterialButton(
+                                              onPressed: () {
+                                                _launchURLfb();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Colors.white,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/fb.png"),
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                            height: 30,
+                                            child: RawMaterialButton(
+                                              onPressed: () {
+                                                _launchURLtik();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Colors.white,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/tiktok.png"),
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 40,
+                                            height: 30,
+                                            child: RawMaterialButton(
+                                              onPressed: () {
+                                                _launchURLinsta();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Colors.white,
+                                              child: const Image(
+                                                image: AssetImage(
+                                                    "assets/images/inst.png"),
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -383,4 +493,55 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   bool get wantKeepAlive => true;
+
+  _launchURL() async {
+    var url =
+        "https://www.youtube.com/channel/${editprofileController.links.youtube_link}";
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLfb() async {
+    var url = "https://www.facebook.com/${editprofileController.links.fb_link}";
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLtik() async {
+    var url =
+        "https://www.tiktok.com/${editprofileController.links.tiktok_link}";
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLinsta() async {
+    var url =
+        "https://www.instagram.com/${editprofileController.links.instagram_link}";
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
+  }
 }
