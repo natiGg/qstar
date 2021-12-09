@@ -79,11 +79,11 @@ class RemoteServices {
     }
   }
 
-  static Future<List<User>> fetachsearchtag(var uname) async {
+  static Future<List<Tag>> fetachsearchtag(var uname) async {
     res = await Network().getData("tagSearch?q=${uname}");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
+      return body["data"].map((e) => Tag.fromJson(e)).toList().cast<Tag>();
 
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
@@ -255,9 +255,32 @@ class RemoteServices {
     }
   }
 
+  static Future<links> fetchProfilelink(var id) async {
+    res = await Network().getData("profile/${id.toString()}/links");
+
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return links.fromJson(body);
+    } else {
+      throw Exception('Failed to load User' + res.statusCode.toString());
+    }
+  }
+
   static Future<String> editprofile(var data, var id) async {
     // ignore: unnecessary_brace_in_string_interps
     res = await Network().getpassedData(data, "profile/${id}");
+    body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return res.statusCode.toString();
+    } else {
+      Map<String, dynamic> map = body["errors"];
+      return map.toString();
+    }
+  }
+
+  static Future<String> updatepass(var data, var id) async {
+    // ignore: unnecessary_brace_in_string_interps
+    res = await Network().getpassedData(data, "changePassword/${id}");
     body = json.decode(res.body);
     if (res.statusCode == 200) {
       return res.statusCode.toString();

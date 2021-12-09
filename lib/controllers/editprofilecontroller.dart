@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 class EditprofileController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditProf = GlobalKey<FormState>();
+  final GlobalKey<FormState> changePass = GlobalKey<FormState>();
+
   // ignore: non_constant_identifier_names
   final GlobalKey<FormState> EditUname = GlobalKey<FormState>();
   late TextEditingController nameControl,
@@ -21,7 +23,14 @@ class EditprofileController extends GetxController with StateMixin {
       birthdayControl,
       emailControl,
       bioControl,
-      passControl;
+      passControl,
+      newpassControl,
+      confirmpassControl,
+      youtubecontroller,
+      instacontroller,
+      tiktokcontroller,
+      facebookcontroller;
+
   var email = '';
   var name = '';
   var uname = '';
@@ -29,6 +38,7 @@ class EditprofileController extends GetxController with StateMixin {
   var prevemail = '';
   var birthday = '';
   var bio = '';
+  var link = '';
   var pass = '';
   var isLoading = false.obs;
   var edited = "";
@@ -53,7 +63,7 @@ class EditprofileController extends GetxController with StateMixin {
   // ignore: prefer_typing_uninitialized_variables
   var suggested;
   var suggestObjs = <User>[].obs;
-
+  var links;
   @override
   void onInit() {
     // ignore: todo
@@ -65,6 +75,12 @@ class EditprofileController extends GetxController with StateMixin {
     unameControl = TextEditingController();
     bioControl = TextEditingController();
     passControl = TextEditingController();
+    newpassControl = TextEditingController();
+    confirmpassControl = TextEditingController();
+    youtubecontroller = TextEditingController();
+    instacontroller = TextEditingController();
+    tiktokcontroller = TextEditingController();
+    facebookcontroller = TextEditingController();
     super.onInit();
   }
 
@@ -120,6 +136,51 @@ class EditprofileController extends GetxController with StateMixin {
     }
   }
 
+  void fetchlinks(var id) async {
+    links = await RemoteServices.fetchProfilelink(id);
+
+    if (links != null) {
+      youtubecontroller.text = links.youtube_link;
+      facebookcontroller.text = links.fb_link;
+      instacontroller.text = links.instagram_link;
+      tiktokcontroller.text = links.tiktok_link;
+    }
+  }
+
+  void changepass(var id) async {
+    try {
+      final isValid = changePass.currentState!.validate();
+
+      if (isValid == true) {
+        isLoading(true);
+        changePass.currentState!.save();
+        await updatePass(id);
+      }
+    } finally {
+      // TODO
+    }
+  }
+
+  Future<void> updatePass(id) async {
+    openAndCloseLoadingDialog();
+
+    var data = {
+      "old_password": passControl.text,
+      "password": newpassControl.text,
+      "password_confirmation": confirmpassControl.text,
+    };
+
+    edited = await RemoteServices.updatepass(data, id);
+
+    if (edited == "200") {
+      closeDialog(true, '');
+      isLoading(false);
+    } else {
+      errorMessages = edited;
+      closeDialog(false, errorMessages);
+    }
+  }
+
   Future<void> updateProf(id) async {
     openAndCloseLoadingDialog();
 
@@ -131,15 +192,19 @@ class EditprofileController extends GetxController with StateMixin {
       }
 
       var data = {
-        "name": name,
+        "name": nameControl.text,
         "website": "https://www.qstar.com",
-        "bio": bio,
+        "bio": bioControl.text,
         "phone_number": 0945525252,
         "gender": "male",
         "country_code": "+251",
         "date_of_birth": birthdayControl.text,
         "current_location": "Addis Ababa",
         "account_type": "personal",
+        "fb_link": facebookcontroller.text,
+        "instagram_link": instacontroller.text,
+        "tiktok_link": tiktokcontroller.text,
+        "youtube_link": youtubecontroller.text,
         "hobbies": tobeSent.join(",").toString(),
         "_method": "put"
       };
@@ -159,15 +224,19 @@ class EditprofileController extends GetxController with StateMixin {
       }
 
       var data = {
-        "name": name,
+        "name": nameControl.text,
         "website": "https://www.qstar.com",
-        "bio": bio,
+        "bio": bioControl.text,
         "phone_number": 0945525252,
         "gender": "male",
         "country_code": "+251",
         "date_of_birth": birthdayControl.text,
         "current_location": "Addis Ababa",
         "account_type": "personal",
+        "fb_link": facebookcontroller.text,
+        "instagram_link": instacontroller.text,
+        "tiktok_link": tiktokcontroller.text,
+        "youtube_link": youtubecontroller.text,
         "hobbies": tobeSent.join(",").toString(),
         "_method": "put"
       };
@@ -261,6 +330,13 @@ class EditprofileController extends GetxController with StateMixin {
   String? validateBio(String value) {
     if (value.isEmpty) {
       return "please Provide a bio";
+    }
+    return null;
+  }
+
+  String? validateUsername(String value) {
+    if (value.isEmpty) {
+      return "please Provide a Userame";
     }
     return null;
   }

@@ -9,6 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
+
 import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/userprofiledetail.dart';
 
@@ -517,6 +518,7 @@ class _HomePageState extends State<HomePage>
   bool get wantKeepAlive => true;
 }
 
+// ignore: must_be_immutable
 class UserSearchResultsListView extends StatelessWidget {
   final String searchTerm;
   EditprofileController editprofileController = Get.find();
@@ -648,7 +650,7 @@ class HastagSearchResultsListView extends StatelessWidget {
                                 size: 0,
                               ),
                         FutureBuilder(
-                            future: RemoteServices.fetachsearch(searchTerm),
+                            future: RemoteServices.fetachsearchtag(searchTerm),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasError) {
@@ -662,8 +664,8 @@ class HastagSearchResultsListView extends StatelessWidget {
                                     shrinkWrap: true,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return SearchList(
-                                          user: snapshot.data[index]);
+                                      return SearchListtag(
+                                          tag: snapshot.data[index]);
                                     },
                                     itemCount: snapshot.data.length,
                                   ),
@@ -819,6 +821,75 @@ class SearchList extends StatelessWidget {
                               text: TextSpan(children: [
                             TextSpan(
                                 text: user!.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                          ])))),
+                ],
+              ),
+            ),
+          ),
+          onTap: () {},
+        ));
+  }
+}
+
+class SearchListtag extends StatelessWidget {
+  final Tag? tag;
+  const SearchListtag({Key? key, required this.tag}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   PageRouteBuilder(
+              //     pageBuilder: (context, animation1, animation2) =>
+              //         UserProfileDetail(
+              //       user: tag,
+              //     ),
+              //     transitionDuration: Duration.zero,
+              //   ),
+              // );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, 10))
+                        ],
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/images/hash.png'),
+                        )),
+                  ),
+                  Expanded(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: tag!.hashtag,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1

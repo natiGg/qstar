@@ -90,7 +90,7 @@ class _EditProfilePageState extends State<ChangePassword> {
         ),
         body: editprofileController.obx(
             (editForm) => Form(
-                  key: editprofileController.EditProf,
+                  key: editprofileController.changePass,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Container(
                     padding:
@@ -149,7 +149,8 @@ class _EditProfilePageState extends State<ChangePassword> {
                                 ),
                                 const SizedBox(height: 8),
                                 TextFormField(
-                                  controller: editprofileController.passControl,
+                                  controller:
+                                      editprofileController.newpassControl,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
@@ -185,7 +186,8 @@ class _EditProfilePageState extends State<ChangePassword> {
                                 ),
                                 const SizedBox(height: 8),
                                 TextFormField(
-                                  controller: editprofileController.passControl,
+                                  controller:
+                                      editprofileController.confirmpassControl,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
@@ -220,14 +222,22 @@ class _EditProfilePageState extends State<ChangePassword> {
                                 // ignore: deprecated_member_use
                                 RaisedButton.icon(
                                   onPressed: () {
-                                    editprofileController.editProf(body["id"]);
+                                    editprofileController
+                                        .changepass(body["id"]);
+
+                                    editprofileController.passControl.clear();
+                                    editprofileController.newpassControl
+                                        .clear();
+                                    editprofileController.confirmpassControl
+                                        .clear();
+
                                     // ignore: avoid_print
-                                    print(editprofileController.isLoading);
+
                                     // ignore: unrelated_type_equality_checks
-                                    editprofileController.isLoading == true
-                                        ? const Center(
-                                            child: CircularProgressIndicator())
-                                        : _showMessage();
+                                    // editprofileController.isLoading == true
+                                    //     ? const Center(
+                                    //         child: CircularProgressIndicator())
+                                    //     : _showMessage();
                                   },
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
