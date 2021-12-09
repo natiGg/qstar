@@ -59,6 +59,7 @@ class Network {
     request.fields["post_type"] = data["post_type"].toString();
     request.fields["comment_disabled"] = data["comment_disabled"].toString();
     request.fields["hashtags"] = data["hashtags"].toString();
+    request.fields["tags"]=data["tags"].toString();
 
     for (var file in files) {
       // ignore: deprecated_member_use

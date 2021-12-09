@@ -40,7 +40,12 @@ class PostController extends GetxController {
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
+  var tagged=[].obs;
+  var taggedName=[].obs;
+
+  var hashTags=[""].obs;
     late VideoPlayerController controller;
+  var isPlaying=false.obs;
   late Future<void> initializeVideoPlayerFuture;
   var id;
   @override
@@ -69,8 +74,7 @@ class PostController extends GetxController {
       patternMatchMap: {
         RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
             color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
-        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
-            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+        
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
@@ -85,6 +89,9 @@ class PostController extends GetxController {
   }
 
   void onSearchTextChanged(String text) async {
+    print(hashtags);
+        print(tagged.join(","));
+
     print(videosList.length);
     searched.clear();
     if (text.isEmpty) {
@@ -100,14 +107,27 @@ class PostController extends GetxController {
 
   void tapSelection(var index) {
     print("objectf");
-    if (hashtags.contains("@" + suggestions[index].userName) == true) {
-      print("already added");
-    } else {
-      print(hashtags);
-      hashtags.add(suggestions[index].userName);
-      captionController.text =
-          captionController.text + "@" + suggestions[index].userName + " ";
-    }
+      if(taggedName.contains("@"+suggestions[index].userName))
+      {
+        print("already added");
+      }
+      else{
+      taggedName.add("@"+suggestions[index].userName);
+      tagged.add(suggestions[index].id.toString());
+      print(suggestions[index].id.toString());
+      }
+     
+    
+  }
+  void onPlay() async {
+             if (controller.value.isPlaying) {
+               isPlaying(false);
+              controller.pause();
+            } else {
+              // If the video is paused, play it.
+              isPlaying(true);
+              controller.play();
+            }
   }
 
   void fetchall() async {
@@ -120,8 +140,15 @@ class PostController extends GetxController {
   }
 
   void removeItem(var index) async {
-    imagesList.removeAt(index);
-    imagefile.removeAt(index);
+    if(imagesList.isNotEmpty){
+          imagesList.removeAt(index);    
+          imagefile.removeAt(index);
+    }
+    else if(videosList.isNotEmpty){
+          videosList.removeAt(index);
+
+    }
+
   }
 
   void removeEdited(var index) async {
@@ -130,6 +157,13 @@ class PostController extends GetxController {
 
   void createPost() async {
     try {
+      for(var tags in hashtags){
+        if(tags.contains("#")){
+          hashTags.add(tags);
+        }
+      }
+      print(hashTags.join(""));
+      print(tagged.join(","));
       var isValid = CaptionForm.currentState!.validate();
       if (isValid) {
         var data = {
@@ -137,15 +171,24 @@ class PostController extends GetxController {
           "caption": captionController.text,
           "post_type": post_type,
           "comment_disabled": 1,
-          "hashtags": "#hashtags",
+          "hashtags": hashTags.join(""),
+          "tags":tagged.join(",")
         };
         isPosting(true);
+        if(imagesList.isNotEmpty){
         posted = await RemoteServices.createPost(imagesList, data);
+
+        }
+        else if(videosList.isNotEmpty){
+         posted = await RemoteServices.createPost(videosList, data);
+
+        }
         print(posted);
         if (posted.toString() == "200") {
           isPosting(false);
           isPosted(true);
           imagesList.clear();
+          videosList.clear();
           captionController.clear();
           post_type.value = "public";
         }

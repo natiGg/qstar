@@ -920,9 +920,23 @@ class FeedState extends ResumableState<Feed>
                                           },
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: GestureDetector(
+                                          onTap: (){
+                                          },
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(postController.taggedName.join(" "),style:  TextStyle(
+                                                      color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
+                                          ),
+                                        ),
+                                      ),
                                       const SizedBox(
                                         height: 40,
                                       ),
+                                      
+
                                       // TypeAheadFormField<User?>(
                                       //   hideOnEmpty: true,
                                       //   textFieldConfiguration:
@@ -1053,13 +1067,14 @@ class FeedState extends ResumableState<Feed>
                                           crossAxisCount: 3,
                                           childAspectRatio: 1,
                                           children: List.generate(
-                                              postController.imagesList.length,
+                                              postController.videosList.length,
                                               (index) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 4.0),
                                               child: Stack(
                                                 children: <Widget>[
+                                                  
                                                   ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -1081,7 +1096,26 @@ class FeedState extends ResumableState<Feed>
                                                         //                       false,
                                                         //                 )));
                                                       },
-                                                      child:  AspectRatio(aspectRatio:1/2, child: VideoPlayer(postController.controller)),
+                                                      child:  AspectRatio(aspectRatio:1, child: VideoPlayer(postController.controller)),
+                                                    ),
+                                                  ),
+                                                  Center(
+                                                    
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: mPrimaryColor
+                                                              .withOpacity(0.5),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                      child: InkWell(
+                                                        child: Icon(
+                                                                    postController.isPlaying.value ? Icons.pause : Icons.play_arrow,
+
+                                                        ),
+                                                        onTap: () {
+                                                          postController.onPlay();
+                                                        },
+                                                      ),
                                                     ),
                                                   ),
                                                   Positioned(
@@ -1160,7 +1194,9 @@ class FeedState extends ResumableState<Feed>
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: () => print('Room'),
+                                            onPressed: (){
+                                              _showFeeling(context);
+                                            },
                                             icon: const Icon(
                                               FontAwesome.smile_o,
                                               color: Colors.amber,
@@ -1229,31 +1265,31 @@ class FeedState extends ResumableState<Feed>
   }
 
     void selectVideos() async {
+      var present=false;
+      postController.imagesList.clear();
+      _imageFileList!.clear();
 
     postController.isPosted(false);
     final XFile? selectedVids = await _picker.pickVideo(source: ImageSource.gallery);
 
     if (selectedVids!.path.isNotEmpty) {
-
-      _imageFileList!.add(selectedVids);
-      if (_imageFileList!.length > 1) {
-          print(_imageFileList![0].path);
-        for (var file in _imageFileList!) {
-          postController.imagesList.clear();
-          File convertedFile = File(file.path);
-          postController.videosList.add(convertedFile);
-          postController.controller=VideoPlayerController.network(convertedFile.path);
+          File convertedFile = File(selectedVids.path);
+          print(convertedFile.path);
+             postController.videosList.clear();
+             postController.videosList.add(convertedFile);
+          postController.controller=VideoPlayerController.network(selectedVids.path);
           // Initialize the controller and store the Future for later use.
           postController.initializeVideoPlayerFuture = postController.controller.initialize();
           // Use the controller to loop the video.
-          postController.controller.setLooping(true);
-        }
-      }    
+          postController.controller.setLooping(true);  
+          
+         
     }
     setState(() {});
   }
 
   void _showVideoPicker(context) async {
+
           showModalBottomSheet(
             context: context,
             builder: (BuildContext bc) {
@@ -1289,6 +1325,7 @@ class FeedState extends ResumableState<Feed>
                 ),
               );
             });
+            
   }
 
   _imgFromCamera() async {
@@ -1386,29 +1423,27 @@ class FeedState extends ResumableState<Feed>
                             }),
                   )),
             ],
-          );
-          // return Container(
-          //   height: 300,
-          //   child: FutureBuilder(
-          //       future: RemoteServices.fetchallFollowers(),
-          //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //         if (snapshot.hasError) {
-          //           return Center(
-          //             child: Text(snapshot.error.toString()),
-          //           );
-          //         }
-          //         if (snapshot.hasData) {
-
-          //         } else {
-          //           return Center(
-          //             child: CircularProgressIndicator(),
-          //           );
-          //         }
-          //       }),
-          // );
+          );        
         });
   }
-
+  void _showFeeling(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              height: 60,
+              child: Wrap(
+                children: <Widget>[
+                  
+               
+                  
+                ],
+              ),
+            ),
+          );
+        });
+  }
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
