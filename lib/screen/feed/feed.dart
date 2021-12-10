@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:camera_camera/camera_camera.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,7 +54,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:rive/rive.dart';
 
 // for refresh
-
+List<Feeling> _feeling = [
+  Feeling(
+      feeling: "happy",
+      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+  Feeling(
+      feeling: "loved",
+      icon: "https://cdn-icons-png.flaticon.com/512/1933/1933691.png"),
+  Feeling(
+      feeling: "wow",
+      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+  Feeling(
+      feeling: "sad",
+      icon: "https://cdn-icons-png.flaticon.com/512/742/742752.png"),
+  Feeling(
+      feeling: "cool",
+      icon: "https://cdn-icons-png.flaticon.com/512/743/743287.png"),
+  Feeling(
+      feeling: "Angry",
+      icon: "https://cdn-icons-png.flaticon.com/512/743/743418.png")
+];
 List<User> _users = [
   User(
       id: 1,
@@ -886,7 +906,7 @@ class FeedState extends ResumableState<Feed>
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          height: 400,
+                          height: 460,
                           child: Form(
                             key: postController.CaptionForm,
                             child: Column(
@@ -920,22 +940,43 @@ class FeedState extends ResumableState<Feed>
                                           },
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: GestureDetector(
-                                          onTap: (){
-                                          },
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(postController.taggedName.join(" "),style:  TextStyle(
-                                                      color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),),
-                                          ),
-                                        ),
-                                      ),
+                                      Obx(() => postController
+                                              .taggedName.isNotEmpty
+                                          ? Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                    children: List.generate(
+                                                        postController
+                                                            .taggedName
+                                                            .length, (index) {
+                                                  return Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: GestureDetector(
+                                                      onTap: () {},
+                                                      child: Text(
+                                                        postController
+                                                            .taggedName[index]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                mPrimaryColor,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  );
+                                                })),
+                                              ),
+                                            )
+                                          : Container()),
                                       const SizedBox(
                                         height: 40,
                                       ),
-                                      
 
                                       // TypeAheadFormField<User?>(
                                       //   hideOnEmpty: true,
@@ -1058,96 +1099,111 @@ class FeedState extends ResumableState<Feed>
                                             );
                                           }),
                                         ),
-                                      )) 
-                                    : postController.videosList.isNotEmpty ? Expanded(
-                                        child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 12.0, right: 12.0),
-                                        child: GridView.count(
-                                          crossAxisCount: 3,
-                                          childAspectRatio: 1,
-                                          children: List.generate(
-                                              postController.videosList.length,
-                                              (index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 4.0),
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        postController.index
-                                                            .value = index;
-                                                        // Navigator.push(
-                                                        //     context,
-                                                        //     MaterialPageRoute(
-                                                        //         builder:
-                                                        //             (context) =>
-                                                        //                 PreviewImageScreengallery(
-                                                        //                   imagePath: postController
-                                                        //                       .videosList[index]
-                                                        //                       .path,
-                                                        //                   isfrompost:
-                                                        //                       false,
-                                                        //                 )));
-                                                      },
-                                                      child:  AspectRatio(aspectRatio:1, child: VideoPlayer(postController.controller)),
-                                                    ),
-                                                  ),
-                                                  Center(
-                                                    
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: mPrimaryColor
-                                                              .withOpacity(0.5),
-                                                          shape:
-                                                              BoxShape.circle),
-                                                      child: InkWell(
-                                                        child: Icon(
-                                                                    postController.isPlaying.value ? Icons.pause : Icons.play_arrow,
-
+                                      ))
+                                    : postController.videosList.isNotEmpty
+                                        ? Expanded(
+                                            child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 12.0, right: 12.0),
+                                            child: GridView.count(
+                                              crossAxisCount: 3,
+                                              childAspectRatio: 1,
+                                              children: List.generate(
+                                                  postController.videosList
+                                                      .length, (index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 4.0),
+                                                  child: Stack(
+                                                    children: <Widget>[
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            postController.index
+                                                                .value = index;
+                                                            // Navigator.push(
+                                                            //     context,
+                                                            //     MaterialPageRoute(
+                                                            //         builder:
+                                                            //             (context) =>
+                                                            //                 PreviewImageScreengallery(
+                                                            //                   imagePath: postController
+                                                            //                       .videosList[index]
+                                                            //                       .path,
+                                                            //                   isfrompost:
+                                                            //                       false,
+                                                            //                 )));
+                                                          },
+                                                          child: AspectRatio(
+                                                              aspectRatio: 1,
+                                                              child: VideoPlayer(
+                                                                  postController
+                                                                      .controller)),
                                                         ),
-                                                        onTap: () {
-                                                          postController.onPlay();
-                                                        },
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    right: 5,
-                                                    top: 5,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: mPrimaryColor
-                                                              .withOpacity(0.5),
-                                                          shape:
-                                                              BoxShape.circle),
-                                                      child: InkWell(
-                                                        child: Icon(
-                                                          FontAwesome.remove,
-                                                          size: 15,
-                                                          color: Colors.white
-                                                              .withOpacity(0.8),
+                                                      Center(
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                              color: mPrimaryColor
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                              shape: BoxShape
+                                                                  .circle),
+                                                          child: InkWell(
+                                                            child: Icon(
+                                                              postController
+                                                                      .isPlaying
+                                                                      .value
+                                                                  ? Icons.pause
+                                                                  : Icons
+                                                                      .play_arrow,
+                                                            ),
+                                                            onTap: () {
+                                                              postController
+                                                                  .onPlay();
+                                                            },
+                                                          ),
                                                         ),
-                                                        onTap: () {
-                                                          postController
-                                                              .removeItem(
-                                                                  index);
-                                                        },
                                                       ),
-                                                    ),
+                                                      Positioned(
+                                                        right: 5,
+                                                        top: 5,
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                              color: mPrimaryColor
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                              shape: BoxShape
+                                                                  .circle),
+                                                          child: InkWell(
+                                                            child: Icon(
+                                                              FontAwesome
+                                                                  .remove,
+                                                              size: 15,
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                      0.8),
+                                                            ),
+                                                            onTap: () {
+                                                              postController
+                                                                  .removeItem(
+                                                                      index);
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      )):Container()),
+                                                );
+                                              }),
+                                            ),
+                                          ))
+                                        : Container()),
                                 const Divider(
                                   thickness: 1,
                                 ),
@@ -1162,7 +1218,7 @@ class FeedState extends ResumableState<Feed>
                                         children: [
                                           FlatButton.icon(
                                             onPressed: () {
-                                            _showVideoPicker(context);
+                                              _showVideoPicker(context);
                                             },
                                             icon: const Icon(
                                               FontAwesome.video_camera,
@@ -1194,7 +1250,7 @@ class FeedState extends ResumableState<Feed>
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: (){
+                                            onPressed: () {
                                               _showFeeling(context);
                                             },
                                             icon: const Icon(
@@ -1264,68 +1320,65 @@ class FeedState extends ResumableState<Feed>
     setState(() {});
   }
 
-    void selectVideos() async {
-      var present=false;
-      postController.imagesList.clear();
-      _imageFileList!.clear();
+  void selectVideos() async {
+    var present = false;
+    postController.imagesList.clear();
+    _imageFileList!.clear();
 
     postController.isPosted(false);
-    final XFile? selectedVids = await _picker.pickVideo(source: ImageSource.gallery);
+    final XFile? selectedVids =
+        await _picker.pickVideo(source: ImageSource.gallery);
 
     if (selectedVids!.path.isNotEmpty) {
-          File convertedFile = File(selectedVids.path);
-          print(convertedFile.path);
-             postController.videosList.clear();
-             postController.videosList.add(convertedFile);
-          postController.controller=VideoPlayerController.network(selectedVids.path);
-          // Initialize the controller and store the Future for later use.
-          postController.initializeVideoPlayerFuture = postController.controller.initialize();
-          // Use the controller to loop the video.
-          postController.controller.setLooping(true);  
-          
-         
+      File convertedFile = File(selectedVids.path);
+      print(convertedFile.path);
+      postController.videosList.clear();
+      postController.videosList.add(convertedFile);
+      postController.controller =
+          VideoPlayerController.network(selectedVids.path);
+      // Initialize the controller and store the Future for later use.
+      postController.initializeVideoPlayerFuture =
+          postController.controller.initialize();
+      // Use the controller to loop the video.
+      postController.controller.setLooping(true);
     }
     setState(() {});
   }
 
   void _showVideoPicker(context) async {
-
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext bc) {
-              return SafeArea(
-                child: Container(
-                  child: Wrap(
-                    children: <Widget>[
-                      ListTile(
-                          leading: const Icon(
-                            Icons.photo_library,
-                            color: mPrimaryColor,
-                          ),
-                          title: const Text(
-                              'Video Library'),
-                          onTap: () {
-                              selectVideos();                            
-                              Navigator.of(context).pop();
-                          }),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.videocam_sharp,
-                          color: mPrimaryColor,
-                        ),
-                        title: const Text(
-                            'Video Camera'),
-                        onTap: () {
-                          _pickVideoFromCamera();
-                          Navigator.of(context).pop();
-                        },
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: const Icon(
+                        Icons.photo_library,
+                        color: mPrimaryColor,
                       ),
-                    ],
+                      title: const Text('Video Library'),
+                      onTap: () {
+                        selectVideos();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.videocam_sharp,
+                      color: mPrimaryColor,
+                    ),
+                    title: const Text('Video Camera'),
+                    onTap: () {
+                      _pickVideoFromCamera();
+                      Navigator.of(context).pop();
+                    },
                   ),
-                ),
-              );
-            });
-            
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   _imgFromCamera() async {
@@ -1423,27 +1476,50 @@ class FeedState extends ResumableState<Feed>
                             }),
                   )),
             ],
-          );        
+          );
         });
   }
+
   void _showFeeling(context) {
     showModalBottomSheet(
         context: context,
+        backgroundColor: Colors.white,
         builder: (BuildContext bc) {
-          return SafeArea(
+          return Expanded(
             child: Container(
-              height: 60,
-              child: Wrap(
-                children: <Widget>[
-                  
-               
-                  
-                ],
-              ),
+              height: 200,
+              padding: EdgeInsets.all(12.0),
+              child: ListView.builder(
+                  reverse: false,
+                  itemCount: _feeling.length,
+                  padding: EdgeInsets.all(8),
+                  itemBuilder: (BuildContext context, int index) {
+                    return SafeArea(
+                        child: Container(
+                            child: Wrap(children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          radius: 15,
+                          backgroundImage: NetworkImage(_feeling[index].icon),
+                        ),
+                        title: Text(
+                          _feeling[index].feeling.toString(),
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+         
+                          postController.captionController.text=postController.captionController.text+" "+editprofileController.suggested.name+" is Feeling "+_feeling[index].feeling.toString()+" 😁";
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ])));
+                  }),
             ),
           );
         });
   }
+
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,

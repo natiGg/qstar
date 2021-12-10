@@ -142,6 +142,12 @@ class Tag {
     );
   }
 }
+class Feeling{
+  String feeling;
+  String icon;
+  Feeling({required this.feeling,required this.icon
+});
+}
 
 class Userpf {
   int id;

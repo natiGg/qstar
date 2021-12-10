@@ -89,7 +89,7 @@ class PostController extends GetxController {
   }
 
   void onSearchTextChanged(String text) async {
-    print(hashtags);
+    print(text);
         print(tagged.join(","));
 
     print(videosList.length);
@@ -146,6 +146,8 @@ class PostController extends GetxController {
     }
     else if(videosList.isNotEmpty){
           videosList.removeAt(index);
+          controller.dispose();
+
 
     }
 
