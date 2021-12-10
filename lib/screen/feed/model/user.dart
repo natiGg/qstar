@@ -143,6 +143,12 @@ class Tag {
   }
 }
 
+class Feeling {
+  String feeling;
+  String icon;
+  Feeling({required this.feeling, required this.icon});
+}
+
 class Userpf {
   int id;
   String full_name;
@@ -240,5 +246,15 @@ class hashtagPost {
 
   factory hashtagPost.fromJson(Map<String, dynamic> json) {
     return hashtagPost(post_id: json["post_id"]);
+  }
+}
+
+class Location {
+  String posts_num;
+  String location;
+  Location({required this.posts_num, required this.location});
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+        posts_num: json["number_of_posts"], location: json["location"]);
   }
 }

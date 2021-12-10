@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:camera_camera/camera_camera.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,7 +54,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:rive/rive.dart';
 
 // for refresh
-
+List<Feeling> _feeling = [
+  Feeling(
+      feeling: "happy",
+      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+  Feeling(
+      feeling: "loved",
+      icon: "https://cdn-icons-png.flaticon.com/512/1933/1933691.png"),
+  Feeling(
+      feeling: "wow",
+      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+  Feeling(
+      feeling: "sad",
+      icon: "https://cdn-icons-png.flaticon.com/512/742/742752.png"),
+  Feeling(
+      feeling: "cool",
+      icon: "https://cdn-icons-png.flaticon.com/512/743/743287.png"),
+  Feeling(
+      feeling: "Angry",
+      icon: "https://cdn-icons-png.flaticon.com/512/743/743418.png")
+];
 List<User> _users = [
   User(
       id: 1,
@@ -872,7 +892,7 @@ class FeedState extends ResumableState<Feed>
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          height: 400,
+                          height: 460,
                           child: Form(
                             key: postController.CaptionForm,
                             child: Column(
@@ -906,23 +926,40 @@ class FeedState extends ResumableState<Feed>
                                           },
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: GestureDetector(
-                                          onTap: () {},
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              postController.taggedName
-                                                  .join(" "),
-                                              style: TextStyle(
-                                                  color: mPrimaryColor,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      Obx(() => postController
+                                              .taggedName.isNotEmpty
+                                          ? Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                    children: List.generate(
+                                                        postController
+                                                            .taggedName
+                                                            .length, (index) {
+                                                  return Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: GestureDetector(
+                                                      onTap: () {},
+                                                      child: Text(
+                                                        postController
+                                                            .taggedName[index]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                mPrimaryColor,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  );
+                                                })),
+                                              ),
+                                            )
+                                          : Container()),
                                       const SizedBox(
                                         height: 40,
                                       ),
@@ -1211,7 +1248,9 @@ class FeedState extends ResumableState<Feed>
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: () => print('Room'),
+                                            onPressed: () {
+                                              _showLocation(context);
+                                            },
                                             icon: const Icon(
                                               FontAwesome.location_arrow,
                                               color: Colors.green,
@@ -1429,16 +1468,123 @@ class FeedState extends ResumableState<Feed>
         });
   }
 
-  void _showFeeling(context) {
+  void _showLocation(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              height: 60,
-              child: Wrap(
-                children: <Widget>[],
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new Card(
+                  child: new ListTile(
+                    leading: new Icon(Icons.search),
+                    title: new TextField(
+                      controller: postController.locationController,
+                      decoration: new InputDecoration(
+                          hintText: 'Search Location',
+                          border: InputBorder.none),
+                      onChanged: postController.onLocationTextChanged,
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.cancel),
+                      onPressed: () {
+                        postController.locationController.clear();
+                        postController.onLocationTextChanged('');
+                      },
+                    ),
+                  ),
+                ),
               ),
+              Obx(() => Expanded(
+                    child: postController.searchedLoc.value.isNotEmpty ||
+                            postController.locationController.text.isNotEmpty
+                        ? ListView.builder(
+                            reverse: false,
+                            itemCount: postController.searchedLoc.value.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.location_pin),
+                                  title: Text(postController
+                                      .searchedLoc[index].location
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            })
+                        : ListView.builder(
+                            reverse: false,
+                            itemCount: postController.location.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.location_pin),
+                                  title: Text(postController
+                                      .location[index].location
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            }),
+                  )),
+            ],
+          );
+        });
+  }
+
+  void _showFeeling(context) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          return Expanded(
+            child: Container(
+              height: 200,
+              padding: EdgeInsets.all(12.0),
+              child: ListView.builder(
+                  reverse: false,
+                  itemCount: _feeling.length,
+                  padding: EdgeInsets.all(8),
+                  itemBuilder: (BuildContext context, int index) {
+                    return SafeArea(
+                        child: Container(
+                            child: Wrap(children: <Widget>[
+                      ListTile(
+                        leading: CircleAvatar(
+                          radius: 15,
+                          backgroundImage: NetworkImage(_feeling[index].icon),
+                        ),
+                        title: Text(
+                          _feeling[index].feeling.toString(),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          postController.captionController.text =
+                              postController.captionController.text +
+                                  " " +
+                                  editprofileController.suggested.name +
+                                  " is Feeling " +
+                                  _feeling[index].feeling.toString() +
+                                  " 😁";
+                          Navigator.of(context).pop(true);
+                        },
+                      ),
+                    ])));
+                  }),
             ),
           );
         });
