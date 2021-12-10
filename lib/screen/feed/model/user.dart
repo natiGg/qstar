@@ -230,3 +230,15 @@ class Post {
   String title;
   Post({required this.userid, required this.id, required this.title});
 }
+
+class hashtagPost {
+  int post_id;
+
+  hashtagPost({
+    required this.post_id,
+  });
+
+  factory hashtagPost.fromJson(Map<String, dynamic> json) {
+    return hashtagPost(post_id: json["post_id"]);
+  }
+}

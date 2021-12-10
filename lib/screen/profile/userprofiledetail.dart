@@ -289,7 +289,8 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               padding: EdgeInsets.all(2.0),
               child: Text(
                 widget.user!.name,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
           ),

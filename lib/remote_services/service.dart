@@ -91,6 +91,21 @@ class RemoteServices {
     }
   }
 
+  static Future<List<hashtagPost>> hashtagdetail(var uname) async {
+    res = await Network().getData("hashtagSearch?tag=${uname}");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => hashtagPost.fromJson(e))
+          .toList()
+          .cast<hashtagPost>();
+
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
   static Future<List<User>> fetchPerfectMatch() async {
     res = await Network().getData("myPerfectMatch");
     var body = json.decode(res.body);
