@@ -1560,7 +1560,7 @@ class FeedState extends ResumableState<Feed>
   void _showFeeling(context) {
     showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
           return Expanded(
             child: Container(
@@ -1582,7 +1582,7 @@ class FeedState extends ResumableState<Feed>
                         title: Text(
                           _feeling[index].feeling.toString(),
                           style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
          
