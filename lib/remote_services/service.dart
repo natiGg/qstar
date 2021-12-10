@@ -65,10 +65,22 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
-
+  static Future<List<Location>> fetchallPlaces() async {
+    res = await Network().getData("placeSearch");
+    var body = json.decode(res.body);
+    print(body);
+    if (res.statusCode == 200) {
+      
+      return body["data"].map((e) => Location.fromJson(e)).toList().cast<Location>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
   static Future<List<User>> fetachsearch(var uname) async {
     res = await Network().getData("accountSearch?q=${uname}");
     var body = json.decode(res.body);
+    print(body);
     if (res.statusCode == 200) {
       print(body);
       return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();

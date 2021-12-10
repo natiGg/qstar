@@ -1262,7 +1262,9 @@ class FeedState extends ResumableState<Feed>
                                           ),
                                           FlatButton.icon(
                                             // ignore: avoid_print
-                                            onPressed: () => print('Room'),
+                                            onPressed: () {
+                                              _showLocation(context);
+                                            },
                                             icon: const Icon(
                                               FontAwesome.location_arrow,
                                               color: Colors.green,
@@ -1480,6 +1482,81 @@ class FeedState extends ResumableState<Feed>
         });
   }
 
+  void _showLocation(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new Card(
+                  child: new ListTile(
+                    leading: new Icon(Icons.search),
+                    title: new TextField(
+                      controller: postController.locationController,
+                      decoration: new InputDecoration(
+                          hintText: 'Search Location', border: InputBorder.none),
+                      onChanged: postController.onLocationTextChanged,
+                    ),
+                    trailing: new IconButton(
+                      icon: new Icon(Icons.cancel),
+                      onPressed: () {
+                        postController.locationController.clear();
+                        postController.onLocationTextChanged('');
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Obx(() => Expanded(
+                    child: postController.searchedLoc.value.isNotEmpty ||
+                            postController.locationController.text.isNotEmpty
+                        ? ListView.builder(
+                            reverse: false,
+                            itemCount: postController.searchedLoc.value.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.location_pin),
+                                  title: Text(postController
+                                      .searchedLoc[index].location
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            })
+                        : ListView.builder(
+                            reverse: false,
+                            itemCount: postController.location.length,
+                            padding: EdgeInsets.all(8),
+                            itemBuilder: (BuildContext context, int index) {
+                              return SafeArea(
+                                  child: Container(
+                                      child: Wrap(children: <Widget>[
+                                ListTile(
+                                  leading: Icon(Icons.location_pin),
+                                  title: Text(postController
+                                      .location[index].location
+                                      .toString()),
+                                  onTap: () {
+                                    postController.tapSelection(index);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ])));
+                            }),
+                  )),
+            ],
+          );
+        });
+  }
   void _showFeeling(context) {
     showModalBottomSheet(
         context: context,

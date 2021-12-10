@@ -236,3 +236,15 @@ class Post {
   String title;
   Post({required this.userid, required this.id, required this.title});
 }
+
+class Location {
+  String posts_num;
+  String  location;
+  Location({required this.posts_num, required this.location});
+  factory Location.fromJson(Map<String,dynamic> json){
+    return Location(
+      posts_num: json["number_of_posts"],
+      location: json["location"]
+    );
+  }
+}

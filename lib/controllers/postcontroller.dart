@@ -20,6 +20,7 @@ class PostController extends GetxController {
 
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
   late RichTextController captionController, searchController;
+  late TextEditingController locationController;
   var caption;
   // ignore: non_constant_identifier_names
   var post_type = 'public'.obs;
@@ -34,9 +35,11 @@ class PostController extends GetxController {
   var unames = [""].obs;
   var hashtags = [""].obs;
   var index = 0.obs;
-  var suggestions;
+  var suggestions,location;
   var isCam = false.obs;
   var searched = <User>[].obs;
+  var searchedLoc = <Location>[].obs;
+
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
@@ -59,6 +62,7 @@ class PostController extends GetxController {
       id = body['id'];
     }
     fetchall();
+    fetchallLocation();
     searchController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
@@ -83,6 +87,7 @@ class PostController extends GetxController {
       },
       deleteOnBack: true,
     );
+    locationController = TextEditingController();
     fetchall();
     // TODO: implement onInit
     super.onInit();
@@ -101,6 +106,18 @@ class PostController extends GetxController {
       if (userDetail.name.toLowerCase().contains(text) ||
           userDetail.userName.toLowerCase().contains(text)) {
         searched.add(userDetail);
+      }
+    });
+  }
+   void onLocationTextChanged(String text) async {
+   
+    searchedLoc.clear();
+    if (text.isEmpty) {
+      return;
+    }
+    location.forEach((loc) {
+      if (loc.location.toLowerCase().contains(text)) {
+        searchedLoc.add(loc);
       }
     });
   }
@@ -135,6 +152,10 @@ class PostController extends GetxController {
     suggestions = await RemoteServices.fetchallFollower(id.toString());
   }
 
+  void fetchallLocation() async {
+    print(id.toString() + "fdfdf");
+    location = await RemoteServices.fetchallPlaces();
+  }
   void changePostype(var type) async {
     post_type.value = type;
   }
