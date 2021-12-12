@@ -892,301 +892,347 @@ class FeedState extends ResumableState<Feed>
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Container(
-                          height: 460,
+                          height: 420,
                           child: Form(
                             key: postController.CaptionForm,
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          minLines: 1,
-                                          maxLines:
-                                              5, // allow user to enter 5 line in textfield
-                                          keyboardType: TextInputType
-                                              .multiline, // user keyboard will have a button to move cursor to next line
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextFormField(
+                                            minLines: 1,
+                                            maxLines:
+                                                5, // allow user to enter 5 line in textfield
+                                            keyboardType: TextInputType
+                                                .multiline, // user keyboard will have a button to move cursor to next line
 
-                                          controller:
-                                              postController.captionController,
+                                            controller: postController
+                                                .captionController,
 
-                                          decoration:
-                                              const InputDecoration.collapsed(
-                                                  hintText:
-                                                      'What\'s on your mind?',
-                                                  hintStyle: TextStyle(
-                                                    fontSize: 15,
-                                                  )),
+                                            decoration:
+                                                const InputDecoration.collapsed(
+                                                    hintText:
+                                                        'What\'s on your mind?',
+                                                    hintStyle: TextStyle(
+                                                      fontSize: 15,
+                                                    )),
 
-                                          validator: (value) {
-                                            return postController
-                                                .validateCaption(value!);
-                                          },
+                                            validator: (value) {
+                                              return postController
+                                                  .validateCaption(value!);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      Obx(() => postController
-                                              .taggedName.isNotEmpty
-                                          ? Container(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                    children: List.generate(
-                                                        postController
-                                                            .taggedName
-                                                            .length, (index) {
-                                                  return Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: GestureDetector(
-                                                      onTap: () {},
-                                                      child: Text(
-                                                        postController
-                                                            .taggedName[index]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            color:
-                                                                mPrimaryColor,
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                        Obx(() => postController
+                                                .taggedName.isNotEmpty
+                                            ? Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                      children: List.generate(
+                                                          postController
+                                                              .taggedName
+                                                              .length, (index) {
+                                                    return Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          postController
+                                                              .removedTagged(
+                                                                  index);
+                                                        },
+                                                        child: Text(
+                                                          postController
+                                                              .taggedName[index]
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  mPrimaryColor,
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
-                                                })),
-                                              ),
-                                            )
-                                          : Container()),
-                                      const SizedBox(
-                                        height: 40,
-                                      ),
+                                                    );
+                                                  })),
+                                                ),
+                                              )
+                                            : Container()),
+                                        Obx(() => postController
+                                                    .at_loca.value !=
+                                                ""
+                                            ? Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Container(
+                                                  child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(Icons
+                                                              .location_pin),
+                                                          Text(
+                                                              postController
+                                                                  .at_loca
+                                                                  .value,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 12))
+                                                        ],
+                                                      )),
+                                                ),
+                                              )
+                                            : Container()),
 
-                                      // TypeAheadFormField<User?>(
-                                      //   hideOnEmpty: true,
-                                      //   textFieldConfiguration:
-                                      //       TextFieldConfiguration(
-                                      //     controller:
-                                      //         postController.captionController,
-                                      //     decoration:
-                                      //         const InputDecoration.collapsed(
-                                      //             hintText:
-                                      //                 'What\'s on your mind?',
-                                      //             hintStyle: TextStyle(
-                                      //               fontSize: 15,
-                                      //             )),
-                                      //   ),
-                                      //   suggestionsCallback:
-                                      //       RemoteServices.fetchFollowers,
-                                      //   itemBuilder:
-                                      //       (context, User? suggestion) {
-                                      //     final user = suggestion!;
-                                      //     return ListTile(
-                                      //       leading: CircleAvatar(
-                                      //         backgroundImage: NetworkImage(
-                                      //             "https://qstar.mindethiopia.com/api/getProfilePicture/${user.id}"),
-                                      //       ),
-                                      //       title: Text(user.name),
-                                      //     );
-                                      //   },
-                                      //   onSuggestionSelected:
-                                      //       (User? suggestion) {
-                                      //     final user = suggestion;
-                                      //     ScaffoldMessenger.of(context)
-                                      //       ..removeCurrentSnackBar()
-                                      //       ..showSnackBar(SnackBar(
-                                      //         content: Text(
-                                      //             'Selected user: ${user!.name}'),
-                                      //       ));
-                                      //   },
-                                      //   validator: (value) {
-                                      //     return postController
-                                      //         .validateCaption(value!);
-                                      //   },
-                                      // )
-                                    ],
+                                        const SizedBox(
+                                          height: 40,
+                                        ),
+
+                                        // TypeAheadFormField<User?>(
+                                        //   hideOnEmpty: true,
+                                        //   textFieldConfiguration:
+                                        //       TextFieldConfiguration(
+                                        //     controller:
+                                        //         postController.captionController,
+                                        //     decoration:
+                                        //         const InputDecoration.collapsed(
+                                        //             hintText:
+                                        //                 'What\'s on your mind?',
+                                        //             hintStyle: TextStyle(
+                                        //               fontSize: 15,
+                                        //             )),
+                                        //   ),
+                                        //   suggestionsCallback:
+                                        //       RemoteServices.fetchFollowers,
+                                        //   itemBuilder:
+                                        //       (context, User? suggestion) {
+                                        //     final user = suggestion!;
+                                        //     return ListTile(
+                                        //       leading: CircleAvatar(
+                                        //         backgroundImage: NetworkImage(
+                                        //             "https://qstar.mindethiopia.com/api/getProfilePicture/${user.id}"),
+                                        //       ),
+                                        //       title: Text(user.name),
+                                        //     );
+                                        //   },
+                                        //   onSuggestionSelected:
+                                        //       (User? suggestion) {
+                                        //     final user = suggestion;
+                                        //     ScaffoldMessenger.of(context)
+                                        //       ..removeCurrentSnackBar()
+                                        //       ..showSnackBar(SnackBar(
+                                        //         content: Text(
+                                        //             'Selected user: ${user!.name}'),
+                                        //       ));
+                                        //   },
+                                        //   validator: (value) {
+                                        //     return postController
+                                        //         .validateCaption(value!);
+                                        //   },
+                                        // )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Obx(() => postController.imagesList.isNotEmpty
                                     ? Expanded(
+                                        child: Container(
                                         child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 12.0, right: 12.0),
-                                        child: GridView.count(
-                                          crossAxisCount: 3,
-                                          childAspectRatio: 1,
-                                          children: List.generate(
-                                              postController.imagesList.length,
-                                              (index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 4.0),
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        postController.index
-                                                            .value = index;
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        PreviewImageScreengallery(
-                                                                          imagePath: postController
-                                                                              .imagesList[index]
-                                                                              .path,
-                                                                          isfrompost:
-                                                                              false,
-                                                                        )));
-                                                      },
-                                                      child: Image.file(
-                                                        File(postController
-                                                            .imagesList[index]
-                                                            .path),
-                                                        fit: BoxFit.cover,
-                                                        height: 100,
-                                                        width: 400,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    right: 5,
-                                                    top: 5,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: mPrimaryColor
-                                                              .withOpacity(0.5),
-                                                          shape:
-                                                              BoxShape.circle),
-                                                      child: InkWell(
-                                                        child: Icon(
-                                                          FontAwesome.remove,
-                                                          size: 15,
-                                                          color: Colors.white
-                                                              .withOpacity(0.8),
-                                                        ),
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 12.0, right: 12.0),
+                                          child: GridView.count(
+                                            crossAxisCount: 3,
+                                            childAspectRatio: 1,
+                                            children: List.generate(
+                                                postController.imagesList
+                                                    .length, (index) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 4.0),
+                                                child: Stack(
+                                                  children: <Widget>[
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: GestureDetector(
                                                         onTap: () {
-                                                          postController
-                                                              .removeItem(
-                                                                  index);
+                                                          postController.index
+                                                              .value = index;
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          PreviewImageScreengallery(
+                                                                            imagePath:
+                                                                                postController.imagesList[index].path,
+                                                                            isfrompost:
+                                                                                false,
+                                                                          )));
                                                         },
+                                                        child: Image.file(
+                                                          File(postController
+                                                              .imagesList[index]
+                                                              .path),
+                                                          fit: BoxFit.cover,
+                                                          height: 100,
+                                                          width: 400,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          }),
+                                                    Positioned(
+                                                      right: 5,
+                                                      top: 5,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            color: mPrimaryColor
+                                                                .withOpacity(
+                                                                    0.5),
+                                                            shape: BoxShape
+                                                                .circle),
+                                                        child: InkWell(
+                                                          child: Icon(
+                                                            FontAwesome.remove,
+                                                            size: 15,
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.8),
+                                                          ),
+                                                          onTap: () {
+                                                            postController
+                                                                .removeItem(
+                                                                    index);
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
+                                          ),
                                         ),
                                       ))
                                     : postController.videosList.isNotEmpty
                                         ? Expanded(
+                                            child: Container(
                                             child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 12.0, right: 12.0),
-                                            child: GridView.count(
-                                              crossAxisCount: 3,
-                                              childAspectRatio: 1,
-                                              children: List.generate(
-                                                  postController.videosList
-                                                      .length, (index) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 4.0),
-                                                  child: Stack(
-                                                    children: <Widget>[
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            postController.index
-                                                                .value = index;
-                                                            // Navigator.push(
-                                                            //     context,
-                                                            //     MaterialPageRoute(
-                                                            //         builder:
-                                                            //             (context) =>
-                                                            //                 PreviewImageScreengallery(
-                                                            //                   imagePath: postController
-                                                            //                       .videosList[index]
-                                                            //                       .path,
-                                                            //                   isfrompost:
-                                                            //                       false,
-                                                            //                 )));
-                                                          },
-                                                          child: AspectRatio(
-                                                              aspectRatio: 1,
-                                                              child: VideoPlayer(
-                                                                  postController
-                                                                      .controller)),
-                                                        ),
-                                                      ),
-                                                      Center(
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              color: mPrimaryColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                          child: InkWell(
-                                                            child: Icon(
-                                                              postController
-                                                                      .isPlaying
-                                                                      .value
-                                                                  ? Icons.pause
-                                                                  : Icons
-                                                                      .play_arrow,
-                                                            ),
+                                              padding: const EdgeInsets.only(
+                                                  top: 10,
+                                                  left: 12.0,
+                                                  right: 12.0),
+                                              child: GridView.count(
+                                                crossAxisCount: 3,
+                                                childAspectRatio: 1,
+                                                children: List.generate(
+                                                    postController.videosList
+                                                        .length, (index) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 4.0),
+                                                    child: Stack(
+                                                      children: <Widget>[
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child:
+                                                              GestureDetector(
                                                             onTap: () {
                                                               postController
-                                                                  .onPlay();
+                                                                      .index
+                                                                      .value =
+                                                                  index;
+                                                              // Navigator.push(
+                                                              //     context,
+                                                              //     MaterialPageRoute(
+                                                              //         builder:
+                                                              //             (context) =>
+                                                              //                 PreviewImageScreengallery(
+                                                              //                   imagePath: postController
+                                                              //                       .videosList[index]
+                                                              //                       .path,
+                                                              //                   isfrompost:
+                                                              //                       false,
+                                                              //                 )));
                                                             },
+                                                            child: AspectRatio(
+                                                                aspectRatio: 1,
+                                                                child: VideoPlayer(
+                                                                    postController
+                                                                        .controller)),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Positioned(
-                                                        right: 5,
-                                                        top: 5,
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              color: mPrimaryColor
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                          child: InkWell(
-                                                            child: Icon(
-                                                              FontAwesome
-                                                                  .remove,
-                                                              size: 15,
-                                                              color: Colors
-                                                                  .white
-                                                                  .withOpacity(
-                                                                      0.8),
+                                                        Center(
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                                color: mPrimaryColor
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                shape: BoxShape
+                                                                    .circle),
+                                                            child: InkWell(
+                                                              child: Icon(
+                                                                postController
+                                                                        .isPlaying
+                                                                        .value
+                                                                    ? Icons
+                                                                        .pause
+                                                                    : Icons
+                                                                        .play_arrow,
+                                                              ),
+                                                              onTap: () {
+                                                                postController
+                                                                    .onPlay();
+                                                              },
                                                             ),
-                                                            onTap: () {
-                                                              postController
-                                                                  .removeItem(
-                                                                      index);
-                                                            },
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              }),
+                                                        Positioned(
+                                                          right: 5,
+                                                          top: 5,
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                                color: mPrimaryColor
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                shape: BoxShape
+                                                                    .circle),
+                                                            child: InkWell(
+                                                              child: Icon(
+                                                                FontAwesome
+                                                                    .remove,
+                                                                size: 15,
+                                                                color: Colors
+                                                                    .white
+                                                                    .withOpacity(
+                                                                        0.8),
+                                                              ),
+                                                              onTap: () {
+                                                                postController
+                                                                    .removeItem(
+                                                                        index);
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
+                                              ),
                                             ),
                                           ))
                                         : Container()),
@@ -1513,7 +1559,7 @@ class FeedState extends ResumableState<Feed>
                                       .searchedLoc[index].location
                                       .toString()),
                                   onTap: () {
-                                    postController.tapSelection(index);
+                                    postController.tapLocselection(index);
                                     Navigator.of(context).pop(true);
                                   },
                                 ),
@@ -1533,7 +1579,7 @@ class FeedState extends ResumableState<Feed>
                                       .location[index].location
                                       .toString()),
                                   onTap: () {
-                                    postController.tapSelection(index);
+                                    postController.tapLocselection(index);
                                     Navigator.of(context).pop(true);
                                   },
                                 ),

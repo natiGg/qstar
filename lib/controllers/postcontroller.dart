@@ -24,6 +24,7 @@ class PostController extends GetxController {
   var caption;
   // ignore: non_constant_identifier_names
   var post_type = 'public'.obs;
+  var at_loca = "".obs;
   var image;
   var posted;
   var imageAdded = false.obs;
@@ -66,7 +67,7 @@ class PostController extends GetxController {
     searchController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
-            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+            color: mPrimaryColor, fontSize: 16, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
@@ -77,7 +78,7 @@ class PostController extends GetxController {
     captionController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
-            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
+            color: mPrimaryColor, fontSize: 16, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
@@ -132,6 +133,16 @@ class PostController extends GetxController {
     }
   }
 
+  void removedTagged(var index) {
+    taggedName.removeAt(index);
+    tagged.removeAt(index);
+  }
+
+  void tapLocselection(var index) {
+    print("objectf");
+    at_loca.value = location[index].location;
+  }
+
   void onPlay() async {
     if (controller.value.isPlaying) {
       isPlaying(false);
@@ -183,7 +194,7 @@ class PostController extends GetxController {
       var isValid = CaptionForm.currentState!.validate();
       if (isValid) {
         var data = {
-          "location": "Addis Ababa",
+          "location": at_loca,
           "caption": captionController.text,
           "post_type": post_type,
           "comment_disabled": 1,
