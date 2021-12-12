@@ -965,34 +965,40 @@ class FeedState extends ResumableState<Feed>
                                                 ),
                                               )
                                             : Container()),
-                                        Obx(() => postController
-                                                    .at_loca.value !=
-                                                ""
-                                            ? Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Container(
-                                                  child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(Icons
-                                                              .location_pin),
-                                                          Text(
-                                                              postController
-                                                                  .at_loca
-                                                                  .value,
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 12))
-                                                        ],
-                                                      )),
-                                                ),
-                                              )
-                                            : Container()),
+                                        Obx(() =>
+                                            postController.at_loca.value != ""
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      _showLocation(context);
+                                                    },
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Container(
+                                                        child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons
+                                                                    .location_pin),
+                                                                Text(
+                                                                    postController
+                                                                        .at_loca
+                                                                        .value,
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            12))
+                                                              ],
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container()),
 
                                         const SizedBox(
                                           height: 40,
@@ -1379,6 +1385,29 @@ class FeedState extends ResumableState<Feed>
     setState(() {});
   }
 
+  void selectVideosFromCam() async {
+    var present = false;
+    postController.imagesList.clear();
+    _imageFileList!.clear();
+    final XFile? selectedVids =
+        await _picker.pickVideo(source: ImageSource.camera);
+    postController.isPosted(false);
+
+    if (selectedVids!.path.isNotEmpty) {
+      File convertedFile = File(selectedVids.path);
+      print(convertedFile.path);
+      postController.videosList.clear();
+      postController.videosList.add(convertedFile);
+      postController.controller =
+          VideoPlayerController.network(selectedVids.path);
+      // Initialize the controller and store the Future for later use.
+      postController.initializeVideoPlayerFuture =
+          postController.controller.initialize();
+      // Use the controller to loop the video.
+      postController.controller.setLooping(true);
+    }
+  }
+
   void _showVideoPicker(context) async {
     showModalBottomSheet(
         context: context,
@@ -1404,7 +1433,7 @@ class FeedState extends ResumableState<Feed>
                     ),
                     title: const Text('Video Camera'),
                     onTap: () {
-                      _pickVideoFromCamera();
+                      selectVideosFromCam();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -1619,13 +1648,60 @@ class FeedState extends ResumableState<Feed>
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
-                          postController.captionController.text =
-                              postController.captionController.text +
-                                  " " +
-                                  editprofileController.suggested.name +
-                                  " is Feeling " +
-                                  _feeling[index].feeling.toString() +
-                                  " 😁";
+                          if (_feeling[index].feeling.toString() == "happy") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    " 😁";
+                          }
+                          if (_feeling[index].feeling.toString() == "loved") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    " 🥰";
+                          }
+                          if (_feeling[index].feeling.toString() == "wow") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    " 😲";
+                          }
+                          if (_feeling[index].feeling.toString() == "sad") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    "  😥";
+                          }
+                          if (_feeling[index].feeling.toString() == "cool") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    " 😎";
+                          }
+                          if (_feeling[index].feeling.toString() == "Angry") {
+                            postController.captionController.text =
+                                postController.captionController.text +
+                                    " " +
+                                    editprofileController.suggested.name +
+                                    " is Feeling " +
+                                    _feeling[index].feeling.toString() +
+                                    " 😡";
+                          }
                           Navigator.of(context).pop(true);
                         },
                       ),

@@ -67,7 +67,7 @@ class PostController extends GetxController {
     searchController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
-            color: mPrimaryColor, fontSize: 16, fontWeight: FontWeight.bold),
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
@@ -78,7 +78,7 @@ class PostController extends GetxController {
     captionController = RichTextController(
       patternMatchMap: {
         RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
-            color: mPrimaryColor, fontSize: 16, fontWeight: FontWeight.bold),
+            color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
         // Do something with matches.
@@ -192,13 +192,12 @@ class PostController extends GetxController {
       print(hashTags.join(""));
       print(tagged.join(","));
       var isValid = CaptionForm.currentState!.validate();
+      print(at_loca.value.toString());
       if (isValid) {
         var data = {
-          "location": at_loca,
+          "location": at_loca.value.toString(),
           "caption": captionController.text,
           "post_type": post_type,
-          "comment_disabled": 1,
-          "hashtags": hashTags.join(""),
           "tags": tagged.join(",")
         };
         isPosting(true);
@@ -213,6 +212,9 @@ class PostController extends GetxController {
           isPosted(true);
           imagesList.clear();
           videosList.clear();
+          hashTags.clear();
+          taggedName.clear();
+          tagged.clear();
           captionController.clear();
           post_type.value = "public";
         }
