@@ -24,6 +24,7 @@ class PostController extends GetxController {
   var caption;
   // ignore: non_constant_identifier_names
   var post_type = 'public'.obs;
+  var at_loca = "".obs;
   var image;
   var posted;
   var imageAdded = false.obs;
@@ -132,6 +133,16 @@ class PostController extends GetxController {
     }
   }
 
+  void removedTagged(var index) {
+    taggedName.removeAt(index);
+    tagged.removeAt(index);
+  }
+
+  void tapLocselection(var index) {
+    print("objectf");
+    at_loca.value = location[index].location;
+  }
+
   void onPlay() async {
     if (controller.value.isPlaying) {
       isPlaying(false);
@@ -181,13 +192,12 @@ class PostController extends GetxController {
       print(hashTags.join(""));
       print(tagged.join(","));
       var isValid = CaptionForm.currentState!.validate();
+      print(at_loca.value.toString());
       if (isValid) {
         var data = {
-          "location": "Addis Ababa",
+          "location": at_loca.value.toString(),
           "caption": captionController.text,
           "post_type": post_type,
-          "comment_disabled": 1,
-          "hashtags": hashTags.join(""),
           "tags": tagged.join(",")
         };
         isPosting(true);
@@ -202,6 +212,9 @@ class PostController extends GetxController {
           isPosted(true);
           imagesList.clear();
           videosList.clear();
+          hashTags.clear();
+          taggedName.clear();
+          tagged.clear();
           captionController.clear();
           post_type.value = "public";
         }

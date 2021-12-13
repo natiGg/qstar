@@ -51,15 +51,14 @@ class Network {
     // ignore: prefer_typing_uninitialized_variables
     var multipartFile;
     var uri = Uri.parse(fullUrl);
+    print(data);
     await _getToken();
     var request = new http.MultipartRequest("POST", uri);
     request.headers.addAll(_setFileHeaders());
     request.fields["location"] = data["location"].toString();
     request.fields["caption"] = data["caption"].toString();
     request.fields["post_type"] = data["post_type"].toString();
-    request.fields["comment_disabled"] = data["comment_disabled"].toString();
-    request.fields["hashtags"] = data["hashtags"].toString();
-    request.fields["tags"]=data["tags"].toString();
+    request.fields["tags"] = data["tags"].toString();
 
     for (var file in files) {
       // ignore: deprecated_member_use
