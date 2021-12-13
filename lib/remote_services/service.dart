@@ -94,11 +94,40 @@ class RemoteServices {
   static Future<List<hashtagPost>> hashtagdetail(var uname) async {
     res = await Network().getData("hashtagSearch?tag=${uname}");
     var body = json.decode(res.body);
+
     if (res.statusCode == 200) {
       return body["data"]
           .map((e) => hashtagPost.fromJson(e))
           .toList()
           .cast<hashtagPost>();
+
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
+  static Future<List<Place>> fetachsearchplace(var uname) async {
+    res = await Network().getData("placeSearch?q=${uname}");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => Place.fromJson(e)).toList().cast<Place>();
+
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
+  static Future<List<PlacePost>> placedetail(var uname) async {
+    res = await Network().getData("locationPostSearch?location=${uname}");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => PlacePost.fromJson(e))
+          .toList()
+          .cast<PlacePost>();
 
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
@@ -223,6 +252,21 @@ class RemoteServices {
       return true;
     } else {
       throw Exception('Failed to Follow User');
+    }
+  }
+
+  static Future<List<Location>> fetchallPlaces() async {
+    res = await Network().getData("placeSearch");
+    var body = json.decode(res.body);
+    print(body);
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => Location.fromJson(e))
+          .toList()
+          .cast<Location>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
     }
   }
 

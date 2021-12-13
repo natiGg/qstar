@@ -125,24 +125,6 @@ class links {
   }
 }
 
-class Tag {
-  // ignore: non_constant_identifier_names
-  String number_of_posts;
-  String hashtag;
-
-  Tag({
-    required this.number_of_posts,
-    required this.hashtag,
-  });
-
-  factory Tag.fromJson(dynamic json) {
-    return Tag(
-      number_of_posts: json['number_of_posts'],
-      hashtag: json['hashtag'],
-    );
-  }
-}
-
 class Feeling {
   String feeling;
   String icon;
@@ -237,15 +219,65 @@ class Post {
   Post({required this.userid, required this.id, required this.title});
 }
 
+class Tag {
+  // ignore: non_constant_identifier_names
+  String number_of_posts;
+  String hashtag;
+
+  Tag({
+    required this.number_of_posts,
+    required this.hashtag,
+  });
+
+  factory Tag.fromJson(dynamic json) {
+    return Tag(
+      number_of_posts: json['number_of_posts'],
+      hashtag: json['hashtag'],
+    );
+  }
+}
+
 class hashtagPost {
   int post_id;
+  String fileurl;
 
   hashtagPost({
     required this.post_id,
+    required this.fileurl,
   });
 
   factory hashtagPost.fromJson(Map<String, dynamic> json) {
-    return hashtagPost(post_id: json["post_id"]);
+    return hashtagPost(post_id: json["post_id"], fileurl: json["fileurl"]);
+  }
+}
+
+class Place {
+  // ignore: non_constant_identifier_names
+  String number_of_posts;
+  String location;
+
+  Place({
+    required this.number_of_posts,
+    required this.location,
+  });
+
+  factory Place.fromJson(dynamic json) {
+    return Place(
+      number_of_posts: json['number_of_posts'],
+      location: json['location'],
+    );
+  }
+}
+
+class PlacePost {
+  int post_id;
+
+  PlacePost({
+    required this.post_id,
+  });
+
+  factory PlacePost.fromJson(Map<String, dynamic> json) {
+    return PlacePost(post_id: json["post_id"]);
   }
 }
 

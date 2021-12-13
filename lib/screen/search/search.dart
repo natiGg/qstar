@@ -13,13 +13,14 @@ import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/userprofiledetail.dart';
 import 'package:qstar/screen/search/hashtagdetail.dart';
+import 'package:qstar/screen/search/placesdetail.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -731,7 +732,7 @@ class placesSearchResultsListView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       children: [
-                        searchTerm == "Search Place"
+                        searchTerm == "Search Places"
                             ? const Icon(
                                 Icons.search_sharp,
                                 size: 0,
@@ -741,7 +742,8 @@ class placesSearchResultsListView extends StatelessWidget {
                                 size: 0,
                               ),
                         FutureBuilder(
-                            future: RemoteServices.fetachsearch(searchTerm),
+                            future:
+                                RemoteServices.fetachsearchplace(searchTerm),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasError) {
@@ -755,8 +757,8 @@ class placesSearchResultsListView extends StatelessWidget {
                                     shrinkWrap: true,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return SearchList(
-                                          user: snapshot.data[index]);
+                                      return SearchListplace(
+                                          place: snapshot.data[index]);
                                     },
                                     itemCount: snapshot.data.length,
                                   ),
@@ -898,6 +900,74 @@ class SearchListtag extends StatelessWidget {
                               text: TextSpan(children: [
                             TextSpan(
                                 text: tag!.hashtag,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                          ])))),
+                ],
+              ),
+            ),
+          ),
+          onTap: () {},
+        ));
+  }
+}
+
+class SearchListplace extends StatelessWidget {
+  final Place? place;
+  const SearchListplace({Key? key, required this.place}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Theme.of(context).cardColor,
+        child: InkWell(
+          child: GestureDetector(
+            onTap: () {
+              print(place);
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      PlaceDetail(place: place),
+                  transitionDuration: Duration.zero,
+                ),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, 10))
+                        ],
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage('assets/images/location.png'),
+                        )),
+                  ),
+                  Expanded(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: place!.location,
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1

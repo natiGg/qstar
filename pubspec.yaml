@@ -70,7 +70,6 @@ dependencies:
   http: ^0.13.4
   shared_preferences: ^2.0.8
   permission_handler: ^6.0.0
-  
   multi_select_flutter: ^4.0.0
   progress_indicators: ^1.0.0
   rich_text_controller: ^1.4.0
