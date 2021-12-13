@@ -271,20 +271,20 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Location>> fetchallPlaces() async {
-    res = await Network().getData("placeSearch");
-    var body = json.decode(res.body);
-    print(body);
-    if (res.statusCode == 200) {
-      return body["data"]
-          .map((e) => Location.fromJson(e))
-          .toList()
-          .cast<Location>();
-      // return User.fromJson(jsonDecode(body["data"]));
-    } else {
-      throw Exception('Failed to load Users');
-    }
-  }
+  // static Future<List<Location>> fetchallPlaces() async {
+  //   res = await Network().getData("placeSearch");
+  //   var body = json.decode(res.body);
+  //   print(body);
+  //   if (res.statusCode == 200) {
+  //     return body["data"]
+  //         .map((e) => Location.fromJson(e))
+  //         .toList()
+  //         .cast<Location>();
+  //     // return User.fromJson(jsonDecode(body["data"]));
+  //   } else {
+  //     throw Exception('Failed to load Users');
+  //   }
+  // }
 
   static Future<bool> uploadImage(File image, String id) async {
     // ignore: unnecessary_null_comparison
@@ -408,7 +408,7 @@ class RemoteServices {
       print(res.toString());
       return res.statusCode.toString();
     } else {
-            print(json.decode(res).toString());
+      print(json.decode(res).toString());
 
       throw Exception("can't post");
     }
