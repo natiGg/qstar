@@ -4,36 +4,37 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/controllers/hashtagcontroller.dart';
+import 'package:qstar/controllers/placecontroller.dart';
+
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
-class Hashtagdetail extends StatefulWidget {
-  final Tag? tag;
+class PlaceDetail extends StatefulWidget {
+  final Place? place;
 
-  const Hashtagdetail({Key? key, required this.tag}) : super(key: key);
+  const PlaceDetail({Key? key, required this.place}) : super(key: key);
 
   @override
   _Hashtagdetail createState() => _Hashtagdetail();
 }
 
-class _Hashtagdetail extends State<Hashtagdetail> {
-  HashController hashController = Get.put(HashController());
+class _Hashtagdetail extends State<PlaceDetail> {
+  Placecontroller placecontroller = Get.put(Placecontroller());
   int ind = 0;
   @override
   void initState() {
     super.initState();
 
-    ind = int.parse(widget.tag!.number_of_posts);
+    ind = int.parse(widget.place!.number_of_posts);
 
-    hashController.fetch(widget.tag!.hashtag);
+    placecontroller.fetch(widget.place!.location);
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => hashController.isfetched.value == true
+      () => placecontroller.isfetched.value == true
           ? Scaffold(
               body: CustomScrollView(
                 slivers: [
@@ -60,7 +61,7 @@ class _Hashtagdetail extends State<Hashtagdetail> {
                                 child: const CircleAvatar(
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      AssetImage('assets/images/hash.png'),
+                                      AssetImage('assets/images/location.png'),
                                 ),
                               ),
                             ],
@@ -76,7 +77,7 @@ class _Hashtagdetail extends State<Hashtagdetail> {
                             child: RichText(
                                 text: TextSpan(children: [
                               TextSpan(
-                                  text: "# ${widget.tag!.hashtag} ",
+                                  text: "# ${widget.place!.location} ",
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle1
@@ -92,7 +93,8 @@ class _Hashtagdetail extends State<Hashtagdetail> {
                             child: RichText(
                                 text: TextSpan(children: [
                               TextSpan(
-                                  text: "${widget.tag!.number_of_posts} posts",
+                                  text:
+                                      "${widget.place!.number_of_posts} posts",
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle1
@@ -105,17 +107,66 @@ class _Hashtagdetail extends State<Hashtagdetail> {
                   ),
 
                   // add package sliver_staggered_grid
+                  // ListView.builder(
+                  //     reverse: false,
+                  //     itemCount: placecontroller.list.length,
+                  //     padding: EdgeInsets.all(8),
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return Stack(
+                  //         fit: StackFit.expand,
+                  //         children: [
+                  //           Image.network(
+                  //             "https://qstar.mindethiopia.com/api/getPostPicture/${placecontroller.list[index].post_id}",
+                  //             fit: BoxFit.cover,
+                  //           ),
+                  //           if (index % 3 == 0)
+                  //             const Padding(
+                  //               padding: EdgeInsets.all(5),
+                  //               child: Align(
+                  //                 alignment: Alignment.topRight,
+                  //                 child: Icon(
+                  //                   Icons.play_arrow,
+                  //                   color: Colors.white,
+                  //                   size: 28,
+                  //                 ),
+                  //               ),
+                  //             )
+                  //           else if (index == 2)
+                  //             Padding(
+                  //               padding: EdgeInsets.all(8),
+                  //               child: Image.asset(
+                  //                 'assets/icons/reels_outline.png',
+                  //                 alignment: Alignment.bottomLeft,
+                  //                 scale: 1.8,
+                  //                 color: Colors.white,
+                  //               ),
+                  //             )
+                  //           else
+                  //             const Padding(
+                  //               padding: EdgeInsets.all(8),
+                  //               child: Align(
+                  //                 alignment: Alignment.topRight,
+                  //                 child: Icon(
+                  //                   Icons.photo_library,
+                  //                   color: Colors.white,
+                  //                   size: 22,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //         ],
+                  //       );
+                  //     }),
                   SliverStaggeredGrid.count(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 2,
+                    crossAxisSpacing: 2,
                     children: List.generate(
-                        hashController.list.length,
+                        placecontroller.list.length,
                         (index) => Stack(
                               fit: StackFit.expand,
                               children: [
                                 Image.network(
-                                  "https://qstar.mindethiopia.com/api/getPostPicture/${hashController.list[index].post_id}",
+                                  "https://qstar.mindethiopia.com/api/getPostPicture/${placecontroller.list[index].post_id}",
                                   fit: BoxFit.cover,
                                 ),
                                 if (index % 3 == 0)
