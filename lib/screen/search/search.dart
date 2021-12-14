@@ -958,7 +958,7 @@ class SearchListplace extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: const DecorationImage(
                           fit: BoxFit.contain,
-                          image: AssetImage('assets/images/location.png'),
+                          image: AssetImage('assets/images/loc.png'),
                         )),
                   ),
                   Expanded(

@@ -117,10 +117,10 @@ class links {
 
   factory links.fromJson(dynamic json) {
     return links(
-      fb_link: json[0]['fb_link'],
-      instagram_link: json[0]['instagram_link'],
-      tiktok_link: json[0]['tiktok_link'],
-      youtube_link: json[0]['youtube_link'],
+      fb_link: json['fb_link'],
+      instagram_link: json['instagram_link'],
+      tiktok_link: json['tiktok_link'],
+      youtube_link: json['youtube_link'],
     );
   }
 }

@@ -61,7 +61,7 @@ class _Hashtagdetail extends State<PlaceDetail> {
                                 child: const CircleAvatar(
                                   backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      AssetImage('assets/images/location.png'),
+                                      AssetImage('assets/images/loc.png'),
                                 ),
                               ),
                             ],

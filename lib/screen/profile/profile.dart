@@ -36,6 +36,7 @@ final EditprofileController editprofileController =
 class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
   late VoidCallback _onShowMenu;
+
   @override
   void initState() {
     _fetchUser();
@@ -205,7 +206,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             height: 30,
                                             child: RawMaterialButton(
                                               onPressed: () {
-                                                _launchURL();
+                                                if (editprofileController
+                                                        .links.youtube_link
+                                                        .toString() !=
+                                                    "null") {
+                                                  _launchURL();
+                                                } else {
+                                                  openSnackBar();
+                                                }
                                               },
                                               elevation: 2.0,
                                               fillColor: Colors.white,
@@ -229,7 +237,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             height: 30,
                                             child: RawMaterialButton(
                                               onPressed: () {
-                                                _launchURLfb();
+                                                if (editprofileController
+                                                        .links.fb_link
+                                                        .toString() !=
+                                                    "null") {
+                                                  _launchURLfb();
+                                                } else {
+                                                  openSnackBar();
+                                                }
                                               },
                                               elevation: 2.0,
                                               fillColor: Colors.white,
@@ -253,7 +268,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             height: 30,
                                             child: RawMaterialButton(
                                               onPressed: () {
-                                                _launchURLtik();
+                                                if (editprofileController
+                                                        .links.tiktok_link
+                                                        .toString() !=
+                                                    "null") {
+                                                  _launchURLtik();
+                                                } else {
+                                                  openSnackBar();
+                                                }
                                               },
                                               elevation: 2.0,
                                               fillColor: Colors.white,
@@ -277,7 +299,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                             height: 30,
                                             child: RawMaterialButton(
                                               onPressed: () {
-                                                _launchURLinsta();
+                                                if (editprofileController
+                                                        .links.instagram_link
+                                                        .toString() !=
+                                                    "null") {
+                                                  _launchURLinsta();
+                                                } else {
+                                                  openSnackBar();
+                                                }
                                               },
                                               elevation: 2.0,
                                               fillColor: Colors.white,
@@ -503,45 +532,50 @@ class _ProfileScreenState extends State<ProfileScreen>
       forceWebView: false,
       headers: <String, String>{'my_header_key': 'my_header_value'},
     )) {
-      throw 'Could not launch $url';
+      openSnackBar();
     }
   }
+}
 
-  _launchURLfb() async {
-    var url = "https://www.facebook.com/${editprofileController.links.fb_link}";
-    if (!await launch(
-      url,
-      forceSafariVC: false,
-      forceWebView: false,
-      headers: <String, String>{'my_header_key': 'my_header_value'},
-    )) {
-      throw 'Could not launch $url';
-    }
+_launchURLfb() async {
+  var url = "https://www.facebook.com/${editprofileController.links.fb_link}";
+  if (!await launch(
+    url,
+    forceSafariVC: false,
+    forceWebView: false,
+    headers: <String, String>{'my_header_key': 'my_header_value'},
+  )) {
+    openSnackBar();
   }
+}
 
-  _launchURLtik() async {
-    var url =
-        "https://www.tiktok.com/${editprofileController.links.tiktok_link}";
-    if (!await launch(
-      url,
-      forceSafariVC: false,
-      forceWebView: false,
-      headers: <String, String>{'my_header_key': 'my_header_value'},
-    )) {
-      throw 'Could not launch $url';
-    }
+_launchURLtik() async {
+  var url = "https://www.tiktok.com/${editprofileController.links.tiktok_link}";
+  if (!await launch(
+    url,
+    forceSafariVC: false,
+    forceWebView: false,
+    headers: <String, String>{'my_header_key': 'my_header_value'},
+  )) {
+    openSnackBar();
   }
+}
 
-  _launchURLinsta() async {
-    var url =
-        "https://www.instagram.com/${editprofileController.links.instagram_link}";
-    if (!await launch(
-      url,
-      forceSafariVC: false,
-      forceWebView: false,
-      headers: <String, String>{'my_header_key': 'my_header_value'},
-    )) {
-      throw 'Could not launch $url';
-    }
+_launchURLinsta() async {
+  var url =
+      "https://www.instagram.com/${editprofileController.links.instagram_link}";
+  if (!await launch(
+    url,
+    forceSafariVC: false,
+    forceWebView: false,
+    headers: <String, String>{'my_header_key': 'my_header_value'},
+  )) {
+    openSnackBar();
   }
+}
+
+Future<void> openSnackBar() async {
+  Get.snackbar("info", "No Link avalable please edit profile to add link",
+      icon: Icon(Icons.person, color: mPrimaryColor.withOpacity(0.05)),
+      snackPosition: SnackPosition.TOP);
 }
