@@ -57,22 +57,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 List<Feeling> _feeling = [
   Feeling(
       feeling: "happy",
-      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+      icon: "assets/images/smiling.png"),
   Feeling(
       feeling: "loved",
-      icon: "https://cdn-icons-png.flaticon.com/512/1933/1933691.png"),
+      icon: "assets/images/loved.png"),
   Feeling(
       feeling: "wow",
-      icon: "https://cdn-icons-png.flaticon.com/512/725/725107.png"),
+      icon: "assets/images/wow.png"),
   Feeling(
       feeling: "sad",
-      icon: "https://cdn-icons-png.flaticon.com/512/742/742752.png"),
+      icon: "assets/images/sad.png"),
   Feeling(
       feeling: "cool",
-      icon: "https://cdn-icons-png.flaticon.com/512/743/743287.png"),
+      icon: "assets/images/cool.png"),
   Feeling(
       feeling: "Angry",
-      icon: "https://cdn-icons-png.flaticon.com/512/743/743418.png")
+      icon: "assets/images/angry.png")
 ];
 List<User> _users = [
   User(
@@ -965,40 +965,7 @@ class FeedState extends ResumableState<Feed>
                                                 ),
                                               )
                                             : Container()),
-                                        Obx(() =>
-                                            postController.at_loca.value != ""
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      _showLocation(context);
-                                                    },
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Container(
-                                                        child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Row(
-                                                              children: [
-                                                                Icon(Icons
-                                                                    .location_pin),
-                                                                Text(
-                                                                    postController
-                                                                        .at_loca
-                                                                        .value,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            12))
-                                                              ],
-                                                            )),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : Container()),
+                                     
 
                                         const SizedBox(
                                           height: 40,
@@ -1140,7 +1107,7 @@ class FeedState extends ResumableState<Feed>
                                                   right: 12.0),
                                               child: GridView.count(
                                                 crossAxisCount: 3,
-                                                childAspectRatio: 1,
+                                                childAspectRatio: 2,
                                                 children: List.generate(
                                                     postController.videosList
                                                         .length, (index) {
@@ -1242,6 +1209,40 @@ class FeedState extends ResumableState<Feed>
                                             ),
                                           ))
                                         : Container()),
+                                           Obx(() =>
+                                            postController.at_loca.value != ""
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      _showLocation(context);
+                                                    },
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Container(
+                                                        child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(Icons
+                                                                    .location_pin),
+                                                                Text(
+                                                                    postController
+                                                                        .at_loca
+                                                                        .value,
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            12))
+                                                              ],
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container()),
                                 const Divider(
                                   thickness: 1,
                                 ),
@@ -1464,81 +1465,86 @@ class FeedState extends ResumableState<Feed>
   void _showPeople(context) {
     showModalBottomSheet(
         context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         builder: (BuildContext bc) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new Card(
-                  child: new ListTile(
-                    leading: new Icon(Icons.search),
-                    title: new TextField(
-                      controller: postController.searchController,
-                      decoration: new InputDecoration(
-                          hintText: 'Search', border: InputBorder.none),
-                      onChanged: postController.onSearchTextChanged,
-                    ),
-                    trailing: new IconButton(
-                      icon: new Icon(Icons.cancel),
-                      onPressed: () {
-                        postController.searchController.clear();
-                        postController.onSearchTextChanged('');
-                      },
+          return Container(
+            height: 350,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new Card(
+                    child: new ListTile(
+                      leading: new Icon(Icons.search),
+                      title: new TextField(
+                        controller: postController.searchController,
+                        decoration: new InputDecoration(
+                            hintText: 'Search', border: InputBorder.none),
+                        onChanged: postController.onSearchTextChanged,
+                      ),
+                      trailing: new IconButton(
+                        icon: new Icon(Icons.cancel),
+                        onPressed: () {
+                          postController.searchController.clear();
+                          postController.onSearchTextChanged('');
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Obx(() => Expanded(
-                    child: postController.searched.value.isNotEmpty ||
-                            postController.searchController.text.isNotEmpty
-                        ? ListView.builder(
-                            reverse: false,
-                            itemCount: postController.searched.value.length,
-                            padding: EdgeInsets.all(8),
-                            itemBuilder: (BuildContext context, int index) {
-                              return SafeArea(
-                                  child: Container(
-                                      child: Wrap(children: <Widget>[
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.searched[index].id.toString()}"),
+                Obx(() => Expanded(
+                      child: postController.searched.value.isNotEmpty ||
+                              postController.searchController.text.isNotEmpty
+                          ? ListView.builder(
+                              reverse: false,
+                              itemCount: postController.searched.value.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child: Wrap(children: <Widget>[
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.searched[index].id.toString()}"),
+                                    ),
+                                    title: Text(postController
+                                        .searched[index].name
+                                        .toString()),
+                                    onTap: () {
+                                      postController.tapSelection(index);
+                                      Navigator.of(context).pop(true);
+                                    },
                                   ),
-                                  title: Text(postController
-                                      .searched[index].name
-                                      .toString()),
-                                  onTap: () {
-                                    postController.tapSelection(index);
-                                    Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ])));
-                            })
-                        : ListView.builder(
-                            reverse: false,
-                            itemCount: postController.suggestions.length,
-                            padding: EdgeInsets.all(8),
-                            itemBuilder: (BuildContext context, int index) {
-                              return SafeArea(
-                                  child: Container(
-                                      child: Wrap(children: <Widget>[
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.suggestions[index].id.toString()}"),
+                                ])));
+                              })
+                          : ListView.builder(
+                              reverse: false,
+                              itemCount: postController.suggestions.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child: Wrap(children: <Widget>[
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          "https://qstar.mindethiopia.com/api/getProfilePicture/${postController.suggestions[index].id.toString()}"),
+                                    ),
+                                    title: Text(postController
+                                        .suggestions[index].name
+                                        .toString()),
+                                    onTap: () {
+                                      postController.tapSelection(index);
+                                      Navigator.of(context).pop(true);
+                                    },
                                   ),
-                                  title: Text(postController
-                                      .suggestions[index].name
-                                      .toString()),
-                                  onTap: () {
-                                    postController.tapSelection(index);
-                                    Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ])));
-                            }),
-                  )),
-            ],
+                                ])));
+                              }),
+                    )),
+              ],
+            ),
           );
         });
   }
@@ -1546,76 +1552,81 @@ class FeedState extends ResumableState<Feed>
   void _showLocation(context) {
     showModalBottomSheet(
         context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         builder: (BuildContext bc) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new Card(
-                  child: new ListTile(
-                    leading: new Icon(Icons.search),
-                    title: new TextField(
-                      controller: postController.locationController,
-                      decoration: new InputDecoration(
-                          hintText: 'Search Location',
-                          border: InputBorder.none),
-                      onChanged: postController.onLocationTextChanged,
-                    ),
-                    trailing: new IconButton(
-                      icon: new Icon(Icons.cancel),
-                      onPressed: () {
-                        postController.locationController.clear();
-                        postController.onLocationTextChanged('');
-                      },
+          return Container(
+            height: 350,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new Card(
+                    child: new ListTile(
+                      leading: new Icon(Icons.search),
+                      title: new TextField(
+                        controller: postController.locationController,
+                        decoration: new InputDecoration(
+                            hintText: 'Search Location',
+                            border: InputBorder.none),
+                        onChanged: postController.onLocationTextChanged,
+                      ),
+                      trailing: new IconButton(
+                        icon: new Icon(Icons.cancel),
+                        onPressed: () {
+                          postController.locationController.clear();
+                          postController.onLocationTextChanged('');
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Obx(() => Expanded(
-                    child: postController.searchedLoc.value.isNotEmpty ||
-                            postController.locationController.text.isNotEmpty
-                        ? ListView.builder(
-                            reverse: false,
-                            itemCount: postController.searchedLoc.value.length,
-                            padding: EdgeInsets.all(8),
-                            itemBuilder: (BuildContext context, int index) {
-                              return SafeArea(
-                                  child: Container(
-                                      child: Wrap(children: <Widget>[
-                                ListTile(
-                                  leading: Icon(Icons.location_pin),
-                                  title: Text(postController
-                                      .searchedLoc[index].location
-                                      .toString()),
-                                  onTap: () {
-                                    postController.tapLocselection(index);
-                                    Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ])));
-                            })
-                        : ListView.builder(
-                            reverse: false,
-                            itemCount: postController.location.length,
-                            padding: EdgeInsets.all(8),
-                            itemBuilder: (BuildContext context, int index) {
-                              return SafeArea(
-                                  child: Container(
-                                      child: Wrap(children: <Widget>[
-                                ListTile(
-                                  leading: Icon(Icons.location_pin),
-                                  title: Text(postController
-                                      .location[index].location
-                                      .toString()),
-                                  onTap: () {
-                                    postController.tapLocselection(index);
-                                    Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ])));
-                            }),
-                  )),
-            ],
+                Obx(() => Expanded(
+                      child: postController.searchedLoc.value.isNotEmpty ||
+                              postController.locationController.text.isNotEmpty
+                          ? ListView.builder(
+                              reverse: false,
+                              itemCount: postController.searchedLoc.value.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child: Wrap(children: <Widget>[
+                                  ListTile(
+                                    leading: Icon(Icons.location_pin),
+                                    title: Text(postController
+                                        .searchedLoc[index].location
+                                        .toString()),
+                                    onTap: () {
+                                      postController.tapsearcLocselection(index);
+                                      Navigator.of(context).pop(true);
+                                    },
+                                  ),
+                                ])));
+                              })
+                          : ListView.builder(
+                              reverse: false,
+                              itemCount: postController.location.length,
+                              padding: EdgeInsets.all(8),
+                              itemBuilder: (BuildContext context, int index) {
+                                return SafeArea(
+                                    child: Container(
+                                        child: Wrap(children: <Widget>[
+                                  ListTile(
+                                    leading: Icon(Icons.location_pin),
+                                    title: Text(postController
+                                        .location[index].location
+                                        .toString()),
+                                    onTap: () {
+                                      postController.tapLocselection(index);
+                                      Navigator.of(context).pop(true);
+                                    },
+                                  ),
+                                ])));
+                              }),
+                    )),
+              ],
+            ),
           );
         });
   }
@@ -1623,90 +1634,92 @@ class FeedState extends ResumableState<Feed>
   void _showFeeling(context) {
     showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         builder: (BuildContext bc) {
           return Expanded(
             child: Container(
-              height: 200,
+              height: 150,
               padding: EdgeInsets.all(12.0),
-              child: ListView.builder(
-                  reverse: false,
-                  itemCount: _feeling.length,
-                  padding: EdgeInsets.all(8),
-                  itemBuilder: (BuildContext context, int index) {
-                    return SafeArea(
-                        child: Container(
-                            child: Wrap(children: <Widget>[
-                      ListTile(
-                        leading: CircleAvatar(
-                          radius: 15,
-                          backgroundImage: NetworkImage(_feeling[index].icon),
+              child: GridView.count(
+                crossAxisCount: 3,
+                childAspectRatio: 2,
+                children: List.generate(_feeling.length,(index)
+                     {
+                      return SafeArea(
+                          child: Container(
+                              child: Wrap(children: <Widget>[
+                        ListTile(
+                          leading: CircleAvatar(
+                            radius: 15,
+                            backgroundImage: AssetImage(_feeling[index].icon),
+                          ),
+                          title: Text(
+                            _feeling[index].feeling.toString(),
+                            style: TextStyle(
+                                color: Colors.black, fontWeight: FontWeight.bold),
+                          ),
+                          onTap: () {
+                            if (_feeling[index].feeling.toString() == "happy") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      " 😁";
+                            }
+                            if (_feeling[index].feeling.toString() == "loved") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      " 🥰";
+                            }
+                            if (_feeling[index].feeling.toString() == "wow") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      " 😲";
+                            }
+                            if (_feeling[index].feeling.toString() == "sad") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      "  😥";
+                            }
+                            if (_feeling[index].feeling.toString() == "cool") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      " 😎";
+                            }
+                            if (_feeling[index].feeling.toString() == "Angry") {
+                              postController.captionController.text =
+                                  postController.captionController.text +
+                                      " " +
+                                      editprofileController.suggested.name +
+                                      " is Feeling " +
+                                      _feeling[index].feeling.toString() +
+                                      " 😡";
+                            }
+                            Navigator.of(context).pop(true);
+                          },
                         ),
-                        title: Text(
-                          _feeling[index].feeling.toString(),
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        onTap: () {
-                          if (_feeling[index].feeling.toString() == "happy") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    " 😁";
-                          }
-                          if (_feeling[index].feeling.toString() == "loved") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    " 🥰";
-                          }
-                          if (_feeling[index].feeling.toString() == "wow") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    " 😲";
-                          }
-                          if (_feeling[index].feeling.toString() == "sad") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    "  😥";
-                          }
-                          if (_feeling[index].feeling.toString() == "cool") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    " 😎";
-                          }
-                          if (_feeling[index].feeling.toString() == "Angry") {
-                            postController.captionController.text =
-                                postController.captionController.text +
-                                    " " +
-                                    editprofileController.suggested.name +
-                                    " is Feeling " +
-                                    _feeling[index].feeling.toString() +
-                                    " 😡";
-                          }
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
-                    ])));
-                  }),
+                      ])));
+                    }),
+              ),
             ),
           );
         });

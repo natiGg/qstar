@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:qstar/network_utils/api.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:convert';
 import 'package:qstar/screen/register/model/hobbies.dart';
@@ -13,6 +14,17 @@ class RemoteServices {
   static var res, body;
   static List<String> sent = [];
 
+  static Future<List<Feed>> fetchFeed() async {
+    res = await Network().getData("feedUpdate");
+    var body =  json.decode(res.body);
+    if(res.statusCode == 200){
+        return body["feed"].map((e)=>Feed.fromJson(e)).toList().cast<Feed>();
+    }
+    else{
+     throw Exception('Failed to load Feed');
+
+    }
+  }
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
     var body = json.decode(res.body);
@@ -364,7 +376,7 @@ class RemoteServices {
       print(res.toString());
       return res.statusCode.toString();
     } else {
-            print(json.decode(res).toString());
+      print(json.decode(res).toString());
 
       throw Exception("can't post");
     }

@@ -142,6 +142,10 @@ class PostController extends GetxController {
     print("objectf");
     at_loca.value = location[index].location;
   }
+  void tapsearcLocselection(var index) {
+    print("objectf");
+    at_loca.value = searchedLoc[index].location;
+  }
 
   void onPlay() async {
     if (controller.value.isPlaying) {
@@ -194,7 +198,9 @@ class PostController extends GetxController {
       var isValid = CaptionForm.currentState!.validate();
       print(at_loca.value.toString());
       if (isValid) {
-        var data = {
+        if(imagesList.isNotEmpty || videosList.isNotEmpty)
+        {
+          var data = {
           "location": at_loca.value.toString(),
           "caption": captionController.text,
           "post_type": post_type,
@@ -218,6 +224,24 @@ class PostController extends GetxController {
           captionController.clear();
           post_type.value = "public";
         }
+        }
+        else{
+          Get.dialog(
+        AlertDialog(
+          title: const Text("info"),
+          content: Text("Please Provide image or video"),
+          actions: <Widget>[
+            // ignore: deprecated_member_use
+            FlatButton(
+              child: const Text("close"),
+              onPressed: () {
+                Get.back();
+              },
+            )
+          ],
+        ));
+        }
+        
       }
     } finally {}
   }
@@ -226,6 +250,7 @@ class PostController extends GetxController {
     if (value.isEmpty) {
       return "Provide a post caption";
     }
+    
     return null;
   }
 }

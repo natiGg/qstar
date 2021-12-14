@@ -6,6 +6,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/remote_services/service.dart';
 
 import 'package:flutter/material.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:io';
 
@@ -15,16 +16,21 @@ class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
   var isRefreshing = false.obs;
+  var feed=<Feed>[].obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
 
     super.onInit();
-
+    fetchFeed();
     fetchPerfectMatches();
   }
 
+  void fetchFeed() async{
+    feed.value=await RemoteServices.fetchFeed();
+    print(feed.value);
+  }
   void fetchPerfectMatches() async {
     try {
       perfectMatches.value = await RemoteServices.fetchPerfectMatch();
