@@ -474,15 +474,17 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Container(width: 5),
-                                  // Text(
-                                  //     perfectMatchController.fetched.age_min
-                                  //             .toString() +
-                                  //         " to " +
-                                  //         perfectMatchController.fetched.age_max
-                                  //             .toString(),
-                                  //     style: TextStyle(
-                                  //         fontSize: 13,
-                                  //         fontWeight: FontWeight.normal))
+                                  perfectMatchController.fetched.age_min != null
+                                      ? Text(
+                                          perfectMatchController
+                                                  .fetched.age_min +
+                                              " to " +
+                                              perfectMatchController
+                                                  .fetched.age_max,
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.normal))
+                                      : Text(" ")
                                 ]),
                               ],
                             ),

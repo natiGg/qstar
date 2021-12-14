@@ -290,3 +290,20 @@ class Location {
         posts_num: json["number_of_posts"], location: json["location"]);
   }
 }
+
+class videoCategory {
+  int id;
+  String title;
+  String remark;
+
+  videoCategory({
+    required this.id,
+    required this.title,
+    required this.remark,
+  });
+
+  factory videoCategory.fromJson(Map<String, dynamic> json) {
+    return videoCategory(
+        id: json["id"], title: json["title"], remark: json["remark"]);
+  }
+}

@@ -565,9 +565,19 @@ class FeedState extends ResumableState<Feed>
                         Row(
                           children: [
                             // ignore: prefer_const_constructors
-                            CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}")),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ProfileScreen(),
+                                  ),
+                                );
+                              },
+                              child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}")),
+                            ),
                             const SizedBox(width: 8.0),
 
                             Expanded(
