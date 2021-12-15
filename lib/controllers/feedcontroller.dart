@@ -16,7 +16,7 @@ class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
   var isRefreshing = false.obs;
-  var feed=<Feed>[].obs;
+  var feed=<Feeds>[].obs;
 
   @override
   void onInit() {

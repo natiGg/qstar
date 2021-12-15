@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
-
 import 'package:qstar/remote_services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/user.dart';
@@ -14,6 +13,8 @@ import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:qstar/screen/post/preview_screen_gallery.dart';
 
 class PostController extends GetxController {
   // ignore: non_constant_identifier_names
@@ -252,5 +253,91 @@ class PostController extends GetxController {
     }
     
     return null;
+  }
+
+    final ImagePicker picker = ImagePicker();
+  ImagePicker picker2 = ImagePicker();
+List<XFile>? _imageFileList = [];
+
+set imageFile(XFile? value) {
+  _imageFileList = value == null ? null : [value];
+}
+  void selectImages() async {
+    isPosted(false);
+    final List<XFile>? selectedImages = await picker.pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      _imageFileList!.addAll(selectedImages);
+      if (_imageFileList!.length > 1) {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          imagesList.add(convertedFile);
+          videosList.clear();
+          print(imagesList.length);
+        }
+      } else {
+        for (var file in _imageFileList!) {
+          File convertedFile = File(file.path);
+          imagesList.add(convertedFile);
+          index.value = imagesList.length - 1;
+          print(imagesList.length);
+          Navigator.push(
+              Get.context!,
+              MaterialPageRoute(
+                  builder: (context) => PreviewImageScreengallery(
+                        imagePath: file.path,
+                        isfrompost: false,
+                      )));
+        }
+      }
+      selectedImages.clear();
+      _imageFileList!.clear();
+    }
+  }
+
+  void selectVideos() async {
+    var present = false;
+    imagesList.clear();
+    _imageFileList!.clear();
+
+    isPosted(false);
+    final XFile? selectedVids =
+        await picker.pickVideo(source: ImageSource.gallery);
+
+    if (selectedVids!.path.isNotEmpty) {
+      File convertedFile = File(selectedVids.path);
+      print(convertedFile.path);
+      videosList.clear();
+      videosList.add(convertedFile);
+      controller =
+          VideoPlayerController.network(selectedVids.path);
+      // Initialize the controller and store the Future for later use.
+      initializeVideoPlayerFuture =
+          controller.initialize();
+      // Use the controller to loop the video.
+      controller.setLooping(true);
+    }
+  }
+
+  void selectVideosFromCam() async {
+    var present = false;
+    imagesList.clear();
+    _imageFileList!.clear();
+    final XFile? selectedVids =
+        await picker.pickVideo(source: ImageSource.camera);
+    isPosted(false);
+
+    if (selectedVids!.path.isNotEmpty) {
+      File convertedFile = File(selectedVids.path);
+      print(convertedFile.path);
+      videosList.clear();
+      videosList.add(convertedFile);
+      controller =
+          VideoPlayerController.network(selectedVids.path);
+      // Initialize the controller and store the Future for later use.
+      initializeVideoPlayerFuture =
+          controller.initialize();
+      // Use the controller to loop the video.
+      controller.setLooping(true);
+    }
   }
 }

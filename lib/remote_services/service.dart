@@ -7,18 +7,18 @@ import 'dart:convert';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
 import 'package:async/async.dart';
 
 class RemoteServices {
   static var res, body;
   static List<String> sent = [];
 
-  static Future<List<Feed>> fetchFeed() async {
+  static Future<List<Feeds>> fetchFeed() async {
     res = await Network().getData("feedUpdate");
     var body =  json.decode(res.body);
     if(res.statusCode == 200){
-        return body["feed"].map((e)=>Feed.fromJson(e)).toList().cast<Feed>();
+        print(body["feed"].toString()+["last_feed"].toString());
+        return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
     }
     else{
      throw Exception('Failed to load Feed');
@@ -280,21 +280,6 @@ class RemoteServices {
       return true;
     } else {
       throw Exception('Failed to Follow User');
-    }
-  }
-
-  static Future<List<Location>> fetchallPlaces() async {
-    res = await Network().getData("placeSearch");
-    var body = json.decode(res.body);
-    print(body);
-    if (res.statusCode == 200) {
-      return body["data"]
-          .map((e) => Location.fromJson(e))
-          .toList()
-          .cast<Location>();
-      // return User.fromJson(jsonDecode(body["data"]));
-    } else {
-      throw Exception('Failed to load Users');
     }
   }
 

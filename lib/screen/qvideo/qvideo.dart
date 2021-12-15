@@ -13,6 +13,7 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
+import 'package:qstar/screen/feed/widgets/sharetousers.dart';
 
 import 'package:qstar/screen/qvideo/comment/comment_widget.dart';
 import 'package:qstar/screen/qvideo/live.dart';
@@ -52,6 +53,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -77,6 +79,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -102,6 +106,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -127,6 +133,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -152,6 +160,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -177,6 +187,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -202,6 +214,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -227,6 +241,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -252,6 +268,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -277,6 +295,8 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
+            ratting: 3,
+
       followers_count: "",
       following_count: "",
       posts_count: ""),

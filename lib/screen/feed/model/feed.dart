@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
 
-class Feed{
+class Feeds{
   int id;
   Posts posts;
   Dimensions dimension;
@@ -16,11 +16,11 @@ class Feed{
   bool viewer_in_photo_of_you;
   bool viewer_can_reshare;
 
-  Feed({required this.id,required this.posts,required this.dimension,required this.display_url,
+  Feeds({required this.id,required this.posts,required this.dimension,required this.display_url,
   required this.is_video,required this.tracking_token,required this.comments_disabled,required this.location,
   required this.viewer_has_liked,required this.viewer_has_saved,required this.viewer_in_photo_of_you,required this.viewer_can_reshare});
-  factory Feed.fromJson(Map<String,dynamic> json){
-    return Feed(
+  factory Feeds.fromJson(Map<String,dynamic> json){
+    return Feeds(
       id: json["id"],
       posts:  Posts.fromJson(json["post"]),
       dimension: Dimensions.fromJson(json["dimensions"]),
@@ -33,8 +33,8 @@ class Feed{
       viewer_has_saved:json["viewer_has_saved"],
       viewer_in_photo_of_you:json["viewer_in_photo_of_you"],
       viewer_can_reshare:json["viewer_can_reshare"]);
+      
   }
-
 }
 class Dimensions{
   int width;
