@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 
 class InfoWidget extends StatelessWidget {
-  const InfoWidget({Key? key}) : super(key: key);
+ final Feeds post;
+  const InfoWidget({Key? key,required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class InfoWidget extends StatelessWidget {
                   .subtitle2!
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
-                '1,102 likes',
+                '${post.posts.like_preview.count} likes',
                 style: Theme.of(context).textTheme.bodyText2,
               )),
           Container(

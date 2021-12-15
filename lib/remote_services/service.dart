@@ -1,18 +1,30 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:qstar/network_utils/api.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:convert';
 import 'package:qstar/screen/register/model/hobbies.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
 import 'package:async/async.dart';
 
 class RemoteServices {
   static var res, body;
   static List<String> sent = [];
 
+  static Future<List<Feeds>> fetchFeed() async {
+    res = await Network().getData("feedUpdate");
+    var body =  json.decode(res.body);
+    if(res.statusCode == 200){
+        print(body["feed"].toString()+["last_feed"].toString());
+        return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
+    }
+    else{
+     throw Exception('Failed to load Feed');
+
+    }
+  }
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
     var body = json.decode(res.body);
@@ -285,21 +297,6 @@ class RemoteServices {
       throw Exception('Failed to Follow User');
     }
   }
-
-  // static Future<List<Location>> fetchallPlaces() async {
-  //   res = await Network().getData("placeSearch");
-  //   var body = json.decode(res.body);
-  //   print(body);
-  //   if (res.statusCode == 200) {
-  //     return body["data"]
-  //         .map((e) => Location.fromJson(e))
-  //         .toList()
-  //         .cast<Location>();
-  //     // return User.fromJson(jsonDecode(body["data"]));
-  //   } else {
-  //     throw Exception('Failed to load Users');
-  //   }
-  // }
 
   static Future<bool> uploadImage(File image, String id) async {
     // ignore: unnecessary_null_comparison

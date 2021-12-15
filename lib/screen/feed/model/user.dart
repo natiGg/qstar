@@ -36,6 +36,7 @@ class User {
   String posts_count;
   String followers_count;
   String following_count;
+  int ratting;
 
   User({
     required this.id,
@@ -71,6 +72,7 @@ class User {
     required this.posts_count,
     required this.followers_count,
     required this.following_count,
+    required this.ratting
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -98,6 +100,7 @@ class User {
         posts_count: json['posts_count'].toString(),
         followers_count: json['followers_count'].toString(),
         following_count: json['following_count'].toString(),
+        ratting:json['following_count'] as int,
         followed: false.obs);
   }
 }
