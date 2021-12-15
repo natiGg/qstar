@@ -4,13 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
 
 import 'package:qstar/remote_services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:io';
-import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,7 +81,6 @@ class PostController extends GetxController {
       onMatch: (List<String> matches) {
         // Do something with matches.
         hashtags.value = matches;
-        print(hashtags);
       },
       deleteOnBack: true,
     );
@@ -94,10 +91,6 @@ class PostController extends GetxController {
   }
 
   void onSearchTextChanged(String text) async {
-    print(text);
-    print(tagged.join(","));
-
-    print(videosList.length);
     searched.clear();
     if (text.isEmpty) {
       return;
@@ -123,13 +116,10 @@ class PostController extends GetxController {
   }
 
   void tapSelection(var index) {
-    print("objectf");
     if (taggedName.contains("@" + suggestions[index].userName)) {
-      print("already added");
     } else {
       taggedName.add("@" + suggestions[index].userName);
       tagged.add(suggestions[index].id.toString());
-      print(suggestions[index].id.toString());
     }
   }
 
@@ -139,7 +129,6 @@ class PostController extends GetxController {
   }
 
   void tapLocselection(var index) {
-    print("objectf");
     at_loca.value = location[index].location;
   }
 
@@ -155,12 +144,10 @@ class PostController extends GetxController {
   }
 
   void fetchall() async {
-    print(id.toString() + "fdfdf");
     suggestions = await RemoteServices.fetchallFollower(id.toString());
   }
 
   void fetchallLocation() async {
-    print(id.toString() + "fdfdf");
     location = await RemoteServices.fetchallPlaces();
   }
 
@@ -189,10 +176,9 @@ class PostController extends GetxController {
           hashTags.add(tags);
         }
       }
-      print(hashTags.join(""));
-      print(tagged.join(","));
+
       var isValid = CaptionForm.currentState!.validate();
-      print(at_loca.value.toString());
+
       if (isValid) {
         var data = {
           "location": at_loca.value.toString(),
@@ -206,7 +192,7 @@ class PostController extends GetxController {
         } else if (videosList.isNotEmpty) {
           posted = await RemoteServices.createPost(videosList, data);
         }
-        print(posted);
+
         if (posted.toString() == "200") {
           isPosting(false);
           isPosted(true);

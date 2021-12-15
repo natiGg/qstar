@@ -77,7 +77,7 @@ class _Hashtagdetail extends State<PlaceDetail> {
                             child: RichText(
                                 text: TextSpan(children: [
                               TextSpan(
-                                  text: "# ${widget.place!.location} ",
+                                  text: "${widget.place!.location} ",
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle1

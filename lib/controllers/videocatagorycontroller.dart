@@ -8,8 +8,6 @@ class VideocatagoryController extends GetxController {
 
   void fetch() async {
     list.value = await RemoteServices.getvideoCategory();
-
-    print(list.value);
     if (list.isNotEmpty) {
       isfetched(true);
     }

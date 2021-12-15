@@ -46,7 +46,7 @@ class RemoteServices {
   static Future<List<User>> fetchallFollowing(var id) async {
     res = await Network().getData("friendship/${id}/following");
     var body = json.decode(res.body);
-    print(body["data"]);
+
     if (res.statusCode == 200) {
       return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
       // return User.fromJson(jsonDecode(body["data"]));
@@ -84,9 +84,8 @@ class RemoteServices {
   static Future<List<User>> fetachsearch(var uname) async {
     res = await Network().getData("accountSearch?q=${uname}");
     var body = json.decode(res.body);
-    print(body);
+
     if (res.statusCode == 200) {
-      print(body);
       return body["data"].map((e) => User.fromJson(e)).toList().cast<User>();
 
       // return User.fromJson(jsonDecode(body["data"]));
@@ -351,7 +350,6 @@ class RemoteServices {
 
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      print(body);
       return links.fromJson(body);
     } else {
       throw Exception('Failed to load User' + res.statusCode.toString());
@@ -385,7 +383,7 @@ class RemoteServices {
   static Future<bool> cheakpf() async {
     // ignore: unnecessary_brace_in_string_interps
     res = await Network().getData("personalInformation");
-    print(res.body.toString());
+
     if (res.statusCode == 200) {
       return true;
     } else {
@@ -422,11 +420,9 @@ class RemoteServices {
 
     if (res.statusCode == 200) {
       res.stream.transform(utf8.decoder).listen((value) {});
-      print(res.toString());
+
       return res.statusCode.toString();
     } else {
-      print(json.decode(res).toString());
-
       throw Exception("can't post");
     }
   }
@@ -437,7 +433,7 @@ class RemoteServices {
     res = await Network().getpassedData(data, "personalInformation");
 
     body = json.decode(res.body);
-    print(body.toString());
+
     if (res.statusCode == 200) {
       return res.statusCode.toString();
     } else {
@@ -460,7 +456,7 @@ class RemoteServices {
     res = await Network().getpassedData(data, "personalInformation");
 
     body = json.decode(res.body);
-    print(res.statusCode.toString());
+
     if (res.statusCode == 200) {
       return res.statusCode.toString();
     } else {
@@ -483,7 +479,7 @@ class RemoteServices {
     res = await Network().getpassedData(data, "changePassword");
 
     body = json.decode(res.body);
-    print(res.statusCode.toString());
+
     if (res.statusCode == 200) {
       return res.statusCode.toString();
     } else {

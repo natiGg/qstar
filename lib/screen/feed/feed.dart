@@ -861,6 +861,7 @@ class FeedState extends ResumableState<Feed>
                                   onPressed: () {
                                     postController.createPost();
                                   },
+                                  // ignore: unrelated_type_equality_checks
                                   child: postController.isPosting == false
                                       ? Center(
                                           // ignore: unrelated_type_equality_checks
@@ -997,7 +998,7 @@ class FeedState extends ResumableState<Feed>
                                                                     postController
                                                                         .at_loca
                                                                         .value,
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .bold,
@@ -1354,7 +1355,7 @@ class FeedState extends ResumableState<Feed>
           File convertedFile = File(file.path);
           postController.imagesList.add(convertedFile);
           postController.index.value = postController.imagesList.length - 1;
-          print(postController.imagesList.length);
+
           Navigator.push(
               context,
               MaterialPageRoute(

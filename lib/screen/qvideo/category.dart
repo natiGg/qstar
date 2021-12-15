@@ -94,68 +94,62 @@ class _CategoryVideo2 extends State<CategoryVid>
                             child: Card(
                               color: Colors.transparent,
                               elevation: 0,
-                              child: Container(
-                                // decoration: BoxDecoration(
-                                //     image: DecorationImage(
-                                //         image: AssetImage(item.),
-                                //         fit: BoxFit.cover)),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.bottomRight,
-                                              colors: [
-                                            Colors.black.withOpacity(.9),
-                                            Colors.black.withOpacity(.1),
-                                          ])),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child: IconButton(
-                                                  icon: const Icon(
-                                                    Icons.play_arrow_rounded,
-                                                    color: Colors.white,
-                                                    size: 40.0,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (context,
-                                                                animation1,
-                                                                animation2) =>
-                                                            const Qvideoscreen(),
-                                                        transitionDuration:
-                                                            Duration.zero,
-                                                      ),
-                                                    );
-                                                  },
-                                                )),
-                                          ],
-                                        ),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            begin: Alignment.bottomRight,
+                                            colors: [
+                                          Colors.black.withOpacity(.9),
+                                          Colors.black.withOpacity(.1),
+                                        ])),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40.0,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) =>
+                                                          const Qvideoscreen(),
+                                                      transitionDuration:
+                                                          Duration.zero,
+                                                    ),
+                                                  );
+                                                },
+                                              )),
+                                        ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Text(
-                                          item.title,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: "font1",
-                                              fontSize: 20),
-                                        ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Text(
+                                        item.title,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "font1",
+                                            fontSize: 20),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ))

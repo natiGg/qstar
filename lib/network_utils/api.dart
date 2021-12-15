@@ -51,7 +51,7 @@ class Network {
     // ignore: prefer_typing_uninitialized_variables
     var multipartFile;
     var uri = Uri.parse(fullUrl);
-    print(data);
+
     await _getToken();
     var request = new http.MultipartRequest("POST", uri);
     request.headers.addAll(_setFileHeaders());
