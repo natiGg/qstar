@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/videocatagorycontroller.dart';
 import 'package:qstar/screen/qvideo/qvideo.dart';
 
 class CategoryVid extends StatefulWidget {
@@ -12,6 +14,18 @@ class CategoryVid extends StatefulWidget {
 
 class _CategoryVideo2 extends State<CategoryVid>
     with SingleTickerProviderStateMixin {
+  VideocatagoryController videocatagoryController =
+      Get.put(VideocatagoryController());
+  int ind = 0;
+  @override
+  void initState() {
+    super.initState();
+
+    //  ind = int.parse(widget.tag!.number_of_posts);
+
+    videocatagoryController.fetch();
+  }
+
   final List<String> _listItem = [
     'assets/images/profile1.jpg',
     'assets/images/profile2.jpg',
@@ -55,98 +69,100 @@ class _CategoryVideo2 extends State<CategoryVid>
               onPressed: () {}),
         ],
       ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                  child: GridView.count(
-                crossAxisCount: 2,
-                children: _listItem
-                    .map((item) => GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation1, animation2) =>
-                                        const Qvideoscreen(),
-                                transitionDuration: Duration.zero,
-                              ),
-                            );
-                          },
-                          child: Card(
-                            color: Colors.transparent,
-                            elevation: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(item),
-                                      fit: BoxFit.cover)),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            begin: Alignment.bottomRight,
-                                            colors: [
-                                          Colors.black.withOpacity(.9),
-                                          Colors.black.withOpacity(.1),
-                                        ])),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.center,
-                                              child: IconButton(
-                                                icon: const Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 40.0,
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    PageRouteBuilder(
-                                                      pageBuilder: (context,
-                                                              animation1,
-                                                              animation2) =>
-                                                          const Qvideoscreen(),
-                                                      transitionDuration:
-                                                          Duration.zero,
-                                                    ),
-                                                  );
-                                                },
-                                              )),
-                                        ],
+      body: Obx(
+        () => SafeArea(
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                    child: GridView.count(
+                  crossAxisCount: 2,
+                  children: videocatagoryController.list
+                      .map((item) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          const Qvideoscreen(),
+                                  transitionDuration: Duration.zero,
+                                ),
+                              );
+                            },
+                            child: Card(
+                              color: Colors.transparent,
+                              elevation: 0,
+                              child: Container(
+                                // decoration: BoxDecoration(
+                                //     image: DecorationImage(
+                                //         image: AssetImage(item.),
+                                //         fit: BoxFit.cover)),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              colors: [
+                                            Colors.black.withOpacity(.9),
+                                            Colors.black.withOpacity(.1),
+                                          ])),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Align(
+                                                alignment: Alignment.center,
+                                                child: IconButton(
+                                                  icon: const Icon(
+                                                    Icons.play_arrow_rounded,
+                                                    color: Colors.white,
+                                                    size: 40.0,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      PageRouteBuilder(
+                                                        pageBuilder: (context,
+                                                                animation1,
+                                                                animation2) =>
+                                                            const Qvideoscreen(),
+                                                        transitionDuration:
+                                                            Duration.zero,
+                                                      ),
+                                                    );
+                                                  },
+                                                )),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        "#Funny",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "font1",
-                                            fontSize: 20),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Text(
+                                          item.title,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: "font1",
+                                              fontSize: 20),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ))
-                    .toList(),
-              ))
-            ],
+                          ))
+                      .toList(),
+                ))
+              ],
+            ),
           ),
         ),
       ),

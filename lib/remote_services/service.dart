@@ -147,6 +147,22 @@ class RemoteServices {
     }
   }
 
+  static Future<List<videoCategory>> getvideoCategory() async {
+    res = await Network().getData("videoCategory");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => videoCategory.fromJson(e))
+          .toList()
+          .cast<videoCategory>();
+
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
   static Future<List<PlacePost>> placedetail(var uname) async {
     res = await Network().getData("locationPostSearch?location=${uname}");
     var body = json.decode(res.body);
@@ -332,6 +348,7 @@ class RemoteServices {
 
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      print(body);
       return links.fromJson(body);
     } else {
       throw Exception('Failed to load User' + res.statusCode.toString());

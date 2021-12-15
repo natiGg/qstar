@@ -120,10 +120,10 @@ class links {
 
   factory links.fromJson(dynamic json) {
     return links(
-      fb_link: json[0]['fb_link'],
-      instagram_link: json[0]['instagram_link'],
-      tiktok_link: json[0]['tiktok_link'],
-      youtube_link: json[0]['youtube_link'],
+      fb_link: json['fb_link'],
+      instagram_link: json['instagram_link'],
+      tiktok_link: json['tiktok_link'],
+      youtube_link: json['youtube_link'],
     );
   }
 }
@@ -291,5 +291,22 @@ class Location {
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
         posts_num: json["number_of_posts"], location: json["location"]);
+  }
+}
+
+class videoCategory {
+  int id;
+  String title;
+  String remark;
+
+  videoCategory({
+    required this.id,
+    required this.title,
+    required this.remark,
+  });
+
+  factory videoCategory.fromJson(Map<String, dynamic> json) {
+    return videoCategory(
+        id: json["id"], title: json["title"], remark: json["remark"]);
   }
 }
