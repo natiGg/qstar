@@ -15,6 +15,7 @@ class PerfectMatchController extends GetxController with StateMixin {
   // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form2 = GlobalKey<FormState>();
   GlobalKey<FormState> Form3 = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form4 = GlobalKey<FormState>();
   late RichTextController captionController;
 
@@ -112,9 +113,8 @@ class PerfectMatchController extends GetxController with StateMixin {
   void create() async {
     try {
       var isValid = Form.currentState!.validate();
-      print(isValid);
+
       if (isValid) {
-        print(currentStep.value);
         currentStep.value += 1;
       }
     } finally {}

@@ -9,7 +9,6 @@ import 'package:qstar/remote_services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'dart:io';
-import 'package:qstar/screen/qvideo/videopicker.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,7 +83,6 @@ class PostController extends GetxController {
       onMatch: (List<String> matches) {
         // Do something with matches.
         hashtags.value = matches;
-        print(hashtags);
       },
       deleteOnBack: true,
     );
@@ -95,10 +93,6 @@ class PostController extends GetxController {
   }
 
   void onSearchTextChanged(String text) async {
-    print(text);
-    print(tagged.join(","));
-
-    print(videosList.length);
     searched.clear();
     if (text.isEmpty) {
       return;
@@ -124,13 +118,10 @@ class PostController extends GetxController {
   }
 
   void tapSelection(var index) {
-    print("objectf");
     if (taggedName.contains("@" + suggestions[index].userName)) {
-      print("already added");
     } else {
       taggedName.add("@" + suggestions[index].userName);
       tagged.add(suggestions[index].id.toString());
-      print(suggestions[index].id.toString());
     }
   }
 
@@ -140,9 +131,9 @@ class PostController extends GetxController {
   }
 
   void tapLocselection(var index) {
-    print("objectf");
     at_loca.value = location[index].location;
   }
+
   void tapsearcLocselection(var index) {
     print("objectf");
     at_loca.value = searchedLoc[index].location;
@@ -160,12 +151,10 @@ class PostController extends GetxController {
   }
 
   void fetchall() async {
-    print(id.toString() + "fdfdf");
     suggestions = await RemoteServices.fetchallFollower(id.toString());
   }
 
   void fetchallLocation() async {
-    print(id.toString() + "fdfdf");
     location = await RemoteServices.fetchallPlaces();
   }
 
@@ -194,55 +183,50 @@ class PostController extends GetxController {
           hashTags.add(tags);
         }
       }
-      print(hashTags.join(""));
-      print(tagged.join(","));
+
       var isValid = CaptionForm.currentState!.validate();
-      print(at_loca.value.toString());
+
       if (isValid) {
-        if(imagesList.isNotEmpty || videosList.isNotEmpty)
-        {
+        if (imagesList.isNotEmpty || videosList.isNotEmpty) {
           var data = {
-          "location": at_loca.value.toString(),
-          "caption": captionController.text,
-          "post_type": post_type,
-          "tags": tagged.join(",")
-        };
-        isPosting(true);
-        if (imagesList.isNotEmpty) {
-          posted = await RemoteServices.createPost(imagesList, data);
-        } else if (videosList.isNotEmpty) {
-          posted = await RemoteServices.createPost(videosList, data);
+            "location": at_loca.value.toString(),
+            "caption": captionController.text,
+            "post_type": post_type,
+            "tags": tagged.join(",")
+          };
+          isPosting(true);
+          if (imagesList.isNotEmpty) {
+            posted = await RemoteServices.createPost(imagesList, data);
+          } else if (videosList.isNotEmpty) {
+            posted = await RemoteServices.createPost(videosList, data);
+          }
+
+          if (posted.toString() == "200") {
+            isPosting(false);
+            isPosted(true);
+            imagesList.clear();
+            videosList.clear();
+            hashTags.clear();
+            taggedName.clear();
+            tagged.clear();
+            captionController.clear();
+            post_type.value = "public";
+          }
+        } else {
+          Get.dialog(AlertDialog(
+            title: const Text("info"),
+            content: Text("Please Provide image or video"),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              FlatButton(
+                child: const Text("close"),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
+          ));
         }
-        print(posted);
-        if (posted.toString() == "200") {
-          isPosting(false);
-          isPosted(true);
-          imagesList.clear();
-          videosList.clear();
-          hashTags.clear();
-          taggedName.clear();
-          tagged.clear();
-          captionController.clear();
-          post_type.value = "public";
-        }
-        }
-        else{
-          Get.dialog(
-        AlertDialog(
-          title: const Text("info"),
-          content: Text("Please Provide image or video"),
-          actions: <Widget>[
-            // ignore: deprecated_member_use
-            FlatButton(
-              child: const Text("close"),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
-        ));
-        }
-        
       }
     } finally {}
   }
@@ -251,17 +235,18 @@ class PostController extends GetxController {
     if (value.isEmpty) {
       return "Provide a post caption";
     }
-    
+
     return null;
   }
 
-    final ImagePicker picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
   ImagePicker picker2 = ImagePicker();
-List<XFile>? _imageFileList = [];
+  List<XFile>? _imageFileList = [];
 
-set imageFile(XFile? value) {
-  _imageFileList = value == null ? null : [value];
-}
+  set imageFile(XFile? value) {
+    _imageFileList = value == null ? null : [value];
+  }
+
   void selectImages() async {
     isPosted(false);
     final List<XFile>? selectedImages = await picker.pickMultiImage();
@@ -308,11 +293,9 @@ set imageFile(XFile? value) {
       print(convertedFile.path);
       videosList.clear();
       videosList.add(convertedFile);
-      controller =
-          VideoPlayerController.network(selectedVids.path);
+      controller = VideoPlayerController.network(selectedVids.path);
       // Initialize the controller and store the Future for later use.
-      initializeVideoPlayerFuture =
-          controller.initialize();
+      initializeVideoPlayerFuture = controller.initialize();
       // Use the controller to loop the video.
       controller.setLooping(true);
     }
@@ -331,11 +314,9 @@ set imageFile(XFile? value) {
       print(convertedFile.path);
       videosList.clear();
       videosList.add(convertedFile);
-      controller =
-          VideoPlayerController.network(selectedVids.path);
+      controller = VideoPlayerController.network(selectedVids.path);
       // Initialize the controller and store the Future for later use.
-      initializeVideoPlayerFuture =
-          controller.initialize();
+      initializeVideoPlayerFuture = controller.initialize();
       // Use the controller to loop the video.
       controller.setLooping(true);
     }

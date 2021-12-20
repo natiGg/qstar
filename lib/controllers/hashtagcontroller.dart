@@ -11,6 +11,5 @@ class HashController extends GetxController {
     if (list.isNotEmpty) {
       isfetched(true);
     }
-    print(list.value);
   }
 }

@@ -9,9 +9,7 @@ class Placecontroller extends GetxController {
   void fetch(id) async {
     list.value = await RemoteServices.placedetail(id);
     if (list.isNotEmpty) {
-      print(list[0].post_id);
       isfetched(true);
     }
-    print(list.value);
   }
 }
