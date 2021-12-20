@@ -2,8 +2,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/perfectmatchcontroller.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
@@ -51,6 +53,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
+    Get.delete<PerfectMatchController>();
+
     Navigator.push(
       // ignore: prefer_const_constructors
       context,

@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:qstar/remote_services/service.dart';
+import 'package:qstar/screen/feed/model/user.dart';
 import 'message_model.dart';
-import 'user_model.dart';
+
 import 'package:qstar/constant.dart';
 
 class ChatScreen extends StatefulWidget {
-  final User user;
+  final User? user;
 
   const ChatScreen({required this.user});
 
@@ -15,7 +17,17 @@ class ChatScreen extends StatefulWidget {
   _ChatScreenState createState() => _ChatScreenState();
 }
 
+late TextEditingController message;
+var messagetype = "text";
+
 class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    message = TextEditingController();
+
+    super.initState();
+  }
+
   _buildMessageComposer() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -46,6 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   Expanded(
                     child: TextField(
+                      controller: message,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Type your message ...',
@@ -64,11 +77,21 @@ class _ChatScreenState extends State<ChatScreen> {
           const SizedBox(
             width: 16,
           ),
-          const CircleAvatar(
-            backgroundColor: mPrimaryColor,
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
+          GestureDetector(
+            onTap: () async {
+              print(message!.text);
+              print(messagetype);
+              print(widget.user!.id);
+
+              await RemoteServices.sendmessage(
+                  message!.text, messagetype, widget.user!.id);
+            },
+            child: const CircleAvatar(
+              backgroundColor: mPrimaryColor,
+              child: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
             ),
           )
         ],
@@ -146,7 +169,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(widget.user.imageUrl))),
+                            image: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"))),
                   ),
                   Positioned(
                       bottom: 10,
@@ -181,7 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.user.name,
+                    widget.user!.name,
                     style: chatSenderName,
                   ),
                   Text(
@@ -239,8 +263,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     if (!isMe)
                                       CircleAvatar(
                                         radius: 15,
-                                        backgroundImage:
-                                            AssetImage(widget.user.imageUrl),
+                                        backgroundImage: NetworkImage(
+                                            "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"),
                                       ),
                                     const SizedBox(
                                       width: 10,

@@ -1,20 +1,25 @@
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, duplicate_ignore
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'message_model.dart';
 import 'chat_screen.dart';
 import 'package:qstar/constant.dart';
 
-class Match extends StatefulWidget {
-  const Match({Key? key}) : super(key: key);
+class FriendsChat extends StatefulWidget {
+  const FriendsChat({Key? key}) : super(key: key);
+
   @override
   _FollowersState createState() => _FollowersState();
 }
 
-FeedController feedController = Get.find();
+EditprofileController editprofileController = Get.find();
 
-class _FollowersState extends State<Match> {
+class _FollowersState extends State<FriendsChat> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -34,11 +39,89 @@ class _FollowersState extends State<Match> {
                 ),
                 child: Column(
                   children: [
-                    Obx(() => Row(
-                        children: feedController.perfectMatches
-                            .map((e) => FollowedList(e))
-                            .toList()
-                            .cast<Widget>())),
+                    SizedBox(
+                      height: 100.0,
+                      child: FutureBuilder(
+                          future: RemoteServices.fetchallFollowing(
+                              editprofileController.uid),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text(snapshot.error.toString()),
+                              );
+                            }
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                physics: const ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                      onTap: () => {
+                                            Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                        animation1,
+                                                        animation2) =>
+                                                    ChatScreen(
+                                                        user: snapshot
+                                                            .data[index]),
+                                                transitionDuration:
+                                                    Duration.zero,
+                                              ),
+                                            ),
+                                          },
+                                      child: FollowedList(
+                                          user: snapshot.data[index]));
+                                },
+                                itemCount: snapshot.data.length,
+                              );
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                    ),
+                    Expanded(
+                      child: FutureBuilder(
+                          future: RemoteServices.fetchallFollower(
+                              editprofileController.uid),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text(snapshot.error.toString()),
+                              );
+                            }
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation1,
+                                                  animation2) =>
+                                              ChatScreen(
+                                                  user: snapshot.data[index]),
+                                          transitionDuration: Duration.zero,
+                                        ),
+                                      );
+                                    },
+                                    child: FollowedList(
+                                        user: snapshot.data[index]),
+                                  );
+                                },
+                                itemCount: snapshot.data.length,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
+                    ),
                   ],
                 )),
           ),
@@ -48,19 +131,17 @@ class _FollowersState extends State<Match> {
 }
 
 class FollowedList extends StatelessWidget {
-  final User user;
-
-  // ignore: use_key_in_widget_constructors
-  const FollowedList(this.user);
+  final User? user;
+  const FollowedList({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 20.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),
         ),

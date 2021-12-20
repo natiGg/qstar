@@ -38,42 +38,41 @@ class User {
   String following_count;
   int ratting;
 
-  User({
-    required this.id,
-    required this.userName,
-    required this.storyImage,
-    required this.userImage,
-    required this.name,
-    required this.website,
-    required this.bio,
-    required this.email,
-    // ignore: non_constant_identifier_names
-    required this.country_code,
-    // ignore: non_constant_identifier_names
-    required this.phone_number,
-    required this.gender,
-    // ignore: non_constant_identifier_names
-    required this.enable_suggestion,
-    required this.status,
-    // ignore: non_constant_identifier_names
-    required this.date_of_birth,
-    // ignore: non_constant_identifier_names
-    required this.current_location,
-    // ignore: non_constant_identifier_names
-    required this.account_type,
-    // ignore: non_constant_identifier_names
-    required this.online_status,
-    // ignore: non_constant_identifier_names
-    required this.joined_date,
-    required this.hobbies,
-    // ignore: non_constant_identifier_names
-    required this.total_followers,
-    required this.followed,
-    required this.posts_count,
-    required this.followers_count,
-    required this.following_count,
-    required this.ratting
-  });
+  User(
+      {required this.id,
+      required this.userName,
+      required this.storyImage,
+      required this.userImage,
+      required this.name,
+      required this.website,
+      required this.bio,
+      required this.email,
+      // ignore: non_constant_identifier_names
+      required this.country_code,
+      // ignore: non_constant_identifier_names
+      required this.phone_number,
+      required this.gender,
+      // ignore: non_constant_identifier_names
+      required this.enable_suggestion,
+      required this.status,
+      // ignore: non_constant_identifier_names
+      required this.date_of_birth,
+      // ignore: non_constant_identifier_names
+      required this.current_location,
+      // ignore: non_constant_identifier_names
+      required this.account_type,
+      // ignore: non_constant_identifier_names
+      required this.online_status,
+      // ignore: non_constant_identifier_names
+      required this.joined_date,
+      required this.hobbies,
+      // ignore: non_constant_identifier_names
+      required this.total_followers,
+      required this.followed,
+      required this.posts_count,
+      required this.followers_count,
+      required this.following_count,
+      required this.ratting});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -100,7 +99,7 @@ class User {
         posts_count: json['posts_count'].toString(),
         followers_count: json['followers_count'].toString(),
         following_count: json['following_count'].toString(),
-        ratting:json['following_count'] as int,
+        ratting: json['following_count'] as int,
         followed: false.obs);
   }
 }
@@ -308,5 +307,37 @@ class videoCategory {
   factory videoCategory.fromJson(Map<String, dynamic> json) {
     return videoCategory(
         id: json["id"], title: json["title"], remark: json["remark"]);
+  }
+}
+
+class getmessage {
+  int id;
+  String date;
+  String content;
+  String seen_status;
+  String message_type;
+  int profile_id;
+  int receiving_profile_id;
+
+  getmessage({
+    required this.id,
+    required this.date,
+    required this.content,
+    required this.seen_status,
+    required this.message_type,
+    required this.profile_id,
+    required this.receiving_profile_id,
+  });
+
+  factory getmessage.fromJson(Map<String, dynamic> json) {
+    return getmessage(
+      id: json["id"],
+      date: json["date"],
+      content: json["content"],
+      seen_status: json["seen_status"],
+      message_type: json["message_type"],
+      profile_id: json["profile_id"],
+      receiving_profile_id: json["content"],
+    );
   }
 }

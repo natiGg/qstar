@@ -15,16 +15,16 @@ class RemoteServices {
 
   static Future<List<Feeds>> fetchFeed() async {
     res = await Network().getData("feedUpdate");
-    var body =  json.decode(res.body);
-    if(res.statusCode == 200){
-        print(body["feed"].toString()+["last_feed"].toString());
-        return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
-    }
-    else{
-     throw Exception('Failed to load Feed');
-
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      print(body["feed"].toString() + ["last_feed"].toString());
+      return body["feed"].map((e) => Feeds.fromJson(e)).toList().cast<Feeds>();
+    } else {
+      print(body["feed"].toString());
+      throw Exception('Failed to load Feed');
     }
   }
+
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
     var body = json.decode(res.body);
@@ -490,6 +490,23 @@ class RemoteServices {
 
         return errors.join("\n").toString();
       }
+    }
+  }
+
+  static Future<String> sendmessage(
+      var content, var message_type, var receiving_profile_id) async {
+    var data = {
+      'content': content,
+      'message_type': message_type,
+      'receiving_profile_id': receiving_profile_id,
+    };
+    res = await Network().getpassedData(data, "message");
+    body = json.decode(res.body);
+    print(body);
+    if (res.statusCode == 200) {
+      return res.statusCode.toString();
+    } else {
+      throw Exception('Failed to send  Mesaage');
     }
   }
 }

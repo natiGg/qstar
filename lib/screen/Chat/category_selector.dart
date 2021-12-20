@@ -42,7 +42,7 @@ class CategorySelector extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 children: const [
-                  TextSpan(text: 'Friends'),
+                  TextSpan(text: 'Recent Chat'),
                   WidgetSpan(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 6.0),
@@ -120,7 +120,7 @@ class CategorySelector extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 children: [
-                  TextSpan(text: 'Match'),
+                  TextSpan(text: 'Perfect Match'),
                   WidgetSpan(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 6.0),
