@@ -83,6 +83,7 @@ class BottomSheetActionWidget extends StatelessWidget {
   void _logout(BuildContext context) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     localStorage.remove('token');
+    localStorage.remove('user');
     Get.delete<EditprofileController>();
     Get.delete<PerfectMatchController>();
     Get.delete<FeedController>();

@@ -80,6 +80,15 @@ class Network {
     return await http.post(uri, body: jsonEncode(data), headers: _setHeaders());
   }
 
+    getdeleteData(apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    var uri = Uri.parse(fullUrl);
+
+    await _getToken();
+    return await http.delete(uri,  headers: _setHeaders());
+  }
+
+
   _setHeaders() => {
         'Content-type': 'application/json',
         'Accept': 'application/json',

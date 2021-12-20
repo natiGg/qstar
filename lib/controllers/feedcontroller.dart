@@ -6,25 +6,42 @@ import 'package:qstar/remote_services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
+import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
+import 'package:rich_text_controller/rich_text_controller.dart';
 
 class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
   var isRefreshing = false.obs;
-  var feed = <Feeds>[].obs;
+  var feed=<Feeds>[].obs;
+    var uid;
+
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('user');
 
+    if (token != null) {
+      var body = json.decode(token);
+
+      uid = body['id'];
+      print(uid);
+    }
     super.onInit();
     fetchFeed();
     fetchPerfectMatches();
   }
 
-  void fetchFeed() async {
-    feed.value = await RemoteServices.fetchFeed();
-    print(feed.value);
+  void fetchFeed() async{
+    feed.value=await RemoteServices.fetchFeed();
+    for (var feeds in feed.value){
+      print(feeds.posts.post_id);
+    }
   }
 
   void fetchPerfectMatches() async {

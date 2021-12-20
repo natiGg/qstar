@@ -54,7 +54,7 @@ class SuggestedUserController extends GetxController {
     try {
       btnLoading(true);
 
-      var unFollowed = await RemoteServices.follow(uid.value.toString());
+      var unFollowed = await RemoteServices.unfollow(uid.value.toString());
       if (unFollowed) {
         // ignore: invalid_use_of_protected_member
         final int index = suggestObjs.value

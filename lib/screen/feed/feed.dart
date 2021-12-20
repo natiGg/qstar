@@ -918,7 +918,7 @@ class FeedState extends ResumableState<Feed>
                                 Obx(() => postController.at_loca.value != ""
                                     ? GestureDetector(
                                         onTap: () {
-                                          _showLocation(context);
+                                          postController.at_loca.value="";
                                         },
                                         child: Align(
                                           alignment: Alignment.centerLeft,

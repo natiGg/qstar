@@ -27,4 +27,19 @@ extension AppContext on BuildContext {
               });
         });
   }
+    Future<BottomSheetAction2?> showBottomSheet2(List<BottomSheetAction2> actions) {
+    return showModalBottomSheet(
+        context: this,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return DraggableScrollableSheet(
+              expand: false,
+              builder: (context, scrollController) {
+                return BottomSheetScrollable2(
+                  actions: actions,
+                  scrollController: scrollController,
+                );
+              });
+        });
+  }
 }
