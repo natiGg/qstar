@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:qstar/controllers/followcontroller.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
-import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
+import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
+
+import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
 import 'widgets/profile_tab_bar.dart';
 import 'widgets/profile_widgets.dart';
 import 'package:qstar/widget/utils.dart';
@@ -17,7 +20,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/followres.dart';
-
+import 'package:get/get.dart';
 import 'package:qstar/widget/utils.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -30,15 +33,19 @@ class UserProfileDetail extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<UserProfileDetail> {
+  Followcontroller  followcontroller=Get.find();
+  FeedController feedController=Get.find();
   VoidCallback? _onShowMenu;
 
   @override
   void initState() {
+    followcontroller.check(widget.user!.id,feedController.uid);
     super.initState();
-
     _onShowMenu = () {
-      context.showBottomSheet([
-        BottomSheetAction(iconData: Icons.share, title: 'Report', id: 0),
+      context.showBottomSheet2([
+        BottomSheetAction2(iconData: Icons.share, title: 'Report', id: 0,unFlwid: ""),
+        followcontroller.following.value?BottomSheetAction2(iconData: Icons.share, title: 'unfollow', id: 1,unFlwid:widget.user!.id.toString()):BottomSheetAction2(iconData: Icons.delete, title: '', id: 1,unFlwid: ""),
+
       ]);
     };
   }
@@ -77,7 +84,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               color: mPrimaryColor),
         ],
       ),
-      body: SingleChildScrollView(
+      body: Obx(()=> followcontroller.isChecked.value? SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
@@ -107,19 +114,21 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
+                       followcontroller.following.value==false? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                followcontroller.follow(widget.user!.id.toString());
+                              },
                               child: follow(
                                 primaryColorDark: _primaryColorDark,
                                 primaryColor: mPrimaryColor,
                               ),
                             ),
                           ),
-                        ),
+                        ):Container(),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -200,7 +209,16 @@ class _ProfileScreenState extends State<UserProfileDetail> {
             ),
           ],
         ),
-      ),
+      ):const Center(
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(
+                          color: mPrimaryColor,
+                          strokeWidth: 8,
+                        ),
+                      ),
+                    )),
     );
   }
 
@@ -217,12 +235,23 @@ class _ProfileScreenState extends State<UserProfileDetail> {
           borderRadius: BorderRadius.circular(5),
           color: mPrimaryColor,
         ),
-        child: const Center(
+        child: !followcontroller.btnLoading.value? Center(
             child: Text(
           'Folllow',
           style: TextStyle(
               fontWeight: FontWeight.bold, color: Colors.white, fontSize: 12),
-        )),
+        )):const Center(
+          child:  SizedBox(
+                                      height: 12,
+                                      width: 12,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          // ignore: unrelated_type_equality_checks
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+        ),
       ),
     );
   }

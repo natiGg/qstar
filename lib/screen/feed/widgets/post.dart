@@ -57,7 +57,6 @@ class WPost extends StatefulWidget {
 }
 
 class _WPostState extends State<WPost> {
-
   bool isActive = false;
   bool isdisActive = false;
   bool isFollowed = false;
@@ -235,8 +234,8 @@ class _WPostState extends State<WPost> {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image:
-                          NetworkImage("https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts}"),
+                      image: NetworkImage(
+                          "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}"),
                       fit: BoxFit.cover),
                 ),
                 height: 500,
@@ -317,9 +316,9 @@ class _WPostState extends State<WPost> {
               ],
             ),
           ),
-           Padding(
+          Padding(
             padding: EdgeInsets.all(2.0),
-            child: InfoWidget(post:widget.post),
+            child: InfoWidget(post: widget.post),
           ),
           const Divider(
             thickness: 1.0,
@@ -475,13 +474,7 @@ void showSheet(context) {
                             const Padding(
                               padding: EdgeInsets.all(8.0),
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: Row(
-                            //       children: _users
-                            //           .map((e) => UserAvater2(e))
-                            //           .toList()),
-                            // )
+
                           ],
                         ),
                       ],

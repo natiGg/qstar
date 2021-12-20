@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:qstar/controllers/followcontroller.dart';
 import 'package:qstar/screen/feed/feed.dart';
 
 import 'package:qstar/screen/profile/profile.dart';
@@ -28,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _BottomNavPageState extends State<MyHomePage> {
   int _currentTabIndex = 0;
   FeedController feedController = Get.put(FeedController());
+  Followcontroller followcontroller = Get.put(Followcontroller());
   EditprofileController editprofileController =
       Get.put(EditprofileController());
   final PageController _pageController = PageController(initialPage: 0);

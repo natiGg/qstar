@@ -266,7 +266,6 @@ class FeedState extends ResumableState<Feed>
         ),
         backgroundColor: Colors.white,
         body: SmartRefresher(
-<<<<<<< HEAD
             enablePullDown: true,
             enablePullUp: true,
             header: const WaterDropHeader(),
@@ -335,75 +334,6 @@ class FeedState extends ResumableState<Feed>
                                                     ),
                                                   )),
                                             ),
-=======
-          enablePullDown: true,
-          enablePullUp: true,
-          header: const WaterDropHeader(),
-          //cheak pull_to_refresh
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
-
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                Card(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
-                  elevation: 2,
-                  shape: null,
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            // ignore: prefer_const_constructors
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ProfileScreen(),
-                                  ),
-                                );
-                              },
-                              child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${editprofileController.uid}")),
-                            ),
-                            const SizedBox(width: 8.0),
-
-                            Expanded(
-                              // ignore: duplicate_ignore, duplicate_ignore
-                              child: Container(
-                                height: 40,
-                                width: 300,
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                        color: Colors.grey.withOpacity(0.9))),
-                                // ignore: deprecated_member_use
-                                child: FlatButton(
-                                  onPressed: () {
-                                    postModal(context);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          'Share us your thought',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey.withOpacity(0.9),
->>>>>>> 225e1523bdd2cb532d021fa5d1e23ade373e709a
                                           ),
                                         ),
                                       ),
@@ -988,7 +918,7 @@ class FeedState extends ResumableState<Feed>
                                 Obx(() => postController.at_loca.value != ""
                                     ? GestureDetector(
                                         onTap: () {
-                                          _showLocation(context);
+                                          postController.at_loca.value="";
                                         },
                                         child: Align(
                                           alignment: Alignment.centerLeft,

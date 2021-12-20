@@ -17,7 +17,8 @@ class RemoteServices {
     res = await Network().getData("feedUpdate");
     var body =  json.decode(res.body);
     if(res.statusCode == 200){
-        print(body["feed"].toString()+["last_feed"].toString());
+      print(body["feed"].map((e)=>Feeds.fromJson(e)).toList().length);
+        print(body["feed"].toString());
         return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
     }
     else{
@@ -36,22 +37,38 @@ class RemoteServices {
     }
   }
 
-  static Future<List<User>> fetchFollowers(String querys) async {
-    res = await Network().getData("friendship/170/followers");
+  static Future<bool> checkFollowers(var check_id,var id) async {
+    res = await Network().getData("friendship/${id}/following");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      return body["data"]
+      var check= body["data"]
           .map((e) => User.fromJson(e))
           .where((user) {
-            final uname = user.userName.toLowerCase().toString();
-            final query = querys.toLowerCase();
-            return uname.contains(query);
+            final uid = user.id.toString();
+            print(uid.toString()+"found it"+check_id.toString());
+            return uid==check_id.toString();
           })
           .toList()
           .cast<User>();
+          if(check.toList().isNotEmpty)
+          {
+                      print(check);
+
+           return true;
+          }
+          else{
+            return false;
+          }
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
-      throw Exception('Failed to load Users');
+      print(body['data'].toString()+"fdfdf");
+      if(body['data']==null){
+        return false;
+      }
+      else{
+              throw Exception('Failed to load Users');
+
+      }
     }
   }
 
@@ -322,8 +339,7 @@ class RemoteServices {
   }
 
   static Future<bool> unfollow(String id) async {
-    var data = {'following_id': id};
-    res = await Network().getpassedData(data, "delete");
+    res = await Network().getdeleteData("following/${id}");
     body = json.decode(res.body);
     if (res.statusCode == 200) {
       return true;
@@ -423,7 +439,6 @@ class RemoteServices {
       return res.statusCode.toString();
     } else {
       print(json.decode(res).toString());
-
       throw Exception("can't post");
     }
   }
