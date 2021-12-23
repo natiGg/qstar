@@ -15,7 +15,6 @@ class HobbiesController extends GetxController with StateMixin {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     fetchHobbies();
     super.onInit();
   }
