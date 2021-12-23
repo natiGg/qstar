@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: file_names
+
 import 'package:qstar/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/feed.dart';

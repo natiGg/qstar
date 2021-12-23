@@ -49,11 +49,10 @@ class Network {
   postFile(apiUrl, files, data) async {
     var fullUrl = _url + apiUrl;
     // ignore: prefer_typing_uninitialized_variables
-    var multipartFile;
     var uri = Uri.parse(fullUrl);
 
     await _getToken();
-    var request = new http.MultipartRequest("POST", uri);
+    var request = http.MultipartRequest("POST", uri);
     request.headers.addAll(_setFileHeaders());
     request.fields["location"] = data["location"].toString();
     request.fields["caption"] = data["caption"].toString();
@@ -80,14 +79,13 @@ class Network {
     return await http.post(uri, body: jsonEncode(data), headers: _setHeaders());
   }
 
-    getdeleteData(apiUrl) async {
+  getdeleteData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     var uri = Uri.parse(fullUrl);
 
     await _getToken();
-    return await http.delete(uri,  headers: _setHeaders());
+    return await http.delete(uri, headers: _setHeaders());
   }
-
 
   _setHeaders() => {
         'Content-type': 'application/json',

@@ -1,10 +1,11 @@
+// ignore_for_file: non_constant_identifier_names, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/user.dart';
@@ -21,11 +22,14 @@ class PostController extends GetxController {
   final GlobalKey<FormState> CaptionForm = GlobalKey<FormState>();
   late RichTextController captionController, searchController;
   late TextEditingController locationController;
+  // ignore: prefer_typing_uninitialized_variables
   var caption;
   // ignore: non_constant_identifier_names
   var post_type = 'public'.obs;
+  // ignore: non_constant_identifier_names
   var at_loca = "".obs;
   var image;
+  // ignore: prefer_typing_uninitialized_variables
   var posted;
   var imageAdded = false.obs;
   var imagesList = <File>[].obs;
@@ -36,6 +40,7 @@ class PostController extends GetxController {
   var unames = [""].obs;
   var hashtags = [""].obs;
   var index = 0.obs;
+  // ignore: prefer_typing_uninitialized_variables
   var suggestions, location;
   var isCam = false.obs;
   var searched = <User>[].obs;
@@ -51,6 +56,7 @@ class PostController extends GetxController {
   late VideoPlayerController controller;
   var isPlaying = false.obs;
   late Future<void> initializeVideoPlayerFuture;
+  // ignore: prefer_typing_uninitialized_variables
   var id;
   @override
   void onInit() async {
@@ -77,7 +83,7 @@ class PostController extends GetxController {
     );
     captionController = RichTextController(
       patternMatchMap: {
-        RegExp(r"\B#[a-zA-Z0-9]+\b"): TextStyle(
+        RegExp(r"\B#[a-zA-Z0-9]+\b"): const TextStyle(
             color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
@@ -135,7 +141,6 @@ class PostController extends GetxController {
   }
 
   void tapsearcLocselection(var index) {
-    print("objectf");
     at_loca.value = searchedLoc[index].location;
   }
 
@@ -215,7 +220,7 @@ class PostController extends GetxController {
         } else {
           Get.dialog(AlertDialog(
             title: const Text("info"),
-            content: Text("Please Provide image or video"),
+            content: const Text("Please Provide image or video"),
             actions: <Widget>[
               // ignore: deprecated_member_use
               FlatButton(
@@ -257,14 +262,13 @@ class PostController extends GetxController {
           File convertedFile = File(file.path);
           imagesList.add(convertedFile);
           videosList.clear();
-          print(imagesList.length);
         }
       } else {
         for (var file in _imageFileList!) {
           File convertedFile = File(file.path);
           imagesList.add(convertedFile);
           index.value = imagesList.length - 1;
-          print(imagesList.length);
+
           Navigator.push(
               Get.context!,
               MaterialPageRoute(
@@ -280,7 +284,6 @@ class PostController extends GetxController {
   }
 
   void selectVideos() async {
-    var present = false;
     imagesList.clear();
     _imageFileList!.clear();
 
@@ -290,7 +293,7 @@ class PostController extends GetxController {
 
     if (selectedVids!.path.isNotEmpty) {
       File convertedFile = File(selectedVids.path);
-      print(convertedFile.path);
+
       videosList.clear();
       videosList.add(convertedFile);
       controller = VideoPlayerController.network(selectedVids.path);
@@ -302,7 +305,6 @@ class PostController extends GetxController {
   }
 
   void selectVideosFromCam() async {
-    var present = false;
     imagesList.clear();
     _imageFileList!.clear();
     final XFile? selectedVids =
@@ -311,7 +313,7 @@ class PostController extends GetxController {
 
     if (selectedVids!.path.isNotEmpty) {
       File convertedFile = File(selectedVids.path);
-      print(convertedFile.path);
+
       videosList.clear();
       videosList.add(convertedFile);
       controller = VideoPlayerController.network(selectedVids.path);

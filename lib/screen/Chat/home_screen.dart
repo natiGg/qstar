@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
-import 'package:qstar/remote_services/service.dart';
+
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
@@ -25,8 +22,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
-  final TextEditingController _searchQueryController = TextEditingController();
-  bool _isSearching = false;
   String searchQuery = "Search query";
 
   void onTabChange() {
@@ -190,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Navigator.push(
             context,
             PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => Search(),
+              pageBuilder: (context, animation1, animation2) => const Search(),
               transitionDuration: Duration.zero,
             ),
           );

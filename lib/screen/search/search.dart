@@ -1,4 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison
+// ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison, camel_case_types, must_be_immutable, must_call_super, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,6 @@ import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
-import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/userprofiledetail.dart';
 import 'package:qstar/screen/search/hashtagdetail.dart';
 import 'package:qstar/screen/search/placesdetail.dart';
@@ -20,7 +19,7 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -923,7 +922,6 @@ class SearchListplace extends StatelessWidget {
         child: InkWell(
           child: GestureDetector(
             onTap: () {
-              print(place);
               Navigator.push(
                 context,
                 PageRouteBuilder(

@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
-import 'package:qstar/controllers/feedcontroller.dart';
-import 'package:qstar/controllers/hobbiescontroller.dart';
-import 'package:qstar/controllers/perfectmatchcontroller.dart';
+
 import 'package:qstar/controllers/postcontroller.dart';
-import 'package:qstar/controllers/suggesteduserscontroller.dart';
-import 'package:qstar/screen/login/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_sheet_action.dart';
 
@@ -77,26 +71,6 @@ class BottomSheetActionWidget extends StatelessWidget {
             break;
         }
       },
-    );
-  }
-
-  void _logout(BuildContext context) async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.remove('token');
-    localStorage.remove('user');
-    Get.delete<EditprofileController>();
-    Get.delete<PerfectMatchController>();
-    Get.delete<FeedController>();
-    Get.delete<PostController>();
-    Get.delete<HobbiesController>();
-    Get.delete<SuggestedUserController>();
-
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => const LoginScreen(),
-        transitionDuration: Duration.zero,
-      ),
     );
   }
 }

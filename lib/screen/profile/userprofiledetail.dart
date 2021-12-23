@@ -10,19 +10,14 @@ import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
 import 'widgets/profile_tab_bar.dart';
-import 'widgets/profile_widgets.dart';
+
 import 'package:qstar/widget/utils.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
-import 'package:flutter/material.dart';
-
-import 'package:qstar/constant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'package:qstar/screen/profile/following.dart';
-import 'package:qstar/screen/profile/followres.dart';
 import 'package:get/get.dart';
-import 'package:qstar/widget/utils.dart';
+
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class UserProfileDetail extends StatefulWidget {
@@ -259,7 +254,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
           color: mPrimaryColor,
         ),
         child: !followcontroller.btnLoading.value
-            ? Center(
+            ? const Center(
                 child: Text(
                 'Folllow',
                 style: TextStyle(
@@ -342,7 +337,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
           ),
           Center(
             child: Padding(
-              padding: EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
               child: Text(
                 widget.user!.name,
                 style:

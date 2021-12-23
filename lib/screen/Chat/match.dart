@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/screen/feed/model/user.dart';
-import 'message_model.dart';
-import 'chat_screen.dart';
 import 'package:qstar/constant.dart';
 
 class Match extends StatefulWidget {
@@ -20,9 +18,9 @@ class _FollowersState extends State<Match> {
     return RefreshIndicator(
         child: Expanded(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
                 topRight: Radius.circular(30.0),
               ),
@@ -87,7 +85,7 @@ class FollowedList extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user.id}"))),
             ),
             Positioned(
                 bottom: 10,
@@ -106,7 +104,7 @@ class FollowedList extends StatelessWidget {
                       ],
                       shape: BoxShape.circle,
                       color: Colors.white),
-                  child: Icon(
+                  child: const Icon(
                     Icons.circle,
                     color: Colors.green,
                     size: 10,
@@ -117,7 +115,7 @@ class FollowedList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                user!.name,
+                user.name,
                 style: const TextStyle(
                   color: mPrimaryColor,
                   fontSize: 17.0,
@@ -133,9 +131,9 @@ class FollowedList extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5.0),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.45,
-                child: Text(
+                child: const Text(
                   "hey there",
                   // ignore: prefer_const_constructors
                   style: TextStyle(
@@ -165,7 +163,7 @@ class FollowedList extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               Text(
                 "10 min",
                 style: TextStyle(

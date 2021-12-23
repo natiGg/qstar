@@ -3,22 +3,18 @@ import 'package:get/state_manager.dart';
 
 import 'package:qstar/remote_services/service.dart';
 
-import 'package:flutter/material.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
-import 'package:rich_text_controller/rich_text_controller.dart';
 
 class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
   var isRefreshing = false.obs;
-  var feed=<Feeds>[].obs;
-    var uid;
-
+  var feed = <Feeds>[].obs;
+  // ignore: prefer_typing_uninitialized_variables
+  var uid;
 
   @override
   void onInit() async {
@@ -30,18 +26,16 @@ class FeedController extends GetxController with StateMixin {
       var body = json.decode(token);
 
       uid = body['id'];
-      print(uid);
     }
     super.onInit();
     fetchFeed();
     fetchPerfectMatches();
   }
 
-  void fetchFeed() async{
-    feed.value=await RemoteServices.fetchFeed();
-    for (var feeds in feed.value){
-      print(feeds.posts.post_id);
-    }
+  void fetchFeed() async {
+    feed.value = await RemoteServices.fetchFeed();
+    // ignore: invalid_use_of_protected_member
+    for (var feeds in feed.value) {}
   }
 
   void fetchPerfectMatches() async {

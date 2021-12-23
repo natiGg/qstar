@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
 import 'package:qstar/constant.dart';
 import 'package:qstar/controllers/placecontroller.dart';
 
-import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/feed/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 
 class PlaceDetail extends StatefulWidget {
@@ -183,7 +181,7 @@ class _Hashtagdetail extends State<PlaceDetail> {
                                   )
                                 else if (index == 2)
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: Image.asset(
                                       'assets/icons/reels_outline.png',
                                       alignment: Alignment.bottomLeft,
@@ -209,13 +207,13 @@ class _Hashtagdetail extends State<PlaceDetail> {
                       int value = index % ind + 1;
                       if (value == 2) {
                         // Reels
-                        return StaggeredTile.count(1, 2);
+                        return const StaggeredTile.count(1, 2);
                       } else if (value == 8) {
                         // IG TV
-                        return StaggeredTile.count(2, 2);
+                        return const StaggeredTile.count(2, 2);
                       }
                       // Anything
-                      return StaggeredTile.count(1, 1);
+                      return const StaggeredTile.count(1, 1);
                     }),
                   ),
                 ],

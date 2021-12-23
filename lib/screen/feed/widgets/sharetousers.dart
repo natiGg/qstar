@@ -1,56 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
+// ignore_for_file: use_key_in_widget_constructors
 
-import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:need_resume/need_resume.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
-import 'package:qstar/controllers/feedcontroller.dart';
-import 'package:qstar/controllers/perfectmatchcontroller.dart';
-import 'package:qstar/controllers/postcontroller.dart';
-import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/model/feed.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
-
-import 'package:qstar/screen/feed/widgets/info_widget.dart';
-
-import 'package:qstar/screen/post/main.dart';
-import 'package:qstar/screen/Chat/home_screen.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controls.dart';
-import 'package:get/get.dart';
-import 'package:qstar/screen/post/preview_screen_gallery.dart';
-
-import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
-import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
-import 'package:qstar/screen/profile/profile.dart';
-import 'package:qstar/screen/qvideo/userprofile.dart';
-import 'package:qstar/screen/qvideo/videoPreview.dart';
-import 'package:qstar/screen/qvideo/videopicker.dart';
-import 'package:qstar/screen/register/phonevarification.dart';
-import 'package:video_player/video_player.dart';
-import 'package:qstar/screen/search/search.dart';
-import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
-import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-
-
 
 class UserAvater2 extends StatefulWidget {
   final User user;

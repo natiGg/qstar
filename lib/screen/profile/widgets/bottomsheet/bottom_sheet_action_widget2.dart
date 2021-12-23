@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
+
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/followcontroller.dart';
-import 'package:qstar/screen/login/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../changepassword.dart';
 
 import 'bottom_sheet_action.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qstar/screen/profilesetting/setting.dart';
+
 class BottomSheetActionWidget2 extends StatelessWidget {
   final BottomSheetAction2 action;
 
@@ -20,9 +20,9 @@ class BottomSheetActionWidget2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      FeedController feedController=Get.find();
+    FeedController feedController = Get.find();
 
-       Followcontroller followcontroller = Get.find();
+    Followcontroller followcontroller = Get.find();
 
     return InkWell(
       highlightColor: Colors.blue.withOpacity(0.1),
@@ -63,22 +63,23 @@ class BottomSheetActionWidget2 extends StatelessWidget {
 
           case "1":
             {
-              if(action.title.toString()=="unfollow"){
+              if (action.title.toString() == "unfollow") {
                 followcontroller.unfollow(action.unFlwid);
                 Navigator.of(context).pop();
-                followcontroller.check(action.unFlwid.toString(),feedController.uid.toString(),);
+                followcontroller.check(
+                  action.unFlwid.toString(),
+                  feedController.uid.toString(),
+                );
+              } else {
+                Fluttertoast.showToast(
+                    msg: "1",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               }
-              else{
-                  Fluttertoast.showToast(
-                  msg: "1",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
-              }
-            
             }
 
             break;
@@ -98,9 +99,7 @@ class BottomSheetActionWidget2 extends StatelessWidget {
             break;
 
           case "7":
-            {
-         
-            }
+            {}
             break;
           default:
             {
@@ -112,5 +111,4 @@ class BottomSheetActionWidget2 extends StatelessWidget {
       },
     );
   }
-
 }

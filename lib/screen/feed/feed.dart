@@ -2,20 +2,17 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
+
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
-import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,30 +20,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/model/feed.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 
 import 'package:qstar/screen/feed/widgets/post.dart';
-import 'package:qstar/screen/feed/widgets/suggested.dart';
 
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controls.dart';
+
 import 'package:get/get.dart';
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
-import 'package:qstar/screen/qvideo/userprofile.dart';
+
 import 'package:qstar/screen/qvideo/videoPreview.dart';
-import 'package:qstar/screen/qvideo/videopicker.dart';
-import 'package:qstar/screen/register/phonevarification.dart';
+
 import 'package:video_player/video_player.dart';
-import 'package:qstar/screen/search/search.dart';
+
 import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -69,7 +61,6 @@ List<Feeling> _feeling = [
 // ignore: unused_element
 dynamic _pickImageError;
 
-List<bool> _isFF = [true, false, false, true, false];
 late int ratings = 3;
 late double rating_d = 3;
 
@@ -207,6 +198,7 @@ class FeedState extends ResumableState<Feed>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return editprofileController.obx((edit) => Scaffold(
         resizeToAvoidBottomInset: true,
@@ -493,8 +485,8 @@ class FeedState extends ResumableState<Feed>
                               scrollDirection: Axis.horizontal,
                               children: [
                                 Column(
-                                  children: [
-                                    const Padding(
+                                  children: const [
+                                    Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: SizedBox(height: 5),
                                     ),
@@ -512,7 +504,7 @@ class FeedState extends ResumableState<Feed>
                         ],
                       ),
                     )
-                  : Center(
+                  : const Center(
                       child: SizedBox(
                         width: 30,
                         height: 30,
@@ -602,6 +594,7 @@ class FeedState extends ResumableState<Feed>
                                   onPressed: () {
                                     postController.createPost();
                                   },
+                                  // ignore: unrelated_type_equality_checks
                                   child: postController.isPosting == false
                                       ? Center(
                                           // ignore: unrelated_type_equality_checks
@@ -702,7 +695,7 @@ class FeedState extends ResumableState<Feed>
                                                           postController
                                                               .taggedName[index]
                                                               .toString(),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               color:
                                                                   mPrimaryColor,
                                                               fontSize: 18,
@@ -918,7 +911,7 @@ class FeedState extends ResumableState<Feed>
                                 Obx(() => postController.at_loca.value != ""
                                     ? GestureDetector(
                                         onTap: () {
-                                          postController.at_loca.value="";
+                                          postController.at_loca.value = "";
                                         },
                                         child: Align(
                                           alignment: Alignment.centerLeft,
@@ -928,11 +921,12 @@ class FeedState extends ResumableState<Feed>
                                                     const EdgeInsets.all(8.0),
                                                 child: Row(
                                                   children: [
-                                                    Icon(Icons.location_pin),
+                                                    const Icon(
+                                                        Icons.location_pin),
                                                     Text(
                                                         postController
                                                             .at_loca.value,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 12))
@@ -1060,23 +1054,6 @@ class FeedState extends ResumableState<Feed>
         });
   }
 
-  _imgFromCamera() async {
-    try {
-      final pickedFile = await postController.picker.pickImage(
-        source: ImageSource.camera,
-      );
-      setState(() {
-        postController.imageFile = pickedFile;
-        File file = File(pickedFile!.path);
-        editprofileController.image = file;
-      });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
-
   void _showPeople(context) {
     showModalBottomSheet(
         context: context,
@@ -1089,17 +1066,17 @@ class FeedState extends ResumableState<Feed>
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: new Card(
-                    child: new ListTile(
-                      leading: new Icon(Icons.search),
-                      title: new TextField(
+                  child: Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.search),
+                      title: TextField(
                         controller: postController.searchController,
-                        decoration: new InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'Search', border: InputBorder.none),
                         onChanged: postController.onSearchTextChanged,
                       ),
-                      trailing: new IconButton(
-                        icon: new Icon(Icons.cancel),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.cancel),
                         onPressed: () {
                           postController.searchController.clear();
                           postController.onSearchTextChanged('');
@@ -1109,12 +1086,14 @@ class FeedState extends ResumableState<Feed>
                   ),
                 ),
                 Obx(() => Expanded(
+                      // ignore: invalid_use_of_protected_member
                       child: postController.searched.value.isNotEmpty ||
                               postController.searchController.text.isNotEmpty
                           ? ListView.builder(
                               reverse: false,
+                              // ignore: invalid_use_of_protected_member
                               itemCount: postController.searched.value.length,
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               itemBuilder: (BuildContext context, int index) {
                                 return SafeArea(
                                     child: Container(
@@ -1137,7 +1116,7 @@ class FeedState extends ResumableState<Feed>
                           : ListView.builder(
                               reverse: false,
                               itemCount: postController.suggestions.length,
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               itemBuilder: (BuildContext context, int index) {
                                 return SafeArea(
                                     child: Container(
@@ -1176,18 +1155,18 @@ class FeedState extends ResumableState<Feed>
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: new Card(
-                    child: new ListTile(
-                      leading: new Icon(Icons.search),
-                      title: new TextField(
+                  child: Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.search),
+                      title: TextField(
                         controller: postController.locationController,
-                        decoration: new InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'Search Location',
                             border: InputBorder.none),
                         onChanged: postController.onLocationTextChanged,
                       ),
-                      trailing: new IconButton(
-                        icon: new Icon(Icons.cancel),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.cancel),
                         onPressed: () {
                           postController.locationController.clear();
                           postController.onLocationTextChanged('');
@@ -1202,14 +1181,15 @@ class FeedState extends ResumableState<Feed>
                           ? ListView.builder(
                               reverse: false,
                               itemCount:
+                                  // ignore: invalid_use_of_protected_member
                                   postController.searchedLoc.value.length,
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               itemBuilder: (BuildContext context, int index) {
                                 return SafeArea(
                                     child: Container(
                                         child: Wrap(children: <Widget>[
                                   ListTile(
-                                    leading: Icon(Icons.location_pin),
+                                    leading: const Icon(Icons.location_pin),
                                     title: Text(postController
                                         .searchedLoc[index].location
                                         .toString()),
@@ -1224,13 +1204,13 @@ class FeedState extends ResumableState<Feed>
                           : ListView.builder(
                               reverse: false,
                               itemCount: postController.location.length,
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               itemBuilder: (BuildContext context, int index) {
                                 return SafeArea(
                                     child: Container(
                                         child: Wrap(children: <Widget>[
                                   ListTile(
-                                    leading: Icon(Icons.location_pin),
+                                    leading: const Icon(Icons.location_pin),
                                     title: Text(postController
                                         .location[index].location
                                         .toString()),
@@ -1257,7 +1237,7 @@ class FeedState extends ResumableState<Feed>
           return Expanded(
             child: Container(
               height: 150,
-              padding: EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(12.0),
               child: GridView.count(
                 crossAxisCount: 3,
                 childAspectRatio: 2,
@@ -1272,7 +1252,7 @@ class FeedState extends ResumableState<Feed>
                       ),
                       title: Text(
                         _feeling[index].feeling.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                       onTap: () {
@@ -1428,7 +1408,7 @@ class FeedState extends ResumableState<Feed>
                 },
                 child: Expanded(
                     child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: feedController.isRefreshing.value
                             ? Refresh()
                             : const Icon(

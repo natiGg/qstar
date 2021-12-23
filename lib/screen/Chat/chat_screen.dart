@@ -458,6 +458,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           reverse: true,
                           itemCount: getmessageController.list.length,
                           itemBuilder: (context, int index) {
+                            // ignore: unused_local_variable
                             final message =
                                 getmessageController.list[index].content;
                             bool isMe =

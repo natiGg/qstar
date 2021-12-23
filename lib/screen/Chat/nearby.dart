@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'message_model.dart';
-import 'chat_screen.dart';
+
 import 'package:qstar/constant.dart';
 
 class Nearby extends StatelessWidget {

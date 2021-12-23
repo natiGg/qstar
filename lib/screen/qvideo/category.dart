@@ -26,17 +26,6 @@ class _CategoryVideo2 extends State<CategoryVid>
     videocatagoryController.fetch();
   }
 
-  final List<String> _listItem = [
-    'assets/images/profile1.jpg',
-    'assets/images/profile2.jpg',
-    'assets/images/profile3.jpg',
-    'assets/images/profile4.jpg',
-    'assets/images/profile5.jpg',
-    'assets/images/profile2.jpg',
-    'assets/images/profile1.jpg',
-    'assets/images/profile4.jpg',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +131,7 @@ class _CategoryVideo2 extends State<CategoryVid>
                                       alignment: Alignment.bottomCenter,
                                       child: Text(
                                         item.title,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontFamily: "font1",
                                             fontSize: 20),

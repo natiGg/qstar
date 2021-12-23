@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, duplicate_ignore, camel_case_types
+
 import 'package:get/get.dart';
 
 class User {
@@ -33,8 +35,11 @@ class User {
   String total_followers;
   RxBool followed;
 
+  // ignore: non_constant_identifier_names
   String posts_count;
+  // ignore: non_constant_identifier_names
   String followers_count;
+  // ignore: non_constant_identifier_names
   String following_count;
   int ratting;
 
@@ -69,8 +74,11 @@ class User {
       // ignore: non_constant_identifier_names
       required this.total_followers,
       required this.followed,
+      // ignore: non_constant_identifier_names
       required this.posts_count,
+      // ignore: non_constant_identifier_names
       required this.followers_count,
+      // ignore: non_constant_identifier_names
       required this.following_count,
       required this.ratting});
 
@@ -104,10 +112,14 @@ class User {
   }
 }
 
+// ignore: camel_case_types
 class links {
+  // ignore: non_constant_identifier_names
   String fb_link;
+  // ignore: non_constant_identifier_names
   String instagram_link;
   String tiktok_link;
+  // ignore: non_constant_identifier_names
   String youtube_link;
 
   links({

@@ -6,7 +6,6 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
-import 'message_model.dart';
 import 'chat_screen.dart';
 import 'package:qstar/constant.dart';
 

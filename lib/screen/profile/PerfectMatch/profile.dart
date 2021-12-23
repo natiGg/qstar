@@ -1,10 +1,11 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, override_on_non_overriding_member
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
-import 'package:qstar/screen/main/main_screen.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/editpersonalinfoform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
 
   void onReady() {
     // Implement your code inside here
-    print('HomeScreen is ready!');
+
     _fetchUser();
   }
 
@@ -191,10 +192,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.full_name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text("")
+                                      : const Text("")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -207,10 +208,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                   Container(width: 5),
                                   editprofileController.gender != null
                                       ? Text(editprofileController.gender,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -225,10 +226,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.country,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -242,10 +243,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                   perfectMatchController.fetched.city != null
                                       ? Text(
                                           perfectMatchController.fetched.city,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -261,10 +262,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.phone_number,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ])
                               ],
                             ),
@@ -303,10 +304,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.religion,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -320,10 +321,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                   perfectMatchController.fetched.height != null
                                       ? Text(
                                           perfectMatchController.fetched.height,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                               ],
                             ),
@@ -362,10 +363,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.education,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -381,10 +382,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.employment,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -400,10 +401,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.occupation,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                               ],
                             ),
@@ -441,10 +442,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.pflocation,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -460,10 +461,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                       ? Text(
                                           perfectMatchController
                                               .fetched.pfgender,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                                 Container(height: 4),
                                 Row(children: [
@@ -481,10 +482,10 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                                               " to " +
                                               perfectMatchController
                                                   .fetched.age_max,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.normal))
-                                      : Text(" ")
+                                      : const Text(" ")
                                 ]),
                               ],
                             ),
@@ -494,6 +495,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                       Container(height: 20),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
+                        // ignore: deprecated_member_use
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(36),
@@ -518,7 +520,7 @@ class ProfileImageAppbarRouteState extends State<ProfileImageAppbarRoute> {
                 ),
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             )),
     );

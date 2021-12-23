@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks
+// ignore_for_file: unrelated_type_equality_checks, duplicate_ignore
 
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
