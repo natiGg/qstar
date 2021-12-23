@@ -310,34 +310,25 @@ class videoCategory {
   }
 }
 
-class getmessage {
-  int id;
-  String date;
-  String content;
-  String seen_status;
+class Getmessage {
+  String date_human_readable;
+  bool i_am_sender;
   String message_type;
-  int profile_id;
-  int receiving_profile_id;
+  String content;
 
-  getmessage({
-    required this.id,
-    required this.date,
-    required this.content,
-    required this.seen_status,
+  Getmessage({
+    required this.date_human_readable,
+    required this.i_am_sender,
     required this.message_type,
-    required this.profile_id,
-    required this.receiving_profile_id,
+    required this.content,
   });
 
-  factory getmessage.fromJson(Map<String, dynamic> json) {
-    return getmessage(
-      id: json["id"],
-      date: json["date"],
-      content: json["content"],
-      seen_status: json["seen_status"],
+  factory Getmessage.fromJson(Map<String, dynamic> json) {
+    return Getmessage(
+      date_human_readable: json["date_human_readable"],
+      i_am_sender: json["i_am_sender"],
       message_type: json["message_type"],
-      profile_id: json["profile_id"],
-      receiving_profile_id: json["content"],
+      content: json["content"],
     );
   }
 }

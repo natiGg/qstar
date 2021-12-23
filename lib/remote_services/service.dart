@@ -505,7 +505,7 @@ class RemoteServices {
     }
   }
 
-  static Future<String> sendmessage(
+  static Future<bool> sendmessage(
       var content, var message_type, var receiving_profile_id) async {
     var data = {
       'content': content,
@@ -516,9 +516,24 @@ class RemoteServices {
     body = json.decode(res.body);
     print(body);
     if (res.statusCode == 200) {
-      return res.statusCode.toString();
+      return true;
     } else {
       throw Exception('Failed to send  Mesaage');
+    }
+  }
+
+  static Future<List<Getmessage>> getmessage(var id) async {
+    res = await Network().getData("message/${id}/conversation");
+    var body = json.decode(res.body);
+    print(body);
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => Getmessage.fromJson(e))
+          .toList()
+          .cast<Getmessage>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to Load Users');
     }
   }
 }
