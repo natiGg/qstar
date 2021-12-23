@@ -26,6 +26,40 @@ class RemoteServices {
 
     }
   }
+
+  
+  static Future<List<Feeds>> refreshFeed() async {
+    res = await Network().getData("oldFeedUpdate");
+    var body =  json.decode(res.body);
+    if(res.statusCode == 200){
+      print(body["feed"].map((e)=>Feeds.fromJson(e)).toList().length);
+        print(body["feed"].toString());
+        return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
+    }
+    else{
+     throw Exception('Failed to load Feed');
+
+    }
+  }
+
+
+  static Future<bool> likePost(var id) async{
+    var data={
+      'post_id':id
+    };
+    res = await Network().getpassedData(data,"postlike");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200){
+      print(body);
+      return true;
+    }
+    else{
+      throw Exception('Failed to like');
+    }
+  }
+
+
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
     var body = json.decode(res.body);

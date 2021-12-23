@@ -14,12 +14,10 @@ import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
-
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
@@ -32,7 +30,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:get/get.dart';
 import 'package:qstar/screen/post/preview_screen_gallery.dart';
-
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
@@ -57,10 +54,17 @@ class WPost extends StatefulWidget {
 }
 
 class _WPostState extends State<WPost> {
-  bool isActive = false;
-  bool isdisActive = false;
+ 
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
+  FeedController feedController=Get.find();
+  
+  @override
+  void initState() {
+    feedController.isActive.value=widget.post.viewer_has_liked;
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,14 +223,15 @@ class _WPostState extends State<WPost> {
             ),
             GestureDetector(
               onDoubleTap: () {
-                setState(() {
-                  if (isdisActive && !isActive) {
-                    isdisActive = !isdisActive;
-                    isActive = !isActive;
-                  } else if (!isActive) {
-                    isActive = !isActive;
-                  }
+              feedController.LikePost(widget.post.posts.post_id);
 
+                setState(() {  
+                  if (feedController.isdisActive.value && !feedController.isActive.value) {
+                    feedController.isdisActive.value = !feedController.isdisActive.value;
+                     feedController.isActive.value = !feedController.isActive.value;
+                  } else if (!feedController.isActive.value) {
+                   feedController.isActive.value = !feedController.isActive.value;
+                  }
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
@@ -262,43 +267,38 @@ class _WPostState extends State<WPost> {
               children: [
                 GestureDetector(
                     onTap: () {
+                      feedController.LikePost(widget.post.posts.post_id);
                       setState(() {
-                        if (isdisActive && !isActive) {
-                          isActive = !isActive;
-                          isdisActive = !isdisActive;
-                        } else if (!isdisActive && isActive) {
-                          isActive = !isActive;
-                        } else if (!isdisActive && !isActive) {
-                          isActive = !isActive;
+                        if (feedController.isdisActive.value && !feedController.isActive.value) {
+                         feedController.isActive.value = !feedController.isActive.value;
+                          feedController.isdisActive.value = !feedController.isdisActive.value;
+                        } else if (!feedController.isdisActive.value &&  feedController.isActive.value) {
+                          feedController.isActive.value = ! feedController.isActive.value;
+                        } else if (!feedController.isdisActive.value && !feedController.isActive.value) {
+                          feedController.isActive.value= ! feedController.isActive.value;
                         }
                       });
                     },
-                    child: activeLikeButton(isActive)),
+                    child: activeLikeButton(feedController.isActive.value)),
                 GestureDetector(
                     onTap: () {
+                      feedController.DisLikePost(widget.post.posts.post_id);
+
                       setState(() {
-                        if (isActive && !isdisActive) {
-                          isActive = !isActive;
-                          isdisActive = !isdisActive;
-                        } else if (isdisActive && !isActive) {
-                          isdisActive = !isdisActive;
-                        } else if (!isdisActive && !isActive) {
-                          isdisActive = !isdisActive;
+                        if ( feedController.isActive.value && ! feedController.isdisActive.value) {
+                           feedController.isActive.value = ! feedController.isActive.value;
+                          feedController.isdisActive.value = ! feedController.isdisActive.value;
+                        } else if ( feedController.isdisActive.value && ! feedController.isActive.value) {
+                           feedController.isdisActive.value = ! feedController.isdisActive.value;
+                        } else if (! feedController.isdisActive.value && ! feedController.isActive.value) {
+                          feedController.isdisActive.value = ! feedController.isdisActive.value;
                         }
                       });
                     },
-                    child: activedisLikeButton(isdisActive)),
+                    child: activedisLikeButton(feedController.isdisActive.value)),
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context);
-                      // Navigator.push(
-                      //   context,
-                      //   PageRouteBuilder(
-                      //     pageBuilder: (context, animation1, animation2) =>
-                      //         CommentPage(),
-                      //     transitionDuration: Duration.zero,
-                      //   ),
-                      // );
                     },
                     child: Comment()),
                 Share(),

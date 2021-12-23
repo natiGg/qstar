@@ -40,13 +40,12 @@ class PostController extends GetxController {
   var isCam = false.obs;
   var searched = <User>[].obs;
   var searchedLoc = <Location>[].obs;
-
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
   var tagged = [].obs;
   var taggedName = [].obs;
-
+  var isVid=false.obs;
   var hashTags = [""].obs;
   late VideoPlayerController controller;
   var isPlaying = false.obs;
@@ -188,12 +187,27 @@ class PostController extends GetxController {
 
       if (isValid) {
         if (imagesList.isNotEmpty || videosList.isNotEmpty) {
-          var data = {
-            "location": at_loca.value.toString(),
-            "caption": captionController.text,
-            "post_type": post_type,
-            "tags": tagged.join(",")
-          };
+          var data;
+          if(videosList.isNotEmpty){
+            isVid.value=true;
+              data = {
+              "location": at_loca.value.toString(),
+              "caption": captionController.text,
+              "post_type": post_type,
+              "tags": tagged.join(","),
+              "is_video":isVid.value
+            };
+          }
+          if(imagesList.isNotEmpty){
+              data = {
+              "location": at_loca.value.toString(),
+              "caption": captionController.text,
+              "post_type": post_type,
+              "tags": tagged.join(","),
+              "is_video":isVid.value
+            };
+          }
+          
           isPosting(true);
           if (imagesList.isNotEmpty) {
             posted = await RemoteServices.createPost(imagesList, data);
@@ -308,7 +322,6 @@ class PostController extends GetxController {
     final XFile? selectedVids =
         await picker.pickVideo(source: ImageSource.camera);
     isPosted(false);
-
     if (selectedVids!.path.isNotEmpty) {
       File convertedFile = File(selectedVids.path);
       print(convertedFile.path);
