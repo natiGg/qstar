@@ -1,21 +1,6 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers, use_key_in_widget_constructors
 
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
-
-import 'package:camera_camera/camera_camera.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:need_resume/need_resume.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
-import 'package:qstar/controllers/feedcontroller.dart';
-import 'package:qstar/controllers/perfectmatchcontroller.dart';
-import 'package:qstar/controllers/postcontroller.dart';
-import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/comment/comment_widget.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,22 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/model/feed.dart';
-
-import 'package:qstar/screen/feed/model/user.dart';
-
-import 'package:qstar/screen/feed/widgets/info_widget.dart';
-
-import 'package:qstar/screen/post/main.dart';
-import 'package:qstar/screen/Chat/home_screen.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controls.dart';
-import 'package:get/get.dart';
-import 'package:qstar/screen/post/preview_screen_gallery.dart';
-
-
-
 
 class Refresh extends StatefulWidget {
   @override
@@ -52,7 +21,7 @@ class RefreshState extends State<Refresh> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2))
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
           ..repeat();
   }
 
@@ -66,7 +35,7 @@ class RefreshState extends State<Refresh> with SingleTickerProviderStateMixin {
           child: child,
         );
       },
-      child: Icon(
+      child: const Icon(
         FontAwesome.refresh,
         color: mPrimaryColor,
       ),

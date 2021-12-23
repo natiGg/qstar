@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
+import 'package:qstar/screen/search/search.dart';
 import 'category_selector.dart';
-import 'recent_chats.dart';
+import 'friends_chat.dart';
 import 'package:qstar/constant.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,8 +22,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? tabController;
   int currentTabIndex = 0;
-  final TextEditingController _searchQueryController = TextEditingController();
-  bool _isSearching = false;
   String searchQuery = "Search query";
 
   void onTabChange() {
@@ -86,26 +87,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: _isSearching
-            ? const BackButton(
-                color: mPrimaryColor,
-              )
-            : IconButton(
-                icon: const Icon(Icons.arrow_back),
-                color: mPrimaryColor,
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                }),
-        title: _isSearching
-            ? _buildSearchField()
-            : const Text(
-                "Chat",
-                style: TextStyle(
-                  color: mPrimaryColor,
-                  fontSize: 27,
-                  fontFamily: 'font1',
-                ),
-              ),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: mPrimaryColor,
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            }),
+        title: const Text(
+          "Chat",
+          style: TextStyle(
+            color: mPrimaryColor,
+            fontSize: 27,
+            fontFamily: 'font1',
+          ),
+        ),
         actions: _buildActions(),
       ),
       body: SmartRefresher(
@@ -151,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     controller: tabController,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      const RecentChats(),
+                      const FriendsChat(),
                       const Online(),
                       const Nearby(),
                       const Match(),
@@ -180,75 +175,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchQueryController,
-      autofocus: true,
-      decoration: const InputDecoration(
-        hintText: "Search Data...",
-        border: InputBorder.none,
-        hintStyle: TextStyle(color: mPrimaryColor),
-      ),
-      style: const TextStyle(color: Colors.black, fontSize: 16.0),
-      onChanged: (query) => updateSearchQuery(query),
-    );
-  }
-
   List<Widget> _buildActions() {
-    if (_isSearching) {
-      return <Widget>[
-        IconButton(
-          icon: const Icon(Icons.clear),
-          color: mPrimaryColor,
-          onPressed: () {
-            // ignore: unnecessary_null_comparison
-            if (_searchQueryController == null ||
-                _searchQueryController.text.isEmpty) {
-              Navigator.pop(context);
-              return;
-            }
-            _clearSearchQuery();
-          },
-        ),
-      ];
-    }
-
     return <Widget>[
       IconButton(
         icon: const Icon(Icons.search),
-        onPressed: _startSearch,
         color: mPrimaryColor,
+        onPressed: () {
+          // ignore: unnecessary_null_comparison
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => const Search(),
+              transitionDuration: Duration.zero,
+            ),
+          );
+        },
       ),
     ];
-  }
-
-  void _startSearch() {
-    ModalRoute.of(context)!
-        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
-
-    setState(() {
-      _isSearching = true;
-    });
-  }
-
-  void updateSearchQuery(String newQuery) {
-    setState(() {
-      searchQuery = newQuery;
-    });
-  }
-
-  void _stopSearching() {
-    _clearSearchQuery();
-
-    setState(() {
-      _isSearching = false;
-    });
-  }
-
-  void _clearSearchQuery() {
-    setState(() {
-      _searchQueryController.clear();
-      updateSearchQuery("");
-    });
   }
 }

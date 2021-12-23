@@ -1,14 +1,18 @@
 // ignore: file_names
+// ignore_for_file: file_names, duplicate_ignore
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/controllers/perfectmatchcontroller.dart';
 
 import 'package:qstar/screen/profile/PerfectMatch/personalinfoform.dart';
 
 class MyPages extends StatelessWidget {
-  MyPages({Key? key}) : super(key: key);
+  const MyPages({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class MyPages extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: mPrimaryColor,
             onPressed: () {
               Navigator.pushNamed(context, '/home');
@@ -28,20 +32,20 @@ class MyPages extends StatelessWidget {
         // ignore: prefer_const_constructors
         title: Text(
           "Perfect Match",
-          style: TextStyle(
+          style: const TextStyle(
             color: mPrimaryColor,
             fontSize: 27,
             fontFamily: 'font1',
           ),
         ),
       ),
-      body: OnBoardingPage(),
+      body: const OnBoardingPage(),
     );
   }
 }
 
 class OnBoardingPage extends StatefulWidget {
-  OnBoardingPage({Key? key}) : super(key: key);
+  const OnBoardingPage({Key? key}) : super(key: key);
 
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
@@ -51,11 +55,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
+    Get.delete<PerfectMatchController>();
+
     Navigator.push(
       // ignore: prefer_const_constructors
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => PersonalInfo(),
+        pageBuilder: (context, animation1, animation2) => const PersonalInfo(),
         transitionDuration: Duration.zero,
       ),
     );
@@ -121,7 +127,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      dotsContainerDecorator: ShapeDecoration(
+      dotsContainerDecorator: const ShapeDecoration(
         color: Colors.black54,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),

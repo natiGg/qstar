@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, duplicate_ignore, prefer_is_empty
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -49,8 +49,11 @@ class EditprofileController extends GetxController with StateMixin {
   // ignore: prefer_typing_uninitialized_variables
   var image;
   var gender;
+  // ignore: non_constant_identifier_names
   var followers_count;
+  // ignore: non_constant_identifier_names
   var following_count;
+  // ignore: non_constant_identifier_names
   var posts_count;
   late String uid = "";
 
@@ -66,10 +69,6 @@ class EditprofileController extends GetxController with StateMixin {
   var links;
   @override
   void onInit() {
-    // ignore: todo
-    // TODO: implement onInit
-    // ignore: avoid_print
-    print("controller initialized");
     nameControl = TextEditingController();
     birthdayControl = TextEditingController();
     unameControl = TextEditingController();
@@ -87,7 +86,7 @@ class EditprofileController extends GetxController with StateMixin {
   void fetchProfile(var id) async {
     try {
       uid = id.toString();
-      print(uid);
+
       suggested = await RemoteServices.fetchProfile(id);
       if (suggested.id != null) {
         nameControl.text = suggested.name;
@@ -308,8 +307,6 @@ class EditprofileController extends GetxController with StateMixin {
 
   @override
   void onClose() {
-    // TODO: implement onClose
-
     super.onClose();
   }
 

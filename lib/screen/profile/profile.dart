@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe, unused_import
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -20,7 +22,7 @@ import 'package:qstar/screen/profile/editprofile.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/link.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {

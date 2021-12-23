@@ -33,6 +33,7 @@ class Hobbieselector extends StatefulWidget {
 class _HobbieselectorState extends State<Hobbieselector> {
   HobbiesController hobbiesController = Get.put(HobbiesController());
 
+  // ignore: prefer_typing_uninitialized_variables
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Hobbies> _selectedItems2 = [];

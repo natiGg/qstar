@@ -15,7 +15,6 @@ class HobbiesController extends GetxController with StateMixin {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     fetchHobbies();
     super.onInit();
   }
@@ -25,6 +24,7 @@ class HobbiesController extends GetxController with StateMixin {
       hobbies = await RemoteServices.fetchHobbies();
       if (hobbies != null) {
         hobbyitems = hobbies;
+        // ignore: unnecessary_null_comparison
         if (hobbyitems != null) {
           hobItem = hobbyitems
               .map((hobbies) => MultiSelectItem<Hobbies>(hobbies, hobbies.name))

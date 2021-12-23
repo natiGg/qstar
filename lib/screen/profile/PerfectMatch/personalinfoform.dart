@@ -1,17 +1,17 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
-import 'package:language_picker/languages.dart';
-import 'package:language_picker/languages.g.dart';
+
 import 'package:qstar/constant.dart';
 
 import 'package:country_picker/country_picker.dart';
-import 'package:language_picker/language_picker.dart';
+
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
-import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({Key? key}) : super(key: key);
@@ -24,8 +24,6 @@ class _MyHomePageState extends State<PersonalInfo> {
   String? lan = "Language";
   PerfectMatchController pfcontroller = Get.put(PerfectMatchController());
   var isLastStep;
-
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

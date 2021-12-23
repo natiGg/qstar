@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps, duplicate_ignore
 
 import 'package:qstar/network_utils/api.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
@@ -15,15 +15,11 @@ class RemoteServices {
 
   static Future<List<Feeds>> fetchFeed() async {
     res = await Network().getData("feedUpdate");
-    var body =  json.decode(res.body);
-    if(res.statusCode == 200){
-      print(body["feed"].map((e)=>Feeds.fromJson(e)).toList().length);
-        print(body["feed"].toString());
-        return body["feed"].map((e)=>Feeds.fromJson(e)).toList().cast<Feeds>();
-    }
-    else{
-     throw Exception('Failed to load Feed');
-
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["feed"].map((e) => Feeds.fromJson(e)).toList().cast<Feeds>();
+    } else {
+      throw Exception('Failed to load Feed');
     }
   }
 
@@ -71,37 +67,30 @@ class RemoteServices {
     }
   }
 
-  static Future<bool> checkFollowers(var check_id,var id) async {
+  static Future<bool> checkFollowers(var checkId, var id) async {
     res = await Network().getData("friendship/${id}/following");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      var check= body["data"]
+      var check = body["data"]
           .map((e) => User.fromJson(e))
           .where((user) {
             final uid = user.id.toString();
-            print(uid.toString()+"found it"+check_id.toString());
-            return uid==check_id.toString();
+
+            return uid == checkId.toString();
           })
           .toList()
           .cast<User>();
-          if(check.toList().isNotEmpty)
-          {
-                      print(check);
-
-           return true;
-          }
-          else{
-            return false;
-          }
-      // return User.fromJson(jsonDecode(body["data"]));
-    } else {
-      print(body['data'].toString()+"fdfdf");
-      if(body['data']==null){
+      if (check.toList().isNotEmpty) {
+        return true;
+      } else {
         return false;
       }
-      else{
-              throw Exception('Failed to load Users');
-
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      if (body['data'] == null) {
+        return false;
+      } else {
+        throw Exception('Failed to load Users');
       }
     }
   }
@@ -470,7 +459,6 @@ class RemoteServices {
 
       return res.statusCode.toString();
     } else {
-      print(json.decode(res).toString());
       throw Exception("can't post");
     }
   }
@@ -541,6 +529,39 @@ class RemoteServices {
 
         return errors.join("\n").toString();
       }
+    }
+  }
+
+  static Future<bool> sendmessage(
+      var content, var messageType, var receivingProfileId) async {
+    var data = {
+      'content': content,
+      'message_type': messageType,
+      'receiving_profile_id': receivingProfileId,
+    };
+    res = await Network().getpassedData(data, "message");
+    body = json.decode(res.body);
+    // ignore: avoid_print
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
+
+  static Future<List<Getmessage>> getmessage(var id) async {
+    res = await Network().getData("message/${id}/conversation");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => Getmessage.fromJson(e))
+          .toList()
+          .cast<Getmessage>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to Load Users');
     }
   }
 }

@@ -39,6 +39,7 @@ class _ActivityPageState extends State<ActivityPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,

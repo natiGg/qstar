@@ -1,49 +1,44 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 import 'package:qstar/screen/feed/model/user.dart';
 
 class Followcontroller extends GetxController {
-var isLoading = true.obs;
+  var isLoading = true.obs;
   RxBool btnLoading = false.obs;
-  RxBool following=false.obs;
-  RxBool isChecked=false.obs;
-  RxBool isFetching=false.obs;
-  var following_list=<User>[].obs;
-  var unFollowed,uFollowed;
-  FeedController feedController=Get.find();
+  RxBool following = false.obs;
+  RxBool isChecked = false.obs;
+  RxBool isFetching = false.obs;
+  // ignore: non_constant_identifier_names
+  var following_list = <User>[].obs;
+  var unFollowed, uFollowed;
+  FeedController feedController = Get.find();
 
-
-@override
-  void onInit() async {
-
-    super.onInit();
-  }
-  void fetchFollowing(var id) async{
-    try{
-      isFetching(true);
-      following_list.value=await RemoteServices.fetchallFollowing(id);
-      isFetching(false);
-    }finally{
-
-    }
-  }
- void check(var check_id,var u_id) async {
+  void fetchFollowing(var id) async {
     try {
-       uFollowed = await RemoteServices.checkFollowers(check_id,u_id.toString());
-      following.value=uFollowed;
-      isChecked(true);
-    } finally {
-    }
+      isFetching(true);
+      following_list.value = await RemoteServices.fetchallFollowing(id);
+      isFetching(false);
+    } finally {}
   }
- void follow(var id) async {
+
+  void check(var check_id, var u_id) async {
+    try {
+      uFollowed =
+          await RemoteServices.checkFollowers(check_id, u_id.toString());
+      following.value = uFollowed;
+      isChecked(true);
+    } finally {}
+  }
+
+  void follow(var id) async {
     try {
       btnLoading(true);
-       uFollowed = await RemoteServices.follow(id);
-        following.value=uFollowed;
+      uFollowed = await RemoteServices.follow(id);
+      following.value = uFollowed;
     } finally {
       btnLoading(false);
     }
@@ -53,16 +48,11 @@ var isLoading = true.obs;
     try {
       btnLoading(true);
 
- unFollowed = await RemoteServices.unfollow(id);
-      
-     
-        following.value=!unFollowed;
-        fetchFollowing(feedController.uid);
-              btnLoading(false);
+      unFollowed = await RemoteServices.unfollow(id);
 
-
-    } finally {
-    }
+      following.value = !unFollowed;
+      fetchFollowing(feedController.uid);
+      btnLoading(false);
+    } finally {}
   }
-
 }

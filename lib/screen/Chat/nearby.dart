@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'message_model.dart';
-import 'chat_screen.dart';
+
 import 'package:qstar/constant.dart';
 
 class Nearby extends StatelessWidget {
@@ -30,16 +30,16 @@ class Nearby extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final Message chat = chats3[index];
               return GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        ChatScreen(
-                      user: chat.sender,
-                    ),
-                    transitionDuration: Duration.zero,
-                  ),
-                ),
+                // onTap: () => Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (context, animation1, animation2) =>
+                //         ChatScreen(
+                //       user: chat.sender,
+                //     ),
+                //     transitionDuration: Duration.zero,
+                //   ),
+                // ),
                 child: Container(
                   margin:
                       const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 20.0),

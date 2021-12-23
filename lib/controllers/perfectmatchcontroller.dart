@@ -14,6 +14,7 @@ class PerfectMatchController extends GetxController with StateMixin {
   GlobalKey<FormState> Form = GlobalKey<FormState>();
   // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form2 = GlobalKey<FormState>();
+  // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form3 = GlobalKey<FormState>();
   // ignore: non_constant_identifier_names
   GlobalKey<FormState> Form4 = GlobalKey<FormState>();
@@ -43,10 +44,13 @@ class PerfectMatchController extends GetxController with StateMixin {
   late TextEditingController location;
   // ignore: prefer_typing_uninitialized_variables
   var macthgender;
+  // ignore: prefer_typing_uninitialized_variables
   var inforesponse;
   var checkpf, fetched;
-  RangeValues currentRangeValues = RangeValues(18, 65);
+  RangeValues currentRangeValues = const RangeValues(18, 65);
+  // ignore: prefer_typing_uninitialized_variables
   var agestart;
+  // ignore: prefer_typing_uninitialized_variables
   var ageend;
 
   @override

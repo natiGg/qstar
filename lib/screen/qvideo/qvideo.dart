@@ -1,4 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
+// ignore_for_file: import_of_legacy_library_into_null_safe, must_call_super
 
 import 'dart:io';
 
@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/feed.dart';
+
 import 'package:qstar/screen/qvideo/bottomsheet_report/app_context.dart';
 import 'package:qstar/screen/qvideo/bottomsheet_report/bottom_sheet_action.dart';
 import 'package:qstar/screen/feed/widgets/sharetousers.dart';
@@ -79,8 +79,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -106,8 +105,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -133,8 +131,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -160,8 +157,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -187,8 +183,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -214,8 +209,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -241,8 +235,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -268,8 +261,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),
@@ -295,8 +287,7 @@ List<User> _users = [
       hobbies: "",
       total_followers: "",
       followed: false.obs,
-            ratting: 3,
-
+      ratting: 3,
       followers_count: "",
       following_count: "",
       posts_count: ""),

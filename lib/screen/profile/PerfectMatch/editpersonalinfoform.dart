@@ -1,24 +1,20 @@
-// ignore_for_file: unused_field, prefer_const_constructors
+// ignore_for_file: unused_field, prefer_const_constructors, prefer_typing_uninitialized_variables, unused_local_variable, duplicate_ignore
 
-import 'dart:io';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:date_format/date_format.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:image_picker/image_picker.dart';
-import 'package:language_picker/language_picker.dart';
-import 'package:language_picker/languages.dart';
-import 'package:language_picker/languages.g.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
+
 import 'package:qstar/controllers/hobbiescontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
-import 'package:qstar/screen/profile/usernamedit.dart';
+
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import 'package:qstar/constant.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+
 import 'dart:convert';
 import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
@@ -38,7 +34,7 @@ class _EditProfilePageState extends State<EditPersonalInfo> {
   PerfectMatchController pfcontroller = Get.find();
   var isLastStep;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {

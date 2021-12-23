@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, duplicate_ignore, camel_case_types
+
 import 'package:get/get.dart';
 
 class User {
@@ -33,47 +35,52 @@ class User {
   String total_followers;
   RxBool followed;
 
+  // ignore: non_constant_identifier_names
   String posts_count;
+  // ignore: non_constant_identifier_names
   String followers_count;
+  // ignore: non_constant_identifier_names
   String following_count;
   int ratting;
 
-  User({
-    required this.id,
-    required this.userName,
-    required this.storyImage,
-    required this.userImage,
-    required this.name,
-    required this.website,
-    required this.bio,
-    required this.email,
-    // ignore: non_constant_identifier_names
-    required this.country_code,
-    // ignore: non_constant_identifier_names
-    required this.phone_number,
-    required this.gender,
-    // ignore: non_constant_identifier_names
-    required this.enable_suggestion,
-    required this.status,
-    // ignore: non_constant_identifier_names
-    required this.date_of_birth,
-    // ignore: non_constant_identifier_names
-    required this.current_location,
-    // ignore: non_constant_identifier_names
-    required this.account_type,
-    // ignore: non_constant_identifier_names
-    required this.online_status,
-    // ignore: non_constant_identifier_names
-    required this.joined_date,
-    required this.hobbies,
-    // ignore: non_constant_identifier_names
-    required this.total_followers,
-    required this.followed,
-    required this.posts_count,
-    required this.followers_count,
-    required this.following_count,
-    required this.ratting
-  });
+  User(
+      {required this.id,
+      required this.userName,
+      required this.storyImage,
+      required this.userImage,
+      required this.name,
+      required this.website,
+      required this.bio,
+      required this.email,
+      // ignore: non_constant_identifier_names
+      required this.country_code,
+      // ignore: non_constant_identifier_names
+      required this.phone_number,
+      required this.gender,
+      // ignore: non_constant_identifier_names
+      required this.enable_suggestion,
+      required this.status,
+      // ignore: non_constant_identifier_names
+      required this.date_of_birth,
+      // ignore: non_constant_identifier_names
+      required this.current_location,
+      // ignore: non_constant_identifier_names
+      required this.account_type,
+      // ignore: non_constant_identifier_names
+      required this.online_status,
+      // ignore: non_constant_identifier_names
+      required this.joined_date,
+      required this.hobbies,
+      // ignore: non_constant_identifier_names
+      required this.total_followers,
+      required this.followed,
+      // ignore: non_constant_identifier_names
+      required this.posts_count,
+      // ignore: non_constant_identifier_names
+      required this.followers_count,
+      // ignore: non_constant_identifier_names
+      required this.following_count,
+      required this.ratting});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -100,15 +107,19 @@ class User {
         posts_count: json['posts_count'].toString(),
         followers_count: json['followers_count'].toString(),
         following_count: json['following_count'].toString(),
-        ratting:json['following_count'] as int,
+        ratting: json['following_count'] as int,
         followed: false.obs);
   }
 }
 
+// ignore: camel_case_types
 class links {
+  // ignore: non_constant_identifier_names
   String fb_link;
+  // ignore: non_constant_identifier_names
   String instagram_link;
   String tiktok_link;
+  // ignore: non_constant_identifier_names
   String youtube_link;
 
   links({
@@ -308,5 +319,28 @@ class videoCategory {
   factory videoCategory.fromJson(Map<String, dynamic> json) {
     return videoCategory(
         id: json["id"], title: json["title"], remark: json["remark"]);
+  }
+}
+
+class Getmessage {
+  String date_human_readable;
+  bool i_am_sender;
+  String message_type;
+  String content;
+
+  Getmessage({
+    required this.date_human_readable,
+    required this.i_am_sender,
+    required this.message_type,
+    required this.content,
+  });
+
+  factory Getmessage.fromJson(Map<String, dynamic> json) {
+    return Getmessage(
+      date_human_readable: json["date_human_readable"],
+      i_am_sender: json["i_am_sender"],
+      message_type: json["message_type"],
+      content: json["content"],
+    );
   }
 }
