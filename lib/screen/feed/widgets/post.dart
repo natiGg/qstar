@@ -56,16 +56,35 @@ class WPost extends StatefulWidget {
 }
 
 class _WPostState extends State<WPost> {
- 
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
-  FeedController feedController=Get.find();
-  
+  FeedController feedController = Get.find();
+  late VideoPlayerController controller;
+  late Future<void> initializeVideoPlayerFuture;
   @override
   void initState() {
-    feedController.isActive.value=widget.post.viewer_has_liked;
+    feedController.isActive.value = widget.post.viewer_has_liked;
+    if (widget.post.posts.is_image == "0") {
+      controller = VideoPlayerController.network(
+          "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}");
+      // Initialize the controller and store the Future for later use.
+      initializeVideoPlayerFuture = controller.initialize();
+      // Use the controller to loop the video.
+      controller.setLooping(true);
+    }
     // TODO: implement initState
     super.initState();
+  }
+
+  void onPlay() async {
+    if (controller.value.isPlaying) {
+      feedController.isPlaying(false);
+      controller.pause();
+    } else {
+      // If the video is paused, play it.
+      feedController.isPlaying(true);
+      controller.play();
+    }
   }
 
   @override
@@ -225,28 +244,50 @@ class _WPostState extends State<WPost> {
             ),
             GestureDetector(
               onDoubleTap: () {
-              feedController.LikePost(widget.post.posts.post_id);
-
-                setState(() {  
-                  if (feedController.isdisActive.value && !feedController.isActive.value) {
-                    feedController.isdisActive.value = !feedController.isdisActive.value;
-                     feedController.isActive.value = !feedController.isActive.value;
-                  } else if (!feedController.isActive.value) {
-                   feedController.isActive.value = !feedController.isActive.value;
-                  }
+                feedController.LikePost(widget.post.posts.post_id);
+                setState(() {
+                  if (!feedController.isActive.value) {
+                        feedController.isActive.value =
+                        !feedController.isActive.value;
+                  } 
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}"),
-                      fit: BoxFit.cover),
-                ),
-                height: 500,
-              ),
+              child: widget.post.posts.is_image.toString() == "1"
+                  ? Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}"),
+                            fit: BoxFit.cover),
+                      ),
+                      height: 500,
+                    )
+                  : Stack(children: <Widget>[
+                      Container(
+                        child: VideoPlayer(controller),
+                        height: 500,
+                      ),
+                      Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: mPrimaryColor.withOpacity(0.5),
+                              shape: BoxShape.circle),
+                          child: InkWell(
+                            child: Icon(
+                              feedController.isPlaying.value
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                            ),
+                            onTap: () {
+                              onPlay();
+                            },
+                          ),
+                        ),
+                      ),
+                    ])
+                    ,
             ),
             Container(
               height: 500,
@@ -269,35 +310,18 @@ class _WPostState extends State<WPost> {
               children: [
                 GestureDetector(
                     onTap: () {
-                      feedController.LikePost(widget.post.posts.post_id);
                       setState(() {
-                        if (feedController.isdisActive.value && !feedController.isActive.value) {
-                         feedController.isActive.value = !feedController.isActive.value;
-                          feedController.isdisActive.value = !feedController.isdisActive.value;
-                        } else if (!feedController.isdisActive.value &&  feedController.isActive.value) {
-                          feedController.isActive.value = ! feedController.isActive.value;
-                        } else if (!feedController.isdisActive.value && !feedController.isActive.value) {
-                          feedController.isActive.value= ! feedController.isActive.value;
+                        if ( !feedController.isActive.value) {
+                            feedController.LikePost(widget.post.posts.post_id);
+                          feedController.isActive.value = !feedController.isActive.value;
+                        } else if (feedController.isActive.value) {
+                          feedController.DisLikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =!feedController.isActive.value ;
                         }
                       });
                     },
                     child: activeLikeButton(feedController.isActive.value)),
-                GestureDetector(
-                    onTap: () {
-                      feedController.DisLikePost(widget.post.posts.post_id);
-
-                      setState(() {
-                        if ( feedController.isActive.value && ! feedController.isdisActive.value) {
-                           feedController.isActive.value = ! feedController.isActive.value;
-                          feedController.isdisActive.value = ! feedController.isdisActive.value;
-                        } else if ( feedController.isdisActive.value && ! feedController.isActive.value) {
-                           feedController.isdisActive.value = ! feedController.isdisActive.value;
-                        } else if (! feedController.isdisActive.value && ! feedController.isActive.value) {
-                          feedController.isdisActive.value = ! feedController.isdisActive.value;
-                        }
-                      });
-                    },
-                    child: activedisLikeButton(feedController.isdisActive.value)),
+              
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context);

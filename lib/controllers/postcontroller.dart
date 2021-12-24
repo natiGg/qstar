@@ -200,7 +200,11 @@ class PostController extends GetxController {
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
+<<<<<<< HEAD
               "is_video": isVid.value
+=======
+              "is_image":0
+>>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
             };
           }
           if (imagesList.isNotEmpty) {
@@ -209,7 +213,11 @@ class PostController extends GetxController {
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
+<<<<<<< HEAD
               "is_video": isVid.value
+=======
+              "is_image":1
+>>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
             };
           }
 

@@ -45,6 +45,19 @@ class RemoteServices {
       throw Exception('Failed to like');
     }
   }
+  static Future<bool> dislikePost(var id) async{
+  
+    res = await Network().getdeleteData("postlike/${id}");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200){
+      print("disliked");
+      return true;
+    }
+    else{
+      throw Exception('Failed to like');
+    }
+  }
 
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
@@ -441,9 +454,10 @@ class RemoteServices {
   }
 
   static Future<String> createPost(var image, var data) async {
+    print(data);
     // create multipart request
     res = await Network().postFile("post", image, data);
-
+    print(res.statusCode.toString());
     if (res.statusCode == 200) {
       res.stream.transform(utf8.decoder).listen((value) {});
 
