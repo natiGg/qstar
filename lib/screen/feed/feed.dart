@@ -14,28 +14,16 @@ import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
-<<<<<<< HEAD
 
-=======
-import 'package:qstar/remote_services/service.dart';
-import 'package:qstar/screen/comment/comment_widget.dart';
->>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
-<<<<<<< HEAD
 
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/post.dart';
 
-=======
-import 'package:qstar/screen/feed/model/feed.dart';
-import 'package:qstar/screen/feed/model/user.dart';
-import 'package:qstar/screen/feed/widgets/post.dart';
-import 'package:qstar/screen/feed/widgets/suggested.dart';
->>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
 import 'package:qstar/screen/post/main.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 import 'package:get/get.dart';

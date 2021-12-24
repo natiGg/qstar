@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:video_player/video_player.dart';
 
-
 class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
@@ -20,15 +19,8 @@ class FeedController extends GetxController with StateMixin {
   var liked = false.obs;
   var isActive = false.obs;
   var isdisActive = false.obs;
-<<<<<<< HEAD
   var uid;
-=======
-    var uid;
-      var isPlaying = false.obs;
-
-
-
->>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
+  var isPlaying = false.obs;
 
   @override
   void onInit() async {
@@ -68,43 +60,24 @@ class FeedController extends GetxController with StateMixin {
       change(null, status: RxStatus.error("Something went wrong"));
     }
   }
-<<<<<<< HEAD
 
-  void LikePost(var postId) async {
-    try {
-      liked.value = await RemoteServices.likePost(postId);
-    } on Exception {
-=======
   void LikePost(var post_id) async {
-    try{
+    try {
       print("inside like");
-      liked.value=await RemoteServices.likePost(post_id);
-      print("about to like"+liked.value.toString());
-   
-    }
-     on Exception {
->>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
+      liked.value = await RemoteServices.likePost(post_id);
+      print("about to like" + liked.value.toString());
+    } on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }
   }
-<<<<<<< HEAD
 
-  void DisLikePost(var postId) async {
+  void DisLikePost(var post_id) async {
     try {
-      liked.value = await RemoteServices.likePost(postId);
-    } on Exception {
-      change(null, status: RxStatus.error("Can't like post"));
-=======
- void DisLikePost(var post_id) async {
-    try{
       print("dislike");
-      liked.value=await RemoteServices.likePost(post_id);
-      print("about to dislike"+liked.value.toString());
-    }
-     on Exception {
+      liked.value = await RemoteServices.likePost(post_id);
+      print("about to dislike" + liked.value.toString());
+    } on Exception {
       change(null, status: RxStatus.error("Can't dislike post"));
-
->>>>>>> b6a9b74c6b0d54d75d4cee304680edebd845d29a
     }
   }
 
@@ -137,9 +110,5 @@ class FeedController extends GetxController with StateMixin {
     } on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
     }
-  } 
-  
-
+  }
 }
-
- 
