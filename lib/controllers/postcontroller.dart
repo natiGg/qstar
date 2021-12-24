@@ -200,7 +200,7 @@ class PostController extends GetxController {
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
-              "is_video":isVid.value
+              "is_image":0
             };
           }
           if(imagesList.isNotEmpty){
@@ -209,7 +209,7 @@ class PostController extends GetxController {
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
-              "is_video":isVid.value
+              "is_image":1
             };
           }
           

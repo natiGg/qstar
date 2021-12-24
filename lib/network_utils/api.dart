@@ -58,6 +58,8 @@ class Network {
     request.fields["caption"] = data["caption"].toString();
     request.fields["post_type"] = data["post_type"].toString();
     request.fields["tags"] = data["tags"].toString();
+    request.fields["is_image"] = data["is_image"].toString();
+
 
     for (var file in files) {
       // ignore: deprecated_member_use

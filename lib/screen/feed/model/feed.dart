@@ -68,6 +68,7 @@ class Posts {
   CommentPreview comment_preview;
   List<User> post_tags;
   User profile;
+  String is_image;
   Posts(
       {required this.post_id,
       required this.date,
@@ -78,7 +79,9 @@ class Posts {
       required this.like_preview,
       required this.comment_preview,
       required this.post_tags,
-      required this.profile});
+      required this.profile,
+      required this.is_image
+      });
   factory Posts.fromJson(Map<String, dynamic> json) {
     return Posts(
         post_id: json["post_id"] as int,
@@ -91,7 +94,8 @@ class Posts {
         post_tags: (json["post_tags"] as List)
             .map((tags) => User.fromJson(tags))
             .toList(),
-        profile: User.fromJson(json["profile"]));
+        profile: User.fromJson(json["profile"]),
+        is_image: json["is_image"].toString());
   }
 }
 

@@ -7,6 +7,8 @@ import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:video_player/video_player.dart';
+
 
 class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
@@ -17,6 +19,9 @@ class FeedController extends GetxController with StateMixin {
   var isActive = false.obs;
   var isdisActive = false.obs;
     var uid;
+      var isPlaying = false.obs;
+
+
 
 
   @override
@@ -58,27 +63,28 @@ class FeedController extends GetxController with StateMixin {
        on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
     }
-
   }
   void LikePost(var post_id) async {
     try{
       print("inside like");
       liked.value=await RemoteServices.likePost(post_id);
       print("about to like"+liked.value.toString());
+   
     }
      on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }
 
   }
-    void DisLikePost(var post_id) async {
+ void DisLikePost(var post_id) async {
     try{
-      print("inside like");
+      print("dislike");
       liked.value=await RemoteServices.likePost(post_id);
-      print("about to like"+liked.value.toString());
+      print("about to dislike"+liked.value.toString());
     }
      on Exception {
-      change(null, status: RxStatus.error("Can't like post"));
+      change(null, status: RxStatus.error("Can't dislike post"));
+
     }
 
   }
@@ -112,5 +118,9 @@ class FeedController extends GetxController with StateMixin {
     } on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
     }
-  }
+  } 
+  
+
 }
+
+ 
