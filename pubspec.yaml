@@ -81,6 +81,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   need_resume: ^1.0.6
   url_launcher: ^6.0.17
+ 
+  location: ^4.3.0
   
 
 

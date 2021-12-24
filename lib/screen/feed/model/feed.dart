@@ -6,9 +6,7 @@ class Feeds {
   int id;
   Posts posts;
   Dimensions dimension;
-  // ignore: non_constant_identifier_names
   String display_url;
-  // ignore: non_constant_identifier_names
   bool is_video;
   String tracking_token;
   bool comments_disabled;
@@ -31,6 +29,7 @@ class Feeds {
       required this.viewer_has_saved,
       required this.viewer_in_photo_of_you,
       required this.viewer_can_reshare});
+
   factory Feeds.fromJson(Map<String, dynamic> json) {
     return Feeds(
         id: json["id"],
@@ -72,7 +71,6 @@ class Posts {
       {required this.post_id,
       required this.date,
       required this.caption,
-      // ignore: non_constant_identifier_names
       required this.file_url,
       required this.post_files,
       required this.like_preview,

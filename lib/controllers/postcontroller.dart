@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, duplicate_ignore
+// ignore_for_file: non_constant_identifier_names, duplicate_ignore, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 
@@ -44,13 +44,13 @@ class PostController extends GetxController {
   var suggestions, location;
   var isCam = false.obs;
   var searched = <User>[].obs;
-  var searchedLoc = <Location>[].obs;
+  var searchedLoc = <Locations>[].obs;
   var isSelected = false.obs;
   var selectedUsers = [].obs;
   var imagefile = <File>[].obs;
   var tagged = [].obs;
   var taggedName = [].obs;
-  var isVid=false.obs;
+  var isVid = false.obs;
   var hashTags = [""].obs;
   late VideoPlayerController controller;
   var isPlaying = false.obs;
@@ -71,7 +71,7 @@ class PostController extends GetxController {
     fetchallLocation();
     searchController = RichTextController(
       patternMatchMap: {
-        RegExp(r"\B@[a-zA-Z0-9]+\b"): TextStyle(
+        RegExp(r"\B@[a-zA-Z0-9]+\b"): const TextStyle(
             color: mPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
       },
       onMatch: (List<String> matches) {
@@ -193,26 +193,26 @@ class PostController extends GetxController {
       if (isValid) {
         if (imagesList.isNotEmpty || videosList.isNotEmpty) {
           var data;
-          if(videosList.isNotEmpty){
-            isVid.value=true;
-              data = {
+          if (videosList.isNotEmpty) {
+            isVid.value = true;
+            data = {
               "location": at_loca.value.toString(),
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
-              "is_video":isVid.value
+              "is_video": isVid.value
             };
           }
-          if(imagesList.isNotEmpty){
-              data = {
+          if (imagesList.isNotEmpty) {
+            data = {
               "location": at_loca.value.toString(),
               "caption": captionController.text,
               "post_type": post_type,
               "tags": tagged.join(","),
-              "is_video":isVid.value
+              "is_video": isVid.value
             };
           }
-          
+
           isPosting(true);
           if (imagesList.isNotEmpty) {
             posted = await RemoteServices.createPost(imagesList, data);

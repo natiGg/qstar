@@ -295,12 +295,12 @@ class PlacePost {
   }
 }
 
-class Location {
+class Locations {
   String posts_num;
   String location;
-  Location({required this.posts_num, required this.location});
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
+  Locations({required this.posts_num, required this.location});
+  factory Locations.fromJson(Map<String, dynamic> json) {
+    return Locations(
         posts_num: json["number_of_posts"], location: json["location"]);
   }
 }

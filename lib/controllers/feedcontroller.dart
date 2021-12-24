@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 
@@ -12,12 +14,11 @@ class FeedController extends GetxController with StateMixin {
   var perfectMatches = <User>[].obs;
   var refreshedMatches = <User>[].obs;
   var isRefreshing = false.obs;
-  var feed=<Feeds>[].obs;
-  var liked=false.obs;
+  var feed = <Feeds>[].obs;
+  var liked = false.obs;
   var isActive = false.obs;
   var isdisActive = false.obs;
-    var uid;
-
+  var uid;
 
   @override
   void onInit() async {
@@ -35,52 +36,43 @@ class FeedController extends GetxController with StateMixin {
     fetchPerfectMatches();
   }
 
-  void fetchFeed() async{
-    try{
-          feed.value=await RemoteServices.fetchFeed();
+  void fetchFeed() async {
+    try {
+      feed.value = await RemoteServices.fetchFeed();
 
-          if(feed.isEmpty){
-            onRefreshFeed();
-          }
-    }
-    on Exception {
-      change(null, status: RxStatus.error("Something went wrong"));
-    }
-  }
-  void onRefreshFeed() async{
-      try{
-
-          feed.value=await RemoteServices.fetchFeed();
-          if(feed.isEmpty){
-            feed.value=await RemoteServices.refreshFeed();
-          }
+      if (feed.isEmpty) {
+        onRefreshFeed();
       }
-       on Exception {
+    } on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
     }
-
   }
-  void LikePost(var post_id) async {
-    try{
-      print("inside like");
-      liked.value=await RemoteServices.likePost(post_id);
-      print("about to like"+liked.value.toString());
+
+  void onRefreshFeed() async {
+    try {
+      feed.value = await RemoteServices.fetchFeed();
+      if (feed.isEmpty) {
+        feed.value = await RemoteServices.refreshFeed();
+      }
+    } on Exception {
+      change(null, status: RxStatus.error("Something went wrong"));
     }
-     on Exception {
+  }
+
+  void LikePost(var postId) async {
+    try {
+      liked.value = await RemoteServices.likePost(postId);
+    } on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }
-
   }
-    void DisLikePost(var post_id) async {
-    try{
-      print("inside like");
-      liked.value=await RemoteServices.likePost(post_id);
-      print("about to like"+liked.value.toString());
-    }
-     on Exception {
+
+  void DisLikePost(var postId) async {
+    try {
+      liked.value = await RemoteServices.likePost(postId);
+    } on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }
-
   }
 
   void fetchPerfectMatches() async {

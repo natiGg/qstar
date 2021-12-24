@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
+import 'package:need_resume/need_resume.dart';
 import 'package:qstar/screen/Chat/nearby.dart';
 import 'package:qstar/screen/Chat/online.dart';
 import 'package:qstar/screen/Chat/match.dart';
@@ -19,7 +19,28 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends ResumableState<HomeScreen>
+    with TickerProviderStateMixin {
+  // void onReady() {
+  //   // Implement your code inside here
+
+  //   print('HomeScreen is ready!');
+  // }
+
+  // @override
+  // void onResume() {
+  //   // Implement your code inside here
+
+  //   print('HomeScreen is resumed!');
+  // }
+
+  // @override
+  // void onPause() {
+  //   // Implement your code inside here
+
+  //   print('HomeScreen is paused!');
+  // }
+
   TabController? tabController;
   int currentTabIndex = 0;
   String searchQuery = "Search query";
