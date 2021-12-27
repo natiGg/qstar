@@ -65,7 +65,7 @@ class Posts {
   List<String> post_files;
   LikePreview like_preview;
   CommentPreview comment_preview;
-  List<User> post_tags;
+  List<Tags> post_tags;
   User profile;
   String is_image;
   Posts(
@@ -90,7 +90,7 @@ class Posts {
         like_preview: LikePreview.fromJson(json["like_preview"]),
         comment_preview: CommentPreview.fromJson(json["comment_preview"]),
         post_tags: (json["post_tags"] as List)
-            .map((tags) => User.fromJson(tags))
+            .map((tags) => Tags.fromJson(tags))
             .toList(),
         profile: User.fromJson(json["profile"]),
         is_image: json["is_image"].toString());
@@ -114,5 +114,22 @@ class CommentPreview {
   factory CommentPreview.fromJson(Map<String, dynamic> json) {
     return CommentPreview(
         count: json["count"], previews: json["previews"].cast<String>());
+  }
+}
+
+class Tags {
+  int id;
+  User profile;
+
+  Tags({
+    required this.id,
+    required this.profile
+  });
+
+  factory Tags.fromJson(Map<String,dynamic> json){
+    print(json["profile"]);
+    return Tags(
+      id: json['id'], 
+      profile: User.fromJson(json["profile"][0]));
   }
 }
