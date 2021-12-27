@@ -344,3 +344,28 @@ class Getmessage {
     );
   }
 }
+
+class RecentChat {
+  String id;
+  String username;
+  String name;
+  User profile;
+  Getmessage last_message;
+
+  RecentChat(
+      {required this.id,
+      required this.username,
+      required this.name,
+      required this.profile,
+      required this.last_message});
+
+  factory RecentChat.fromJson(Map<String, dynamic> json) {
+    return RecentChat(
+      id: json["id"],
+      username: json["username"],
+      name: json["name"],
+      profile: User.fromJson(json["profile"]),
+      last_message: Getmessage.fromJson(json["last_message"]),
+    );
+  }
+}

@@ -45,16 +45,14 @@ class RemoteServices {
       throw Exception('Failed to like');
     }
   }
-  static Future<bool> dislikePost(var id) async{
-  
-    res = await Network().getdeleteData("postlike/${id}");
-    var body = json.decode(res.body);
 
-    if (res.statusCode == 200){
+  static Future<bool> dislikePost(var id) async {
+    res = await Network().getdeleteData("postlike/${id}");
+
+    if (res.statusCode == 200) {
       print("disliked");
       return true;
-    }
-    else{
+    } else {
       throw Exception('Failed to like');
     }
   }
@@ -566,6 +564,22 @@ class RemoteServices {
       // return User.fromJson(jsonDecode(body["data"]));
     } else {
       throw Exception('Failed to Load Users');
+    }
+  }
+
+  static Future<List<RecentChat>> recentchat() async {
+    res = await Network().getData("recentConversation");
+    var body = json.decode(res.body);
+
+    print(body);
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => RecentChat.fromJson(e))
+          .toList()
+          .cast<RecentChat>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
     }
   }
 }

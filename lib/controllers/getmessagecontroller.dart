@@ -7,7 +7,6 @@ class GetMessageController extends GetxController {
   var list = <Getmessage>[].obs;
   var isfetched = false.obs;
   var sent = false.obs;
-  FeedController feedController = Get.find();
 
   void fetchmessage(id) async {
     list.value = await RemoteServices.getmessage(id.toString());

@@ -148,15 +148,6 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                                       transitionDuration: Duration.zero,
                                     ),
                                   );
-
-                                  Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder:
-                                            (context, animation1, animation2) =>
-                                                ChatScreen(user: widget.user),
-                                        transitionDuration: Duration.zero,
-                                      ));
                                 },
                                 child: message(
                                   primaryColorDark: _primaryColorDark,

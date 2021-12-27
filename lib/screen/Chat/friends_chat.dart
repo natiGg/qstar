@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:qstar/controllers/editprofilecontroller.dart';
+
+import 'package:qstar/controllers/recentchatcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'chat_screen.dart';
@@ -16,9 +17,15 @@ class FriendsChat extends StatefulWidget {
   _FollowersState createState() => _FollowersState();
 }
 
-EditprofileController editprofileController = Get.find();
+RecenetChatController getMessageController = Get.put(RecenetChatController());
 
 class _FollowersState extends State<FriendsChat> {
+  @override
+  void initState() {
+    getMessageController.fetch();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -39,10 +46,8 @@ class _FollowersState extends State<FriendsChat> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 100.0,
                       child: FutureBuilder(
-                          future: RemoteServices.fetchallFollowing(
-                              editprofileController.uid),
+                          future: RemoteServices.recentchat(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasError) {
@@ -51,76 +56,38 @@ class _FollowersState extends State<FriendsChat> {
                               );
                             }
                             if (snapshot.hasData) {
-                              return ListView.builder(
-                                physics: const ScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                      onTap: () => {
-                                            Navigator.push(
-                                              context,
-                                              PageRouteBuilder(
-                                                pageBuilder: (context,
-                                                        animation1,
-                                                        animation2) =>
-                                                    ChatScreen(
-                                                        user: snapshot
-                                                            .data[index]),
-                                                transitionDuration:
-                                                    Duration.zero,
-                                              ),
-                                            ),
-                                          },
+                              return Expanded(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1,
+                                                    animation2) =>
+                                                ChatScreen(
+                                                    user: snapshot.data[index]),
+                                            transitionDuration: Duration.zero,
+                                          ),
+                                        );
+                                      },
                                       child: FollowedList(
-                                          user: snapshot.data[index]));
-                                },
-                                itemCount: snapshot.data.length,
+                                          user: snapshot.data[index]),
+                                    );
+                                  },
+                                  itemCount: snapshot.data.length,
+                                ),
                               );
                             } else {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
                           }),
-                    ),
-                    Expanded(
-                      child: FutureBuilder(
-                          future: RemoteServices.fetchallFollower(
-                              editprofileController.uid),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasError) {
-                              return Center(
-                                child: Text(snapshot.error.toString()),
-                              );
-                            }
-                            if (snapshot.hasData) {
-                              return ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation1,
-                                                  animation2) =>
-                                              ChatScreen(
-                                                  user: snapshot.data[index]),
-                                          transitionDuration: Duration.zero,
-                                        ),
-                                      );
-                                    },
-                                    child: FollowedList(
-                                        user: snapshot.data[index]),
-                                  );
-                                },
-                                itemCount: snapshot.data.length,
-                              );
-                            } else {
-                              return Container();
-                            }
-                          }),
-                    ),
+                    )
                   ],
                 )),
           ),
@@ -130,7 +97,7 @@ class _FollowersState extends State<FriendsChat> {
 }
 
 class FollowedList extends StatelessWidget {
-  final User? user;
+  final RecentChat? user;
   const FollowedList({Key? key, required this.user}) : super(key: key);
 
   @override
@@ -167,7 +134,7 @@ class FollowedList extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.profile.id}"))),
             ),
             Positioned(
                 bottom: 10,
@@ -197,7 +164,7 @@ class FollowedList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                user!.name,
+                user!.profile.name,
                 style: const TextStyle(
                   color: mPrimaryColor,
                   fontSize: 17.0,
@@ -216,7 +183,7 @@ class FollowedList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: Text(
-                  "hey there",
+                  user!.last_message.content,
                   // ignore: prefer_const_constructors
                   style: TextStyle(
                     color: Colors.blueGrey,
