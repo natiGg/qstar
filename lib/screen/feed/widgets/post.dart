@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +46,17 @@ import 'package:qstar/screen/feed/bottomsheet/app_context.dart';
 import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum Share {
+  facebook,
+  twitter,
+  whatsapp,
+  whatsapp_personal,
+  whatsapp_business,
+  share_system,
+  share_instagram,
+  share_telegram
+}
 
 class WPost extends StatefulWidget {
   final Feeds post;
@@ -338,7 +349,7 @@ class _WPostState extends State<WPost> {
                       showSheetcomment(context);
                     },
                     child: Comment()),
-                Share(),
+                Share(widget.post.posts.post_id, widget.post.posts.caption),
                 const Spacer(),
                 const Spacer(),
                 IconButton(
@@ -431,7 +442,7 @@ class _WPostState extends State<WPost> {
     );
   }
 
-  Widget Share() {
+  Widget Share(int id, String cap) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Center(
@@ -441,7 +452,7 @@ class _WPostState extends State<WPost> {
             IconButton(
               icon: const Icon(Icons.share, color: Colors.grey, size: 25),
               onPressed: () {
-                showSheet(context);
+                showSheet(context, id, cap);
               },
             ),
           ],
@@ -451,7 +462,7 @@ class _WPostState extends State<WPost> {
   }
 }
 
-void showSheet(context) {
+void showSheet(context, id, cap) {
   showModalBottomSheet(
       context: context,
       builder: (BuildContext bc) {
@@ -584,14 +595,25 @@ void showSheet(context) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.facebook,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              print("object");
+                              // FlutterShareMe().shareToFacebook(
+                              //     url:
+                              //         "https://qstar.mindethiopia.com/api/getPostPicture/${id}",
+                              //     msg: "Babilok");
+
+                              onButtonTap(Share.twitter, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.facebook,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
                           ),
-                          Text("More Apps",
+                          Text("Facebook",
                               style: TextStyle(
                                 color: Colors.grey[400],
                               ))
@@ -762,6 +784,43 @@ void showSheet(context) {
           ),
         );
       });
+}
+
+Future<void> onButtonTap(Share share, id, cap) async {
+  String msg = cap;
+  String url = 'https://qstar.mindethiopia.com/api/getPostPicture/${id}';
+
+  String? response;
+  final FlutterShareMe flutterShareMe = FlutterShareMe();
+  switch (share) {
+    case Share.facebook:
+      response = await flutterShareMe.shareToFacebook(url: url, msg: msg);
+      break;
+    case Share.twitter:
+      response = await flutterShareMe.shareToTwitter(url: url, msg: msg);
+      break;
+    case Share.whatsapp:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+
+      break;
+    case Share.whatsapp_business:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+      break;
+    case Share.share_system:
+      response = await flutterShareMe.shareToSystem(msg: msg);
+      break;
+    case Share.whatsapp_personal:
+      response = await flutterShareMe.shareWhatsAppPersonalMessage(
+          message: msg, phoneNumber: 'phone-number-with-country-code');
+      break;
+    case Share.share_instagram:
+      // response = await flutterShareMe.shareToInstagram(msg: msg);
+      break;
+    case Share.share_telegram:
+      response = await flutterShareMe.shareToTelegram(msg: msg);
+      break;
+  }
+  debugPrint(response);
 }
 
 void showSheetcomment(context) {

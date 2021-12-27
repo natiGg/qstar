@@ -83,6 +83,7 @@ dependencies:
   url_launcher: ^6.0.17
  
   location: ^4.3.0
+  flutter_share_me: ^1.2.0
   
 
 
