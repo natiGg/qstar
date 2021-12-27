@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -236,6 +235,28 @@ class _WPostState extends State<WPost> {
               const SizedBox(
                 height: 10,
               ),
+              widget.post.posts.post_tags.isNotEmpty? Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                      children: List.generate(
+                          widget.post.posts.post_tags.length, (index) {
+                    return Align(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          widget.post.posts.post_tags[index].profile.name + " ",
+                          style: const TextStyle(
+                              color: mPrimaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    );
+                  })),
+                ),
+              ):Container()
             ],
           ),
           Stack(children: <Widget>[
@@ -245,11 +266,12 @@ class _WPostState extends State<WPost> {
             GestureDetector(
               onDoubleTap: () {
                 feedController.LikePost(widget.post.posts.post_id);
+
                 setState(() {
                   if (!feedController.isActive.value) {
-                        feedController.isActive.value =
+                    feedController.isActive.value =
                         !feedController.isActive.value;
-                  } 
+                  }
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
@@ -264,45 +286,81 @@ class _WPostState extends State<WPost> {
                       ),
                       height: 500,
                     )
-                  : Stack(children: <Widget>[
-                      Container(
-                        child: VideoPlayer(controller),
-                        height: 500,
-                      ),
-                      Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: mPrimaryColor.withOpacity(0.5),
-                              shape: BoxShape.circle),
-                          child: InkWell(
-                            child: Icon(
-                              feedController.isPlaying.value
-                                  ? Icons.pause
-                                  : Icons.play_arrow,
-                            ),
-                            onTap: () {
-                              onPlay();
-                            },
-                          ),
+                  :
+                    Stack(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: controller.value.aspectRatio,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.bottomRight,
+                                              colors: [
+                                            Colors.black.withOpacity(.9),
+                                            Colors.black.withOpacity(.1),
+                                          ])),
+                                      child: Stack(
+                                        children:[ VideoPlayer(
+                                          controller
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                           Align(
+                                alignment: Alignment.center,
+                                child: IconButton(
+                                  icon: Icon(
+                                    feedController.isPlaying.value
+                                        ? Icons.pause
+                                        : Icons.play_arrow_rounded,
+                                    color: mPrimaryColor,
+                                    size: 40.0,
+                                  ),
+                                  onPressed: () {
+                                    onPlay();
+                                  },
+                                )),
+
+                                          ],
+                                        )
+                                        ]
+                                      ),
+                                    ),
+                                  ),
+                               
+                                ],
+                              )
+            ),
+            widget.post.posts.is_image.toString() == "1"
+                ? Container(
+                    height: 500,
+                    child: Center(
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: FlareActor(
+                          'assets/images/instagram_like.flr',
+                          controller: flareControls,
+                          animation: 'idle',
                         ),
                       ),
-                    ])
-                    ,
-            ),
-            Container(
-              height: 500,
-              child: Center(
-                child: SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: FlareActor(
-                    'assets/images/instagram_like.flr',
-                    controller: flareControls,
-                    animation: 'idle',
+                    ),
+                  )
+                : AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: Center(
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: FlareActor(
+                          'assets/images/instagram_like.flr',
+                          controller: flareControls,
+                          animation: 'idle',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
           ]),
           Container(
             padding: const EdgeInsets.all(5.0),
@@ -311,17 +369,18 @@ class _WPostState extends State<WPost> {
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        if ( !feedController.isActive.value) {
-                            feedController.LikePost(widget.post.posts.post_id);
-                          feedController.isActive.value = !feedController.isActive.value;
+                        if (!feedController.isActive.value) {
+                          feedController.LikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
                         } else if (feedController.isActive.value) {
                           feedController.DisLikePost(widget.post.posts.post_id);
-                          feedController.isActive.value =!feedController.isActive.value ;
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
                         }
                       });
                     },
                     child: activeLikeButton(feedController.isActive.value)),
-              
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context);
