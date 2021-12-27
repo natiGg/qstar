@@ -10,7 +10,7 @@ import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/constant.dart';
 
 class ChatScreen extends StatefulWidget {
-  final RecentChat? user;
+  final User? user;
 
   const ChatScreen({required this.user});
 
@@ -28,7 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
     message = TextEditingController();
 
     super.initState();
-    getmessageController.fetchmessage(widget.user!.profile.id);
+    getmessageController.fetchmessage(widget.user!.id);
   }
 
   _buildMessageComposer() {
@@ -83,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
           GestureDetector(
             onTap: () {
               getmessageController.sendMessage(
-                  message.text, messagetype, widget.user!.profile.id);
+                  message.text, messagetype, widget.user!.id);
             },
             child: const CircleAvatar(
               backgroundColor: mPrimaryColor,
@@ -111,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
     await Future.delayed(const Duration(milliseconds: 1000));
 
     setState(() {
-      getmessageController.fetchmessage(widget.user!.profile.id);
+      getmessageController.fetchmessage(widget.user!.id);
     });
     _refreshController.refreshCompleted();
   }
@@ -172,7 +172,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
-                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.profile.id}"))),
+                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"))),
                         ),
                         Positioned(
                             bottom: 10,
@@ -207,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.user!.profile.name,
+                          widget.user!.name,
                           style: chatSenderName,
                         ),
                         Text(
@@ -269,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             CircleAvatar(
                                               radius: 15,
                                               backgroundImage: NetworkImage(
-                                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.profile.id}"),
+                                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"),
                                             ),
                                           const SizedBox(
                                             width: 10,
@@ -383,7 +383,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(
-                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.profile.id}"))),
+                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"))),
                         ),
                         Positioned(
                             bottom: 10,
@@ -418,7 +418,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.user!.profile.name,
+                          widget.user!.name,
                           style: chatSenderName,
                         ),
                         Text(
@@ -482,7 +482,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             CircleAvatar(
                                               radius: 15,
                                               backgroundImage: NetworkImage(
-                                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.profile.id}"),
+                                                  "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"),
                                             ),
                                           const SizedBox(
                                             width: 10,

@@ -69,13 +69,16 @@ class _FollowersState extends State<FriendsChat> {
                                             pageBuilder: (context, animation1,
                                                     animation2) =>
                                                 ChatScreen(
-                                                    user: snapshot.data[index]),
+                                                    user: snapshot
+                                                        .data[index].profile),
                                             transitionDuration: Duration.zero,
                                           ),
                                         );
                                       },
                                       child: FollowedList(
-                                          user: snapshot.data[index]),
+                                        user: snapshot.data[index].profile,
+                                        last: snapshot.data[index],
+                                      ),
                                     );
                                   },
                                   itemCount: snapshot.data.length,
@@ -97,8 +100,10 @@ class _FollowersState extends State<FriendsChat> {
 }
 
 class FollowedList extends StatelessWidget {
-  final RecentChat? user;
-  const FollowedList({Key? key, required this.user}) : super(key: key);
+  final User? user;
+  final RecentChat? last;
+  const FollowedList({Key? key, required this.user, required this.last})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +139,7 @@ class FollowedList extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.profile.id}"))),
+                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
             ),
             Positioned(
                 bottom: 10,
@@ -164,7 +169,7 @@ class FollowedList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                user!.profile.name,
+                user!.name,
                 style: const TextStyle(
                   color: mPrimaryColor,
                   fontSize: 17.0,
@@ -183,7 +188,7 @@ class FollowedList extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: Text(
-                  user!.last_message.content,
+                  last!.last_message.content,
                   // ignore: prefer_const_constructors
                   style: TextStyle(
                     color: Colors.blueGrey,
