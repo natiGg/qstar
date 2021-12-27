@@ -509,7 +509,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   bottomRight: Radius.circular(
                                                       isMe ? 0 : 12),
                                                 )),
-                                            child: Text("NO Message"),
+                                            child: const Text("NO Message"),
                                           ),
                                         ],
                                       ),

@@ -46,6 +46,7 @@ class PerfectMatchController extends GetxController with StateMixin {
   var macthgender;
   // ignore: prefer_typing_uninitialized_variables
   var inforesponse;
+  // ignore: prefer_typing_uninitialized_variables
   var checkpf, fetched;
   RangeValues currentRangeValues = const RangeValues(18, 65);
   // ignore: prefer_typing_uninitialized_variables
@@ -97,7 +98,7 @@ class PerfectMatchController extends GetxController with StateMixin {
         Navigator.of(Get.context!).pop();
       }
       change(fetched, status: RxStatus.success());
-    } on Exception catch (e) {
+    } on Exception {
       change(null, status: RxStatus.error("Something went wrong"));
 
       // TODO
@@ -173,7 +174,6 @@ class PerfectMatchController extends GetxController with StateMixin {
     };
     inforesponse = await RemoteServices.updatePersonalInfo(data);
     if (inforesponse == "200") {
-      print(inforesponse.toString());
       closeDialog(true, '');
     } else {
       closeDialog(false, inforesponse);

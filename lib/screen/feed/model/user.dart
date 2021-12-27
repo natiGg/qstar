@@ -295,12 +295,12 @@ class PlacePost {
   }
 }
 
-class Location {
+class Locations {
   String posts_num;
   String location;
-  Location({required this.posts_num, required this.location});
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
+  Locations({required this.posts_num, required this.location});
+  factory Locations.fromJson(Map<String, dynamic> json) {
+    return Locations(
         posts_num: json["number_of_posts"], location: json["location"]);
   }
 }
@@ -341,6 +341,31 @@ class Getmessage {
       i_am_sender: json["i_am_sender"],
       message_type: json["message_type"],
       content: json["content"],
+    );
+  }
+}
+
+class RecentChat {
+  String id;
+  String username;
+  String name;
+  User profile;
+  Getmessage last_message;
+
+  RecentChat(
+      {required this.id,
+      required this.username,
+      required this.name,
+      required this.profile,
+      required this.last_message});
+
+  factory RecentChat.fromJson(Map<String, dynamic> json) {
+    return RecentChat(
+      id: json["id"],
+      username: json["username"],
+      name: json["name"],
+      profile: User.fromJson(json["profile"]),
+      last_message: Getmessage.fromJson(json["last_message"]),
     );
   }
 }

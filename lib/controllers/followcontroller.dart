@@ -12,7 +12,7 @@ class Followcontroller extends GetxController {
   RxBool following = false.obs;
   RxBool isChecked = false.obs;
   RxBool isFetching = false.obs;
-  // ignore: non_constant_identifier_names
+//
   var following_list = <User>[].obs;
   var unFollowed, uFollowed;
   FeedController feedController = Get.find();

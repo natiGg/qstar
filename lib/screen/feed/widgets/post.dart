@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/feed/Report/report.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
@@ -173,7 +174,17 @@ class _WPostState extends State<WPost> {
                                         child: Text(e),
                                       ),
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        if (e == "Report...") {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  const ReportScreen(),
+                                              transitionDuration: Duration.zero,
+                                            ),
+                                          );
+                                        }
                                       },
                                     ))
                                 .toList()),
