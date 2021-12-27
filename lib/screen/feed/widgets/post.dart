@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/feed/Report/report.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
@@ -174,7 +175,17 @@ class _WPostState extends State<WPost> {
                                         child: Text(e),
                                       ),
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        if (e == "Report...") {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  const ReportScreen(),
+                                              transitionDuration: Duration.zero,
+                                            ),
+                                          );
+                                        }
                                       },
                                     ))
                                 .toList()),
@@ -247,9 +258,9 @@ class _WPostState extends State<WPost> {
                 feedController.LikePost(widget.post.posts.post_id);
                 setState(() {
                   if (!feedController.isActive.value) {
-                        feedController.isActive.value =
+                    feedController.isActive.value =
                         !feedController.isActive.value;
-                  } 
+                  }
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");
@@ -286,8 +297,7 @@ class _WPostState extends State<WPost> {
                           ),
                         ),
                       ),
-                    ])
-                    ,
+                    ]),
             ),
             Container(
               height: 500,
@@ -311,17 +321,18 @@ class _WPostState extends State<WPost> {
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        if ( !feedController.isActive.value) {
-                            feedController.LikePost(widget.post.posts.post_id);
-                          feedController.isActive.value = !feedController.isActive.value;
+                        if (!feedController.isActive.value) {
+                          feedController.LikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
                         } else if (feedController.isActive.value) {
                           feedController.DisLikePost(widget.post.posts.post_id);
-                          feedController.isActive.value =!feedController.isActive.value ;
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
                         }
                       });
                     },
                     child: activeLikeButton(feedController.isActive.value)),
-              
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context);

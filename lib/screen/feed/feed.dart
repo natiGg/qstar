@@ -104,19 +104,6 @@ class FeedState extends ResumableState<Feed>
     };
   }
 
-  // void onReady() {
-  //   // Implement your code inside here
-  //   print('HomeScreen is ready!');
-  //   _cheakperfect();
-  // }
-
-  // @override
-  // void onResume() {
-  //   // Implement your code inside here
-  //   print('HomeScreen is resumed!');
-  //   _cheakperfect();
-  // }
-
   void _cheakperfect() async {
     if (await perfectMatchController.checkmp() == false) {
       alreadySaved = true;
