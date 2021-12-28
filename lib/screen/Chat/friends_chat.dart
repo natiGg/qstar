@@ -17,15 +17,7 @@ class FriendsChat extends StatefulWidget {
   _FollowersState createState() => _FollowersState();
 }
 
-RecenetChatController getMessageController = Get.put(RecenetChatController());
-
 class _FollowersState extends State<FriendsChat> {
-  @override
-  void initState() {
-    getMessageController.fetch();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -45,7 +37,8 @@ class _FollowersState extends State<FriendsChat> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(
+                    Expanded(
+                        child: SizedBox(
                       child: FutureBuilder(
                           future: RemoteServices.recentchat(),
                           builder:
@@ -90,7 +83,7 @@ class _FollowersState extends State<FriendsChat> {
                               );
                             }
                           }),
-                    )
+                    )),
                   ],
                 )),
           ),
