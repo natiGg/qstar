@@ -258,32 +258,6 @@ class _WPostState extends State<WPost> {
               const SizedBox(
                 height: 10,
               ),
-              widget.post.posts.post_tags.isNotEmpty
-                  ? Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            children: List.generate(
-                                widget.post.posts.post_tags.length, (index) {
-                          return Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Text(
-                                widget.post.posts.post_tags[index].profile
-                                        .name +
-                                    " ",
-                                style: const TextStyle(
-                                    color: mPrimaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          );
-                        })),
-                      ),
-                    )
-                  : Container()
             ],
           ),
           Stack(children: <Widget>[
@@ -291,95 +265,65 @@ class _WPostState extends State<WPost> {
               height: 5,
             ),
             GestureDetector(
-                onDoubleTap: () {
-                  feedController.LikePost(widget.post.posts.post_id);
-
-                  setState(() {
-                    if (!feedController.isActive.value) {
-                      feedController.isActive.value =
-                          !feedController.isActive.value;
-                    }
-                    // _isPlaying ? null : _controller.isActive = true;
-                  });
-                  flareControls.play("like");
-                },
-                child: widget.post.posts.is_image.toString() == "1"
-                    ? Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}"),
-                              fit: BoxFit.cover),
-                        ),
+              onDoubleTap: () {
+                feedController.LikePost(widget.post.posts.post_id);
+                setState(() {
+                  if (!feedController.isActive.value) {
+                    feedController.isActive.value =
+                        !feedController.isActive.value;
+                  }
+                  // _isPlaying ? null : _controller.isActive = true;
+                });
+                flareControls.play("like");
+              },
+              child: widget.post.posts.is_image.toString() == "1"
+                  ? Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}"),
+                            fit: BoxFit.cover),
+                      ),
+                      height: 500,
+                    )
+                  : Stack(children: <Widget>[
+                      Container(
+                        child: VideoPlayer(controller),
                         height: 500,
-                      )
-                    : Stack(
-                        children: [
-                          AspectRatio(
-                            aspectRatio: controller.value.aspectRatio,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomRight,
-                                      colors: [
-                                    Colors.black.withOpacity(.9),
-                                    Colors.black.withOpacity(.1),
-                                  ])),
-                              child: Stack(children: [
-                                VideoPlayer(controller),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            feedController.isPlaying.value
-                                                ? Icons.pause
-                                                : Icons.play_arrow_rounded,
-                                            color: mPrimaryColor,
-                                            size: 40.0,
-                                          ),
-                                          onPressed: () {
-                                            onPlay();
-                                          },
-                                        )),
-                                  ],
-                                )
-                              ]),
+                      ),
+                      Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: mPrimaryColor.withOpacity(0.5),
+                              shape: BoxShape.circle),
+                          child: InkWell(
+                            child: Icon(
+                              feedController.isPlaying.value
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
                             ),
+                            onTap: () {
+                              onPlay();
+                            },
                           ),
-                        ],
-                      )),
-            widget.post.posts.is_image.toString() == "1"
-                ? Container(
-                    height: 500,
-                    child: Center(
-                      child: SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: FlareActor(
-                          'assets/images/instagram_like.flr',
-                          controller: flareControls,
-                          animation: 'idle',
                         ),
                       ),
-                    ),
-                  )
-                : AspectRatio(
-                    aspectRatio: controller.value.aspectRatio,
-                    child: Center(
-                      child: SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: FlareActor(
-                          'assets/images/instagram_like.flr',
-                          controller: flareControls,
-                          animation: 'idle',
-                        ),
-                      ),
-                    ),
+                    ]),
+            ),
+            Container(
+              height: 500,
+              child: Center(
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: FlareActor(
+                    'assets/images/instagram_like.flr',
+                    controller: flareControls,
+                    animation: 'idle',
                   ),
+                ),
+              ),
+            ),
           ]),
           Container(
             padding: const EdgeInsets.all(5.0),
@@ -631,9 +575,14 @@ void showSheet(context, id, cap) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.whatsapp,
-                            color: Colors.green,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.whatsapp, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.whatsapp,
+                              color: Colors.green,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -653,13 +602,7 @@ void showSheet(context, id, cap) {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              print("object");
-                              // FlutterShareMe().shareToFacebook(
-                              //     url:
-                              //         "https://qstar.mindethiopia.com/api/getPostPicture/${id}",
-                              //     msg: "Babilok");
-
-                              onButtonTap(Share.twitter, id, cap);
+                              onButtonTap(Share.facebook, id, cap);
                             },
                             child: const Icon(
                               FontAwesome.facebook,
@@ -682,9 +625,14 @@ void showSheet(context, id, cap) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.instagram,
-                            color: Colors.redAccent,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.share_instagram, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.instagram,
+                              color: Colors.redAccent,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -696,12 +644,20 @@ void showSheet(context, id, cap) {
                         ],
                       )),
                       Container(
+                        width: 18,
+                      ),
+                      Container(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.telegram,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.share_telegram, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.telegram,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -719,94 +675,19 @@ void showSheet(context, id, cap) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitter,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.twitter, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.twitter,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
                           ),
                           Text("twitter",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 26,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google_plus,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("google_plus",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 32,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitch,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("twitch",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 25,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.youtube,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 8,
-                          ),
-                          Text("youtube",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 2,
-                          ),
-                          Text("google",
                               style: TextStyle(
                                 color: Colors.grey[400],
                               ))
@@ -864,6 +745,7 @@ Future<void> onButtonTap(Share share, id, cap) async {
       break;
     case Share.share_system:
       response = await flutterShareMe.shareToSystem(msg: msg);
+
       break;
     case Share.whatsapp_personal:
       response = await flutterShareMe.shareWhatsAppPersonalMessage(
