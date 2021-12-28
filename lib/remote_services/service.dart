@@ -598,4 +598,20 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
+
+  static Future<bool> sendcomment(var comment, var post_id) async {
+    var data = {
+      'comment': comment,
+      'post_id': post_id,
+    };
+    res = await Network().getpassedData(data, "postcomment");
+    body = json.decode(res.body);
+    // ignore: avoid_print
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
 }

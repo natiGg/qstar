@@ -8,6 +8,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
@@ -71,6 +72,9 @@ class WPost extends StatefulWidget {
   State<WPost> createState() => _WPostState();
 }
 
+GetCommenteController getCommenteController = Get.put(GetCommenteController());
+late TextEditingController message;
+
 class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
@@ -92,8 +96,8 @@ class _WPostState extends State<WPost> {
     // TODO: implement initState
     postid = widget.post.posts.post_id;
 
-    print(postid);
-    print("postid");
+    message = TextEditingController();
+
     super.initState();
   }
 
@@ -732,7 +736,7 @@ void showSheet(context, id, cap) {
       });
 }
 
-_buildMessageComposer() {
+_buildMessageComposer(int post_id) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     height: 60,
@@ -762,7 +766,7 @@ _buildMessageComposer() {
                 ),
                 Expanded(
                   child: TextField(
-                    //  controller: message,
+                    controller: message,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Type your Comment ...',
@@ -779,8 +783,8 @@ _buildMessageComposer() {
         ),
         GestureDetector(
           onTap: () {
-            // getmessageController.sendMessage(
-            //     message.text, messagetype, widget.user!.id);
+            getCommenteController.sendcomment(message.text, post_id);
+            message.clear();
           },
           child: const CircleAvatar(
             backgroundColor: mPrimaryColor,
@@ -834,6 +838,8 @@ Future<void> onButtonTap(Share share, id, cap) async {
 }
 
 void showSheetcomment(context, int post_id) {
+  getCommenteController.fetchComment(post_id);
+
   showModalBottomSheet(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -843,125 +849,67 @@ void showSheetcomment(context, int post_id) {
       builder: (context) => Padding(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-            // child: Column(
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: <Widget>[
-            //     // Column(
-            //     //   mainAxisAlignment: MainAxisAlignment.center,
-            //     //   children: const <Widget>[
-            //     //
-            //     //     CommentWidget(),
-            //     //     CommentWidget(),
-            //     //     CommentWidget(),
-            //     //   ],
-            //     // ),
-
-            //     Material(
-            //       type: MaterialType.canvas,
-            //       child: SafeArea(
-            //         child: Container(
-            //           height: kToolbarHeight,
-            //           margin: EdgeInsets.only(
-            //               bottom: MediaQuery.of(context).viewInsets.bottom),
-            //           padding: const EdgeInsets.only(left: 16, right: 8),
-            //           child: Row(
-            //             children: [
-            //               // ignore: prefer_const_constructors
-            //               CircleAvatar(
-            //                 backgroundImage:
-            //                     const AssetImage('assets/images/1.jpg'),
-            //                 radius: 18,
-            //               ),
-            //               // ignore: prefer_const_constructors
-            //               Expanded(
-            //                 // ignore: prefer_const_constructors
-            //                 child: Padding(
-            //                   padding:
-            //                       const EdgeInsets.only(left: 16, right: 8),
-            //                   // ignore: prefer_const_constructors
-            //                   child: TextField(
-            //                     // ignore: prefer_const_constructors
-            //                     decoration: InputDecoration(
-            //                         hintText: 'Comment here',
-            //                         border: InputBorder.none),
-            //                   ),
-            //                 ),
-            //               ),
-            //               InkWell(
-            //                 onTap: () {},
-            //                 child: Container(
-            //                   padding: const EdgeInsets.symmetric(
-            //                       vertical: 8, horizontal: 8),
-            //                   child: Text(
-            //                     'Post',
-            //                     style: Theme.of(context)
-            //                         .primaryTextTheme
-            //                         .bodyText2
-            //                         ?.copyWith(color: Colors.blue),
-            //                   ),
-            //                 ),
-            //               )
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             child: SizedBox(
               height: 400,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: FutureBuilder(
-                        future: RemoteServices.getcomment(post_id),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
-                          }
-                          if (snapshot.hasData) {
-                            print("ok bro");
-                            print(post_id);
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   PageRouteBuilder(
-                                    //     pageBuilder: (context, animation1,
-                                    //             animation2) =>
-                                    //         ChatScreen(
-                                    //             user: snapshot
-                                    //                 .data[index].profile),
-                                    //     transitionDuration: Duration.zero,
-                                    //   ),
-                                    // );
-                                  },
-                                  child: FollowedList(
-                                    user: snapshot.data[index].profile,
-                                    comment: snapshot.data[index],
-                                  ),
-                                );
-                              },
-                              itemCount: snapshot.data.length,
-                            );
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
-                  ),
-                  _buildMessageComposer()
-                ],
-              ),
+              child: Obx(() => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      getCommenteController.list.value.isNotEmpty
+                          ? Expanded(
+                              child: ListView.builder(
+                                  itemCount: getCommenteController.list.length,
+                                  reverse: false,
+                                  itemBuilder: (context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: FollowedList(
+                                        user: getCommenteController
+                                            .list[index].profile,
+                                        comment:
+                                            getCommenteController.list[index],
+                                      ),
+                                    );
+                                  }),
+                              // child: FutureBuilder(
+                              //     future: RemoteServices.getcomment(post_id),
+                              //     builder:
+                              //         (BuildContext context, AsyncSnapshot snapshot) {
+                              //       if (snapshot.hasError) {
+                              //         return Center(
+                              //           child: Text(snapshot.error.toString()),
+                              //         );
+                              //       }
+                              //       if (snapshot.hasData) {
+                              //         print("ok bro");
+                              //         print(post_id);
+                              //         return ListView.builder(
+                              //           shrinkWrap: true,
+                              //           physics: const BouncingScrollPhysics(),
+                              //           itemBuilder: (context, index) {
+                              //             return GestureDetector(
+                              //               onTap: () {},
+                              //               child: FollowedList(
+                              //                 user: snapshot.data[index].profile,
+                              //                 comment: snapshot.data[index],
+                              //               ),
+                              //             );
+                              //           },
+                              //           itemCount: snapshot.data.length,
+                              //         );
+                              //       } else {
+                              //         return const Center(
+                              //           child: CircularProgressIndicator(),
+                              //         );
+                              //       }
+                              //     }),
+                            )
+                          : Container(
+                              child: Center(
+                                  child: const CircularProgressIndicator()),
+                            ),
+                      _buildMessageComposer(post_id)
+                    ],
+                  )),
             ),
           ));
 }

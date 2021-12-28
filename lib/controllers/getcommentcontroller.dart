@@ -10,19 +10,20 @@ class GetCommenteController extends GetxController {
 
   void fetchComment(id) async {
     list.value = await RemoteServices.getcomment(id.toString());
+    print(list.length.toString());
     if (list.isNotEmpty) {
       isfetched(true);
     }
   }
 
-  // void sendMessage(message, messagetype, id) async {
-  //   try {
-  //     sent.value = await RemoteServices.sendmessage(message, messagetype, id);
-  //     if (sent.isTrue) {
-  //       fetchmessage(id);
-  //     }
-  //   } on Exception {
-  //     throw Exception('Failed to send  Mesaage');
-  //   }
-  // }
+  void sendcomment(comment, postId) async {
+    try {
+      sent.value = await RemoteServices.sendcomment(comment, postId);
+      if (sent.isTrue) {
+        fetchComment(postId);
+      }
+    } on Exception {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
 }
