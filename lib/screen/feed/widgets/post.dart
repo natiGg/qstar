@@ -2,14 +2,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:qstar/controllers/getcommentcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
@@ -46,6 +49,20 @@ import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+enum Share {
+  facebook,
+  twitter,
+  whatsapp,
+  whatsapp_personal,
+  whatsapp_business,
+  share_system,
+  share_instagram,
+  share_telegram
+}
+
+int? postid;
+
 class WPost extends StatefulWidget {
   final Feeds post;
 
@@ -55,12 +72,16 @@ class WPost extends StatefulWidget {
   State<WPost> createState() => _WPostState();
 }
 
+GetCommenteController getCommenteController = Get.put(GetCommenteController());
+late TextEditingController message;
+
 class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
   FeedController feedController = Get.find();
   late VideoPlayerController controller;
   late Future<void> initializeVideoPlayerFuture;
+
   @override
   void initState() {
     feedController.isActive.value = widget.post.viewer_has_liked;
@@ -74,6 +95,10 @@ class _WPostState extends State<WPost> {
       controller.setLooping(true);
     }
     // TODO: implement initState
+    postid = widget.post.posts.post_id;
+
+    message = TextEditingController();
+
     super.initState();
   }
 
@@ -303,7 +328,6 @@ class _WPostState extends State<WPost> {
             GestureDetector(
               onDoubleTap: () {
                 feedController.LikePost(widget.post.posts.post_id);
-
                 setState(() {
                   if (!feedController.isActive.value) {
                     feedController.isActive.value =
@@ -373,22 +397,39 @@ class _WPostState extends State<WPost> {
                           animation: 'idle',
                         ),
                       ),
-                    ),
-                  )
-                : AspectRatio(
-                    aspectRatio: controller.value.aspectRatio,
-                    child: Center(
-                      child: SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: FlareActor(
-                          'assets/images/instagram_like.flr',
-                          controller: flareControls,
-                          animation: 'idle',
+                      Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: mPrimaryColor.withOpacity(0.5),
+                              shape: BoxShape.circle),
+                          child: InkWell(
+                            child: Icon(
+                              feedController.isPlaying.value
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                            ),
+                            onTap: () {
+                              onPlay();
+                            },
+                          ),
                         ),
                       ),
-                    ),
+                    ]),
+            ),
+            Container(
+              height: 500,
+              child: Center(
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: FlareActor(
+                    'assets/images/instagram_like.flr',
+                    controller: flareControls,
+                    animation: 'idle',
                   ),
+                ),
+              ),
+            ),
           ]),
           Container(
             padding: const EdgeInsets.all(5.0),
@@ -411,10 +452,10 @@ class _WPostState extends State<WPost> {
                     child: activeLikeButton(feedController.isActive.value)),
                 GestureDetector(
                     onTap: () {
-                      showSheetcomment(context);
+                      showSheetcomment(context, widget.post.posts.post_id);
                     },
                     child: Comment()),
-                Share(),
+                Share(widget.post.posts.post_id, widget.post.posts.caption),
                 const Spacer(),
                 const Spacer(),
                IconButton(
@@ -520,7 +561,7 @@ class _WPostState extends State<WPost> {
     );
   }
 
-  Widget Share() {
+  Widget Share(int id, String cap) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Center(
@@ -530,7 +571,7 @@ class _WPostState extends State<WPost> {
             IconButton(
               icon: const Icon(Icons.share, color: Colors.grey, size: 25),
               onPressed: () {
-                showSheet(context);
+                showSheet(context, id, cap);
               },
             ),
           ],
@@ -540,7 +581,7 @@ class _WPostState extends State<WPost> {
   }
 }
 
-void showSheet(context) {
+void showSheet(context, id, cap) {
   showModalBottomSheet(
       context: context,
       builder: (BuildContext bc) {
@@ -653,9 +694,14 @@ void showSheet(context) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.whatsapp,
-                            color: Colors.green,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.whatsapp, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.whatsapp,
+                              color: Colors.green,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -673,14 +719,19 @@ void showSheet(context) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.facebook,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.facebook, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.facebook,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
                           ),
-                          Text("More Apps",
+                          Text("Facebook",
                               style: TextStyle(
                                 color: Colors.grey[400],
                               ))
@@ -693,9 +744,14 @@ void showSheet(context) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.instagram,
-                            color: Colors.redAccent,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.share_instagram, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.instagram,
+                              color: Colors.redAccent,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -707,12 +763,20 @@ void showSheet(context) {
                         ],
                       )),
                       Container(
+                        width: 18,
+                      ),
+                      Container(
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.telegram,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.share_telegram, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.telegram,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -730,94 +794,19 @@ void showSheet(context) {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitter,
-                            color: Colors.blue,
+                          GestureDetector(
+                            onTap: () {
+                              onButtonTap(Share.twitter, id, cap);
+                            },
+                            child: const Icon(
+                              FontAwesome.twitter,
+                              color: Colors.blue,
+                            ),
                           ),
                           Container(
                             height: 10,
                           ),
                           Text("twitter",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 26,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google_plus,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("google_plus",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 32,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitch,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("twitch",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 25,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.youtube,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 8,
-                          ),
-                          Text("youtube",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 2,
-                          ),
-                          Text("google",
                               style: TextStyle(
                                 color: Colors.grey[400],
                               ))
@@ -853,7 +842,110 @@ void showSheet(context) {
       });
 }
 
-void showSheetcomment(context) {
+_buildMessageComposer(int post_id) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    height: 60,
+    // ignore: prefer_const_constructors
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: Colors.grey[500],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: message,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type your Comment ...',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        GestureDetector(
+          onTap: () {
+            getCommenteController.sendcomment(message.text, post_id);
+            message.clear();
+          },
+          child: const CircleAvatar(
+            backgroundColor: mPrimaryColor,
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Future<void> onButtonTap(Share share, id, cap) async {
+  String msg = cap;
+  String url = 'https://qstar.mindethiopia.com/api/getPostPicture/${id}';
+
+  String? response;
+  final FlutterShareMe flutterShareMe = FlutterShareMe();
+  switch (share) {
+    case Share.facebook:
+      response = await flutterShareMe.shareToFacebook(url: url, msg: msg);
+      break;
+    case Share.twitter:
+      response = await flutterShareMe.shareToTwitter(url: url, msg: msg);
+      break;
+    case Share.whatsapp:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+
+      break;
+    case Share.whatsapp_business:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+      break;
+    case Share.share_system:
+      response = await flutterShareMe.shareToSystem(msg: msg);
+
+      break;
+    case Share.whatsapp_personal:
+      response = await flutterShareMe.shareWhatsAppPersonalMessage(
+          message: msg, phoneNumber: 'phone-number-with-country-code');
+      break;
+    case Share.share_instagram:
+      // response = await flutterShareMe.shareToInstagram(msg: msg);
+      break;
+    case Share.share_telegram:
+      response = await flutterShareMe.shareToTelegram(msg: msg);
+      break;
+  }
+  debugPrint(response);
+}
+
+void showSheetcomment(context, int post_id) {
+  getCommenteController.fetchComment(post_id);
+
   showModalBottomSheet(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -861,70 +953,159 @@ void showSheetcomment(context) {
       context: context,
       isScrollControlled: true,
       builder: (context) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                  ],
-                ),
-                Material(
-                  type: MaterialType.canvas,
-                  child: SafeArea(
-                    child: Container(
-                      height: kToolbarHeight,
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      padding: const EdgeInsets.only(left: 16, right: 8),
-                      child: Row(
-                        children: [
-                          // ignore: prefer_const_constructors
-                          CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/images/1.jpg'),
-                            radius: 18,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            // ignore: prefer_const_constructors
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 8),
-                              // ignore: prefer_const_constructors
-                              child: TextField(
-                                // ignore: prefer_const_constructors
-                                decoration: InputDecoration(
-                                    hintText: 'Comment here',
-                                    border: InputBorder.none),
-                              ),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SizedBox(
+              height: 400,
+              child: Obx(() => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      getCommenteController.list.value.isNotEmpty
+                          ? Expanded(
+                              child: ListView.builder(
+                                  itemCount: getCommenteController.list.length,
+                                  reverse: false,
+                                  itemBuilder: (context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: FollowedList(
+                                        user: getCommenteController
+                                            .list[index].profile,
+                                        comment:
+                                            getCommenteController.list[index],
+                                      ),
+                                    );
+                                  }),
+                              // child: FutureBuilder(
+                              //     future: RemoteServices.getcomment(post_id),
+                              //     builder:
+                              //         (BuildContext context, AsyncSnapshot snapshot) {
+                              //       if (snapshot.hasError) {
+                              //         return Center(
+                              //           child: Text(snapshot.error.toString()),
+                              //         );
+                              //       }
+                              //       if (snapshot.hasData) {
+                              //         print("ok bro");
+                              //         print(post_id);
+                              //         return ListView.builder(
+                              //           shrinkWrap: true,
+                              //           physics: const BouncingScrollPhysics(),
+                              //           itemBuilder: (context, index) {
+                              //             return GestureDetector(
+                              //               onTap: () {},
+                              //               child: FollowedList(
+                              //                 user: snapshot.data[index].profile,
+                              //                 comment: snapshot.data[index],
+                              //               ),
+                              //             );
+                              //           },
+                              //           itemCount: snapshot.data.length,
+                              //         );
+                              //       } else {
+                              //         return const Center(
+                              //           child: CircularProgressIndicator(),
+                              //         );
+                              //       }
+                              //     }),
+                            )
+                          : Container(
+                              child: Center(
+                                  child: const CircularProgressIndicator()),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              child: Text(
-                                'Post',
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText2
-                                    ?.copyWith(color: Colors.blue),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                      _buildMessageComposer(post_id)
+                    ],
+                  )),
             ),
           ));
+}
+
+class FollowedList extends StatelessWidget {
+  final User? user;
+  final GetComment? comment;
+
+  const FollowedList({
+    Key? key,
+    required this.user,
+    required this.comment,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    width: 4, color: Theme.of(context).scaffoldBackgroundColor),
+                boxShadow: [
+                  BoxShadow(
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(0, 10))
+                ],
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+          ),
+          Expanded(
+              child: Container(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: user!.name,
+                          style: Theme.of(context).textTheme.bodyText2),
+                      TextSpan(
+                          text: " " + comment!.comment,
+                          style: Theme.of(context).textTheme.bodyText1),
+                    ]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: DefaultTextStyle(
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                        child: Row(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            Text(comment!.date),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Text('3 likes'),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Text('Reply')
+                          ],
+                        )),
+                  )
+                ],
+              ),
+            ),
+          )),
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Icon(
+              Icons.favorite,
+              size: 16,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

@@ -80,8 +80,14 @@ dependencies:
   need_resume: ^1.0.6
   url_launcher: ^6.0.17
   location: ^4.3.0
+<<<<<<< HEAD
   visibility_detector: ^0.2.2
 
+=======
+  flutter_share_me: ^1.2.0
+  visibility_detector: ^0.2.2
+  
+>>>>>>> dab4af15f5daa13e04c6de76cacba1ee06d7de98
 
 
 

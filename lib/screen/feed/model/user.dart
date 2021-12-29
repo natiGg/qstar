@@ -369,3 +369,26 @@ class RecentChat {
     );
   }
 }
+
+class GetComment {
+  int id;
+  String comment;
+  String date;
+  User profile;
+
+  GetComment({
+    required this.id,
+    required this.comment,
+    required this.date,
+    required this.profile,
+  });
+
+  factory GetComment.fromJson(Map<String, dynamic> json) {
+    return GetComment(
+      id: json["id"] as int,
+      comment: json["comment"],
+      date: json["date"],
+      profile: User.fromJson(json["profile"][0]),
+    );
+  }
+}

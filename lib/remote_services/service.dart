@@ -605,4 +605,36 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
+
+  static Future<List<GetComment>> getcomment(var id) async {
+    res = await Network().getData("post/${id}/coments");
+    var body = json.decode(res.body);
+
+    print(body);
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => GetComment.fromJson(e))
+          .toList()
+          .cast<GetComment>();
+      // return User.fromJson(jsonDecode(body["data"]));
+    } else {
+      throw Exception('Failed to load Users');
+    }
+  }
+
+  static Future<bool> sendcomment(var comment, var post_id) async {
+    var data = {
+      'comment': comment,
+      'post_id': post_id,
+    };
+    res = await Network().getpassedData(data, "postcomment");
+    body = json.decode(res.body);
+    // ignore: avoid_print
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
 }
