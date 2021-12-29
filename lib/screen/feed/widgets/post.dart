@@ -1,5 +1,4 @@
 // ignore_for_file: unused_import, avoid_unnecessary_containers
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -23,7 +22,6 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qstar/constant.dart';
-import 'package:qstar/screen/feed/Report/report.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/screen/feed/widgets/info_widget.dart';
@@ -38,6 +36,8 @@ import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
+import 'package:qstar/screen/profile/userprofiledetail.dart';
+import 'package:qstar/screen/qvideo/qvideo2.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
 import 'package:qstar/screen/qvideo/videopicker.dart';
@@ -85,6 +85,7 @@ class _WPostState extends State<WPost> {
   @override
   void initState() {
     feedController.isActive.value = widget.post.viewer_has_liked;
+    feedController.isBookMarked.value = widget.post.viewer_has_saved;
     if (widget.post.posts.is_image == "0") {
       controller = VideoPlayerController.network(
           "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}");
@@ -150,7 +151,7 @@ class _WPostState extends State<WPost> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) {
-                                      return const UserProfile();
+                                      return  UserProfileDetail(user: widget.post.posts.profile);
                                     },
                                   ),
                                 );
@@ -207,17 +208,7 @@ class _WPostState extends State<WPost> {
                                         child: Text(e),
                                       ),
                                       onTap: () {
-                                        if (e == "Report...") {
-                                          Navigator.push(
-                                            context,
-                                            PageRouteBuilder(
-                                              pageBuilder: (context, animation1,
-                                                      animation2) =>
-                                                  const ReportScreen(),
-                                              transitionDuration: Duration.zero,
-                                            ),
-                                          );
-                                        }
+                                        Navigator.pop(context);
                                       },
                                     ))
                                 .toList()),
@@ -261,9 +252,31 @@ class _WPostState extends State<WPost> {
               const SizedBox(
                 height: 15,
               ),
-              Container(
-                child: Center(
-                  child: Padding(
+              // Container(
+              //   child: Center(
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         "${widget.post.posts.caption}",
+              //         style: TextStyle(
+              //           color: Colors.black.withOpacity(0.6),
+              //           decorationStyle: TextDecorationStyle.wavy,
+              //         ),
+              //         textAlign: TextAlign.center,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(
+                height: 10,
+              ),
+              
+             Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "${widget.post.posts.caption}",
@@ -274,11 +287,46 @@ class _WPostState extends State<WPost> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                     widget.post.posts.post_tags.isNotEmpty? Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Row(
+                            children: List.generate(
+                                widget.post.posts.post_tags.length, (index) {
+                          return Align(
+                            alignment: Alignment.centerLeft,
+                            child: GestureDetector(
+                              onTap: () {
+
+                              Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2){
+                                return UserProfileDetail(user: widget.post.posts.post_tags[index].profile);
+                              }));
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    widget.post.posts.post_tags[index].profile.name+"",
+                                    style: const TextStyle(
+                                        color: mPrimaryColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  index!=widget.post.posts.post_tags.length-1? Text(
+                                    ", ",
+                                    style:  TextStyle(
+                                        color: mPrimaryColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ):Container(),
+                                ],
+                              ),
+                            ),
+                          );
+                        })),
+                     ):Container(),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              )
             ],
           ),
           Stack(children: <Widget>[
@@ -297,6 +345,9 @@ class _WPostState extends State<WPost> {
                 });
                 flareControls.play("like");
               },
+              onTap: (){
+                onPlay();
+              },
               child: widget.post.posts.is_image.toString() == "1"
                   ? Container(
                       decoration: BoxDecoration(
@@ -307,10 +358,52 @@ class _WPostState extends State<WPost> {
                       ),
                       height: 500,
                     )
-                  : Stack(children: <Widget>[
-                      Container(
-                        child: VideoPlayer(controller),
-                        height: 500,
+                  :
+                  GestureDetector(
+                    onTap: (){
+                         Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) =>
+                                const Search(),
+                            transitionDuration: Duration.zero,
+                          ),
+                        );
+                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(feed: widget.post)));
+                    },
+                    child: Stack(
+                        children: [
+                          VisibilityDetector(
+                              key: Key("unique key"),
+                              onVisibilityChanged: (VisibilityInfo info) {
+                                  if(info.visibleFraction == 0){
+                                      controller.pause();
+                                  }
+                                  else{
+                                      controller.play();
+                                  }
+                              },
+                              child: AspectRatio(aspectRatio:controller.value.aspectRatio , child: VideoPlayer(controller))),
+                           
+                        ],
+                      ),
+                  ),
+
+
+            ),
+            
+            widget.post.posts.is_image.toString() == "1"
+                ? Container(
+                    height: 500,
+                    child: Center(
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: FlareActor(
+                          'assets/images/instagram_like.flr',
+                          controller: flareControls,
+                          animation: 'idle',
+                        ),
                       ),
                       Center(
                         child: Container(
@@ -373,10 +466,23 @@ class _WPostState extends State<WPost> {
                 Share(widget.post.posts.post_id, widget.post.posts.caption),
                 const Spacer(),
                 const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.bookmark_border,
+               IconButton(
+                    onPressed: () {
+                      setState(() {
+                          if(!feedController.isBookMarked.value){
+                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
+
+                         feedController.postBookMark(widget.post.posts.post_id);
+                       }
+                       else if(feedController.isBookMarked.value){
+                         feedController.unBookMark(widget.post.posts.post_id);
+                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
+                       }
+                      });
+                     
+                    },
+                    icon:  Icon(
+                    feedController.isBookMarked.value? Icons.bookmark:Icons.bookmark_border,
                       color: mPrimaryColor,
                     )),
                 const SizedBox(

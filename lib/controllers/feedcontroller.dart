@@ -17,8 +17,11 @@ class FeedController extends GetxController with StateMixin {
   var isRefreshing = false.obs;
   var feed = <Feeds>[].obs;
   var liked = false.obs;
+  var bookMarked = false.obs;
   var isActive = false.obs;
   var isdisActive = false.obs;
+  var isBookMarked = false.obs;
+  
   var uid;
   var isPlaying = false.obs;
 
@@ -74,11 +77,28 @@ class FeedController extends GetxController with StateMixin {
   void DisLikePost(var post_id) async {
     try {
       print("dislike");
-      liked.value = await RemoteServices.likePost(post_id);
+      liked.value = await RemoteServices.dislikePost(post_id);
       print("about to dislike" + liked.value.toString());
     } on Exception {
       change(null, status: RxStatus.error("Can't dislike post"));
     }
+  }
+  void postBookMark(var post_id) async {
+    try{
+   bookMarked.value= await RemoteServices.bookMarkPost(post_id);
+    } on Exception {
+      change(null, status: RxStatus.error("Can't bookmark post"));
+    }
+
+  }
+    void unBookMark(var post_id) async{
+    try{
+      bookMarked.value=await RemoteServices.unbookPost(post_id);
+
+    } on Exception {
+      change(null, status: RxStatus.error("Can't unbookmark post"));
+    }
+
   }
 
   void fetchPerfectMatches() async {

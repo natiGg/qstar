@@ -56,6 +56,29 @@ class RemoteServices {
       throw Exception('Failed to like');
     }
   }
+    static Future<bool> bookMarkPost(var id) async {
+    var data = {'post_id': id};
+    res = await Network().getpassedData(data, "saved");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      print(body);
+      return true;
+    } else {
+      throw Exception('Failed to like');
+    }
+  }
+
+  static Future<bool> unbookPost(var id) async {
+    res = await Network().getdeleteData("saved/${id}");
+
+    if (res.statusCode == 200) {
+      print("unbookmarked");
+      return true;
+    } else {
+      throw Exception('Failed to bookmark');
+    }
+  }
 
   static Future<List<User>> fetchSuggested() async {
     res = await Network().getData("friendSuggestion");
