@@ -101,6 +101,14 @@ class _WPostState extends State<WPost> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    message.dispose();
+    super.dispose();
+  }
+
   void onPlay() async {
     if (controller.value.isPlaying) {
       feedController.isPlaying(false);
@@ -870,38 +878,6 @@ void showSheetcomment(context, int post_id) {
                                       ),
                                     );
                                   }),
-                              // child: FutureBuilder(
-                              //     future: RemoteServices.getcomment(post_id),
-                              //     builder:
-                              //         (BuildContext context, AsyncSnapshot snapshot) {
-                              //       if (snapshot.hasError) {
-                              //         return Center(
-                              //           child: Text(snapshot.error.toString()),
-                              //         );
-                              //       }
-                              //       if (snapshot.hasData) {
-                              //         print("ok bro");
-                              //         print(post_id);
-                              //         return ListView.builder(
-                              //           shrinkWrap: true,
-                              //           physics: const BouncingScrollPhysics(),
-                              //           itemBuilder: (context, index) {
-                              //             return GestureDetector(
-                              //               onTap: () {},
-                              //               child: FollowedList(
-                              //                 user: snapshot.data[index].profile,
-                              //                 comment: snapshot.data[index],
-                              //               ),
-                              //             );
-                              //           },
-                              //           itemCount: snapshot.data.length,
-                              //         );
-                              //       } else {
-                              //         return const Center(
-                              //           child: CircularProgressIndicator(),
-                              //         );
-                              //       }
-                              //     }),
                             )
                           : Container(
                               child: Center(
@@ -983,7 +959,13 @@ class FollowedList extends StatelessWidget {
                             SizedBox(
                               width: 24,
                             ),
-                            Text('Reply')
+                            GestureDetector(
+                                onTap: () {
+                                  message.text = user!.name;
+
+                                  //  getCommenteController.sendreplay(message.text, post_id);
+                                },
+                                child: Text('Reply'))
                           ],
                         )),
                   )
