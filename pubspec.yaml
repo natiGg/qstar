@@ -54,8 +54,6 @@ dependencies:
   path_provider: ^2.0.0
   path: ^1.6.2
   photofilters: ^3.0.1
- 
- 
   flare_flutter: ^3.0.2
   flutter_typeahead: ^3.2.1
   email_validator: ^2.0.1
@@ -81,9 +79,9 @@ dependencies:
   pull_to_refresh: ^2.0.0
   need_resume: ^1.0.6
   url_launcher: ^6.0.17
- 
   location: ^4.3.0
-  
+  visibility_detector: ^0.2.2
+
 
 
 

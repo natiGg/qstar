@@ -12,10 +12,18 @@ class Followcontroller extends GetxController {
   RxBool following = false.obs;
   RxBool isChecked = false.obs;
   RxBool isFetching = false.obs;
-//
+  late User profile;
   var following_list = <User>[].obs;
   var unFollowed, uFollowed;
   FeedController feedController = Get.find();
+
+    void fetchUProfile(var id) async {
+    try {
+      isFetching(true);
+      profile= await RemoteServices.fetchProfile(id);
+      isFetching(false);
+    } finally {}
+  }
 
   void fetchFollowing(var id) async {
     try {

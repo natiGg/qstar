@@ -36,6 +36,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
   @override
   void initState() {
     followcontroller.check(widget.user!.id, feedController.uid);
+    followcontroller.fetchUProfile(widget.user!.id);
     super.initState();
     _onShowMenu = () {
       context.showBottomSheet2([
@@ -46,7 +47,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                 iconData: Icons.share,
                 title: 'unfollow',
                 id: 1,
-                unFlwid: widget.user!.id.toString())
+                unFlwid: followcontroller.profile.id.toString())
             : BottomSheetAction2(
                 iconData: Icons.delete, title: '', id: 1, unFlwid: ""),
       ]);
@@ -87,7 +88,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               color: mPrimaryColor),
         ],
       ),
-      body: Obx(() => followcontroller.isChecked.value
+      body: Obx(() => followcontroller.isChecked.value && !followcontroller.isFetching.value
           ? SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -127,7 +128,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                                         child: GestureDetector(
                                           onTap: () {
                                             followcontroller.follow(
-                                                widget.user!.id.toString());
+                                                followcontroller.profile.id.toString());
                                           },
                                           child: follow(
                                             primaryColorDark: _primaryColorDark,
@@ -339,7 +340,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
             child: Padding(
               padding: const EdgeInsets.all(2.0),
               child: Text(
-                widget.user!.name,
+                followcontroller.profile.name,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
@@ -360,7 +361,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: widget.user!.bio,
+                          text: followcontroller.profile.bio,
                           style: const TextStyle(
                             color: Colors.black,
                           ),
@@ -381,7 +382,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                statsBox(count: widget.user!.posts_count, title: 'Posts'),
+                statsBox(count: followcontroller.profile.posts_count, title: 'Posts'),
                 GestureDetector(
                     onTap: () {
                       // Navigator.push(
@@ -394,7 +395,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                       // );
                     },
                     child: statsBox(
-                        count: widget.user!.followers_count.toString(),
+                        count: followcontroller.profile.followers_count.toString(),
                         title: 'Followers')),
                 GestureDetector(
                     onTap: () {
@@ -408,7 +409,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                       // );
                     },
                     child: statsBox(
-                        count: widget.user!.following_count.toString(),
+                        count: followcontroller.profile.following_count.toString(),
                         title: 'Following')),
               ],
             ),
@@ -655,7 +656,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                 ),
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user!.id}"),
+                      "https://qstar.mindethiopia.com/api/getProfilePicture/${followcontroller.profile.id}"),
                 ),
               ),
             ),
