@@ -375,12 +375,14 @@ class GetComment {
   String comment;
   String date;
   User profile;
+  List<GetComment> replies;
 
   GetComment({
     required this.id,
     required this.comment,
     required this.date,
     required this.profile,
+    required this.replies,
   });
 
   factory GetComment.fromJson(Map<String, dynamic> json) {
@@ -389,6 +391,9 @@ class GetComment {
       comment: json["comment"],
       date: json["date"],
       profile: User.fromJson(json["profile"][0]),
+      replies: (json["replies"] as List)
+          .map((reply) => GetComment.fromJson(reply))
+          .toList(),
     );
   }
 }
