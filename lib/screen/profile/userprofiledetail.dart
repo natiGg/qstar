@@ -9,6 +9,9 @@ import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
+import 'package:qstar/screen/qvideo/qvideo2.dart';
+import 'package:qstar/screen/register/phonevarification.dart';
+import 'package:video_player/video_player.dart';
 import 'widgets/profile_tab_bar.dart';
 
 import 'package:qstar/widget/utils.dart';
@@ -32,11 +35,19 @@ class _ProfileScreenState extends State<UserProfileDetail> {
   Followcontroller followcontroller = Get.find();
   FeedController feedController = Get.find();
   VoidCallback? _onShowMenu;
-
+  late VideoPlayerController controller;
+  late Future<void> initializeVideoPlayerFuture;
   @override
   void initState() {
     followcontroller.check(widget.user!.id, feedController.uid);
     followcontroller.fetchUProfile(widget.user!.id);
+    followcontroller.fetchFlgPost(widget.user!.id);
+    controller = VideoPlayerController.network(
+          "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[0].post_id}");
+
+   initializeVideoPlayerFuture = controller.initialize();
+      // Use the controller to loop the video.
+      controller.setLooping(true);
     super.initState();
     _onShowMenu = () {
       context.showBottomSheet2([
@@ -197,7 +208,7 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     crossAxisCount: _pageIndex != 1 ? 3 : 2,
-                    itemCount: Utils.listOfImageUrl.length,
+                    itemCount: followcontroller.flgPosts.length,
                     itemBuilder: (contex, index) {
                       return Align(
                         child: Container(
@@ -211,11 +222,26 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                             borderRadius: _pageIndex == 1
                                 ? BorderRadius.circular(15)
                                 : BorderRadius.circular(0),
-                            child: Image(
+                            child:followcontroller.flgPosts[index].is_image=="1"? Image(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                  Utils.listOfImageUrl.elementAt(index)),
-                            ),
+                                  "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[index].post_id}"),
+                            ):GestureDetector(
+                              onTap: (){
+                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(post: followcontroller.flgPosts[index])));
+                              },
+                              child: Stack(children:[ VideoPlayer(controller),       Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40.0,
+                                                ),
+                                                onPressed: () {
+                                           
+                                                },
+                                              )),])),
                           ),
                         ),
                       );
@@ -240,7 +266,14 @@ class _ProfileScreenState extends State<UserProfileDetail> {
             )),
     );
   }
-
+  void onPlay() async {
+    if (controller.value.isPlaying) {
+      controller.pause();
+    } else {
+      // If the video is paused, play it.
+      controller.play();
+    }
+  }
   Widget follow(
       {@required Color? primaryColor, required Color primaryColorDark}) {
     return Container(

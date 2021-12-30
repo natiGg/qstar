@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 
@@ -15,6 +16,7 @@ class Followcontroller extends GetxController {
   late User profile;
   var following_list = <User>[].obs;
   var unFollowed, uFollowed;
+  var flgPosts=<Posts>[].obs;
   FeedController feedController = Get.find();
 
     void fetchUProfile(var id) async {
@@ -24,7 +26,15 @@ class Followcontroller extends GetxController {
       isFetching(false);
     } finally {}
   }
+  void fetchFlgPost(var id) async {
+    try{
+      flgPosts.value=await RemoteServices.fetchFlgPosts(id);
+    }
+    on Exception {
+      print("can't fetch");
+    }
 
+  }
   void fetchFollowing(var id) async {
     try {
       isFetching(true);

@@ -295,8 +295,8 @@ List<User> _users = [
 ];
 
 class Qvideoscreen2 extends StatefulWidget {
-  Feeds?feed;
-   Qvideoscreen2({Key? key,required this.feed}) : super(key: key);
+  Posts?post;
+   Qvideoscreen2({Key? key,required this.post}) : super(key: key);
 
   @override
   _QvideoState2 createState() => _QvideoState2();
@@ -325,7 +325,7 @@ class _QvideoState2 extends State<Qvideoscreen2>
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     animationController.repeat();
-    _controller = VideoPlayerController.network("https://qstar.mindethiopia.com/api/getPostPicture/${widget.feed!.posts.post_id}")
+    _controller = VideoPlayerController.network("https://qstar.mindethiopia.com/api/getPostPicture/${widget.post!.post_id}")
       ..initialize().then((value) {
         _controller.play();
         _controller.setLooping(true);

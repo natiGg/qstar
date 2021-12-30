@@ -130,6 +130,15 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
+    static Future<List<Posts>> fetchFlgPosts(var id) async {
+    res = await Network().getData("profile/${id}/posts");
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      return body["data"].map((e) => Posts.fromJson(e)).toList().cast<Posts>();
+    } else {
+      throw Exception('Failed to load Feed');
+    }
+  }
 
   static Future<List<User>> fetchallFollower(var id) async {
     res = await Network().getData("friendship/${id}/followers");

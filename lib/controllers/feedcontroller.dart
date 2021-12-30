@@ -44,6 +44,8 @@ class FeedController extends GetxController with StateMixin {
   void fetchFeed() async {
     try {
       feed.value = await RemoteServices.fetchFeed();
+            print("herere found it");
+
 
       if (feed.isEmpty) {
         onRefreshFeed();
@@ -69,6 +71,7 @@ class FeedController extends GetxController with StateMixin {
       print("inside like");
       liked.value = await RemoteServices.likePost(post_id);
       print("about to like" + liked.value.toString());
+      
     } on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }

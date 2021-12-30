@@ -2,14 +2,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:qstar/controllers/getcommentcontroller.dart';
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
 import 'package:qstar/remote_services/service.dart';
@@ -46,6 +49,19 @@ import 'package:qstar/screen/feed/bottomsheet/bottom_sheet_action.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+enum Share {
+  facebook,
+  twitter,
+  whatsapp,
+  whatsapp_personal,
+  whatsapp_business,
+  share_system,
+  share_instagram,
+  share_telegram
+}
+
+int? postid;
 class WPost extends StatefulWidget {
   final Feeds post;
 
@@ -54,7 +70,8 @@ class WPost extends StatefulWidget {
   @override
   State<WPost> createState() => _WPostState();
 }
-
+GetCommenteController getCommenteController = Get.put(GetCommenteController());
+late TextEditingController message;
 class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
@@ -73,6 +90,8 @@ class _WPostState extends State<WPost> {
       // Use the controller to loop the video.
       controller.setLooping(true);
     }
+        message = TextEditingController();
+
     // TODO: implement initState
     super.initState();
   }
@@ -165,7 +184,6 @@ class _WPostState extends State<WPost> {
                             children: [
                               'Report...',
                               'Hide',
-                              'unfollow',
                               'Block',
                             ]
                                 .map((e) => InkWell(
@@ -329,15 +347,8 @@ class _WPostState extends State<WPost> {
                   :
                   GestureDetector(
                     onTap: (){
-                         Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                const Search(),
-                            transitionDuration: Duration.zero,
-                          ),
-                        );
-                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(feed: widget.post)));
+                       
+                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(post: widget.post.posts)));
                     },
                     child: Stack(
                         children: [
@@ -411,7 +422,7 @@ class _WPostState extends State<WPost> {
                     child: activeLikeButton(feedController.isActive.value)),
                 GestureDetector(
                     onTap: () {
-                      showSheetcomment(context);
+                      showSheetcomment(context,widget.post.posts.post_id);
                     },
                     child: Comment()),
                 Share(),
@@ -422,7 +433,6 @@ class _WPostState extends State<WPost> {
                       setState(() {
                           if(!feedController.isBookMarked.value){
                          feedController.isBookMarked.value=!feedController.isBookMarked.value;
-
                          feedController.postBookMark(widget.post.posts.post_id);
                        }
                        else if(feedController.isBookMarked.value){
@@ -853,7 +863,110 @@ void showSheet(context) {
       });
 }
 
-void showSheetcomment(context) {
+_buildMessageComposer(int post_id) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    height: 60,
+    // ignore: prefer_const_constructors
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: Colors.grey[500],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: message,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type your Comment ...',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        GestureDetector(
+          onTap: () {
+            getCommenteController.sendcomment(message.text, post_id);
+            message.clear();
+          },
+          child: const CircleAvatar(
+            backgroundColor: mPrimaryColor,
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Future<void> onButtonTap(Share share, id, cap) async {
+  String msg = cap;
+  String url = 'https://qstar.mindethiopia.com/api/getPostPicture/${id}';
+
+  String? response;
+  final FlutterShareMe flutterShareMe = FlutterShareMe();
+  switch (share) {
+    case Share.facebook:
+      response = await flutterShareMe.shareToFacebook(url: url, msg: msg);
+      break;
+    case Share.twitter:
+      response = await flutterShareMe.shareToTwitter(url: url, msg: msg);
+      break;
+    case Share.whatsapp:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+
+      break;
+    case Share.whatsapp_business:
+      response = await flutterShareMe.shareToWhatsApp(msg: msg);
+      break;
+    case Share.share_system:
+      response = await flutterShareMe.shareToSystem(msg: msg);
+
+      break;
+    case Share.whatsapp_personal:
+      response = await flutterShareMe.shareWhatsAppPersonalMessage(
+          message: msg, phoneNumber: 'phone-number-with-country-code');
+      break;
+    case Share.share_instagram:
+      // response = await flutterShareMe.shareToInstagram(msg: msg);
+      break;
+    case Share.share_telegram:
+      response = await flutterShareMe.shareToTelegram(msg: msg);
+      break;
+  }
+  debugPrint(response);
+}
+
+void showSheetcomment(context, int post_id) {
+  getCommenteController.fetchComment(post_id);
+
   showModalBottomSheet(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -861,70 +974,159 @@ void showSheetcomment(context) {
       context: context,
       isScrollControlled: true,
       builder: (context) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                  ],
-                ),
-                Material(
-                  type: MaterialType.canvas,
-                  child: SafeArea(
-                    child: Container(
-                      height: kToolbarHeight,
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      padding: const EdgeInsets.only(left: 16, right: 8),
-                      child: Row(
-                        children: [
-                          // ignore: prefer_const_constructors
-                          CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/images/1.jpg'),
-                            radius: 18,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            // ignore: prefer_const_constructors
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 8),
-                              // ignore: prefer_const_constructors
-                              child: TextField(
-                                // ignore: prefer_const_constructors
-                                decoration: InputDecoration(
-                                    hintText: 'Comment here',
-                                    border: InputBorder.none),
-                              ),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SizedBox(
+              height: 400,
+              child: Obx(() => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      getCommenteController.list.value.isNotEmpty
+                          ? Expanded(
+                              child: ListView.builder(
+                                  itemCount: getCommenteController.list.length,
+                                  reverse: false,
+                                  itemBuilder: (context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: FollowedList(
+                                        user: getCommenteController
+                                            .list[index].profile,
+                                        comment:
+                                            getCommenteController.list[index],
+                                      ),
+                                    );
+                                  }),
+                              // child: FutureBuilder(
+                              //     future: RemoteServices.getcomment(post_id),
+                              //     builder:
+                              //         (BuildContext context, AsyncSnapshot snapshot) {
+                              //       if (snapshot.hasError) {
+                              //         return Center(
+                              //           child: Text(snapshot.error.toString()),
+                              //         );
+                              //       }
+                              //       if (snapshot.hasData) {
+                              //         print("ok bro");
+                              //         print(post_id);
+                              //         return ListView.builder(
+                              //           shrinkWrap: true,
+                              //           physics: const BouncingScrollPhysics(),
+                              //           itemBuilder: (context, index) {
+                              //             return GestureDetector(
+                              //               onTap: () {},
+                              //               child: FollowedList(
+                              //                 user: snapshot.data[index].profile,
+                              //                 comment: snapshot.data[index],
+                              //               ),
+                              //             );
+                              //           },
+                              //           itemCount: snapshot.data.length,
+                              //         );
+                              //       } else {
+                              //         return const Center(
+                              //           child: CircularProgressIndicator(),
+                              //         );
+                              //       }
+                              //     }),
+                            )
+                          : Container(
+                              child: Center(
+                                  child: const CircularProgressIndicator()),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              child: Text(
-                                'Post',
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText2
-                                    ?.copyWith(color: Colors.blue),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                      _buildMessageComposer(post_id)
+                    ],
+                  )),
             ),
           ));
+}
+
+class FollowedList extends StatelessWidget {
+  final User? user;
+  final GetComment? comment;
+
+  const FollowedList({
+    Key? key,
+    required this.user,
+    required this.comment,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    width: 4, color: Theme.of(context).scaffoldBackgroundColor),
+                boxShadow: [
+                  BoxShadow(
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(0, 10))
+                ],
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+          ),
+          Expanded(
+              child: Container(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: user!.name,
+                          style: Theme.of(context).textTheme.bodyText2),
+                      TextSpan(
+                          text: " " + comment!.comment,
+                          style: Theme.of(context).textTheme.bodyText1),
+                    ]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: DefaultTextStyle(
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                        child: Row(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            Text(comment!.date),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Text('3 likes'),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Text('Reply')
+                          ],
+                        )),
+                  )
+                ],
+              ),
+            ),
+          )),
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Icon(
+              Icons.favorite,
+              size: 16,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
