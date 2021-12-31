@@ -64,6 +64,7 @@ enum Share {
 }
 
 int? postid;
+
 class WPost extends StatefulWidget {
   final Feeds post;
 
@@ -72,9 +73,11 @@ class WPost extends StatefulWidget {
   @override
   State<WPost> createState() => _WPostState();
 }
+
 GetCommenteController getCommenteController = Get.put(GetCommenteController());
 
 late TextEditingController message;
+
 class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
@@ -92,7 +95,7 @@ class _WPostState extends State<WPost> {
       // Use the controller to loop the video.
       controller.setLooping(true);
     }
-        message = TextEditingController();
+    message = TextEditingController();
 
     // TODO: implement initState
     super.initState();
@@ -161,22 +164,6 @@ class _WPostState extends State<WPost> {
                         ),
                       ),
                     ),
-                    // _isFF[(widget.post.userid) - 1]
-                    //     ? Container(
-                    //         margin: const EdgeInsets.only(
-                    //             left: 20, top: 55, right: 20),
-                    //         child: GestureDetector(
-                    //           onTap: () {
-                    //             setState(() {
-                    //               isFollowed = !isFollowed;
-                    //             });
-                    //           },
-                    //           child: followButton(isFollowed),
-                    //         ),
-                    //       )
-                    //     : const SizedBox(
-                    //         width: 0,
-                    //       ),
                   ]),
                 ],
               ),
@@ -304,33 +291,33 @@ class _WPostState extends State<WPost> {
                       ),
                       height: 500,
                     )
-                  :
-                  GestureDetector(
-                    onTap: (){
-                       
-                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(post: widget.post.posts)));
-                    },
-                    child: Stack(
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (context, animation1,
+                                        animation2) =>
+                                    Qvideoscreen2(post: widget.post.posts)));
+                      },
+                      child: Stack(
                         children: [
                           VisibilityDetector(
                               key: Key("unique key"),
                               onVisibilityChanged: (VisibilityInfo info) {
-                                  if(info.visibleFraction == 0){
-                                      controller.pause();
-                                  }
-                                  else{
-                                      controller.play();
-                                  }
+                                if (info.visibleFraction == 0) {
+                                  controller.pause();
+                                } else {
+                                  controller.play();
+                                }
                               },
-                              child: AspectRatio(aspectRatio:controller.value.aspectRatio , child: VideoPlayer(controller))),
-                           
+                              child: AspectRatio(
+                                  aspectRatio: controller.value.aspectRatio,
+                                  child: VideoPlayer(controller))),
                         ],
                       ),
-                  ),
-
-
+                    ),
             ),
-            
             widget.post.posts.is_image.toString() == "1"
                 ? Container(
                     height: 500,
@@ -382,28 +369,31 @@ class _WPostState extends State<WPost> {
                     child: activeLikeButton(feedController.isActive.value)),
                 GestureDetector(
                     onTap: () {
-                      showSheetcomment(context,widget.post.posts.post_id);
+                      showSheetcomment(context, widget.post.posts.post_id);
                     },
                     child: Comment()),
                 Share(),
                 const Spacer(),
                 const Spacer(),
-               IconButton(
+                IconButton(
                     onPressed: () {
                       setState(() {
-                          if(!feedController.isBookMarked.value){
-                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
-                         feedController.postBookMark(widget.post.posts.post_id);
-                       }
-                       else if(feedController.isBookMarked.value){
-                         feedController.unBookMark(widget.post.posts.post_id);
-                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
-                       }
+                        if (!feedController.isBookMarked.value) {
+                          feedController.isBookMarked.value =
+                              !feedController.isBookMarked.value;
+                          feedController
+                              .postBookMark(widget.post.posts.post_id);
+                        } else if (feedController.isBookMarked.value) {
+                          feedController.unBookMark(widget.post.posts.post_id);
+                          feedController.isBookMarked.value =
+                              !feedController.isBookMarked.value;
+                        }
                       });
-                     
                     },
-                    icon:  Icon(
-                    feedController.isBookMarked.value? Icons.bookmark:Icons.bookmark_border,
+                    icon: Icon(
+                      feedController.isBookMarked.value
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
                       color: mPrimaryColor,
                     )),
                 const SizedBox(
@@ -952,8 +942,8 @@ void showSheetcomment(context, int post_id) {
                                       child: CommestList(
                                         user: getCommenteController
                                             .list[index].profile,
-                                        replies: getCommenteController
-                                            .list[index].replies,
+                                        // replies: getCommenteController
+                                        //     .list[index].replies,
                                         comment:
                                             getCommenteController.list[index],
                                       ),
@@ -974,206 +964,201 @@ void showSheetcomment(context, int post_id) {
 class CommestList extends StatelessWidget {
   final User? user;
   final GetComment? comment;
-  final List<GetComment>? replies;
+  // final GetReply replies;
 
   const CommestList({
     Key? key,
     required this.user,
-    required this.replies,
+//    required this.replies,
     required this.comment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 4,
-                        color: Theme.of(context).scaffoldBackgroundColor),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(0.1),
-                          offset: const Offset(0, 10))
-                    ],
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
-              ),
-              Expanded(
-                  child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: user!.name,
-                              style: Theme.of(context).textTheme.bodyText2),
-                          TextSpan(
-                              text: " " + comment!.comment,
-                              style: Theme.of(context).textTheme.bodyText1),
-                        ]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: DefaultTextStyle(
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(
-                                    fontSize: 12, fontWeight: FontWeight.w400),
-                            child: Row(
-                              // ignore: prefer_const_literals_to_create_immutables
-                              children: [
-                                Text(comment!.date),
-                                SizedBox(
-                                  width: 24,
-                                ),
-                                Text('3 likes'),
-                                SizedBox(
-                                  width: 24,
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      message.text = user!.name;
-
-                                      //  getCommenteController.sendreplay(message.text, post_id);
-                                    },
-                                    child: Text('Reply'))
-                              ],
-                            )),
-                      )
-                    ],
-                  ),
-                ),
-              )),
-              Container(
-                padding: EdgeInsets.all(8),
-                child: const Icon(
-                  Icons.favorite,
-                  size: 16,
-                ),
-              )
-            ],
-          ),
-        ),
-        replies!.isNotEmpty
-            ? ListView.builder(
-                itemCount: replies!.length,
-                reverse: false,
-                itemBuilder: (context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(0, 10))
-                              ],
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${replies![index].profile.id}"))),
-                        ),
-                        Expanded(
-                            child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(
-                                        text: replies![index].profile.name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2),
-                                    TextSpan(
-                                        text: " " + replies![index].comment,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1),
-                                  ]),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: DefaultTextStyle(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
-                                      child: Row(
-                                        // ignore: prefer_const_literals_to_create_immutables
-                                        children: [
-                                          Text(comment!.date),
-                                          SizedBox(
-                                            width: 24,
-                                          ),
-                                          Text('3 likes'),
-                                          SizedBox(
-                                            width: 24,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                message.text = user!.name;
-
-                                                //  getCommenteController.sendreplay(message.text, post_id);
-                                              },
-                                              child: Text('Reply'))
-                                        ],
-                                      )),
-                                )
-                              ],
-                            ),
-                          ),
-                        )),
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(
-                            Icons.favorite,
-                            size: 16,
-                          ),
-                        )
-                      ],
+    return Column(children: [
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      width: 4,
+                      color: Theme.of(context).scaffoldBackgroundColor),
+                  boxShadow: [
+                    BoxShadow(
+                        spreadRadius: 2,
+                        blurRadius: 10,
+                        color: Colors.black.withOpacity(0.1),
+                        offset: const Offset(0, 10))
+                  ],
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                          "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+            ),
+            Expanded(
+                child: Container(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: user!.name,
+                            style: Theme.of(context).textTheme.bodyText2),
+                        TextSpan(
+                            text: " " + comment!.comment,
+                            style: Theme.of(context).textTheme.bodyText1),
+                      ]),
                     ),
-                  );
-                })
-            : Container(
-                child: Text(replies!.length.toString()),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: DefaultTextStyle(
+                          style: Theme.of(context).textTheme.caption!.copyWith(
+                              fontSize: 12, fontWeight: FontWeight.w400),
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              Text(comment!.date),
+                              SizedBox(
+                                width: 24,
+                              ),
+                              Text('3 likes'),
+                              SizedBox(
+                                width: 24,
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    message.text = user!.name;
+
+                                    //  getCommenteController.sendreplay(message.text, post_id);
+                                  },
+                                  child: Text('Reply'))
+                            ],
+                          )),
+                    )
+                  ],
+                ),
               ),
-      ],
-    );
+            )),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: const Icon(
+                Icons.favorite,
+                size: 16,
+              ),
+            )
+          ],
+        ),
+      ),
+      //   ListView.builder(
+      //           itemCount: 2,
+      //           reverse: false,
+      //           itemBuilder: (context, int index) {
+      //             return Container(
+      //               padding: const EdgeInsets.symmetric(
+      //                   vertical: 20, horizontal: 16),
+      //               child: Row(
+      //                 children: [
+      //                   Container(
+      //                     width: 40,
+      //                     height: 40,
+      //                     decoration: BoxDecoration(
+      //                         border: Border.all(
+      //                             width: 4,
+      //                             color: Theme.of(context)
+      //                                 .scaffoldBackgroundColor),
+      //                         boxShadow: [
+      //                           BoxShadow(
+      //                               spreadRadius: 2,
+      //                               blurRadius: 10,
+      //                               color: Colors.black.withOpacity(0.1),
+      //                               offset: const Offset(0, 10))
+      //                         ],
+      //                         shape: BoxShape.circle,
+      //                         image: DecorationImage(
+      //                             fit: BoxFit.cover,
+      //                             image: NetworkImage(
+      //                                 "https://qstar.mindethiopia.com/api/getProfilePicture/${replies.profile.id}"))),
+      //                   ),
+      //                   Expanded(
+      //                       child: Container(
+      //                     child: Padding(
+      //                       padding: const EdgeInsets.only(left: 16),
+      //                       child: Column(
+      //                         crossAxisAlignment: CrossAxisAlignment.start,
+      //                         mainAxisAlignment: MainAxisAlignment.center,
+      //                         children: [
+      //                           RichText(
+      //                             text: TextSpan(children: [
+      //                               TextSpan(
+      //                                   text: replies.profile.name,
+      //                                   style: Theme.of(context)
+      //                                       .textTheme
+      //                                       .bodyText2),
+      //                               TextSpan(
+      //                                   text: " " + replies.comment,
+      //                                   style: Theme.of(context)
+      //                                       .textTheme
+      //                                       .bodyText1),
+      //                             ]),
+      //                           ),
+      //                           Padding(
+      //                             padding: const EdgeInsets.only(top: 4),
+      //                             child: DefaultTextStyle(
+      //                                 style: Theme.of(context)
+      //                                     .textTheme
+      //                                     .caption!
+      //                                     .copyWith(
+      //                                         fontSize: 12,
+      //                                         fontWeight: FontWeight.w400),
+      //                                 child: Row(
+      //                                   // ignore: prefer_const_literals_to_create_immutables
+      //                                   children: [
+      //                                     Text(comment!.date),
+      //                                     SizedBox(
+      //                                       width: 24,
+      //                                     ),
+      //                                     Text('3 likes'),
+      //                                     SizedBox(
+      //                                       width: 24,
+      //                                     ),
+      //                                     GestureDetector(
+      //                                         onTap: () {
+      //                                           message.text = user!.name;
+
+      //                                           //  getCommenteController.sendreplay(message.text, post_id);
+      //                                         },
+      //                                         child: Text('Reply'))
+      //                                   ],
+      //                                 )),
+      //                           )
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   )),
+      //                   Container(
+      //                     padding: EdgeInsets.all(8),
+      //                     child: Icon(
+      //                       Icons.favorite,
+      //                       size: 16,
+      //                     ),
+      //                   )
+      //                 ],
+      //               ),
+      //             );
+      //           })
+      //       : Container(
+      //           child: Text(replies.toString()),
+      //         ),
+      // ],
+    ]);
   }
 }
