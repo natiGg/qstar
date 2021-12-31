@@ -39,6 +39,7 @@ import 'package:qstar/screen/post/preview_screen_gallery.dart';
 import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
+import 'package:qstar/screen/profile/userprofiledetail.dart';
 import 'package:qstar/screen/qvideo/qvideo2.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
@@ -147,7 +148,7 @@ class _WPostState extends State<WPost> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) {
-                                      return const UserProfile();
+                                      return  UserProfileDetail(user: widget.post.posts.profile);
                                     },
                                   ),
                                 );
@@ -259,16 +260,57 @@ class _WPostState extends State<WPost> {
               ),
               Container(
                 child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "${widget.post.posts.caption}",
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.6),
-                        decorationStyle: TextDecorationStyle.wavy,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "${widget.post.posts.caption}",
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.6),
+                            decorationStyle: TextDecorationStyle.wavy,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
+                      
+                     widget.post.posts.post_tags.isNotEmpty? Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: Row(
+                            children: List.generate(
+                                widget.post.posts.post_tags.length, (index) {
+                          return Align(
+                            alignment: Alignment.centerLeft,
+                            child: GestureDetector(
+                              onTap: () {
+
+                              Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2){
+                                return UserProfileDetail(user: widget.post.posts.post_tags[index].profile);
+                              }));
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    widget.post.posts.post_tags[index].profile.name+"",
+                                    style: const TextStyle(
+                                        color: mPrimaryColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  index!=widget.post.posts.post_tags.length-1? Text(
+                                    ", ",
+                                    style:  TextStyle(
+                                        color: mPrimaryColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ):Container(),
+                                ],
+                              ),
+                            ),
+                          );
+                        })),
+                     ):Container(),
+                    ],
                   ),
                 ),
               ),
