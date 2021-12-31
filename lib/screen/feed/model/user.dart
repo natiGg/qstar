@@ -386,6 +386,7 @@ class GetComment {
   });
 
   factory GetComment.fromJson(Map<String, dynamic> json) {
+    
     return GetComment(
       id: json["id"] as int,
       comment: json["comment"],
@@ -397,3 +398,4 @@ class GetComment {
     );
   }
 }
+
