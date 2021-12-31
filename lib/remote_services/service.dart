@@ -620,16 +620,14 @@ class RemoteServices {
   static Future<List<GetComment>> getcomment(var id) async {
     res = await Network().getData("post/${id}/comments");
     var body = json.decode(res.body);
-
     print(body);
     if (res.statusCode == 200) {
       return body["data"]
           .map((e) => GetComment.fromJson(e))
           .toList()
           .cast<GetComment>();
-      // return User.fromJson(jsonDecode(body["data"]));
     } else {
-      throw Exception('Failed to load Users');
+      throw Exception('Failed to load Comment');
     }
   }
 
