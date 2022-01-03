@@ -7,7 +7,8 @@ class GetCommenteController extends GetxController {
   var list = <GetComment>[].obs;
   var isfetched = false.obs;
   var sent = false.obs;
-
+  var isActive=false.obs;
+  var isLiked=false.obs;
   void fetchComment(id) async {
     list.value = await RemoteServices.getcomment(id.toString());
     print(list.length.toString());
@@ -24,6 +25,22 @@ class GetCommenteController extends GetxController {
       }
     } on Exception {
       throw Exception('Failed to send  Mesaage');
+    }
+  }
+  void likeComment(comment_id) async {
+    try{
+        isLiked.value=await RemoteServices.likeCommentPost(comment_id);
+    }
+    on Exception {
+      throw Exception("can't like comment");
+    }
+  }
+    void dislikeComment(comment_id) async {
+    try{
+        isLiked.value=!await RemoteServices.dislikeCommentPost(comment_id);
+    }
+    on Exception {
+      throw Exception("can't like comment");
     }
   }
 }

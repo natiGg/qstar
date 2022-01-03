@@ -629,6 +629,29 @@ class RemoteServices {
     }
   }
 
+static Future<bool> likeCommentPost(var id) async {
+    var data = {'post_comment_id': id};
+    res = await Network().getpassedData(data, "postcommentlike");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      print("comment liked");
+      return true;
+    } else {
+      throw Exception('Failed to like');
+    }
+  }
+
+  static Future<bool> dislikeCommentPost(var id) async {
+    res = await Network().getdeleteData("postcommentlike/${id}");
+
+    if (res.statusCode == 200) {
+      print("disliked");
+      return true;
+    } else {
+      throw Exception('Failed to like');
+    }
+  }
   static Future<bool> sendcomment(var comment, var post_id) async {
     var data = {
       'comment': comment,

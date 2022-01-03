@@ -65,6 +65,7 @@ enum Share {
 }
 
 int? postid;
+
 class WPost extends StatefulWidget {
   final Feeds post;
 
@@ -73,13 +74,16 @@ class WPost extends StatefulWidget {
   @override
   State<WPost> createState() => _WPostState();
 }
-GetCommenteController getCommenteController = Get.put(GetCommenteController());
 
 late TextEditingController message;
+
 class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
   FeedController feedController = Get.find();
+  GetCommenteController getCommenteController =
+      Get.put(GetCommenteController());
+
   late VideoPlayerController controller;
   late Future<void> initializeVideoPlayerFuture;
   @override
@@ -93,7 +97,7 @@ class _WPostState extends State<WPost> {
       // Use the controller to loop the video.
       controller.setLooping(true);
     }
-        message = TextEditingController();
+    message = TextEditingController();
 
     // TODO: implement initState
     super.initState();
@@ -148,7 +152,8 @@ class _WPostState extends State<WPost> {
                                   PageRouteBuilder(
                                     pageBuilder:
                                         (context, animation1, animation2) {
-                                      return  UserProfileDetail(user: widget.post.posts.profile);
+                                      return UserProfileDetail(
+                                          user: widget.post.posts.profile);
                                     },
                                   ),
                                 );
@@ -273,43 +278,56 @@ class _WPostState extends State<WPost> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      
-                     widget.post.posts.post_tags.isNotEmpty? Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Row(
-                            children: List.generate(
-                                widget.post.posts.post_tags.length, (index) {
-                          return Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTap: () {
-
-                              Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2){
-                                return UserProfileDetail(user: widget.post.posts.post_tags[index].profile);
-                              }));
-                              },
+                      widget.post.posts.post_tags.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                children: [
-                                  Text(
-                                    widget.post.posts.post_tags[index].profile.name+"",
-                                    style: const TextStyle(
-                                        color: mPrimaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+                                  children: List.generate(
+                                      widget.post.posts.post_tags.length,
+                                      (index) {
+                                return Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context, PageRouteBuilder(
+                                          pageBuilder: (context, animation1,
+                                              animation2) {
+                                        return UserProfileDetail(
+                                            user: widget.post.posts
+                                                .post_tags[index].profile);
+                                      }));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          widget.post.posts.post_tags[index]
+                                                  .profile.name +
+                                              "",
+                                          style: const TextStyle(
+                                              color: mPrimaryColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        index !=
+                                                widget.post.posts.post_tags
+                                                        .length -
+                                                    1
+                                            ? Text(
+                                                ", ",
+                                                style: TextStyle(
+                                                    color: mPrimaryColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
                                   ),
-                                  index!=widget.post.posts.post_tags.length-1? Text(
-                                    ", ",
-                                    style:  TextStyle(
-                                        color: mPrimaryColor,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold),
-                                  ):Container(),
-                                ],
-                              ),
-                            ),
-                          );
-                        })),
-                     ):Container(),
+                                );
+                              })),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),
@@ -346,33 +364,33 @@ class _WPostState extends State<WPost> {
                       ),
                       height: 500,
                     )
-                  :
-                  GestureDetector(
-                    onTap: (){
-                       
-                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(post: widget.post.posts)));
-                    },
-                    child: Stack(
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                pageBuilder: (context, animation1,
+                                        animation2) =>
+                                    Qvideoscreen2(post: widget.post.posts)));
+                      },
+                      child: Stack(
                         children: [
                           VisibilityDetector(
                               key: Key("unique key"),
                               onVisibilityChanged: (VisibilityInfo info) {
-                                  if(info.visibleFraction == 0){
-                                      controller.pause();
-                                  }
-                                  else{
-                                      controller.play();
-                                  }
+                                if (info.visibleFraction == 0) {
+                                  controller.pause();
+                                } else {
+                                  controller.play();
+                                }
                               },
-                              child: AspectRatio(aspectRatio:controller.value.aspectRatio , child: VideoPlayer(controller))),
-                           
+                              child: AspectRatio(
+                                  aspectRatio: controller.value.aspectRatio,
+                                  child: VideoPlayer(controller))),
                         ],
                       ),
-                  ),
-
-
+                    ),
             ),
-            
             widget.post.posts.is_image.toString() == "1"
                 ? Container(
                     height: 500,
@@ -424,28 +442,31 @@ class _WPostState extends State<WPost> {
                     child: activeLikeButton(feedController.isActive.value)),
                 GestureDetector(
                     onTap: () {
-                      showSheetcomment(context,widget.post.posts.post_id);
+                      showSheetcomment(context, widget.post.posts.post_id);
                     },
                     child: Comment()),
                 Share(),
                 const Spacer(),
                 const Spacer(),
-               IconButton(
+                IconButton(
                     onPressed: () {
                       setState(() {
-                          if(!feedController.isBookMarked.value){
-                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
-                         feedController.postBookMark(widget.post.posts.post_id);
-                       }
-                       else if(feedController.isBookMarked.value){
-                         feedController.unBookMark(widget.post.posts.post_id);
-                         feedController.isBookMarked.value=!feedController.isBookMarked.value;
-                       }
+                        if (!feedController.isBookMarked.value) {
+                          feedController.isBookMarked.value =
+                              !feedController.isBookMarked.value;
+                          feedController
+                              .postBookMark(widget.post.posts.post_id);
+                        } else if (feedController.isBookMarked.value) {
+                          feedController.unBookMark(widget.post.posts.post_id);
+                          feedController.isBookMarked.value =
+                              !feedController.isBookMarked.value;
+                        }
                       });
-                     
                     },
-                    icon:  Icon(
-                    feedController.isBookMarked.value? Icons.bookmark:Icons.bookmark_border,
+                    icon: Icon(
+                      feedController.isBookMarked.value
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
                       color: mPrimaryColor,
                     )),
                 const SizedBox(
@@ -550,382 +571,428 @@ class _WPostState extends State<WPost> {
       ),
     );
   }
-}
 
-void showSheet(context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 10,
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    const Spacer(),
-                    const Text(
-                      "Send to",
-                      style: TextStyle(
-                        color: mPrimaryColor,
-                        fontFamily: "font1",
-                        fontSize: 24,
-                      ),
+  void showSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 10,
                     ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) =>
-                                const Search(),
-                            transitionDuration: Duration.zero,
-                          ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.search,
-                        color: mPrimaryColor,
-                        size: 15,
-                      ),
-                    ),
-                  ])
-                ],
-              )),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Expanded(
-                  child: Container(
-                    height: 150,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                            ),
-                          ],
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      const Spacer(),
+                      const Text(
+                        "Send to",
+                        style: TextStyle(
+                          color: mPrimaryColor,
+                          fontFamily: "font1",
+                          fontSize: 24,
                         ),
-                      ],
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  const Search(),
+                              transitionDuration: Duration.zero,
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.search,
+                          color: mPrimaryColor,
+                          size: 15,
+                        ),
+                      ),
+                    ])
+                  ],
+                )),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Expanded(
+                    child: Container(
+                      height: 150,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ]),
-              const Divider(indent: 18, endIndent: 18, color: Colors.grey),
-              const Text(
-                "Share to",
-                style: TextStyle(
-                  color: mPrimaryColor,
-                  fontFamily: "font1",
-                  fontSize: 24,
-                ),
-              ),
-              Container(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            Icons.copy,
-                            color: mPrimaryColor,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("copy link",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.whatsapp,
-                            color: Colors.green,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("whatsapp",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.facebook,
-                            color: Colors.blue,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("More Apps",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.instagram,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("Instagram",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.telegram,
-                            color: Colors.blue,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("Telegram",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 21,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitter,
-                            color: Colors.blue,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("twitter",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 26,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google_plus,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("google_plus",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 32,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.twitch,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Text("twitch",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 25,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.youtube,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 8,
-                          ),
-                          Text("youtube",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 18,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            FontAwesome.google,
-                            color: Colors.redAccent,
-                          ),
-                          Container(
-                            height: 2,
-                          ),
-                          Text("google",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                      Container(
-                        width: 26,
-                      ),
-                      Container(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Icon(
-                            Icons.more_horiz_sharp,
-                            color: mPrimaryColor,
-                          ),
-                          Container(
-                            height: 6,
-                          ),
-                          Text("More App",
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                              ))
-                        ],
-                      )),
-                    ],
+                ]),
+                const Divider(indent: 18, endIndent: 18, color: Colors.grey),
+                const Text(
+                  "Share to",
+                  style: TextStyle(
+                    color: mPrimaryColor,
+                    fontFamily: "font1",
+                    fontSize: 24,
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      });
-}
-
-_buildMessageComposer(int post_id) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    height: 60,
-    // ignore: prefer_const_constructors
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
-    ),
-    child: Row(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.emoji_emotions_outlined,
-                  color: Colors.grey[500],
+                Container(
+                  height: 10,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: message,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Type your Comment ...',
-                      hintStyle: TextStyle(color: Colors.grey[500]),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: 18,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              Icons.copy,
+                              color: mPrimaryColor,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("copy link",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 18,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.whatsapp,
+                              color: Colors.green,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("whatsapp",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 18,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.facebook,
+                              color: Colors.blue,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("More Apps",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 18,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.instagram,
+                              color: Colors.redAccent,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("Instagram",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.telegram,
+                              color: Colors.blue,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("Telegram",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 21,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.twitter,
+                              color: Colors.blue,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("twitter",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 26,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.google_plus,
+                              color: Colors.red,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("google_plus",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 32,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.twitch,
+                              color: Colors.redAccent,
+                            ),
+                            Container(
+                              height: 10,
+                            ),
+                            Text("twitch",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 25,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.youtube,
+                              color: Colors.red,
+                            ),
+                            Container(
+                              height: 8,
+                            ),
+                            Text("youtube",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 18,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              FontAwesome.google,
+                              color: Colors.redAccent,
+                            ),
+                            Container(
+                              height: 2,
+                            ),
+                            Text("google",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                        Container(
+                          width: 26,
+                        ),
+                        Container(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Icon(
+                              Icons.more_horiz_sharp,
+                              color: mPrimaryColor,
+                            ),
+                            Container(
+                              height: 6,
+                            ),
+                            Text("More App",
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                ))
+                          ],
+                        )),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        GestureDetector(
-          onTap: () {
-            getCommenteController.sendcomment(message.text, post_id);
-            message.clear();
-          },
-          child: const CircleAvatar(
-            backgroundColor: mPrimaryColor,
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
+          );
+        });
+  }
+
+  _buildMessageComposer(int post_id) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      height: 60,
+      // ignore: prefer_const_constructors
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.emoji_emotions_outlined,
+                    color: Colors.grey[500],
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: message,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Type your Comment ...',
+                        hintStyle: TextStyle(color: Colors.grey[500]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        )
-      ],
-    ),
-  );
+          const SizedBox(
+            width: 16,
+          ),
+          GestureDetector(
+            onTap: () {
+              getCommenteController.sendcomment(message.text, post_id);
+              message.clear();
+            },
+            child: const CircleAvatar(
+              backgroundColor: mPrimaryColor,
+              child: Icon(
+                Icons.send,
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  void showSheetcomment(context, int post_id) {
+    getCommenteController.fetchComment(post_id);
+
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: SizedBox(
+                height: 400,
+                child: Obx(() => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        getCommenteController.list.value.isNotEmpty
+                            ? Expanded(
+                                child: ListView.builder(
+                                    itemCount:
+                                        getCommenteController.list.length,
+                                    reverse: false,
+                                    itemBuilder: (context, int index) {
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: CommestList(
+                                          user: getCommenteController
+                                              .list[index].profile,
+                                          comment:
+                                              getCommenteController.list[index],
+                                        ),
+                                      );
+                                    }),
+                              )
+                            : Container(
+                                child: Center(
+                                    child: const CircularProgressIndicator()),
+                              ),
+                        _buildMessageComposer(post_id)
+                      ],
+                    )),
+              ),
+            ));
+  }
 }
 
 Future<void> onButtonTap(Share share, id, cap) async {
@@ -966,64 +1033,22 @@ Future<void> onButtonTap(Share share, id, cap) async {
   debugPrint(response);
 }
 
-void showSheetcomment(context, int post_id) {
-  getCommenteController.fetchComment(post_id);
-
-  showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
-      backgroundColor: Colors.white,
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: SizedBox(
-              height: 400,
-              child: Obx(() => Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      getCommenteController.list.value.isNotEmpty
-                          ? Expanded(
-                              child: ListView.builder(
-                                  itemCount: getCommenteController.list.length,
-                                  reverse: false,
-                                  itemBuilder: (context, int index) {
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: CommestList(
-                                        user: getCommenteController
-                                            .list[index].profile,
-                                        replies: getCommenteController
-                                            .list[index].replies,
-                                        comment:
-                                            getCommenteController.list[index],
-                                      ),
-                                    );
-                                  }),
-                            )
-                          : Container(
-                              child: Center(
-                                  child: const CircularProgressIndicator()),
-                            ),
-                      _buildMessageComposer(post_id)
-                    ],
-                  )),
-            ),
-          ));
-}
-
-class CommestList extends StatelessWidget {
-  final User? user;
-  final GetComment? comment;
-  final List<GetComment>? replies;
+class CommestList extends StatefulWidget {
+  final User user;
+  final GetComment comment;
 
   const CommestList({
     Key? key,
     required this.user,
-    required this.replies,
     required this.comment,
   }) : super(key: key);
+
+  @override
+  State<CommestList> createState() => _CommestListState();
+}
+
+class _CommestListState extends State<CommestList> {
+  GetCommenteController getCommenteController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -1051,7 +1076,7 @@ class CommestList extends StatelessWidget {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                            "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                            "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}"))),
               ),
               Expanded(
                   child: Container(
@@ -1064,10 +1089,10 @@ class CommestList extends StatelessWidget {
                       RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                              text: user!.name,
+                              text: widget.user.name,
                               style: Theme.of(context).textTheme.bodyText2),
                           TextSpan(
-                              text: " " + comment!.comment,
+                              text: " " + widget.comment.comment,
                               style: Theme.of(context).textTheme.bodyText1),
                         ]),
                       ),
@@ -1082,7 +1107,7 @@ class CommestList extends StatelessWidget {
                             child: Row(
                               // ignore: prefer_const_literals_to_create_immutables
                               children: [
-                                Text(comment!.date),
+                                Text(widget.comment.date),
                                 SizedBox(
                                   width: 24,
                                 ),
@@ -1092,7 +1117,7 @@ class CommestList extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      message.text = user!.name;
+                                      message.text = widget.user.name;
 
                                       //  getCommenteController.sendreplay(message.text, post_id);
                                     },
@@ -1104,118 +1129,38 @@ class CommestList extends StatelessWidget {
                   ),
                 ),
               )),
-              Container(
-                padding: EdgeInsets.all(8),
-                child: const Icon(
-                  Icons.favorite,
-                  size: 16,
-                ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (!getCommenteController.isActive.value) {
+                      getCommenteController.isActive.value =
+                          !getCommenteController.isActive.value;
+                      getCommenteController.likeComment(widget.comment.id);
+                    } else {
+                      getCommenteController.isActive.value =
+                          !getCommenteController.isActive.value;
+                      getCommenteController.dislikeComment(widget.comment.id);
+                    }
+                  });
+                },
+                child: likeComment(getCommenteController.isActive.value),
               )
             ],
           ),
         ),
-        replies!.isNotEmpty
-            ? ListView.builder(
-                itemCount: replies!.length,
-                reverse: false,
-                itemBuilder: (context, int index) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(0, 10))
-                              ],
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "https://qstar.mindethiopia.com/api/getProfilePicture/${replies![index].profile.id}"))),
-                        ),
-                        Expanded(
-                            child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(
-                                        text: replies![index].profile.name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2),
-                                    TextSpan(
-                                        text: " " + replies![index].comment,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1),
-                                  ]),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: DefaultTextStyle(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400),
-                                      child: Row(
-                                        // ignore: prefer_const_literals_to_create_immutables
-                                        children: [
-                                          Text(comment!.date),
-                                          SizedBox(
-                                            width: 24,
-                                          ),
-                                          Text('3 likes'),
-                                          SizedBox(
-                                            width: 24,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                message.text = user!.name;
-
-                                                //  getCommenteController.sendreplay(message.text, post_id);
-                                              },
-                                              child: Text('Reply'))
-                                        ],
-                                      )),
-                                )
-                              ],
-                            ),
-                          ),
-                        )),
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(
-                            Icons.favorite,
-                            size: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                })
-            : Container(
-                child: Text(replies!.length.toString()),
-              ),
       ],
+    );
+  }
+
+  Widget likeComment(isActive) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: Icon(
+        getCommenteController.isActive.value
+            ? FontAwesome.heart
+            : FontAwesome.heart_o,
+        size: 16,
+      ),
     );
   }
 }

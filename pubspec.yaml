@@ -82,6 +82,7 @@ dependencies:
   location: ^4.3.0
   visibility_detector: ^0.2.2
   flutter_share_me: ^1.2.0
+  json_serializable: ^6.1.3
   
 
 

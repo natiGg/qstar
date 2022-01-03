@@ -21,7 +21,6 @@ class FeedController extends GetxController with StateMixin {
   var isActive = false.obs;
   var isdisActive = false.obs;
   var isBookMarked = false.obs;
-  
   var uid;
   var isPlaying = false.obs;
 
