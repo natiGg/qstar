@@ -199,7 +199,9 @@ class _WPostState extends State<WPost> {
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  const ReportScreen(),
+                                                  ReportScreen(
+                                                      postid: widget
+                                                          .post.posts.post_id),
                                               transitionDuration: Duration.zero,
                                             ),
                                           );
@@ -556,9 +558,6 @@ class _WPostState extends State<WPost> {
     );
   }
 
-
-
-
   _buildMessageComposer(int post_id) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -668,6 +667,7 @@ class _WPostState extends State<WPost> {
             ));
   }
 }
+
 void showSheet(context, int post_id, String caption) {
   showModalBottomSheet(
       context: context,
@@ -1069,9 +1069,7 @@ class _CommestListState extends State<CommestList> {
                 ),
               )),
               GestureDetector(
-                onTap: () {
-                
-                },
+                onTap: () {},
                 child: likebutonComment(getCommenteController.isActive.value),
               )
             ],
@@ -1092,28 +1090,29 @@ class _CommestListState extends State<CommestList> {
       ),
     );
   }
-    Widget likebutonComment(isActive) {
+
+  Widget likebutonComment(isActive) {
     return Container(
       padding: EdgeInsets.all(8),
       child: IconButton(
         onPressed: () {
           setState(() {
-                    if (!getCommenteController.isActive.value) {
-                      getCommenteController.isActive.value =
-                          !getCommenteController.isActive.value;
-                      getCommenteController.likeComment(widget.comment.id);
-                    } else {
-                      getCommenteController.isActive.value =
-                          !getCommenteController.isActive.value;
-                      getCommenteController.dislikeComment(widget.comment.id);
-                    }
-                  });
+            if (!getCommenteController.isActive.value) {
+              getCommenteController.isActive.value =
+                  !getCommenteController.isActive.value;
+              getCommenteController.likeComment(widget.comment.id);
+            } else {
+              getCommenteController.isActive.value =
+                  !getCommenteController.isActive.value;
+              getCommenteController.dislikeComment(widget.comment.id);
+            }
+          });
         },
-        icon:Icon(  getCommenteController.isActive.value
-            ? FontAwesome.heart
-            : FontAwesome.heart_o,size: 14)
-      ,
-        
+        icon: Icon(
+            getCommenteController.isActive.value
+                ? FontAwesome.heart
+                : FontAwesome.heart_o,
+            size: 14),
       ),
     );
   }

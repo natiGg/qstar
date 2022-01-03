@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:qstar/controllers/getcommentcontroller.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
+import 'package:qstar/screen/feed/widgets/post.dart';
+
+import '../../../constant.dart';
+
+GetCommenteController getCommenteController = Get.put(GetCommenteController());
 
 class InfoWidget extends StatelessWidget {
- final Feeds post;
-  const InfoWidget({Key? key,required this.post}) : super(key: key);
+  final Feeds post;
+  const InfoWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +39,13 @@ class InfoWidget extends StatelessWidget {
           InkWell(
             child: Container(
               child: Text(
-                'View all 4 comment',
+                'View all ${getCommenteController.list.length} comment',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               padding: const EdgeInsets.symmetric(vertical: 5),
             ),
             onTap: () {
-              showSheetcomment(context);
+              showSheetcomment(context, post.posts.post_id);
             },
           )
         ],
@@ -47,7 +54,9 @@ class InfoWidget extends StatelessWidget {
   }
 }
 
-void showSheetcomment(context) {
+void showSheetcomment(context, int post_id) {
+  getCommenteController.fetchComment(post_id);
+
   showModalBottomSheet(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -55,70 +64,100 @@ void showSheetcomment(context) {
       context: context,
       isScrollControlled: true,
       builder: (context) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                    CommentWidget(),
-                  ],
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: SizedBox(
+              height: 400,
+              child: Obx(() => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      getCommenteController.list.value.isNotEmpty
+                          ? Expanded(
+                              child: ListView.builder(
+                                  itemCount: getCommenteController.list.length,
+                                  reverse: false,
+                                  itemBuilder: (context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: CommestList(
+                                        user: getCommenteController
+                                            .list[index].profile,
+                                        comment:
+                                            getCommenteController.list[index],
+                                      ),
+                                    );
+                                  }),
+                            )
+                          : Container(
+                              child: Center(
+                                  child: const CircularProgressIndicator()),
+                            ),
+                      _buildMessageComposer(post_id)
+                    ],
+                  )),
+            ),
+          ));
+}
+
+_buildMessageComposer(int post_id) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    height: 60,
+    // ignore: prefer_const_constructors
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(30.0)),
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: Colors.grey[500],
                 ),
-                Material(
-                  type: MaterialType.canvas,
-                  child: SafeArea(
-                    child: Container(
-                      height: kToolbarHeight,
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      padding: const EdgeInsets.only(left: 16, right: 8),
-                      child: Row(
-                        children: [
-                          // ignore: prefer_const_constructors
-                          CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/images/1.jpg'),
-                            radius: 18,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            // ignore: prefer_const_constructors
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 16, right: 8),
-                              // ignore: prefer_const_constructors
-                              child: TextField(
-                                // ignore: prefer_const_constructors
-                                decoration: InputDecoration(
-                                    hintText: 'Comment here',
-                                    border: InputBorder.none),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              child: Text(
-                                'Post',
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText2
-                                    ?.copyWith(color: Colors.blue),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: message,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type your Comment ...',
+                      hintStyle: TextStyle(color: Colors.grey[500]),
                     ),
                   ),
                 ),
               ],
             ),
-          ));
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        GestureDetector(
+          onTap: () {
+            getCommenteController.sendcomment(message.text, post_id);
+            message.clear();
+          },
+          child: const CircleAvatar(
+            backgroundColor: mPrimaryColor,
+            child: Icon(
+              Icons.send,
+              color: Colors.white,
+            ),
+          ),
+        )
+      ],
+    ),
+  );
 }
