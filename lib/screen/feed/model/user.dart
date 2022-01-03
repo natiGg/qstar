@@ -386,7 +386,6 @@ class GetComment {
   });
 
   factory GetComment.fromJson(Map<String, dynamic> json) {
-    
     return GetComment(
       id: json["id"] as int,
       comment: json["comment"],
@@ -420,3 +419,19 @@ class GetReply {
   }
 }
 
+class GetReportCategory {
+  int id;
+  String category;
+
+  GetReportCategory({
+    required this.id,
+    required this.category,
+  });
+
+  factory GetReportCategory.fromJson(Map<String, dynamic> json) {
+    return GetReportCategory(
+      id: json["id"] as int,
+      category: json["category"],
+    );
+  }
+}

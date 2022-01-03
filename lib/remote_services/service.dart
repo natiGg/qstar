@@ -646,4 +646,18 @@ class RemoteServices {
       throw Exception('Failed to send  Mesaage');
     }
   }
+
+  static Future<List<GetReportCategory>> getReportCategory() async {
+    res = await Network().getData("reportCategory");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => GetReportCategory.fromJson(e))
+          .toList()
+          .cast<GetReportCategory>();
+    } else {
+      throw Exception('Failed to load Comment');
+    }
+  }
 }
