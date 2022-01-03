@@ -1,153 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:qstar/controllers/getreportcontroller.dart';
+import 'package:qstar/screen/feed/model/user.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:qstar/constant.dart';
 
 class ReportScreen extends StatefulWidget {
-  const ReportScreen({Key? key}) : super(key: key);
+  final int? postid;
+
+  const ReportScreen({required this.postid});
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
+GeteportCategoryController getReportCategory =
+    Get.put(GeteportCategoryController());
+
 class _SettingsScreenState extends State<ReportScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      getReportCategory.fetchReplay();
+    });
+
+    super.initState();
+  }
+
   bool lockInBackground = true;
   bool notificationsEnabled = true;
   late String strTitle;
   List<ReportScreen> arrSongList = [];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: mPrimaryColor,
-              onPressed: () {
-                Navigator.popUntil(context, (route) => route.isFirst);
-              }),
-          title: const Text(
-            "Report",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 27,
-              fontFamily: 'font1',
+    return Obx(() => Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: mPrimaryColor,
+                onPressed: () {
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }),
+            title: const Text(
+              "Report",
+              style: TextStyle(
+                color: mPrimaryColor,
+                fontSize: 27,
+                fontFamily: 'font1',
+              ),
             ),
+            elevation: 0.0,
           ),
-          elevation: 0.0,
-        ),
-        body: Column(children: [
-          const Center(
-            child: ListTile(
-              title: Text("Why are you reporting this post?"),
-              subtitle: Text('Your report is anonymous'),
-            ),
-          ),
-          ListTile(
-              title: const Text("Its spam"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text("Hate speech"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text(" Sextual activity"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text(" False information"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text(" Scum or fraud"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text("I just dont like it "),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text("Self injury"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-          ListTile(
-              title: const Text("Other"),
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: "Succefully Reported",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0);
-                Navigator.pop(context);
-              }),
-        ]));
+          body: getReportCategory.isfetched.isTrue
+              ? ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return FollowedList(
+                        report: getReportCategory.list[index],
+                        postid: widget.postid);
+                  },
+                  itemCount: getReportCategory.list.length,
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+        ));
+  }
+}
+
+class FollowedList extends StatelessWidget {
+  final GetReportCategory? report;
+  final int? postid;
+
+  const FollowedList({Key? key, required this.report, required this.postid})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    GeteportCategoryController geteportCategoryController = Get.find();
+
+    return Material(
+        color: Theme.of(context).cardColor,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+                child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                  title: Text(report!.category),
+                  onTap: () async {
+                    geteportCategoryController.sendReport(report!.id, postid);
+                    await Future.delayed(const Duration(seconds: 1));
+                    geteportCategoryController.sent.value
+                        ? Fluttertoast.showToast(
+                            msg: "Succefully Reported",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0)
+                        : Fluttertoast.showToast(
+                            msg: "Not Succefully Reported",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                    Navigator.pop(context);
+                  }),
+            )),
+          ],
+        ));
   }
 }

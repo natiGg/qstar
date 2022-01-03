@@ -631,7 +631,7 @@ class RemoteServices {
     }
   }
 
-static Future<bool> likeCommentPost(var id) async {
+  static Future<bool> likeCommentPost(var id) async {
     var data = {'post_comment_id': id};
     res = await Network().getpassedData(data, "postcommentlike");
     var body = json.decode(res.body);
@@ -654,6 +654,7 @@ static Future<bool> likeCommentPost(var id) async {
       throw Exception('Failed to like');
     }
   }
+
   static Future<bool> sendcomment(var comment, var post_id) async {
     var data = {
       'comment': comment,
@@ -675,12 +676,32 @@ static Future<bool> likeCommentPost(var id) async {
     var body = json.decode(res.body);
 
     if (res.statusCode == 200) {
-      return body["data"]
+      return body
           .map((e) => GetReportCategory.fromJson(e))
           .toList()
           .cast<GetReportCategory>();
     } else {
       throw Exception('Failed to load Comment');
+    }
+  }
+
+  static Future<bool> sendReport(
+    var report_category_id,
+    var post_id,
+  ) async {
+    var data = {
+      'report_category_id': report_category_id,
+      'post_id': post_id,
+    };
+    res = await Network().getpassedData(data, "postReport");
+    body = json.decode(res.body);
+    // ignore: avoid_print
+    print("body");
+    print(body);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to send  Mesaage');
     }
   }
 }
