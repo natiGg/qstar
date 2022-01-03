@@ -5,6 +5,7 @@ import 'package:qstar/screen/feed/model/user.dart';
 
 class GetCommenteController extends GetxController {
   var list = <GetComment>[].obs;
+
   var isfetched = false.obs;
   var sent = false.obs;
   var isActive=false.obs;

@@ -393,3 +393,42 @@ class GetComment {
   }
 }
 
+class GetReply {
+  int id;
+  String comment;
+  String date;
+  User profile;
+
+  GetReply({
+    required this.id,
+    required this.comment,
+    required this.date,
+    required this.profile,
+  });
+
+  factory GetReply.fromJson(Map<String, dynamic> json) {
+    return GetReply(
+      id: json["id"] as int,
+      comment: json["comment"],
+      date: json["date"],
+      profile: User.fromJson(json["profile"][0]),
+    );
+  }
+}
+
+class GetReportCategory {
+  int id;
+  String category;
+
+  GetReportCategory({
+    required this.id,
+    required this.category,
+  });
+
+  factory GetReportCategory.fromJson(Map<String, dynamic> json) {
+    return GetReportCategory(
+      id: json["id"] as int,
+      category: json["category"],
+    );
+  }
+}

@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-
 import 'package:flutter/material.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
-
 import 'package:rich_text_controller/rich_text_controller.dart';
 
 class PerfectMatchController extends GetxController with StateMixin {

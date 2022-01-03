@@ -6,6 +6,7 @@ import 'package:qstar/screen/Chat/chat_screen.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
@@ -31,23 +32,29 @@ class UserProfileDetail extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
+late Followcontroller followcontroller = Get.find();
+late FeedController feedController = Get.find();
+late VoidCallback? _onShowMenu;
+VideoPlayerController? controller;
+late Future<void>? initializeVideoPlayerFuture;
+
 class _ProfileScreenState extends State<UserProfileDetail> {
-  Followcontroller followcontroller = Get.find();
-  FeedController feedController = Get.find();
-  VoidCallback? _onShowMenu;
-  late VideoPlayerController controller;
-  late Future<void> initializeVideoPlayerFuture;
   @override
   void initState() {
-    followcontroller.check(widget.user!.id, feedController.uid);
-    followcontroller.fetchUProfile(widget.user!.id);
-    followcontroller.fetchFlgPost(widget.user!.id);
-    controller = VideoPlayerController.network(
+    // followcontroller.following_list.value = [];
+
+    Future.delayed(Duration.zero, () async {
+      followcontroller.check(widget.user!.id, feedController.uid);
+      followcontroller.fetchUProfile(widget.user!.id);
+      followcontroller.fetchFlgPost(widget.user!.id);
+      controller = VideoPlayerController.network(
           "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[0].post_id}");
 
-   initializeVideoPlayerFuture = controller.initialize();
+      initializeVideoPlayerFuture = controller!.initialize();
       // Use the controller to loop the video.
-      controller.setLooping(true);
+      controller!.setLooping(true);
+    });
+
     super.initState();
     _onShowMenu = () {
       context.showBottomSheet2([
@@ -99,7 +106,8 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               color: mPrimaryColor),
         ],
       ),
-      body: Obx(() => followcontroller.isChecked.value && !followcontroller.isFetching.value
+      body: Obx(() => followcontroller.isChecked.value &&
+              !followcontroller.isFetching.value
           ? SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -139,7 +147,8 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                                         child: GestureDetector(
                                           onTap: () {
                                             followcontroller.follow(
-                                                followcontroller.profile.id.toString());
+                                                followcontroller.profile.id
+                                                    .toString());
                                           },
                                           child: follow(
                                             primaryColorDark: _primaryColorDark,
@@ -222,26 +231,37 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                             borderRadius: _pageIndex == 1
                                 ? BorderRadius.circular(15)
                                 : BorderRadius.circular(0),
-                            child:followcontroller.flgPosts[index].is_image=="1"? Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[index].post_id}"),
-                            ):GestureDetector(
-                              onTap: (){
-                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,animation1,animation2)=> Qvideoscreen2(post: followcontroller.flgPosts[index])));
-                              },
-                              child: Stack(children:[ VideoPlayer(controller),       Align(
-                                              alignment: Alignment.center,
-                                              child: IconButton(
-                                                icon: const Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 40.0,
-                                                ),
-                                                onPressed: () {
-                                           
-                                                },
-                                              )),])),
+                            child: followcontroller.flgPosts[index].is_image ==
+                                    "1"
+                                ? Image(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[index].post_id}"),
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                              pageBuilder: (context, animation1,
+                                                      animation2) =>
+                                                  Qvideoscreen2(
+                                                      post: followcontroller
+                                                          .flgPosts[index])));
+                                    },
+                                    child: Stack(children: [
+                                      VideoPlayer(controller!),
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: IconButton(
+                                            icon: const Icon(
+                                              Icons.play_arrow_rounded,
+                                              color: Colors.white,
+                                              size: 40.0,
+                                            ),
+                                            onPressed: () {},
+                                          )),
+                                    ])),
                           ),
                         ),
                       );
@@ -266,14 +286,16 @@ class _ProfileScreenState extends State<UserProfileDetail> {
             )),
     );
   }
+
   void onPlay() async {
-    if (controller.value.isPlaying) {
-      controller.pause();
+    if (controller!.value.isPlaying) {
+      controller!.pause();
     } else {
       // If the video is paused, play it.
-      controller.play();
+      controller!.play();
     }
   }
+
   Widget follow(
       {@required Color? primaryColor, required Color primaryColorDark}) {
     return Container(
@@ -415,7 +437,9 @@ class _ProfileScreenState extends State<UserProfileDetail> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                statsBox(count: followcontroller.profile.posts_count, title: 'Posts'),
+                statsBox(
+                    count: followcontroller.profile.posts_count,
+                    title: 'Posts'),
                 GestureDetector(
                     onTap: () {
                       // Navigator.push(
@@ -428,21 +452,23 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                       // );
                     },
                     child: statsBox(
-                        count: followcontroller.profile.followers_count.toString(),
+                        count:
+                            followcontroller.profile.followers_count.toString(),
                         title: 'Followers')),
                 GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   PageRouteBuilder(
-                      //     pageBuilder: (context, animation1, animation2) =>
-                      //         const Followed(),
-                      //     transitionDuration: Duration.zero,
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              Followed(id: widget.user!.id),
+                          transitionDuration: Duration.zero,
+                        ),
+                      );
                     },
                     child: statsBox(
-                        count: followcontroller.profile.following_count.toString(),
+                        count:
+                            followcontroller.profile.following_count.toString(),
                         title: 'Following')),
               ],
             ),

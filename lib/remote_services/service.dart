@@ -56,7 +56,8 @@ class RemoteServices {
       throw Exception('Failed to like');
     }
   }
-    static Future<bool> bookMarkPost(var id) async {
+
+  static Future<bool> bookMarkPost(var id) async {
     var data = {'post_id': id};
     res = await Network().getpassedData(data, "saved");
     var body = json.decode(res.body);
@@ -130,7 +131,8 @@ class RemoteServices {
       throw Exception('Failed to load Users');
     }
   }
-    static Future<List<Posts>> fetchFlgPosts(var id) async {
+
+  static Future<List<Posts>> fetchFlgPosts(var id) async {
     res = await Network().getData("profile/${id}/posts");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
@@ -665,6 +667,20 @@ static Future<bool> likeCommentPost(var id) async {
       return true;
     } else {
       throw Exception('Failed to send  Mesaage');
+    }
+  }
+
+  static Future<List<GetReportCategory>> getReportCategory() async {
+    res = await Network().getData("reportCategory");
+    var body = json.decode(res.body);
+
+    if (res.statusCode == 200) {
+      return body["data"]
+          .map((e) => GetReportCategory.fromJson(e))
+          .toList()
+          .cast<GetReportCategory>();
+    } else {
+      throw Exception('Failed to load Comment');
     }
   }
 }
