@@ -1131,19 +1131,9 @@ class _CommestListState extends State<CommestList> {
               )),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    if (!getCommenteController.isActive.value) {
-                      getCommenteController.isActive.value =
-                          !getCommenteController.isActive.value;
-                      getCommenteController.likeComment(widget.comment.id);
-                    } else {
-                      getCommenteController.isActive.value =
-                          !getCommenteController.isActive.value;
-                      getCommenteController.dislikeComment(widget.comment.id);
-                    }
-                  });
+                
                 },
-                child: likeComment(getCommenteController.isActive.value),
+                child: likebutonComment(getCommenteController.isActive.value),
               )
             ],
           ),
@@ -1160,6 +1150,31 @@ class _CommestListState extends State<CommestList> {
             ? FontAwesome.heart
             : FontAwesome.heart_o,
         size: 16,
+      ),
+    );
+  }
+    Widget likebutonComment(isActive) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      child: IconButton(
+        onPressed: () {
+          setState(() {
+                    if (!getCommenteController.isActive.value) {
+                      getCommenteController.isActive.value =
+                          !getCommenteController.isActive.value;
+                      getCommenteController.likeComment(widget.comment.id);
+                    } else {
+                      getCommenteController.isActive.value =
+                          !getCommenteController.isActive.value;
+                      getCommenteController.dislikeComment(widget.comment.id);
+                    }
+                  });
+        },
+        icon:Icon(  getCommenteController.isActive.value
+            ? FontAwesome.heart
+            : FontAwesome.heart_o,size: 14)
+      ,
+        
       ),
     );
   }
