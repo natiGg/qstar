@@ -10,6 +10,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
+import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/widgets/profile_tab_bar.dart';
@@ -32,8 +33,11 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
+int? userid;
 final EditprofileController editprofileController =
     Get.put(EditprofileController());
+
+FeedController feedController = Get.find();
 
 class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
@@ -71,6 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       // ignore: avoid_print
       print(body["id"]);
       editprofileController.fetchProfile(body["id"]);
+      userid = feedController.uid;
       editprofileController.fetchlinks(body["id"]);
     }
   }
@@ -496,7 +501,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              const Followed(),
+                              Followed(id: userid),
                           transitionDuration: Duration.zero,
                         ),
                       );

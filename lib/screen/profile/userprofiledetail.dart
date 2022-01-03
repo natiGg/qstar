@@ -6,6 +6,7 @@ import 'package:qstar/screen/Chat/chat_screen.dart';
 import 'package:qstar/screen/Chat/home_screen.dart';
 
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/profile/following.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
@@ -31,24 +32,29 @@ class UserProfileDetail extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-Followcontroller followcontroller = Get.find();
-FeedController feedController = Get.find();
-VoidCallback? _onShowMenu;
+late Followcontroller followcontroller = Get.find();
+late FeedController feedController = Get.find();
+late VoidCallback? _onShowMenu;
 VideoPlayerController? controller;
-Future<void>? initializeVideoPlayerFuture;
+late Future<void>? initializeVideoPlayerFuture;
 
 class _ProfileScreenState extends State<UserProfileDetail> {
   @override
   void initState() {
-    followcontroller.check(widget.user!.id, feedController.uid);
-    followcontroller.fetchUProfile(widget.user!.id);
-    followcontroller.fetchFlgPost(widget.user!.id);
-    controller = VideoPlayerController.network(
-        "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[0].post_id}");
+    // followcontroller.following_list.value = [];
 
-    initializeVideoPlayerFuture = controller!.initialize();
-    // Use the controller to loop the video.
-    controller!.setLooping(true);
+    Future.delayed(Duration.zero, () async {
+      followcontroller.check(widget.user!.id, feedController.uid);
+      followcontroller.fetchUProfile(widget.user!.id);
+      followcontroller.fetchFlgPost(widget.user!.id);
+      controller = VideoPlayerController.network(
+          "https://qstar.mindethiopia.com/api/getPostPicture/${followcontroller.flgPosts[0].post_id}");
+
+      initializeVideoPlayerFuture = controller!.initialize();
+      // Use the controller to loop the video.
+      controller!.setLooping(true);
+    });
+
     super.initState();
     _onShowMenu = () {
       context.showBottomSheet2([
@@ -451,14 +457,14 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                         title: 'Followers')),
                 GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   PageRouteBuilder(
-                      //     pageBuilder: (context, animation1, animation2) =>
-                      //         const Followed(),
-                      //     transitionDuration: Duration.zero,
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              Followed(id: widget.user!.id),
+                          transitionDuration: Duration.zero,
+                        ),
+                      );
                     },
                     child: statsBox(
                         count:

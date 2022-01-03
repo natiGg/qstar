@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -10,24 +12,28 @@ import "package:qstar/screen/profile/widgets/profile_widgets.dart";
 import 'package:qstar/screen/feed/model/user.dart';
 
 class Followed extends StatefulWidget {
-  // ignore: constant_identifier_names
-  static const ROUTE_NAME = 'Followed';
+  final int? id;
 
-  const Followed({Key? key}) : super(key: key);
+  Followed({required this.id});
   @override
   _FollowedState createState() => _FollowedState();
 }
 
+Followcontroller followcontroller = Get.find();
+
 class _FollowedState extends State<Followed> {
-  Followcontroller followcontroller = Get.find();
   @override
   void initState() {
-    followcontroller.fetchFollowing(editprofileController.uid);
+    Future.delayed(Duration.zero, () async {
+      followcontroller.fetchFollowing(widget.id);
+    });
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -46,62 +52,60 @@ class _FollowedState extends State<Followed> {
             ),
           ),
         ),
-        body: Obx(() => RefreshIndicator(
-            child: followcontroller.following_list.isNotEmpty
-                ? ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return FollowedList(
-                          user: followcontroller.following_list[index]);
-                    },
-                    itemCount: followcontroller.following_list.length,
+        body: followcontroller.following_list.isNotEmpty
+            ? ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return FollowedList(
+                      user: followcontroller.following_list[index]);
+                },
+                itemCount: followcontroller.following_list.length,
+              )
+            : followcontroller.isFetching.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
                   )
-                : followcontroller.isFetching.value
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                              child: Column(children: [
-                            Container(
-                              width: 70,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        color: Colors.black.withOpacity(0.1),
-                                        offset: const Offset(0, 10))
-                                  ],
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://cdn-icons-png.flaticon.com/512/983/983937.png"))),
-                            ),
-                            RichText(
-                                text: TextSpan(children: [
-                              TextSpan(
-                                  text: "No Followed Users",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16)),
-                            ]))
-                          ])),
-                        ],
-                      ),
-            onRefresh: () async {})));
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Column(children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: const Offset(0, 10))
+                              ],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      "https://cdn-icons-png.flaticon.com/512/983/983937.png"))),
+                        ),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "No Followed Users",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                        ]))
+                      ])),
+                    ],
+                  )));
   }
 }
 
