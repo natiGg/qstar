@@ -35,26 +35,22 @@ class _UserAvatarState2 extends State<UserAvater2> {
                   Container(
                     width: 50,
                     height: 50,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: const Offset(0, 10))
+                        ],
                         shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                            colors: [mPrimaryColor, mPrimaryColor],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Container(
-                          height: 70,
-                          width: 70,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 2),
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/profile${widget.user.id}.jpg'),
-                                fit: BoxFit.cover),
-                          )),
-                    ),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://qstar.mindethiopia.com/api/getProfilePicture/${widget.user.id}"))),
                   ),
                 ],
               ),
