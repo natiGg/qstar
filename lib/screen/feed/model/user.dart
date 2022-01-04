@@ -432,3 +432,45 @@ class GetReportCategory {
     );
   }
 }
+
+class GetActivity {
+  String profile_name;
+  String body;
+  int user_account_id;
+  String post_id;
+
+  GetActivity({
+    required this.profile_name,
+    required this.body,
+    required this.user_account_id,
+    required this.post_id,
+  });
+
+  factory GetActivity.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> jsons = json["data"];
+
+    return GetActivity(
+      profile_name: jsons["profile_name"],
+      body: jsons["body"],
+      user_account_id: jsons["user_account_id"] as int,
+      post_id: jsons["post_id"],
+    );
+  }
+}
+
+class Activities {
+  final List<GetActivity> activities;
+
+  Activities({
+    required this.activities,
+  });
+
+  factory Activities.fromJson(List<dynamic> json) {
+    List<GetActivity> activities = <GetActivity>[];
+    activities = json.map((i) => GetActivity.fromJson(i)).toList();
+
+    return Activities(
+      activities: activities,
+    );
+  }
+}

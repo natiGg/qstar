@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
 import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
+import 'package:qstar/controllers/followcontroller.dart';
 import 'package:qstar/controllers/getcommentcontroller.dart';
 
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
@@ -40,6 +41,7 @@ import 'package:qstar/screen/profile/PerfectMatch/Progress.dart';
 import 'package:qstar/screen/profile/PerfectMatch/profile.dart';
 import 'package:qstar/screen/profile/profile.dart';
 import 'package:qstar/screen/profile/userprofiledetail.dart';
+import 'package:qstar/screen/profile/widgets/profile_widgets.dart';
 import 'package:qstar/screen/qvideo/qvideo2.dart';
 import 'package:qstar/screen/qvideo/userprofile.dart';
 import 'package:qstar/screen/qvideo/videoPreview.dart';
@@ -81,6 +83,7 @@ class _WPostState extends State<WPost> {
   bool isFollowed = false;
   final FlareControls flareControls = FlareControls();
   FeedController feedController = Get.find();
+  Followcontroller followcontroller = Get.put(Followcontroller());
   GetCommenteController getCommenteController =
       Get.put(GetCommenteController());
   bool isActived=false;
@@ -101,7 +104,9 @@ class _WPostState extends State<WPost> {
     }
     message = TextEditingController();
 
-    // TODO: implement initState
+    Future.delayed(Duration.zero, () async {
+      followcontroller.fetchFollowing(feedController.uid);
+    });
     super.initState();
   }
 
@@ -721,19 +726,39 @@ void showSheet(context, int post_id, String caption) {
               )),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 150,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                            ),
-                          ],
-                        ),
-                      ],
+                    child: Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                    children: followcontroller.following_list
+                                        .map((e) => UserAvater2(e))
+                                        .toList()),
+                              )
+                              // followcontroller.following_list.isNotEmpty
+                              //     ? ListView.builder(
+                              //         physics: const BouncingScrollPhysics(),
+                              //         itemBuilder: (context, index) {
+                              //           return FollowedLists(
+                              //               user: followcontroller
+                              //                   .following_list[index]);
+                              //         },
+                              //         itemCount: followcontroller
+                              //             .following_list.length,
+                              //       )
+                              //     : const Center(
+                              //         child: CircularProgressIndicator(),
+                              //       ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1126,5 +1151,50 @@ class _CommestListState extends State<CommestList> {
       ,
       ),
     );
+  }
+}
+
+class FollowedLists extends StatelessWidget {
+  final User? user;
+  const FollowedLists({Key? key, required this.user}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Followcontroller followcontroller = Get.find();
+
+    return Row(children: <Widget>[
+      // Container(
+      //   width: 70,
+      //   height: 70,
+      //   decoration: BoxDecoration(
+      //       border: Border.all(
+      //           width: 4,
+      //           color: Theme.of(context).scaffoldBackgroundColor),
+      //       boxShadow: [
+      //         BoxShadow(
+      //             spreadRadius: 2,
+      //             blurRadius: 10,
+      //             color: Colors.black.withOpacity(0.1),
+      //             offset: const Offset(0, 10))
+      //       ],
+      //       shape: BoxShape.circle,
+      //       image: DecorationImage(
+      //           fit: BoxFit.cover,
+      //           image: NetworkImage(
+      //               "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+      // ),
+      Expanded(
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: user!.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+              ])))),
+    ]);
   }
 }
