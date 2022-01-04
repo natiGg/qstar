@@ -411,21 +411,7 @@ class _WPostState extends State<WPost> {
             padding: const EdgeInsets.all(5.0),
             child: Row(
               children: [
-                GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (!feedController.isActive.value) {
-                          feedController.LikePost(widget.post.posts.post_id);
-                          feedController.isActive.value =
-                              !feedController.isActive.value;
-                        } else if (feedController.isActive.value) {
-                          feedController.DisLikePost(widget.post.posts.post_id);
-                          feedController.isActive.value =
-                              !feedController.isActive.value;
-                        }
-                      });
-                    },
-                    child: activeLikeButton(feedController.isActive.value)),
+                activeLikeButton(feedController.isActive.value),
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context, widget.post.posts.post_id);
@@ -475,16 +461,26 @@ class _WPostState extends State<WPost> {
 
   Widget activeLikeButton(isActive) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 10),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
+           IconButton(onPressed: (){setState(() {
+                        if (!feedController.isActive.value) {
+                          feedController.LikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
+                        } else if (feedController.isActive.value) {
+                          feedController.DisLikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
+                        }
+                      });}, icon:Icon(
               isActive ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
               color: isActive ? mPrimaryColor : Colors.grey,
               size: 25,
-            )
+           ))
           ],
         ),
       ),
@@ -1108,11 +1104,10 @@ class _CommestListState extends State<CommestList> {
             }
           });
         },
-        icon: Icon(
-            getCommenteController.isActive.value
-                ? FontAwesome.heart
-                : FontAwesome.heart_o,
-            size: 14),
+        icon:Icon(  getCommenteController.isActive.value
+            ? FontAwesome.heart
+            : FontAwesome.heart_o,size: 14)
+      ,
       ),
     );
   }
