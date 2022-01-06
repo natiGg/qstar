@@ -63,7 +63,8 @@ class _FollowersState extends State<FriendsChat> {
                                                     animation2) =>
                                                 ChatScreen(
                                                     user: snapshot
-                                                        .data[index].profile),
+                                                        .data[index].profile,
+                                                    fromsshare: "no"),
                                             transitionDuration: Duration.zero,
                                           ),
                                         );

@@ -11,8 +11,9 @@ import 'package:qstar/constant.dart';
 
 class ChatScreen extends StatefulWidget {
   final User? user;
+  final String fromsshare;
 
-  const ChatScreen({required this.user});
+  const ChatScreen({required this.user, required this.fromsshare});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();

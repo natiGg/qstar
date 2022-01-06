@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/Chat/chat_screen.dart';
 
 import 'package:qstar/screen/feed/model/user.dart';
 
@@ -38,7 +39,10 @@ class _UserAvatarState2 extends State<UserAvater2> {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Qvideoscreen(),
+                              ChatScreen(
+                            user: widget.user,
+                            fromsshare: "yes",
+                          ),
                           transitionDuration: Duration.zero,
                         ),
                       );

@@ -175,7 +175,10 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                                       PageRouteBuilder(
                                         pageBuilder:
                                             (context, animation1, animation2) =>
-                                                ChatScreen(user: widget.user),
+                                                ChatScreen(
+                                          user: widget.user,
+                                          fromsshare: "no",
+                                        ),
                                         transitionDuration: Duration.zero,
                                       ));
                                 },
