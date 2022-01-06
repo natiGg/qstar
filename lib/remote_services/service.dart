@@ -718,4 +718,22 @@ class RemoteServices {
       throw Exception('Failed to load Comment');
     }
   }
+
+  static Future<bool> blockedAccount(
+    var blocked_profile_id,
+  ) async {
+    var data = {
+      'blocked_profile_id': blocked_profile_id,
+    };
+    res = await Network().getpassedData(data, "blockedAccount");
+    body = json.decode(res.body);
+    // ignore: avoid_print
+    print("body");
+    print(body);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
 }

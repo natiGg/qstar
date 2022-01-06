@@ -29,3 +29,18 @@ class GeteportCategoryController extends GetxController {
     }
   }
 }
+
+class BlockedAccount extends GetxController {
+  var sent = false.obs;
+
+  void sendblock(id) async {
+    try {
+      sent.value = await RemoteServices.blockedAccount(id);
+      if (sent.isTrue) {
+        // fetchReplay(id);
+      }
+    } on Exception {
+      throw Exception('Failed to send  Mesaage');
+    }
+  }
+}

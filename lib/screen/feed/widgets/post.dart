@@ -8,6 +8,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:need_resume/need_resume.dart';
@@ -15,6 +16,7 @@ import 'package:qstar/controllers/editprofilecontroller.dart';
 import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/followcontroller.dart';
 import 'package:qstar/controllers/getcommentcontroller.dart';
+import 'package:qstar/controllers/getreportcontroller.dart';
 
 import 'package:qstar/controllers/perfectmatchcontroller.dart';
 import 'package:qstar/controllers/postcontroller.dart';
@@ -84,6 +86,7 @@ class _WPostState extends State<WPost> {
   final FlareControls flareControls = FlareControls();
   FeedController feedController = Get.find();
   Followcontroller followcontroller = Get.put(Followcontroller());
+  BlockedAccount geteportCategoryController = Get.put(BlockedAccount());
   GetCommenteController getCommenteController =
       Get.put(GetCommenteController());
   bool isActived = false;
@@ -212,6 +215,14 @@ class _WPostState extends State<WPost> {
                                               transitionDuration: Duration.zero,
                                             ),
                                           );
+                                        }
+
+                                        if (e == "Block") {
+                                          Navigator.of(context).pop();
+                                          showbloaksheet(
+                                              context,
+                                              widget.post.posts.profile.name,
+                                              widget.post.posts.profile.id);
                                         }
                                       },
                                     ))
@@ -632,6 +643,100 @@ class _WPostState extends State<WPost> {
     );
   }
 
+  void showbloaksheet(
+    context,
+    String name,
+    int id,
+  ) {
+    // getCommenteController.fetchComment(post_id);
+
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+        backgroundColor: Colors.white,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: SizedBox(
+                height: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Container(
+                        child: Center(child: Text("Block " + name + "?")),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Center(
+                        child: Container(
+                          width: 120,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4.0)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.6),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 8.0),
+                            ],
+                          ),
+                          child: Material(
+                            color: kPrimaryColor,
+                            child: InkWell(
+                              onTap: () async {
+                                geteportCategoryController.sendblock(id);
+                                await Future.delayed(
+                                    const Duration(seconds: 1));
+                                geteportCategoryController.sent.value
+                                    ? Fluttertoast.showToast(
+                                        msg: "Succefully Blocked",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.green,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                    : Fluttertoast.showToast(
+                                        msg: "Not Succefully Blocked",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                Navigator.pop(context);
+                              },
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'Block',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ));
+  }
+
   void showSheetcomment(context, int post_id) {
     getCommenteController.fetchComment(post_id);
 
@@ -645,7 +750,7 @@ class _WPostState extends State<WPost> {
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: SizedBox(
-                height: 400,
+                height: 200,
                 child: Obx(() => Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
