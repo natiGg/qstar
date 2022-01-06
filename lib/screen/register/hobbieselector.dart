@@ -69,7 +69,6 @@ class _HobbieselectorState extends State<Hobbieselector> {
                     child: Column(
                       children: <Widget>[
                         const SizedBox(height: 40),
-
                         const Text(
                           "Help us to understand you more",
                           style: TextStyle(
@@ -265,17 +264,6 @@ class _HobbieselectorState extends State<Hobbieselector> {
                             ),
                           ),
                         )
-                        //################################################################################################
-                        // MultiSelectBottomSheetField with validators
-                        //################################################################################################
-
-                        //################################################################################################
-                        // MultiSelectChipField
-                        //################################################################################################
-
-                        //################################################################################################
-                        // MultiSelectDialogField with initial values
-                        //################################################################################################
                       ],
                     ),
                   ),

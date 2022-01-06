@@ -90,9 +90,13 @@ class _CategoryVideo2 extends State<CategoryVid>
                                         gradient: LinearGradient(
                                             begin: Alignment.bottomRight,
                                             colors: [
-                                          Colors.black.withOpacity(.9),
-                                          Colors.black.withOpacity(.1),
-                                        ])),
+                                              Colors.black.withOpacity(.9),
+                                              Colors.black.withOpacity(.1),
+                                            ]),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                "https://qstar.mindethiopia.com/api/videoCategory/${item.avatar}"))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(

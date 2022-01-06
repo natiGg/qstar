@@ -45,11 +45,11 @@ class ActivityItemWidget extends StatelessWidget {
                             fontSize: 16))
                   ])),
                 )),
-                CircleAvatar(
-                  maxRadius: 19,
-                  backgroundImage: NetworkImage(
-                      "https://qstar.mindethiopia.com/api/getPostPicture/${data!.post_id}"),
-                ),
+                // CircleAvatar(
+                //   maxRadius: 19,
+                //   backgroundImage: NetworkImage(
+                //       "https://qstar.mindethiopia.com/api/getPostPicture/${data!.post_id}"),
+                // ),
               ],
             ),
           ),
