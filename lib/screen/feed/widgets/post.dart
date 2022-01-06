@@ -86,12 +86,14 @@ class _WPostState extends State<WPost> {
   Followcontroller followcontroller = Get.put(Followcontroller());
   GetCommenteController getCommenteController =
       Get.put(GetCommenteController());
-
+  bool isActived=false;
   late VideoPlayerController controller;
   late Future<void> initializeVideoPlayerFuture;
   @override
   void initState() {
     feedController.isActive.value = widget.post.viewer_has_liked;
+    isActived=feedController.isActive.value;
+    
     if (widget.post.posts.is_image == "0") {
       controller = VideoPlayerController.network(
           "https://qstar.mindethiopia.com/api/getPostPicture/${widget.post.posts.post_id}");
@@ -416,7 +418,7 @@ class _WPostState extends State<WPost> {
             padding: const EdgeInsets.all(5.0),
             child: Row(
               children: [
-                activeLikeButton(feedController.isActive.value),
+                activeLikeButton(isActived),
                 GestureDetector(
                     onTap: () {
                       showSheetcomment(context, widget.post.posts.post_id);
@@ -428,15 +430,17 @@ class _WPostState extends State<WPost> {
                 IconButton(
                     onPressed: () {
                       setState(() {
-                        if (!feedController.isBookMarked.value) {
+                        if (!isActived) {
                           feedController.isBookMarked.value =
                               !feedController.isBookMarked.value;
+                              isActived=!isActived;
                           feedController
                               .postBookMark(widget.post.posts.post_id);
                         } else if (feedController.isBookMarked.value) {
                           feedController.unBookMark(widget.post.posts.post_id);
                           feedController.isBookMarked.value =
                               !feedController.isBookMarked.value;
+                            isActived=!isActived;
                         }
                       });
                     },
@@ -471,25 +475,24 @@ class _WPostState extends State<WPost> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (!feedController.isActive.value) {
-                      feedController.LikePost(widget.post.posts.post_id);
-                      feedController.isActive.value =
-                          !feedController.isActive.value;
-                    } else if (feedController.isActive.value) {
-                      feedController.DisLikePost(widget.post.posts.post_id);
-                      feedController.isActive.value =
-                          !feedController.isActive.value;
-                    }
-                  });
-                },
-                icon: Icon(
-                  isActive ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
-                  color: isActive ? mPrimaryColor : Colors.grey,
-                  size: 25,
-                ))
+           IconButton(onPressed: (){setState(() {
+                        if (!feedController.isActive.value) {
+                          feedController.LikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
+                              isActived=!isActived;
+                        } else if (feedController.isActive.value) {
+                          feedController.DisLikePost(widget.post.posts.post_id);
+                          feedController.isActive.value =
+                              !feedController.isActive.value;
+                                isActived=!isActived;
+
+                        }
+                      });}, icon:Icon(
+              isActived ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
+              color: isActived ? mPrimaryColor : Colors.grey,
+              size: 25,
+           ))
           ],
         ),
       ),
@@ -1012,7 +1015,13 @@ class CommestList extends StatefulWidget {
 }
 
 class _CommestListState extends State<CommestList> {
+  bool isActived=false;
   GetCommenteController getCommenteController = Get.find();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1122,22 +1131,24 @@ class _CommestListState extends State<CommestList> {
       child: IconButton(
         onPressed: () {
           setState(() {
-            if (!getCommenteController.isActive.value) {
+            if (!isActived) {
               getCommenteController.isActive.value =
                   !getCommenteController.isActive.value;
+                  isActived=!isActived;
               getCommenteController.likeComment(widget.comment.id);
             } else {
               getCommenteController.isActive.value =
                   !getCommenteController.isActive.value;
+                                    isActived=!isActived;
+
               getCommenteController.dislikeComment(widget.comment.id);
             }
           });
         },
-        icon: Icon(
-            getCommenteController.isActive.value
-                ? FontAwesome.heart
-                : FontAwesome.heart_o,
-            size: 14),
+        icon:Icon(isActived
+            ? FontAwesome.heart
+            : FontAwesome.heart_o,size: 14)
+      ,
       ),
     );
   }

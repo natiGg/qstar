@@ -441,6 +441,7 @@ class FeedState extends ResumableState<Feed>
                           const Divider(
                             thickness: 1.0,
                           ),
+                          
                           ...feedController.feed.map((item) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 18.0),
