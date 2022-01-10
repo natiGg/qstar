@@ -66,14 +66,14 @@ Widget profileStats(
               statsBox(count: '57', title: 'Posts'),
               GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) =>
-                            const Followers(),
-                        transitionDuration: Duration.zero,
-                      ),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   PageRouteBuilder(
+                    //     pageBuilder: (context, animation1, animation2) =>
+                    //         const Followers(),
+                    //     transitionDuration: Duration.zero,
+                    //   ),
+                    // );
                   },
                   child: statsBox(count: '185', title: 'Followers')),
               GestureDetector(

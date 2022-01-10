@@ -487,7 +487,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              const Followers(),
+                              Followers(id: userid),
                           transitionDuration: Duration.zero,
                         ),
                       );

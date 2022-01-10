@@ -44,12 +44,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final EditprofileController editprofileController =
       Get.put(EditprofileController());
   HobbiesController hobbiesController = Get.put(HobbiesController());
-  // ignore: prefer_typing_uninitialized_variables
+
   var _items;
   //List<Animal> _selectedAnimals = [];
   List<Hobbies> _selectedItems2 = [];
   final List<String> _tobeSent = [];
-  List<Hobbies> _selectedItems3 = [];
+  final List<Hobbies> _selectedItems3 = [];
   static final List<Hobbies> _initial = [];
 
   String Preligion = "Hobbies";

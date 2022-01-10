@@ -15,30 +15,39 @@ class Followcontroller extends GetxController {
   RxBool isFetching = false.obs;
   late User profile;
   var following_list = <User>[].obs;
+  var followers_list = <User>[].obs;
   var unFollowed, uFollowed;
-  var flgPosts=<Posts>[].obs;
+  var flgPosts = <Posts>[].obs;
   FeedController feedController = Get.find();
 
-    void fetchUProfile(var id) async {
+  void fetchUProfile(var id) async {
     try {
       isFetching(true);
-      profile= await RemoteServices.fetchProfile(id);
+      profile = await RemoteServices.fetchProfile(id);
       isFetching(false);
     } finally {}
   }
+
   void fetchFlgPost(var id) async {
-    try{
-      flgPosts.value=await RemoteServices.fetchFlgPosts(id);
-    }
-    on Exception {
+    try {
+      flgPosts.value = await RemoteServices.fetchFlgPosts(id);
+    } on Exception {
       print("can't fetch");
     }
-
   }
+
   void fetchFollowing(var id) async {
     try {
       isFetching(true);
       following_list.value = await RemoteServices.fetchallFollowing(id);
+      isFetching(false);
+    } finally {}
+  }
+
+  void fetchfollowers(var id) async {
+    try {
+      isFetching(true);
+      followers_list.value = await RemoteServices.fetchallFollower(id);
       isFetching(false);
     } finally {}
   }

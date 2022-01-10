@@ -96,7 +96,7 @@ class _CategoryVideo2 extends State<CategoryVid>
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: NetworkImage(
-                                                "https://qstar.mindethiopia.com/api/videoCategory/${item.avatar}"))),
+                                                "https://qstar.mindethiopia.com/api/videoCategory/${item.id}"))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(

@@ -7,6 +7,7 @@ import 'package:qstar/screen/Chat/home_screen.dart';
 
 import 'package:qstar/constant.dart';
 import 'package:qstar/screen/profile/following.dart';
+import 'package:qstar/screen/profile/followres.dart';
 import 'package:qstar/screen/profile/widgets/bottomsheet/app_context.dart';
 
 import 'package:qstar/screen/profile/widgets/bottomsheet/bottom_sheet_action.dart';
@@ -445,14 +446,14 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                     title: 'Posts'),
                 GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   PageRouteBuilder(
-                      //     pageBuilder: (context, animation1, animation2) =>
-                      //         const Followers(),
-                      //     transitionDuration: Duration.zero,
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              Followers(id: widget.user!.id),
+                          transitionDuration: Duration.zero,
+                        ),
+                      );
                     },
                     child: statsBox(
                         count:
