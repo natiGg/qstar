@@ -27,7 +27,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class UserProfileDetail extends StatefulWidget {
   final User? user;
-  const UserProfileDetail({Key? key, required this.user}) : super(key: key);
+  final bool fromFeed;
+  const UserProfileDetail(
+      {Key? key, required this.user, required this.fromFeed})
+      : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -450,7 +453,9 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Followers(id: widget.user!.id),
+                              Followers(
+                                  id: widget.user!.id,
+                                  fromFeed: widget.fromFeed),
                           transitionDuration: Duration.zero,
                         ),
                       );
@@ -465,7 +470,10 @@ class _ProfileScreenState extends State<UserProfileDetail> {
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Followed(id: widget.user!.id),
+                              Followed(
+                            id: widget.user!.id,
+                            fromFeed: widget.fromFeed,
+                          ),
                           transitionDuration: Duration.zero,
                         ),
                       );

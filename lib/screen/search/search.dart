@@ -790,6 +790,7 @@ class SearchList extends StatelessWidget {
                   pageBuilder: (context, animation1, animation2) =>
                       UserProfileDetail(
                     user: user,
+                    fromFeed: false,
                   ),
                   transitionDuration: Duration.zero,
                 ),

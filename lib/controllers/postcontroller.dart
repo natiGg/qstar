@@ -191,33 +191,47 @@ class PostController extends GetxController {
       var isValid = CaptionForm.currentState!.validate();
 
       if (isValid) {
-        if (imagesList.isNotEmpty || videosList.isNotEmpty) {
-          var data;
-          if (videosList.isNotEmpty) {
-            isVid.value = true;
-            data = {
-              "location": at_loca.value.toString(),
-              "caption": captionController.text,
-              "post_type": post_type,
-              "tags": tagged.join(","),
-              "is_image": 0
-            };
-          }
-          if (imagesList.isNotEmpty) {
-            data = {
-              "location": at_loca.value.toString(),
-              "caption": captionController.text,
-              "post_type": post_type,
-              "tags": tagged.join(","),
-              "is_image": 1
-            };
-          }
+        if (at_loca.value != "") {
+          if (imagesList.isNotEmpty || videosList.isNotEmpty) {
+            var data;
+            if (videosList.isNotEmpty) {
+              isVid.value = true;
+              data = {
+                "location": at_loca.value.toString(),
+                "caption": captionController.text,
+                "post_type": post_type,
+                "tags": tagged.join(","),
+                "is_image": 0
+              };
+            }
+            if (imagesList.isNotEmpty) {
+              data = {
+                "location": at_loca.value.toString(),
+                "caption": captionController.text,
+                "post_type": post_type,
+                "tags": tagged.join(","),
+                "is_image": 1
+              };
+            }
 
-          isPosting(true);
-          if (imagesList.isNotEmpty) {
-            posted = await RemoteServices.createPost(imagesList, data);
-          } else if (videosList.isNotEmpty) {
-            posted = await RemoteServices.createPost(videosList, data);
+            isPosting(true);
+            if (imagesList.isNotEmpty) {
+              posted = await RemoteServices.createPost(imagesList, data);
+            } else if (videosList.isNotEmpty) {
+              posted = await RemoteServices.createPost(videosList, data);
+            }
+
+            if (posted.toString() == "200") {
+              isPosting(false);
+              isPosted(true);
+              imagesList.clear();
+              videosList.clear();
+              hashTags.clear();
+              taggedName.clear();
+              tagged.clear();
+              captionController.clear();
+              post_type.value = "public";
+            }
           } else {
             Get.dialog(AlertDialog(
               title: const Text("info"),
@@ -233,22 +247,10 @@ class PostController extends GetxController {
               ],
             ));
           }
-
-          if (posted.toString() == "200") {
-            isPosting(false);
-            isPosted(true);
-            imagesList.clear();
-            videosList.clear();
-            hashTags.clear();
-            taggedName.clear();
-            tagged.clear();
-            captionController.clear();
-            post_type.value = "public";
-          }
         } else {
           Get.dialog(AlertDialog(
             title: const Text("info"),
-            content: const Text("Please Provide image or video"),
+            content: const Text("Please Provide Location"),
             actions: <Widget>[
               // ignore: deprecated_member_use
               FlatButton(

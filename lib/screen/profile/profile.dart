@@ -523,7 +523,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Followers(id: userid),
+                              Followers(
+                            id: userid,
+                            fromFeed: false,
+                          ),
                           transitionDuration: Duration.zero,
                         ),
                       );
@@ -537,7 +540,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              Followed(id: userid),
+                              Followed(id: userid, fromFeed: false),
                           transitionDuration: Duration.zero,
                         ),
                       );

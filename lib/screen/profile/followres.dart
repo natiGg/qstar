@@ -16,8 +16,8 @@ import "package:qstar/screen/profile/widgets/profile_widgets.dart";
 class Followers extends StatefulWidget {
   // ignore: constant_identifier_names
   final int? id;
-
-  const Followers({required this.id});
+  final bool fromFeed;
+  const Followers({required this.id, required this.fromFeed});
 
   @override
   _FollowersState createState() => _FollowersState();
@@ -62,7 +62,8 @@ class _FollowersState extends State<Followers> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return FollowedList(
-                      user: followcontroller.followers_list[index]);
+                      user: followcontroller.followers_list[index],
+                      fromFeed: widget.fromFeed);
                 },
                 itemCount: followcontroller.followers_list.length,
               )
@@ -116,7 +117,9 @@ class _FollowersState extends State<Followers> {
 
 class FollowedList extends StatelessWidget {
   final User? user;
-  const FollowedList({Key? key, required this.user}) : super(key: key);
+  final bool fromFeed;
+  const FollowedList({Key? key, required this.user, required this.fromFeed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +164,7 @@ class FollowedList extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16)),
                         ])))),
-                Following(),
+                !fromFeed ? Following() : Container(),
               ],
             ),
           ),
