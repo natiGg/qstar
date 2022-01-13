@@ -218,6 +218,20 @@ class PostController extends GetxController {
             posted = await RemoteServices.createPost(imagesList, data);
           } else if (videosList.isNotEmpty) {
             posted = await RemoteServices.createPost(videosList, data);
+          } else {
+            Get.dialog(AlertDialog(
+              title: const Text("info"),
+              content: const Text("Please Provide image or video"),
+              actions: <Widget>[
+                // ignore: deprecated_member_use
+                FlatButton(
+                  child: const Text("close"),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              ],
+            ));
           }
 
           if (posted.toString() == "200") {
