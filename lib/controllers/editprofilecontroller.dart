@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:qstar/constant.dart';
+import 'package:qstar/screen/feed/model/feed.dart';
 import 'package:qstar/screen/feed/model/user.dart';
 import 'package:qstar/remote_services/service.dart';
 import 'package:qstar/screen/register/model/hobbies.dart';
@@ -62,8 +63,7 @@ class EditprofileController extends GetxController with StateMixin {
   List<Hobbies> hobbyitems = [];
   List<String> hobbiesSplit = [];
   List<String> tobeSent = [];
-
-  // ignore: prefer_typing_uninitialized_variables
+  var posts = <Posts>[].obs;
   var suggested;
   var suggestObjs = <User>[].obs;
   var links;
@@ -81,6 +81,14 @@ class EditprofileController extends GetxController with StateMixin {
     tiktokcontroller = TextEditingController();
     facebookcontroller = TextEditingController();
     super.onInit();
+  }
+
+  void fetchPosts(var id) async {
+    try {
+      posts.value = await RemoteServices.fetchFlgPosts(id);
+    } on Exception {
+      print("can't fetch");
+    }
   }
 
   void fetchProfile(var id) async {

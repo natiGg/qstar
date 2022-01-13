@@ -347,13 +347,14 @@ class _WPostState extends State<WPost> {
             ),
             GestureDetector(
               onDoubleTap: () {
-                feedController.LikePost(widget.post.posts.post_id);
 
-                setState(() {
-                  if (!feedController.isActive.value) {
-                    feedController.isActive.value =
-                        !feedController.isActive.value;
-                  }
+              setState(() {
+                  
+                      feedController.LikePost(widget.post.posts.post_id);
+                      feedController.isActive.value =
+                          !feedController.isActive.value;
+                      isActived = !isActived;
+       
                   // _isPlaying ? null : _controller.isActive = true;
                 });
                 flareControls.play("like");

@@ -23,6 +23,8 @@ import 'package:qstar/screen/profile/editprofile.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
+import 'package:qstar/screen/qvideo/qvideo2.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,9 +44,11 @@ FeedController feedController = Get.find();
 class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
   late VoidCallback _onShowMenu;
-
+  VideoPlayerController? controller;
+  late Future<void>? initializeVideoPlayerFuture;
   @override
   void initState() {
+    editprofileController.fetchPosts(feedController.uid);
     _fetchUser();
     super.initState();
     _onShowMenu = () {
@@ -357,23 +361,55 @@ class _ProfileScreenState extends State<ProfileScreen>
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         crossAxisCount: _pageIndex != 1 ? 3 : 2,
-                        itemCount: Utils.listOfImageUrl.length,
+                        itemCount: editprofileController.posts.length,
                         itemBuilder: (contex, index) {
-                          return Container(
-                            padding: _pageIndex == 1
-                                ? const EdgeInsets.all(5)
-                                : const EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: _pageIndex == 1
-                                  ? BorderRadius.circular(15)
-                                  : BorderRadius.circular(0),
-                              child: Image(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    Utils.listOfImageUrl.elementAt(index)),
+                          return Align(
+                            child: Container(
+                              padding: _pageIndex == 1
+                                  ? const EdgeInsets.all(5)
+                                  : const EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: _pageIndex == 1
+                                    ? BorderRadius.circular(15)
+                                    : BorderRadius.circular(0),
+                                child: editprofileController
+                                            .posts[index].is_image ==
+                                        "1"
+                                    ? Image(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            "https://qstar.mindethiopia.com/api/getPostPicture/${editprofileController.posts[index].post_id}"),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                  pageBuilder: (context,
+                                                          animation1,
+                                                          animation2) =>
+                                                      Qvideoscreen2(
+                                                          post:
+                                                              editprofileController
+                                                                      .posts[
+                                                                  index])));
+                                        },
+                                        child: Stack(children: [
+                                          VideoPlayer(controller!),
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40.0,
+                                                ),
+                                                onPressed: () {},
+                                              )),
+                                        ])),
                               ),
                             ),
                           );
@@ -382,7 +418,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             _pageIndex != 1 ? 1 : 1, _pageIndex != 1 ? 1 : 1.5),
                         crossAxisSpacing: 2,
                         mainAxisSpacing: 2,
-                      ),
+                      )
                     ],
                   ),
                 ),

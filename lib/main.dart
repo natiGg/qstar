@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyApp> {
         ? GetMaterialApp(
             translations: LocaleString(),
             locale: const Locale('en', 'US'),
-            title: 'Coffee',
+            title: 'Qstar',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               scaffoldBackgroundColor: mBackgroundColor,

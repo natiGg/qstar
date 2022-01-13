@@ -145,8 +145,8 @@ class SuggestedUsers extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(
-                    'assets/images/profile${user.status}.jpg',
+                  image: NetworkImage(
+                    'https://qstar.mindethiopia.com/api/getProfilePicture/${user.id}',
                   ),
                 ),
               ),

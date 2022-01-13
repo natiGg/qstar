@@ -115,9 +115,10 @@ class FeedState extends ResumableState<Feed>
   void _fetchUser() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('user');
-
+    print(token);
     if (token != null) {
       var body = json.decode(token);
+      print(body["id"]);
 
       editprofileController.fetchProfile(body["id"]);
     }
@@ -441,7 +442,6 @@ class FeedState extends ResumableState<Feed>
                           const Divider(
                             thickness: 1.0,
                           ),
-                          
                           ...feedController.feed.map((item) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 18.0),

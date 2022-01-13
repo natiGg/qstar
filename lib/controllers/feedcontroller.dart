@@ -35,6 +35,7 @@ class FeedController extends GetxController with StateMixin {
 
       uid = body['id'];
     }
+    print(uid);
     super.onInit();
     fetchFeed();
     fetchPerfectMatches();
@@ -43,8 +44,7 @@ class FeedController extends GetxController with StateMixin {
   void fetchFeed() async {
     try {
       feed.value = await RemoteServices.fetchFeed();
-            print("herere found it");
-
+      print("herere found it");
 
       if (feed.isEmpty) {
         onRefreshFeed();
@@ -70,7 +70,6 @@ class FeedController extends GetxController with StateMixin {
       print("inside like");
       liked.value = await RemoteServices.likePost(post_id);
       print("about to like" + liked.value.toString());
-      
     } on Exception {
       change(null, status: RxStatus.error("Can't like post"));
     }
@@ -85,22 +84,21 @@ class FeedController extends GetxController with StateMixin {
       change(null, status: RxStatus.error("Can't dislike post"));
     }
   }
+
   void postBookMark(var post_id) async {
-    try{
-   bookMarked.value= await RemoteServices.bookMarkPost(post_id);
+    try {
+      bookMarked.value = await RemoteServices.bookMarkPost(post_id);
     } on Exception {
       change(null, status: RxStatus.error("Can't bookmark post"));
     }
-
   }
-    void unBookMark(var post_id) async{
-    try{
-      bookMarked.value=await RemoteServices.unbookPost(post_id);
 
+  void unBookMark(var post_id) async {
+    try {
+      bookMarked.value = await RemoteServices.unbookPost(post_id);
     } on Exception {
       change(null, status: RxStatus.error("Can't unbookmark post"));
     }
-
   }
 
   void fetchPerfectMatches() async {
