@@ -13,8 +13,9 @@ import 'package:qstar/screen/feed/model/user.dart';
 
 class Followed extends StatefulWidget {
   final int? id;
+  final bool fromFeed;
 
-  Followed({required this.id});
+  Followed({required this.id, required this.fromFeed});
   @override
   _FollowedState createState() => _FollowedState();
 }
@@ -57,7 +58,9 @@ class _FollowedState extends State<Followed> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return FollowedList(
-                      user: followcontroller.following_list[index]);
+                    user: followcontroller.following_list[index],
+                    fromFeed: widget.fromFeed,
+                  );
                 },
                 itemCount: followcontroller.following_list.length,
               )
@@ -111,7 +114,9 @@ class _FollowedState extends State<Followed> {
 
 class FollowedList extends StatelessWidget {
   final User? user;
-  const FollowedList({Key? key, required this.user}) : super(key: key);
+  final bool fromFeed;
+  const FollowedList({Key? key, required this.user, required this.fromFeed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -158,98 +163,105 @@ class FollowedList extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16)),
                         ])))),
-                GestureDetector(
-                    onTap: () {
-                      Get.defaultDialog(
-                          title: "",
-                          middleText: "Hello world!",
-                          backgroundColor: Colors.white,
-                          titleStyle: TextStyle(color: mPrimaryColor),
-                          middleTextStyle: TextStyle(color: Colors.white),
-                          content: Column(
-                            children: [
-                              Container(
-                                width: 70,
-                                height: 70,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 4,
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          color: Colors.black.withOpacity(0.1),
-                                          offset: const Offset(0, 10))
-                                    ],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                !fromFeed
+                    ? GestureDetector(
+                        onTap: () {
+                          Get.defaultDialog(
+                              title: "",
+                              middleText: "Hello world!",
+                              backgroundColor: Colors.white,
+                              titleStyle: TextStyle(color: mPrimaryColor),
+                              middleTextStyle: TextStyle(color: Colors.white),
+                              content: Column(
+                                children: [
+                                  Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 4,
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              color:
+                                                  Colors.black.withOpacity(0.1),
+                                              offset: const Offset(0, 10))
+                                        ],
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                "https://qstar.mindethiopia.com/api/getProfilePicture/${user!.id}"))),
+                                  ),
+                                  Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: RichText(
+                                          text: TextSpan(children: [
+                                        TextSpan(
+                                            text: user!.name,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
+                                      ])))
+                                ],
                               ),
-                              Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: user!.name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            ?.copyWith(
+                              actions: [
+                                GestureDetector(
+                                  onTap: () {
+                                    followcontroller
+                                        .unfollow(user!.id.toString());
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Container(
+                                      height: 30,
+                                      width: 200,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      decoration: BoxDecoration(
+                                          color: mPrimaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border:
+                                              Border.all(color: mPrimaryColor)),
+                                      child: !followcontroller.btnLoading.value
+                                          ? Center(
+                                              child: const Text(
+                                              'unfollow',
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 16)),
-                                  ])))
-                            ],
-                          ),
-                          actions: [
-                            GestureDetector(
-                              onTap: () {
-                                followcontroller.unfollow(user!.id.toString());
-                                Navigator.of(context).pop(true);
-                              },
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Container(
-                                  height: 30,
-                                  width: 200,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: mPrimaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: mPrimaryColor)),
-                                  child: !followcontroller.btnLoading.value
-                                      ? Center(
-                                          child: const Text(
-                                          'unfollow',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ))
-                                      : const Center(
-                                          child: SizedBox(
-                                            height: 12,
-                                            width: 12,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                // ignore: unrelated_type_equality_checks
                                                 color: Colors.white,
                                               ),
+                                            ))
+                                          : const Center(
+                                              child: SizedBox(
+                                                height: 12,
+                                                width: 12,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    // ignore: unrelated_type_equality_checks
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ]);
-                    },
-                    child: Unfollow()),
+                              ]);
+                        },
+                        child: Unfollow())
+                    : Container(),
               ],
             ),
           ),

@@ -163,7 +163,9 @@ class _WPostState extends State<WPost> {
                                     pageBuilder:
                                         (context, animation1, animation2) {
                                       return UserProfileDetail(
-                                          user: widget.post.posts.profile);
+                                        user: widget.post.posts.profile,
+                                        fromFeed: true,
+                                      );
                                     },
                                   ),
                                 );
@@ -297,8 +299,10 @@ class _WPostState extends State<WPost> {
                                           pageBuilder: (context, animation1,
                                               animation2) {
                                         return UserProfileDetail(
-                                            user: widget.post.posts
-                                                .post_tags[index].profile);
+                                          user: widget.post.posts
+                                              .post_tags[index].profile,
+                                          fromFeed: true,
+                                        );
                                       }));
                                     },
                                     child: Row(
