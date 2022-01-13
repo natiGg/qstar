@@ -442,7 +442,7 @@ class GetActivity {
   String profile_name;
   String body;
   int user_account_id;
-  String post_id;
+  int post_id;
 
   GetActivity({
     required this.profile_name,
@@ -458,7 +458,7 @@ class GetActivity {
       profile_name: jsons["profile_name"],
       body: jsons["body"],
       user_account_id: jsons["user_account_id"] as int,
-      post_id: jsons["post_id"],
+      post_id: jsons["post_id"] as int,
     );
   }
 }

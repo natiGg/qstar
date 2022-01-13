@@ -706,7 +706,7 @@ class RemoteServices {
   }
 
   static Future<List<GetActivity>> getActivity(var id) async {
-    res = await Network().getData("activity/1");
+    res = await Network().getData("activity/${id}");
     var body = json.decode(res.body);
 
     if (res.statusCode == 200) {
