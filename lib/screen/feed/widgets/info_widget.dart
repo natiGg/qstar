@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qstar/controllers/feedcontroller.dart';
 import 'package:qstar/controllers/getcommentcontroller.dart';
 import 'package:qstar/screen/comment/comment_widget.dart';
 import 'package:qstar/screen/feed/model/feed.dart';
@@ -15,6 +16,8 @@ class InfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FeedController feedController = Get.find();
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -27,7 +30,9 @@ class InfoWidget extends StatelessWidget {
                   .subtitle2!
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
-                '${post.posts.like_preview.count} likes',
+                feedController.isActive.value
+                    ? '${post.posts.like_preview.count + 1} likes'
+                    : '${post.posts.like_preview.count} likes',
                 style: Theme.of(context).textTheme.bodyText2,
               )),
           Container(
